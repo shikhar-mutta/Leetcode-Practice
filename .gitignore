@@ -1,0 +1,15 @@
+# IDE Settings
+.vscode/
+
+# Compiled executables
+test
+run_test
+*.out
+*.exe
+
+# Object files
+*.o
+*.obj
+
+# Output directory (optional - comment out if you want to track test results)
+# Output/

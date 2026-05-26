@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#include "128.cpp"
+#include "493.cpp"
 
 int main() {
     int t;
@@ -12,7 +12,7 @@ int main() {
         vector<int> nums(n);
         for (int i = 0; i < n; i++) cin >> nums[i];
         Solution sol;
-        cout << sol.longestConsecutive(nums) << "\n";
+        cout << sol.reversePairs(nums) << "\n";
     }
     return 0;
 }

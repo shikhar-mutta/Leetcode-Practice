@@ -10,6 +10,7 @@ public:
     {
         // approach1: doutch national flag algorithm
         int n = nums.size();
+        // low-mid->0, mid-high->1, high-end->2
         int low = 0, mid = 0, high = n - 1;
         while (mid <= high)
         {

@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "661.cpp"
+#include "674.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -41,7 +41,7 @@ vector<vector<int>> _rvvi() {
     vector<vector<int>> v;
     int dep=0; string cur;
     for (char c : s) {
-        if (c=='[') { dep++; if(dep==2) cur=""; else if(dep>2) cur+=c; }
+        if (c=='[') { dep++; if(dep>1) cur+=c; }
         else if (c==']') {
             dep--;
             if (dep==1) {
@@ -59,10 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto img = _rvvi();
+        auto nums = _rvi();
         Solution sol;
-        auto res = sol.imageSmoother(img);
-        for(auto&row:res){for(int _i=0;_i<(int)row.size();_i++){if(_i)cout<<" ";cout<<row[_i];}cout<<"\n";}
+        auto res = sol.findLengthOfLCIS(nums);
+        cout << res << "\n";
     }
     return 0;
 }

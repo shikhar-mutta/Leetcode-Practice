@@ -42,3 +42,14 @@ for f in "${OPTIONAL[@]}"; do
         echo "Renamed: $f -> $newname"
     fi
 done
+
+# Fix stale #include inside driver.cpp
+NEWDRIVER="${NEW}_driver.cpp"
+if [ -f "$NEWDRIVER" ]; then
+    sed -i "s|#include \"${OLD}.cpp\"|#include \"${NEW}.cpp\"|g" "$NEWDRIVER"
+    echo "Updated: #include in $NEWDRIVER"
+fi
+
+# Fetch LeetCode data and regenerate test files for the new problem
+echo "Fetching LeetCode problem ${NEW}..."
+python3 "$(dirname "$0")/fetch_problem.py" "$NEW"

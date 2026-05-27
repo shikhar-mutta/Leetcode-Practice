@@ -1,9 +1,0 @@
-1
-3
-happy
-sad
-good
-3
-sad
-happy
-good

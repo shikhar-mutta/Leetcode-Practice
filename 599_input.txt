@@ -1,0 +1,28 @@
+3
+4
+Shogun
+Tapioca Express
+Burger King
+KFC
+4
+Piatti
+The Grill at Torrey Pines
+Hungry Hunter Steakhouse
+Shogun
+4
+Shogun
+Tapioca Express
+Burger King
+KFC
+3
+KFC
+Shogun
+Burger King
+3
+happy
+sad
+good
+3
+sad
+happy
+good

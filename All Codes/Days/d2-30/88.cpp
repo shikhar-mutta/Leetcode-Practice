@@ -10,6 +10,7 @@ public:
     {
         int i = m - 1, j = n - 1, k = m + n - 1;
 
+        // Start merging from the end of nums1 and nums2, and fill nums1 from the end as well.
         while (i >= 0 && j >= 0)
         {
             if (nums1[i] > nums2[j])
@@ -22,9 +23,11 @@ public:
             }
         }
 
+        // If there are remaining elements in nums2, copy them to nums1 as well.
         while (j >= 0)
         {
             nums1[k--] = nums2[j--];
         }
+        // No need to copy remaining elements from nums1, as they are already in place.
     }
 };

@@ -1,0 +1,8 @@
+// optional is used when we want to represent the presence or absence of a value.
+       --> optional<int> first, second, third;
+
+// c = num of cols in new matrix && n = num of cols in old matrix 
+for (int i = 0; i < m * n; i++)
+{ // map the elements from the original matrix to the new matrix
+            ans[i / c][i % c] = mat[i / n][i % n];
+}

@@ -1,2 +1,7 @@
-nCr = nC(r-1) × (n - r + 1) / r
 
+--> nCr = nC(r-1) × (n - r + 1) / r
+
+--> The Nth row of Pascal's Triangle contains these values:
+    C(N-1, 0),  C(N-1, 1),  C(N-1, 2),  ...  C(N-1, N-1)
+
+    

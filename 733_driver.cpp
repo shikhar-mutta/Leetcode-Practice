@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "724.cpp"
+#include "733.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -41,7 +41,7 @@ vector<vector<int>> _rvvi() {
     vector<vector<int>> v;
     int dep=0; string cur;
     for (char c : s) {
-        if (c=='[') { dep++; if(dep>1) cur+=c; }
+        if (c=='[') { dep++; if(dep>2) cur+=c; }
         else if (c==']') {
             dep--;
             if (dep==1) {
@@ -54,34 +54,18 @@ vector<vector<int>> _rvvi() {
     return v;
 }
 
-
-struct TeeBuf : std::streambuf {
-    std::streambuf *orig, *echo;
-    TeeBuf(std::streambuf* o, std::streambuf* e) : orig(o), echo(e) {}
-    int_type uflow() override {
-        int_type c = orig->sbumpc();
-        if (c != traits_type::eof()) echo->sputc(c);
-        return c;
-    }
-    int_type underflow() override { return orig->sgetc(); }
-    std::streamsize xsgetn(char* s, std::streamsize n) override {
-        std::streamsize got = orig->sgetn(s, n);
-        echo->sputn(s, got);
-        return got;
-    }
-};
-
 int main() {
     int t;
     cin >> t;
     cin.ignore();
-    cin.rdbuf(new TeeBuf(cin.rdbuf(), cerr.rdbuf()));
     while (t--) {
-        struct Guard { ~Guard() { cerr << "\n---\n"; } } _guard;
-        auto nums = _rvi();
+        auto image = _rvvi();
+        int sr = _ri();
+        int sc = _ri();
+        int color = _ri();
         Solution sol;
-        auto res = sol.pivotIndex(nums);
-        cout << res << "\n";
+        auto res = sol.floodFill(image, sr, sc, color);
+        for(auto&row:res){for(int _i=0;_i<(int)row.size();_i++){if(_i)cout<<" ";cout<<row[_i];}cout<<"\n";}
     }
     return 0;
 }

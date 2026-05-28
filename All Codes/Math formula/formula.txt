@@ -1,7 +1,22 @@
 
---> nCr = nC(r-1) × (n - r + 1) / r
+========================================
+           MATH FORMULAS
+========================================
 
---> The Nth row of Pascal's Triangle contains these values:
+[1] nCr (Combinations)
+    nCr = nC(r-1) * (n - r + 1) / r
+
+----------------------------------------
+
+[2] Pascal's Triangle - Nth Row
+    The Nth row contains:
     C(N-1, 0),  C(N-1, 1),  C(N-1, 2),  ...  C(N-1, N-1)
 
-    
+----------------------------------------
+
+[3] Area of Triangle (Shoelace Formula)
+    Given 3 points: A(x1,y1), B(x2,y2), C(x3,y3)
+
+    Area = |x1*(y2 - y3) + x2*(y3 - y1) + x3*(y1 - y2)| / 2
+
+========================================

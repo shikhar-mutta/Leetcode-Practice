@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "733.cpp"
+#include "812.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,13 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto image = _rvvi();
-        int sr = _ri();
-        int sc = _ri();
-        int color = _ri();
+        auto points = _rvvi();
         Solution sol;
-        auto res = sol.floodFill(image, sr, sc, color);
-        for(auto&row:res){for(int _i=0;_i<(int)row.size();_i++){if(_i)cout<<" ";cout<<row[_i];}cout<<"\n";}
+        auto res = sol.largestTriangleArea(points);
+        cout << fixed << setprecision(5) << res << "\n";
     }
     return 0;
 }

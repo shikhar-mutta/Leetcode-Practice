@@ -58,9 +58,17 @@ fi
 # --- Compare line by line ---
 mapfile -t EXPECTED_LINES < "$EXPECTED"
 mapfile -t ACTUAL_LINES <<< "$ACTUAL"
+mapfile -t INPUT_LINES < "$INPUT"
 
 TOTAL=${#EXPECTED_LINES[@]}
 PASSED=0
+INPUT_TOTAL=${#INPUT_LINES[@]}
+# Lines per test case (first line in input file is the count)
+if [ "$TOTAL" -gt 0 ]; then
+    LINES_PER_CASE=$(( (INPUT_TOTAL - 1) / TOTAL ))
+else
+    LINES_PER_CASE=1
+fi
 
 echo ""
 for ((i = 0; i < TOTAL; i++)); do
@@ -71,7 +79,15 @@ for ((i = 0; i < TOTAL; i++)); do
         echo "Test $CASE: PASS  (output: $GOT)"
         ((PASSED++))
     else
+        START=$(( 1 + i * LINES_PER_CASE ))
+        END=$(( START + LINES_PER_CASE - 1 ))
+        INPUT_DISPLAY=""
+        for ((j = START; j <= END; j++)); do
+            [ -n "$INPUT_DISPLAY" ] && INPUT_DISPLAY="$INPUT_DISPLAY, "
+            INPUT_DISPLAY="$INPUT_DISPLAY${INPUT_LINES[$j]}"
+        done
         echo "Test $CASE: FAIL  (expected: $EXP  |  got: $GOT)"
+        echo "         input: $INPUT_DISPLAY"
     fi
 done
 

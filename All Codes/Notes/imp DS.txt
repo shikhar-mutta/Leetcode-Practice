@@ -1,8 +1,42 @@
-// optional is used when we want to represent the presence or absence of a value.
-       --> optional<int> first, second, third;
+1. std::optional
+   - Used to represent the presence or absence of a value.
+   - Example: optional<int> first, second, third;
 
-// c = num of cols in new matrix && n = num of cols in old matrix 
-for (int i = 0; i < m * n; i++)
-{ // map the elements from the original matrix to the new matrix
-            ans[i / c][i % c] = mat[i / n][i % n];
-}
+──────────────────────────────────────────────────────────────
+
+2. Matrix Reshaping (index mapping)
+   - c = num of cols in new matrix, n = num of cols in old matrix
+   - Formula: ans[i / c][i % c] = mat[i / n][i % n]
+
+   for (int i = 0; i < m * n; i++)
+       ans[i / c][i % c] = mat[i / n][i % n];
+
+──────────────────────────────────────────────────────────────
+
+3. reverse_iterator::base()
+   - Converts a reverse_iterator to its underlying forward iterator.
+   - find(...rbegin(), rend(), val) returns a reverse_iterator.
+   - You can't subtract a reverse_iterator from a forward iterator directly — different types.
+   - .base() gives you the equivalent forward iterator so you can do arithmetic on it.
+
+──────────────────────────────────────────────────────────────
+
+4. Erase-Remove Idiom
+   - Standard C++ way to delete all occurrences of a value from a vector.
+
+   vec.erase(std::remove(vec.begin(), vec.end(), key), vec.end());
+
+   - std::remove  : shifts non-matching elements to the front; returns iterator to start of "garbage". Does NOT shrink the vector.
+   - vec.erase    : erases from that iterator to the end, actually shrinking the vector.
+
+──────────────────────────────────────────────────────────────
+
+5. std::map::operator[]
+   - If the key does NOT exist, operator[] inserts it with a default value (0 for int) and returns a reference to it.
+   - Side effect: mp[key] on a missing key silently adds {key, 0} to the map.
+   - Prefer mp.find(key) to avoid unwanted insertions:
+
+   auto it = mp.find(key);
+   return it != mp.end() ? it->second : -1;
+
+──────────────────────────────────────────────────────────────

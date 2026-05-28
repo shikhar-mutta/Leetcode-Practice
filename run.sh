@@ -45,30 +45,38 @@ if [ $? -ne 0 ]; then
 fi
 
 # --- Run ---
-ACTUAL=$("$BINARY" < "$INPUT" 2>&1)
+TMPSTDERR=$(mktemp)
+ACTUAL=$("$BINARY" < "$INPUT" 2>"$TMPSTDERR")
 EXIT_CODE=$?
 rm -f "$BINARY"
 
 if [ $EXIT_CODE -ne 0 ]; then
     echo "RUNTIME ERROR (exit code $EXIT_CODE)"
     echo "$ACTUAL"
+    rm -f "$TMPSTDERR"
     exit 1
 fi
+
+# --- Parse stderr into per-test-case input blocks (split by "---") ---
+declare -a TEST_INPUTS
+_cur=""
+while IFS= read -r _line; do
+    if [ "$_line" = "---" ]; then
+        # Strip trailing blank lines before storing
+        TEST_INPUTS+=("$(printf '%s' "$_cur" | sed -e 's/[[:space:]]*$//')")
+        _cur=""
+    else
+        [ -n "$_cur" ] && _cur+=$'\n'"$_line" || _cur="$_line"
+    fi
+done < "$TMPSTDERR"
+rm -f "$TMPSTDERR"
 
 # --- Compare line by line ---
 mapfile -t EXPECTED_LINES < "$EXPECTED"
 mapfile -t ACTUAL_LINES <<< "$ACTUAL"
-mapfile -t INPUT_LINES < "$INPUT"
 
 TOTAL=${#EXPECTED_LINES[@]}
 PASSED=0
-INPUT_TOTAL=${#INPUT_LINES[@]}
-# Lines per test case (first line in input file is the count)
-if [ "$TOTAL" -gt 0 ]; then
-    LINES_PER_CASE=$(( (INPUT_TOTAL - 1) / TOTAL ))
-else
-    LINES_PER_CASE=1
-fi
 
 echo ""
 for ((i = 0; i < TOTAL; i++)); do
@@ -79,15 +87,18 @@ for ((i = 0; i < TOTAL; i++)); do
         echo "Test $CASE: PASS  (output: $GOT)"
         ((PASSED++))
     else
-        START=$(( 1 + i * LINES_PER_CASE ))
-        END=$(( START + LINES_PER_CASE - 1 ))
-        INPUT_DISPLAY=""
-        for ((j = START; j <= END; j++)); do
-            [ -n "$INPUT_DISPLAY" ] && INPUT_DISPLAY="$INPUT_DISPLAY, "
-            INPUT_DISPLAY="$INPUT_DISPLAY${INPUT_LINES[$j]}"
-        done
         echo "Test $CASE: FAIL  (expected: $EXP  |  got: $GOT)"
-        echo "         input: $INPUT_DISPLAY"
+        if [ $i -lt ${#TEST_INPUTS[@]} ] && [ -n "${TEST_INPUTS[$i]}" ]; then
+            _first_line=true
+            while IFS= read -r _iline; do
+                if [ "$_first_line" = true ]; then
+                    echo "         input: $_iline"
+                    _first_line=false
+                else
+                    echo "                $_iline"
+                fi
+            done <<< "${TEST_INPUTS[$i]}"
+        fi
     fi
 done
 

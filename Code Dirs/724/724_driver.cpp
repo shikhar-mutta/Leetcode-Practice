@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "605.cpp"
+#include "724.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -78,11 +78,10 @@ int main() {
     cin.rdbuf(new TeeBuf(cin.rdbuf(), cerr.rdbuf()));
     while (t--) {
         struct Guard { ~Guard() { cerr << "\n---\n"; } } _guard;
-        auto flowerbed = _rvi();
-        int n = _ri();
+        auto nums = _rvi();
         Solution sol;
-        auto res = sol.canPlaceFlowers(flowerbed, n);
-        cout << (res ? "true" : "false") << "\n";
+        auto res = sol.pivotIndex(nums);
+        cout << res << "\n";
     }
     return 0;
 }

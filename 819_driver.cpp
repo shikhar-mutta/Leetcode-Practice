@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "812.cpp"
+#include "819.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -41,7 +41,7 @@ vector<vector<int>> _rvvi() {
     vector<vector<int>> v;
     int dep=0; string cur;
     for (char c : s) {
-        if (c=='[') { dep++; if(dep>2) cur+=c; }
+        if (c=='[') { dep++; if(dep>1) cur+=c; }
         else if (c==']') {
             dep--;
             if (dep==1) {
@@ -59,10 +59,11 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto points = _rvvi();
+        string paragraph = _rs();
+        auto banned = _rvs();
         Solution sol;
-        auto res = sol.largestTriangleArea(points);
-        cout << fixed << setprecision(5) << res << "\n";
+        auto res = sol.mostCommonWord(paragraph, banned);
+        cout << res << "\n";
     }
     return 0;
 }

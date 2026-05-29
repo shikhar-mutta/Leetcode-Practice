@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "867.cpp"
+#include "883.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto matrix = _rvvi();
+        auto grid = _rvvi();
         Solution sol;
-        auto res = sol.transpose(matrix);
-        for(auto&row:res){for(int _i=0;_i<(int)row.size();_i++){if(_i)cout<<" ";cout<<row[_i];}cout<<"\n";}
+        auto res = sol.projectionArea(grid);
+        cout << res << "\n";
     }
     return 0;
 }

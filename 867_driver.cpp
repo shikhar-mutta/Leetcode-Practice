@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "860.cpp"
+#include "867.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -41,7 +41,7 @@ vector<vector<int>> _rvvi() {
     vector<vector<int>> v;
     int dep=0; string cur;
     for (char c : s) {
-        if (c=='[') { dep++; if(dep>1) cur+=c; }
+        if (c=='[') { dep++; if(dep>2) cur+=c; }
         else if (c==']') {
             dep--;
             if (dep==1) {
@@ -59,10 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto bills = _rvi();
+        auto matrix = _rvvi();
         Solution sol;
-        auto res = sol.lemonadeChange(bills);
-        cout << (res ? "true" : "false") << "\n";
+        auto res = sol.transpose(matrix);
+        for(auto&row:res){for(int _i=0;_i<(int)row.size();_i++){if(_i)cout<<" ";cout<<row[_i];}cout<<"\n";}
     }
     return 0;
 }

@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "819.cpp"
+#include "821.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,11 +59,11 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        string paragraph = _rs();
-        auto banned = _rvs();
+        string s = _rs();
+        // TODO: read char c
         Solution sol;
-        auto res = sol.mostCommonWord(paragraph, banned);
-        cout << res << "\n";
+        auto res = sol.shortestToChar(s, c);
+        for (int _i=0;_i<(int)res.size();_i++){if(_i)cout<<" ";cout<<res[_i];}cout<<"\n";
     }
     return 0;
 }

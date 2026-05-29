@@ -60,7 +60,7 @@ int main() {
     cin.ignore();
     while (t--) {
         string s = _rs();
-        // TODO: read char c
+        char c = _rs()[0];
         Solution sol;
         auto res = sol.shortestToChar(s, c);
         for (int _i=0;_i<(int)res.size();_i++){if(_i)cout<<" ";cout<<res[_i];}cout<<"\n";

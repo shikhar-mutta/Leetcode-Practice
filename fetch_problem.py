@@ -142,7 +142,7 @@ vector<vector<int>> _rvvi() {
     vector<vector<int>> v;
     int dep=0; string cur;
     for (char c : s) {
-        if (c=='[') { dep++; if(dep>1) cur+=c; }
+        if (c=='[') { dep++; if(dep>2) cur+=c; }
         else if (c==']') {
             dep--;
             if (dep==1) {

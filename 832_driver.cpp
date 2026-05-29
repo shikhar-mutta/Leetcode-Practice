@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "821.cpp"
+#include "832.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -41,7 +41,7 @@ vector<vector<int>> _rvvi() {
     vector<vector<int>> v;
     int dep=0; string cur;
     for (char c : s) {
-        if (c=='[') { dep++; if(dep>1) cur+=c; }
+        if (c=='[') { dep++; if(dep>2) cur+=c; }
         else if (c==']') {
             dep--;
             if (dep==1) {
@@ -59,11 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        string s = _rs();
-        char c = _rs()[0];
+        auto image = _rvvi();
         Solution sol;
-        auto res = sol.shortestToChar(s, c);
-        for (int _i=0;_i<(int)res.size();_i++){if(_i)cout<<" ";cout<<res[_i];}cout<<"\n";
+        auto res = sol.flipAndInvertImage(image);
+        for(auto&row:res){for(int _i=0;_i<(int)row.size();_i++){if(_i)cout<<" ";cout<<row[_i];}cout<<"\n";}
     }
     return 0;
 }

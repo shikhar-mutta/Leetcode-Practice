@@ -1,5 +1,0 @@
-2
-"loveleetcode"
-"e"
-"aaab"
-"b"

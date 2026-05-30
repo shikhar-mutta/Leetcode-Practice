@@ -40,3 +40,18 @@
    return it != mp.end() ? it->second : -1;
 
 ──────────────────────────────────────────────────────────────
+
+6. std::string::find(char, pos)
+   - Searches for the first occurrence of a character starting at index pos.
+   - Returns the index if found, or std::string::npos if not found.
+
+   string email = "user+tag@example.com";
+   size_t plus = email.find('+', 0);   // returns 4
+   if (plus != string::npos) {
+       local = email.substr(0, plus);  // local = "user"  (drops "+tag")
+   }
+
+   - The second argument (pos) is the start position; find('+') == find('+', 0).
+   - npos is a sentinel value (usually SIZE_MAX) meaning "not found".
+
+──────────────────────────────────────────────────────────────

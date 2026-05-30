@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "929.cpp"
+#include "944.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,9 +59,9 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto emails = _rvs();
+        auto strs = _rvs();
         Solution sol;
-        auto res = sol.numUniqueEmails(emails);
+        auto res = sol.minDeletionSize(strs);
         cout << res << "\n";
     }
     return 0;

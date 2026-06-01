@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1207.cpp"
+#include "1217.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto arr = _rvi();
+        auto position = _rvi();
         Solution sol;
-        auto res = sol.uniqueOccurrences(arr);
-        cout << (res ? "true" : "false") << "\n";
+        auto res = sol.minCostToMoveChips(position);
+        cout << res << "\n";
     }
     return 0;
 }

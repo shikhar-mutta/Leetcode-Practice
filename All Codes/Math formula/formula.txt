@@ -34,4 +34,17 @@
 
     Code: return (x2-x1)*(y3-y1) != (x3-x1)*(y2-y1);
 
+----------------------------------------
+
+[5] Slope Comparison — Collinearity Check (LeetCode 1232)
+    Fix first two points to get reference slope: dx = x1-x0, dy = y1-y0
+    For every subsequent point (x, y), check:
+
+        dx * (y - y0) == dy * (x - x0)
+
+    Avoids division; equivalent to dy/dx == (y-y0)/(x-x0) cross-multiplied.
+    All points collinear ↔ all pass this check.
+
+    Code: if (dx*(y-y0) != dy*(x-x0)) return false;
+
 ========================================

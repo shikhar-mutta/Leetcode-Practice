@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1160.cpp"
+#include "1184.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,11 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto words = _rvs();
-        string chars = _rs();
+        auto distance = _rvi();
+        int start = _ri();
+        int destination = _ri();
         Solution sol;
-        auto res = sol.countCharacters(words, chars);
+        auto res = sol.distanceBetweenBusStops(distance, start, destination);
         cout << res << "\n";
     }
     return 0;

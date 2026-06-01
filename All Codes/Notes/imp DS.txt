@@ -55,3 +55,13 @@
    - npos is a sentinel value (usually SIZE_MAX) meaning "not found".
 
 ──────────────────────────────────────────────────────────────
+
+7. unordered_set::count(val)
+   - Returns 1 if val exists in the set, 0 if it does not.
+   - Since sets have no duplicates, it's always 0 or 1 — effectively a boolean existence check.
+   - Equivalent to: occurrences.find(val) != occurrences.end()
+
+   unordered_set<int> occurrences;
+   if (occurrences.count(val)) { /* val exists */ }
+
+──────────────────────────────────────────────────────────────

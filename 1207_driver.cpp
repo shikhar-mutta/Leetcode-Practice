@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1200.cpp"
+#include "1207.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -61,8 +61,8 @@ int main() {
     while (t--) {
         auto arr = _rvi();
         Solution sol;
-        auto res = sol.minimumAbsDifference(arr);
-        for(auto&row:res){for(int _i=0;_i<(int)row.size();_i++){if(_i)cout<<" ";cout<<row[_i];}cout<<"\n";}
+        auto res = sol.uniqueOccurrences(arr);
+        cout << (res ? "true" : "false") << "\n";
     }
     return 0;
 }

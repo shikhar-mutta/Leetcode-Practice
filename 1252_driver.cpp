@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1232.cpp"
+#include "1252.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,12 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto coordinates = _rvvi();
+        int m = _ri();
+        int n = _ri();
+        auto indices = _rvvi();
         Solution sol;
-        auto res = sol.checkStraightLine(coordinates);
-        cout << (res ? "true" : "false") << "\n";
+        auto res = sol.oddCells(m, n, indices);
+        cout << res << "\n";
     }
     return 0;
 }

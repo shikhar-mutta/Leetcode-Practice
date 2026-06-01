@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1122.cpp"
+#include "1160.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,11 +59,11 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto arr1 = _rvi();
-        auto arr2 = _rvi();
+        auto words = _rvs();
+        string chars = _rs();
         Solution sol;
-        auto res = sol.relativeSortArray(arr1, arr2);
-        for (int _i=0;_i<(int)res.size();_i++){if(_i)cout<<" ";cout<<res[_i];}cout<<"\n";
+        auto res = sol.countCharacters(words, chars);
+        cout << res << "\n";
     }
     return 0;
 }

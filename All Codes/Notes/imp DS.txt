@@ -176,3 +176,14 @@
     cout << fixed << setprecision(5) << val;
 
 ──────────────────────────────────────────────────────────────
+
+15. vec.insert(vec.end(), count, value)
+    - Appends 'value' exactly 'count' times to the end of the vector.
+
+    res.insert(res.end(), f, x);   // inserts x repeated f times
+
+    - Useful when building result vectors from frequency maps:
+      for each (value x, frequency f), expand directly into result.
+    - More concise than a manual for loop: for (int i = 0; i < f; i++) res.push_back(x);
+
+──────────────────────────────────────────────────────────────

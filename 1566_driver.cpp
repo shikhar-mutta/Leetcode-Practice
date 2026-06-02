@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1560.cpp"
+#include "1566.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,11 +59,12 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        int n = _ri();
-        auto rounds = _rvi();
+        auto arr = _rvi();
+        int m = _ri();
+        int k = _ri();
         Solution sol;
-        auto res = sol.mostVisited(n, rounds);
-        for (int _i=0;_i<(int)res.size();_i++){if(_i)cout<<" ";cout<<res[_i];}cout<<"\n";
+        auto res = sol.containsPattern(arr, m, k);
+        cout << (res ? "true" : "false") << "\n";
     }
     return 0;
 }

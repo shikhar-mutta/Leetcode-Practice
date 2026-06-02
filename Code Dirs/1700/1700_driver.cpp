@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1710.cpp"
+#include "1700.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto boxTypes = _rvvi();
-        int truckSize = _ri();
+        auto students = _rvi();
+        auto sandwiches = _rvi();
         Solution sol;
-        auto res = sol.maximumUnits(boxTypes, truckSize);
+        auto res = sol.countStudents(students, sandwiches);
         cout << res << "\n";
     }
     return 0;

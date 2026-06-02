@@ -65,3 +65,87 @@
    if (occurrences.count(val)) { /* val exists */ }
 
 ──────────────────────────────────────────────────────────────
+
+8. vector (sort+unique) vs set for deduplication
+   - Both are O(n log n), but vector is faster in practice.
+   - set (red-black tree): nodes scattered in heap → pointer chasing → cache misses.
+   - vector: contiguous memory → cache-friendly iteration and sort.
+   - Also gives free indexed access: rank = i + 1 (no loop counter needed).
+
+   // Preferred:
+   sort(v.begin(), v.end());
+   v.erase(unique(v.begin(), v.end()), v.end());
+
+──────────────────────────────────────────────────────────────
+
+12. std::string::find(substr) — substring search
+    - Searches for the first occurrence of substr appearing consecutively inside the string.
+    - Returns the starting index if found, or string::npos if not found.
+    - Matches the full substring, NOT just the first character.
+
+    string s = "leetcoder";
+    s.find("leet")  // → 0  (found at index 0)
+    s.find("code")  // → 4  (found at index 4)
+    s.find("leer")  // → string::npos  (not found)
+
+    // Use case: check if words[i] is a substring of words[j] (LC 1408):
+    if (words[j].find(words[i]) != string::npos)
+        ans.push_back(words[i]);
+
+    - find(substr, pos): optional second arg to start search from index pos.
+    - TC: O(n * m) where n = s.size(), m = substr.size().
+
+──────────────────────────────────────────────────────────────
+
+9. __builtin_popcount(n)
+   - GCC built-in that counts the number of set bits (1s) in the binary representation of n.
+   - O(1) — maps to a single hardware instruction (POPCNT) on modern CPUs.
+   - Works on unsigned int; use __builtin_popcountll for long long.
+
+   __builtin_popcount(7)        // 0b0111 → 3
+   __builtin_popcount(8)        // 0b1000 → 1
+   __builtin_popcountll(1LL << 40)  // 1
+
+   - Common use: group/sort numbers by number of set bits (LC 1356).
+
+   // Sort by bit count, break ties by value — single pass, in-place:
+   sort(arr.begin(), arr.end(), [](int a, int b) {
+       int ca = __builtin_popcount(a), cb = __builtin_popcount(b);
+       return ca != cb ? ca < cb : a < b;
+   });
+
+──────────────────────────────────────────────────────────────
+
+10. lower_bound — count of elements smaller than x
+    - lower_bound(begin, end, x) returns an iterator to the first element >= x in a sorted range.
+    - Subtracting begin gives the index of that element = number of elements strictly less than x.
+
+    vector<int> sorted = nums;
+    sort(sorted.begin(), sorted.end());
+    ans[i] = lower_bound(sorted.begin(), sorted.end(), nums[i]) - sorted.begin();
+
+    - Use case: "how many numbers in the array are smaller than nums[i]?" (LC 1365)
+      Sort a copy, then for each element binary-search its position in the sorted copy.
+    - O(n log n) overall vs O(n²) brute force.
+    - upper_bound gives the first element > x; use it to count elements <= x.
+
+──────────────────────────────────────────────────────────────
+
+11. std::none_of / any_of / all_of
+    - Range algorithms that test a predicate against every element; short-circuit on first match.
+    - none_of : returns true if predicate is false for ALL elements.   TC: O(n) worst, O(1) best
+    - any_of  : returns true if predicate is true for AT LEAST ONE element. TC: O(n) worst, O(1) best
+    - all_of  : returns true if predicate is true for ALL elements.    TC: O(n) worst, O(1) best
+
+    // LC 1385 — Approach 1: none_of  |  TC: O(n * m)
+    if (none_of(arr2.begin(), arr2.end(), [&](int y) { return abs(x - y) <= d; }))
+        cnt++;
+
+    // LC 1385 — Approach 2: nested loops with manual break  |  TC: O(n * m)
+    for (auto a2 : arr2)
+        if (abs(a1 - a2) <= d) { res = false; break; }
+
+    - Both approaches are O(n * m) worst case; early-stop makes best case O(n).
+    - Replaces a bool flag + inner loop + break — reads exactly like the problem statement.
+
+──────────────────────────────────────────────────────────────

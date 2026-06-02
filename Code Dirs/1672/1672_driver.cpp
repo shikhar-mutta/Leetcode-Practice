@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1662.cpp"
+#include "1672.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,11 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto word1 = _rvs();
-        auto word2 = _rvs();
+        auto accounts = _rvvi();
         Solution sol;
-        auto res = sol.arrayStringsAreEqual(word1, word2);
-        cout << (res ? "true" : "false") << "\n";
+        auto res = sol.maximumWealth(accounts);
+        cout << res << "\n";
     }
     return 0;
 }

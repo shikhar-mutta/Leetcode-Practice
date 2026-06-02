@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1260.cpp"
+#include "1304.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,11 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto grid = _rvvi();
-        int k = _ri();
+        int n = _ri();
         Solution sol;
-        auto res = sol.shiftGrid(grid, k);
-        for(auto&row:res){for(int _i=0;_i<(int)row.size();_i++){if(_i)cout<<" ";cout<<row[_i];}cout<<"\n";}
+        auto res = sol.sumZero(n);
+        for (int _i=0;_i<(int)res.size();_i++){if(_i)cout<<" ";cout<<res[_i];}cout<<"\n";
     }
     return 0;
 }

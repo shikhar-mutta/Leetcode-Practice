@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1413.cpp"
+#include "1450.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,9 +59,11 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto nums = _rvi();
+        auto startTime = _rvi();
+        auto endTime = _rvi();
+        int queryTime = _ri();
         Solution sol;
-        auto res = sol.minStartValue(nums);
+        auto res = sol.busyStudent(startTime, endTime, queryTime);
         cout << res << "\n";
     }
     return 0;

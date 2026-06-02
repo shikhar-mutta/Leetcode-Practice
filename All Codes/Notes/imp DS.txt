@@ -78,25 +78,6 @@
 
 ──────────────────────────────────────────────────────────────
 
-12. std::string::find(substr) — substring search
-    - Searches for the first occurrence of substr appearing consecutively inside the string.
-    - Returns the starting index if found, or string::npos if not found.
-    - Matches the full substring, NOT just the first character.
-
-    string s = "leetcoder";
-    s.find("leet")  // → 0  (found at index 0)
-    s.find("code")  // → 4  (found at index 4)
-    s.find("leer")  // → string::npos  (not found)
-
-    // Use case: check if words[i] is a substring of words[j] (LC 1408):
-    if (words[j].find(words[i]) != string::npos)
-        ans.push_back(words[i]);
-
-    - find(substr, pos): optional second arg to start search from index pos.
-    - TC: O(n * m) where n = s.size(), m = substr.size().
-
-──────────────────────────────────────────────────────────────
-
 9. __builtin_popcount(n)
    - GCC built-in that counts the number of set bits (1s) in the binary representation of n.
    - O(1) — maps to a single hardware instruction (POPCNT) on modern CPUs.
@@ -147,5 +128,51 @@
 
     - Both approaches are O(n * m) worst case; early-stop makes best case O(n).
     - Replaces a bool flag + inner loop + break — reads exactly like the problem statement.
+
+──────────────────────────────────────────────────────────────
+
+12. std::string::find(substr) — substring search
+    - Searches for the first occurrence of substr appearing consecutively inside the string.
+    - Returns the starting index if found, or string::npos if not found.
+    - Matches the full substring, NOT just the first character.
+
+    string s = "leetcoder";
+    s.find("leet")  // → 0  (found at index 0)
+    s.find("code")  // → 4  (found at index 4)
+    s.find("leer")  // → string::npos  (not found)
+
+    // Use case: check if words[i] is a substring of words[j] (LC 1408):
+    if (words[j].find(words[i]) != string::npos)
+        ans.push_back(words[i]);
+
+    - find(substr, pos): optional second arg to start search from index pos.
+    - TC: O(n * m) where n = s.size(), m = substr.size().
+
+──────────────────────────────────────────────────────────────
+
+13. max / min  vs  max_element / min_element
+    - max(a, b)            : compares two VALUES, returns the larger value.
+    - max_element(beg,end) : scans a RANGE, returns an ITERATOR to the largest element.
+
+    max(3, 7)                          // → 7
+    *max_element(v.begin(), v.end())   // → largest value in vector  ✓
+
+    // COMMON MISTAKE — passing iterators to max/min:
+    *max(v.begin(), v.end())           // compares pointer addresses → returns end() → UB ✗
+
+    - Always dereference max_element: *max_element(...).
+    - Use min_element the same way for minimum.
+
+──────────────────────────────────────────────────────────────
+
+14. Rounding double to n decimal places (inline)
+    - You cannot return a formatted value from a function — double has no precision metadata.
+    - To round the value itself before returning:
+
+    return round(val * 1e5) / 1e5;   // 5 decimal places
+    return round(val * 1e2) / 1e2;   // 2 decimal places
+
+    - For output formatting at cout instead:
+    cout << fixed << setprecision(5) << val;
 
 ──────────────────────────────────────────────────────────────

@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1720.cpp"
+#include "1732.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,11 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto encoded = _rvi();
-        int first = _ri();
+        auto gain = _rvi();
         Solution sol;
-        auto res = sol.decode(encoded, first);
-        for (int _i=0;_i<(int)res.size();_i++){if(_i)cout<<" ";cout<<res[_i];}cout<<"\n";
+        auto res = sol.largestAltitude(gain);
+        cout << res << "\n";
     }
     return 0;
 }

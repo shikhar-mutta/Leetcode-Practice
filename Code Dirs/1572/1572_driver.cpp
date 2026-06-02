@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1566.cpp"
+#include "1572.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,12 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto arr = _rvi();
-        int m = _ri();
-        int k = _ri();
+        auto mat = _rvvi();
         Solution sol;
-        auto res = sol.containsPattern(arr, m, k);
-        cout << (res ? "true" : "false") << "\n";
+        auto res = sol.diagonalSum(mat);
+        cout << res << "\n";
     }
     return 0;
 }

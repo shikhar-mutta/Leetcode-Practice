@@ -1,0 +1,7 @@
+3
+["ab", "c"]
+["a", "bc"]
+["a", "cb"]
+["ab", "c"]
+["abc", "d", "defg"]
+["abcddefg"]

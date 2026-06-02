@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1491.cpp"
+#include "1502.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto salary = _rvi();
+        auto arr = _rvi();
         Solution sol;
-        auto res = sol.average(salary);
-        cout << fixed << setprecision(5) << res << "\n";
+        auto res = sol.canMakeArithmeticProgression(arr);
+        cout << (res ? "true" : "false") << "\n";
     }
     return 0;
 }

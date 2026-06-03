@@ -187,6 +187,23 @@
     - More concise than a manual for loop: for (int i = 0; i < f; i++) res.push_back(x);
 
 
+16. priority_queue tie-breaking with -index
+    - {val, i} max-heap: for equal values, LARGER index wins (lexicographic) — breaks original order.
+    - Fix: store {val, -i}; larger -i = smaller original index = preferred among ties.
+
+    // Two-heap pattern (LC 2099): top-k by value, restore original order  TC: O(n log n)
+    priority_queue<pair<int,int>> maxheap;                                   // {value, -index}
+    priority_queue<pair<int,int>, vector<pair<int,int>>, greater<>> minheap; // {index,  value}
+
+    for (int i = 0; i < n; i++) maxheap.push({nums[i], -i});
+    for (int cnt = 0; cnt < k; cnt++) {
+        minheap.push({-maxheap.top().second, maxheap.top().first});
+        maxheap.pop();
+    }
+    while (!minheap.empty()) { ans.push_back(minheap.top().second); minheap.pop(); }
+
+──────────────────────────────────────────────────────────────
+
 Lambda Function (C++):
     auto funcName = [capture](params) { body; };
 

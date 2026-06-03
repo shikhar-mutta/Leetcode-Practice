@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "2006.cpp"
+#include "2016.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -60,9 +60,8 @@ int main() {
     cin.ignore();
     while (t--) {
         auto nums = _rvi();
-        int k = _ri();
         Solution sol;
-        auto res = sol.countKDifference(nums, k);
+        auto res = sol.maximumDifference(nums);
         cout << res << "\n";
     }
     return 0;

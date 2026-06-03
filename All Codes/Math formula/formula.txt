@@ -47,4 +47,52 @@
 
     Code: if (dx*(y-y0) != dy*(x-x0)) return false;
 
+----------------------------------------
+
+[6] XOR Subset Sum (LC 1863)
+    Formula: Sum of XOR totals of ALL subsets = OR(all elements) * 2^(n-1)
+
+    Brief: For any bit b, split array into Group A (no bit b) and Group B (has bit b).
+           Group A → free to include/exclude → 2^k ways.
+           Group B → need odd count → half qualify → 2^(m-1) ways.
+           Total = 2^k * 2^(m-1) = 2^(n-1)  [since k+m=n, always cancels].
+           Every bit that appears contributes bit_value * 2^(n-1) → sum = OR * 2^(n-1).
+
+    Proof (bit-by-bit argument):
+      Fix any bit position b. Ask: how many subsets have bit b SET in their XOR?
+      A subset's XOR has bit b set  iff  an ODD number of its elements have bit b.
+
+      Split the array into two groups for bit b:
+        Group A (size k) — elements that do NOT have bit b  →  don't affect bit b at all
+        Group B (size m) — elements that DO    have bit b  →  need odd count among these
+
+      Counting valid subsets:
+        Group A: freely include or exclude any element  →  2^k choices
+        Group B: need odd count  →  exactly half of 2^m subsets qualify  →  2^(m-1)
+        Total = 2^k * 2^(m-1) = 2^(k+m-1) = 2^(n-1)   [since k+m = n]
+
+      This holds for EVERY bit b that appears in at least one element.
+      Summing contributions of all bits:
+        answer = sum over each bit b of [2^b * 2^(n-1)]
+               = OR(all elements) * 2^(n-1)
+
+    Example: nums = [1, 2, 3]   →   1=01,  2=10,  3=11  (binary)
+      Bit 0 (value=1):
+        Group A (no bit 0) = {2},      k=1
+        Group B (has bit 0) = {1, 3},  m=2
+        Subsets with bit 0 in XOR = 2^1 * 2^1 = 2^(3-1) = 4
+        Contribution to answer = 1 * 4 = 4
+
+      Bit 1 (value=2):
+        Group A (no bit 1) = {1},      k=1
+        Group B (has bit 1) = {2, 3},  m=2
+        Subsets with bit 1 in XOR = 2^1 * 2^1 = 2^(3-1) = 4
+        Contribution to answer = 2 * 4 = 8
+
+      answer = 4 + 8 = 12
+      OR(1,2,3) * 2^(3-1) = 3 * 4 = 12 ✓
+      Brute: {1}=1, {2}=2, {3}=3, {1,2}=3, {1,3}=2, {2,3}=1, {1,2,3}=0  →  sum=12 ✓
+
+    Code: return orAll * (1 << (n - 1));
+
 ========================================

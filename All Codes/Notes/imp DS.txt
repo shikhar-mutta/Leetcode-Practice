@@ -185,5 +185,3 @@
     - Useful when building result vectors from frequency maps:
       for each (value x, frequency f), expand directly into result.
     - More concise than a manual for loop: for (int i = 0; i < f; i++) res.push_back(x);
-
-──────────────────────────────────────────────────────────────

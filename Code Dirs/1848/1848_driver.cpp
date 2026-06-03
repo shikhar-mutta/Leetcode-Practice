@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1822.cpp"
+#include "1848.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -60,8 +60,10 @@ int main() {
     cin.ignore();
     while (t--) {
         auto nums = _rvi();
+        int target = _ri();
+        int start = _ri();
         Solution sol;
-        auto res = sol.arraySign(nums);
+        auto res = sol.getMinDistance(nums, target, start);
         cout << res << "\n";
     }
     return 0;

@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "2016.cpp"
+#include "2053.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,9 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto nums = _rvi();
+        auto arr = _rvs();
+        int k = _ri();
         Solution sol;
-        auto res = sol.maximumDifference(nums);
+        auto res = sol.kthDistinct(arr, k);
         cout << res << "\n";
     }
     return 0;

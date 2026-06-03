@@ -186,6 +186,7 @@
       for each (value x, frequency f), expand directly into result.
     - More concise than a manual for loop: for (int i = 0; i < f; i++) res.push_back(x);
 
+──────────────────────────────────────────────────────────────
 
 16. priority_queue tie-breaking with -index
     - {val, i} max-heap: for equal values, LARGER index wins (lexicographic) — breaks original order.
@@ -204,7 +205,7 @@
 
 ──────────────────────────────────────────────────────────────
 
-Lambda Function (C++):
+17. Lambda Function (C++)
     auto funcName = [capture](params) { body; };
 
     - [&]  : capture all local variables by reference
@@ -224,3 +225,20 @@ Lambda Function (C++):
 
     - Defined inline inside a function; can close over local variables (e.g. n above)
     - Useful for short, one-off helpers scoped to the enclosing function
+
+──────────────────────────────────────────────────────────────
+
+18. Prefix check via substr
+    - word.substr(0, pref.size()) == pref checks if word starts with pref.
+    - Extracts the first pref.size() characters of word and compares directly.
+
+    // Count words starting with prefix (LC 2185):
+    int prefixCount(vector<string>& words, string pref) {
+        int cnt = 0;
+        for (auto& word : words)
+            if (word.substr(0, pref.size()) == pref) cnt++;
+        return cnt;
+    }
+
+    - TC: O(n * m) where n = words.size(), m = pref.size().
+    - Alternative: word.find(pref) == 0  (same cost, slightly less explicit).

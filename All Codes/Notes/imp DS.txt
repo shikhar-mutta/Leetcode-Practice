@@ -185,3 +185,25 @@
     - Useful when building result vectors from frequency maps:
       for each (value x, frequency f), expand directly into result.
     - More concise than a manual for loop: for (int i = 0; i < f; i++) res.push_back(x);
+
+
+Lambda Function (C++):
+    auto funcName = [capture](params) { body; };
+
+    - [&]  : capture all local variables by reference
+    - [=]  : capture all by value
+    - [&x] : capture only x by reference
+    - []   : capture nothing
+
+    Example — rotate matrix 90° clockwise:
+        auto rotate90 = [&](vector<vector<int>> &m) {
+            vector<vector<int>> tmp(n, vector<int>(n));
+            for (int i = 0; i < n; i++)
+                for (int j = 0; j < n; j++)
+                    tmp[j][n - 1 - i] = m[i][j];
+            m = tmp;
+        };
+        rotate90(cur);  // called like a normal function
+
+    - Defined inline inside a function; can close over local variables (e.g. n above)
+    - Useful for short, one-off helpers scoped to the enclosing function

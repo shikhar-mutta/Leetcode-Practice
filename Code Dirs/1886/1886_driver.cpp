@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1863.cpp"
+#include "1886.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,11 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto nums = _rvi();
+        auto mat = _rvvi();
+        auto target = _rvvi();
         Solution sol;
-        auto res = sol.subsetXORSum(nums);
-        cout << res << "\n";
+        auto res = sol.findRotation(mat, target);
+        cout << (res ? "true" : "false") << "\n";
     }
     return 0;
 }

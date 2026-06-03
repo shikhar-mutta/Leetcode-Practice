@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1732.cpp"
+#include "1748.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,9 +59,9 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto gain = _rvi();
+        auto nums = _rvi();
         Solution sol;
-        auto res = sol.largestAltitude(gain);
+        auto res = sol.sumOfUnique(nums);
         cout << res << "\n";
     }
     return 0;

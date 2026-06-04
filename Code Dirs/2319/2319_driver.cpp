@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "2210.cpp"
+#include "2319.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto nums = _rvi();
+        auto grid = _rvvi();
         Solution sol;
-        auto res = sol.countHillValley(nums);
-        cout << res << "\n";
+        auto res = sol.checkXMatrix(grid);
+        cout << (res ? "true" : "false") << "\n";
     }
     return 0;
 }

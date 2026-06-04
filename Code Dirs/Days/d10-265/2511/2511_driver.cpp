@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "2496.cpp"
+#include "2511.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,9 +59,9 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto strs = _rvs();
+        auto forts = _rvi();
         Solution sol;
-        auto res = sol.maximumValue(strs);
+        auto res = sol.captureForts(forts);
         cout << res << "\n";
     }
     return 0;

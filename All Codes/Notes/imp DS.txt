@@ -242,3 +242,26 @@
 
     - TC: O(n * m) where n = words.size(), m = pref.size().
     - Alternative: word.find(pref) == 0  (same cost, slightly less explicit).
+
+──────────────────────────────────────────────────────────────
+
+19. Max array size in CP (256 MB memory limit, stack ~8 MB)
+
+    | Type          | Bytes | Global/Static | Global Mem | Local (Stack 8MB) |
+    |---------------|-------|---------------|------------|-------------------|
+    | char          | 1     | 10^8          | 100 MB     | 10^6              |
+    | int           | 4     | 10^7          |  40 MB     | 10^6              |
+    | float         | 4     | 10^7          |  40 MB     | 10^6              |
+    | long long     | 8     | 10^7          |  80 MB     | 10^6              |
+    | double        | 8     | 10^7          |  80 MB     | 10^6              |
+    | pair<int,int> | 8     | 10^7          |  80 MB     | 10^6              |
+    Note: Local limits are theoretical max; in practice keep local arrays
+          under 10^5 since stack is shared with function frames.
+
+    256 MB = CP judge memory limit (not hardware). Exceed it → MLE.
+             Most problems: 256 MB default; some: 64/512 MB — always check.
+
+    Quick rule:
+    - int global       → safe up to 10^7  (conservative; actual ~6 × 10^7)
+    - long long global → safe up to 10^7  (conservative; actual ~3 × 10^7)
+    - Always declare large arrays globally, never locally.

@@ -1,3 +1,0 @@
-2
-["adc","wzy","abc"]
-["aaa","bob","ccc","ddd"]

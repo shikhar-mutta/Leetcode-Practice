@@ -96,3 +96,14 @@
     Code: return orAll * (1 << (n - 1));
 
 ========================================
+
+Sum of k elements starting from maxNum (each step +1):
+    maxNum + (maxNum+1) + ... + (maxNum+k-1)
+    = k * maxNum + (0 + 1 + ... + (k-1))
+    = k * maxNum + k*(k-1)/2
+
+    - k * maxNum  : maxNum repeated k times
+    - k*(k-1)/2   : sum of first (k-1) natural numbers (0 to k-1)
+    - Use case: pick max, add 1, repeat k times → maximize sum (LC 2656)
+
+========================================

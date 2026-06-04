@@ -226,6 +226,12 @@
     - Defined inline inside a function; can close over local variables (e.g. n above)
     - Useful for short, one-off helpers scoped to the enclosing function
 
+    Benefits:
+    - Inline helper: no need to write a separate function for small logic.
+    - Captures local vars: use n, grid, vis etc. directly via [&], no extra params.
+    - Custom comparator: clean sorting with sort(v.begin(), v.end(), [](auto& a, auto& b){ ... });
+    - Recursive DFS/BFS: use function<void(int)> dfs = [&](int u){ dfs(v); }; inline.
+
 ──────────────────────────────────────────────────────────────
 
 18. Prefix check via substr
@@ -265,3 +271,14 @@
     - int global       → safe up to 10^7  (conservative; actual ~6 × 10^7)
     - long long global → safe up to 10^7  (conservative; actual ~3 × 10^7)
     - Always declare large arrays globally, never locally.
+
+
+──────────────────────────────────────────────────────────────
+
+20. Early Stopping (very important for optimized code)
+    - Break as soon as result is determined — don't waste iterations.
+    - Saves time when best/worst case is decided before loop ends.
+    - If remaining elements can't change the answer → break immediately.
+    - Turns O(n) inner work into O(1) best case on already-decided iterations.
+    - Example: count + (m - j - 1) <= best → remaining 1s can't beat best → break.
+    - any_of / none_of / all_of use early stopping internally — prefer them when possible.

@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "2558.cpp"
+#include "2574.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,11 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto gifts = _rvi();
-        int k = _ri();
+        auto nums = _rvi();
         Solution sol;
-        auto res = sol.pickGifts(gifts, k);
-        cout << res << "\n";
+        auto res = sol.leftRightDifference(nums);
+        for (int _i=0;_i<(int)res.size();_i++){if(_i)cout<<" ";cout<<res[_i];}cout<<"\n";
     }
     return 0;
 }

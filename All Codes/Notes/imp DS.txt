@@ -355,3 +355,21 @@
         // 0/1 knapsack reachability — O(N * capacity / 64):
         bitset<100001> dp; dp[0] = 1;
         for (int x : nums) dp |= dp << x;
+
+──────────────────────────────────────────────────────────────
+
+22. std::count_if
+    - Counts elements in a range for which a predicate returns true.
+    - TC: O(n) — single pass, no early stopping.
+    - Returns ptrdiff_t (signed) → cast to int when assigning to int.
+
+    count_if(begin, end, predicate)
+
+    // Count even numbers:
+    count_if(v.begin(), v.end(), [](int x){ return x % 2 == 0; });
+
+    // Count nums1 elements that exist in a set (LC 2956):
+    (int)count_if(nums1.begin(), nums1.end(), [&](int x){ return s2.count(x); });
+
+    - Cleaner than a manual loop with a counter variable.
+    - Use when you need a count; use any_of/none_of when you only need a bool.

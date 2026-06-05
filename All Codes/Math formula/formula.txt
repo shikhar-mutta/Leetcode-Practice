@@ -95,9 +95,39 @@
 
     Code: return orAll * (1 << (n - 1));
 
-========================================
+----------------------------------------
 
-Sum of k elements starting from maxNum (each step +1):
+[7] Find Repeated & Missing using Sum + Sum of Squares (LC 2965)
+    Let a = repeated number, b = missing number, N = total elements (n*n).
+
+    Step 1 — Build two equations:
+        diff   = sum(grid)   - N*(N+1)/2          →  a - b
+        sqDiff = sqSum(grid) - N*(N+1)*(2N+1)/6   →  a² - b²
+
+    Step 2 — Use difference of squares: a² - b² = (a+b)(a-b)
+        sqDiff / diff  =  a + b
+
+    Step 3 — Solve the 2-equation system:
+        a - b = diff
+        a + b = sqDiff / diff
+
+        a (repeated) = (sqDiff/diff + diff) / 2
+        b (missing)  = a - diff
+
+    ⚠ Use long long for all intermediates — N*(N+1)*(2N+1) overflows int.
+
+    Code:
+        long long t = (long long)n * n;
+        long long actualSum   = t * (t + 1) / 2;
+        long long actualSqSum = t * (t + 1) * (2*t + 1) / 6;
+        long long diff   = sum   - actualSum;
+        long long sqDiff = sqSum - actualSqSum;
+        int repeated = (int)((sqDiff / diff + diff) / 2);
+        int missing  = (int)(repeated - diff);
+
+----------------------------------------
+
+[8] Sum of k elements starting from maxNum (each step +1):
     maxNum + (maxNum+1) + ... + (maxNum+k-1)
     = k * maxNum + (0 + 1 + ... + (k-1))
     = k * maxNum + k*(k-1)/2
@@ -107,3 +137,4 @@ Sum of k elements starting from maxNum (each step +1):
     - Use case: pick max, add 1, repeat k times → maximize sum (LC 2656)
 
 ========================================
+

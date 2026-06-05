@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "2923.cpp"
+#include "2946.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,11 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto grid = _rvvi();
+        auto mat = _rvvi();
+        int k = _ri();
         Solution sol;
-        auto res = sol.findChampion(grid);
-        cout << res << "\n";
+        auto res = sol.areSimilar(mat, k);
+        cout << (res ? "true" : "false") << "\n";
     }
     return 0;
 }

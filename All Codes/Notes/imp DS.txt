@@ -328,6 +328,17 @@
         bs.to_ulong()   // → unsigned long  (throws if bits exceed 32)
         bs.to_ullong()  // → unsigned long long
 
+        // int → bitset: pass integer to constructor
+        bitset<8> bs(13);           // 13 = 0b00001101 → "00001101"
+
+        // bitset → int:
+        int x = (int)bs.to_ulong(); // → 13
+        long long y = bs.to_ullong(); // for large values
+
+        // Re-assign from int (constructor required — direct = not allowed):
+        bs = bitset<8>(42);         // ✓  re-construct
+        // bs = 42;                 // ✗  does not compile
+
     ── No range-set ──────────────────────────────────────────
         // No bs.set(l, r) — use difference array for multiple intervals:
         int diff[N+2] = {};

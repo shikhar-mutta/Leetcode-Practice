@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "2855.cpp"
+#include "2873.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -61,7 +61,7 @@ int main() {
     while (t--) {
         auto nums = _rvi();
         Solution sol;
-        auto res = sol.minimumRightShifts(nums);
+        auto res = sol.maximumTripletValue(nums);
         cout << res << "\n";
     }
     return 0;

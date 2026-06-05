@@ -282,3 +282,65 @@
     - Turns O(n) inner work into O(1) best case on already-decided iterations.
     - Example: count + (m - j - 1) <= best → remaining 1s can't beat best → break.
     - any_of / none_of / all_of use early stopping internally — prefer them when possible.
+
+──────────────────────────────────────────────────────────────
+
+21. std::bitset<N>
+    - Fixed-size sequence of N bits. N must be a compile-time constant.
+    - Memory: N/8 bytes. 1000 bits = 125 bytes vs 1000 ints = 4000 bytes.
+    - All operations below are O(N/64) — word-level parallel, very fast.
+
+    Declaration:
+        bitset<101> bs;           // all bits 0 by default
+        bitset<8>   bs("10110");  // from binary string → 00010110
+
+    ── Single bit operations ──────────────────────────────────
+        bs.set(3)       // 00001000  — set bit 3 to 1
+        bs.reset(3)     // 00000000  — set bit 3 to 0
+        bs.flip(2)      // 00000100  — toggle bit 2
+        bs.test(3)      // → true    — bounds-checked read (throws if out of range)
+        bs[3]           // → true    — unchecked read, prefer in loops
+
+    ── Whole-bitset operations ────────────────────────────────
+        bs.set()        // 11111111  — set ALL bits to 1
+        bs.reset()      // 00000000  — set ALL bits to 0
+        bs.flip()       // toggle ALL bits
+
+    ── Query functions ────────────────────────────────────────
+        // bitset<4> bs("1010");
+        bs.count()      // → 2      — number of set bits (use instead of counting loop)
+        bs.size()       // → 4      — total bits (always N)
+        bs.any()        // → true   — at least one bit is 1
+        bs.none()       // → false  — true only if all bits are 0
+        bs.all()        // → false  — true only if all bits are 1
+
+    ── Bitwise operators ──────────────────────────────────────
+        // bitset<4> a("1100"), b("1010");
+        a & b           // → 1000  — AND
+        a | b           // → 1110  — OR
+        a ^ b           // → 0110  — XOR
+        ~a              // → 0011  — NOT (flip all)
+        a << 1          // → 1000  — left shift
+        a >> 1          // → 0110  — right shift
+
+    ── Conversion ────────────────────────────────────────────
+        bs.to_string()  // → "1010"  — binary string, MSB first
+        bs.to_ulong()   // → unsigned long  (throws if bits exceed 32)
+        bs.to_ullong()  // → unsigned long long
+
+    ── No range-set ──────────────────────────────────────────
+        // No bs.set(l, r) — use difference array for multiple intervals:
+        int diff[N+2] = {};
+        for (auto& seg : segs) { diff[seg[0]]++; diff[seg[1]+1]--; }
+        int cur = 0;
+        for (int i = 0; i < N; i++) { cur += diff[i]; bs[i] = cur > 0; }
+
+    ── Common use cases ──────────────────────────────────────
+        // Count distinct covered points (LC 2848):
+        bitset<101> bs;
+        for (auto& s : nums) for (int i = s[0]; i <= s[1]; i++) bs[i] = 1;
+        return (int)bs.count();
+
+        // 0/1 knapsack reachability — O(N * capacity / 64):
+        bitset<100001> dp; dp[0] = 1;
+        for (int x : nums) dp |= dp << x;

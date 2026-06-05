@@ -1,0 +1,7 @@
+3
+["alice","bob","charlie"]
+"abc"
+["an","apple"]
+"a"
+["never","gonna","give","up","on","you"]
+"ngguoy"

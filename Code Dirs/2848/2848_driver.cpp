@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "2760.cpp"
+#include "2848.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,9 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto nums = _rvi();
-        int threshold = _ri();
+        auto nums = _rvvi();
         Solution sol;
-        auto res = sol.longestAlternatingSubarray(nums, threshold);
+        auto res = sol.numberOfPoints(nums);
         cout << res << "\n";
     }
     return 0;

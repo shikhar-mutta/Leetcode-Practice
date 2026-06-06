@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "3142.cpp"
+#include "3206.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto grid = _rvvi();
+        auto colors = _rvi();
         Solution sol;
-        auto res = sol.satisfiesConditions(grid);
-        cout << (res ? "true" : "false") << "\n";
+        auto res = sol.numberOfAlternatingGroups(colors);
+        cout << res << "\n";
     }
     return 0;
 }

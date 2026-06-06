@@ -373,3 +373,52 @@
 
     - Cleaner than a manual loop with a counter variable.
     - Use when you need a count; use any_of/none_of when you only need a bool.
+
+──────────────────────────────────────────────────────────────
+
+23. pair<int,int> comparison (lexicographic)
+    - C++ compares pairs lexicographically by default:
+      (a1, a2) > (b1, b2)  →  a1 > b1, OR (a1 == b1 AND a2 > b2)
+
+    // Example:
+    pair<int,int> a = {2, 1}, b = {2, 0};
+    a > b   // → true  (values tie at 2, index 1 > 0)
+    a < b   // → false
+
+    - Use case: sorting/bubbling {value, original_index} pairs where ties in
+      value should be broken by smaller index coming first.
+
+    // Bubble-up after multiplying minimum in sorted array (LC 3264):
+    while (j + 1 < n && temp[j] > temp[j + 1])   // ✓ correct: handles tie-break
+        swap(temp[j], temp[j + 1]), j++;
+
+    // WRONG — only checks value, misses index tie-break:
+    while (j + 1 < n && temp[j].first > temp[j + 1].first)   // ✗
+
+    - Same rule applies to sort, priority_queue, min/max on pairs.
+    - sort(v.begin(), v.end()) on vector<pair<int,int>> sorts by .first first,
+      then .second — no custom comparator needed for this common case.
+
+──────────────────────────────────────────────────────────────
+
+24. map → vector<pair<int,int>> conversion
+    - A map<K,V> can be directly converted to vector<pair<K,V>> via range constructor.
+
+    map<int,int> freq;
+    vector<pair<int,int>> v(freq.begin(), freq.end());
+
+    - Copies all {key, value} entries into the vector in ascending key order (map is sorted).
+    - Use when you need to sort entries by value (or custom criterion) — map doesn't support that directly.
+
+    // Sort by frequency desc, break ties by value desc (LC 3318 x-sum pattern):
+    sort(v.begin(), v.end(), [](auto& a, auto& b) {
+        return a.second != b.second ? a.second > b.second : a.first > b.first;
+    });
+
+    // Then take top-x entries:
+    for (int i = 0; i < min(x, (int)v.size()); i++)
+        sum += v[i].first * v[i].second;
+
+    - TC: O(n) for conversion + O(n log n) for sort.
+    - Alternative for unordered_map: same syntax works — but iteration order is arbitrary,
+      so the resulting vector won't be key-sorted (doesn't matter if you sort afterwards).

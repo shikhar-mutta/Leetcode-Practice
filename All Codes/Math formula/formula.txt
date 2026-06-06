@@ -136,5 +136,22 @@
     - k*(k-1)/2   : sum of first (k-1) natural numbers (0 to k-1)
     - Use case: pick max, add 1, repeat k times → maximize sum (LC 2656)
 
+----------------------------------------
+
+[9] Minimum x such that x | (x+1) = p  (LC 3314)
+    p = 2 → no solution, return -1.
+
+    Idea: x+1 flips x's lowest 0-bit and clears all bits below it.
+          So x | (x+1) fills all bits up to that 0-bit with 1s.
+
+    For odd prime p = ...?0 111  (j trailing 1s, first 0 at position j):
+      → x = p - 2^(j-1)   i.e. clear the highest trailing 1-bit of p
+
+    Code: count trailing 1s → k doubles each step → answer = p - k/2
+
+    p=7  (111):  j=3, k=8  → x = 7-4  = 3   | 3|4  = 111 = 7  ✓
+    p=5  (101):  j=1, k=2  → x = 5-1  = 4   | 4|5  = 101 = 5  ✓
+    p=11 (1011): j=2, k=4  → x = 11-2 = 9   | 9|10 = 1011 = 11 ✓
+
 ========================================
 

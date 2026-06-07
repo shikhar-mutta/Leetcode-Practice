@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "3364.cpp"
+#include "3375.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -60,10 +60,9 @@ int main() {
     cin.ignore();
     while (t--) {
         auto nums = _rvi();
-        int l = _ri();
-        int r = _ri();
+        int k = _ri();
         Solution sol;
-        auto res = sol.minimumSumSubarray(nums, l, r);
+        auto res = sol.minOperations(nums, k);
         cout << res << "\n";
     }
     return 0;

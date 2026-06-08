@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "3852.cpp"
+#include "3880.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -61,8 +61,8 @@ int main() {
     while (t--) {
         auto nums = _rvi();
         Solution sol;
-        auto res = sol.minDistinctFreqPair(nums);
-        for (int _i=0;_i<(int)res.size();_i++){if(_i)cout<<" ";cout<<res[_i];}cout<<"\n";
+        auto res = sol.minAbsoluteDifference(nums);
+        cout << res << "\n";
     }
     return 0;
 }

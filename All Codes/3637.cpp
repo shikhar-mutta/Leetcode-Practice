@@ -6,6 +6,7 @@ using namespace std;
 class Solution
 {
 public:
+    // TC: O(n), SC: O(1)
     bool isTrionic(vector<int> &nums)
     {
 
@@ -15,26 +16,18 @@ public:
 
         while (i < n - 1 && cnt > 0)
         {
+            int prev = i; // store the current index before moving
             if (dir == 1)
-            {
                 while (i < n - 1 && nums[i] < nums[i + 1])
                     i++;
-                dir = dir * -1;
-                cnt--;
-            }
-            else if (dir == -1)
-            {
+            else
                 while (i < n - 1 && nums[i] > nums[i + 1])
                     i++;
-                dir = dir * -1;
-                cnt--;
-            }
-
-            if (cnt == 0)
-                break;
+            if (i == prev) // no change in direction, not a valid trionic array
+                return false;
+            dir = -dir; // change direction
+            cnt--;      // decrease the count of direction changes
         }
-        if (i == n - 1 && cnt == 0)
-            return true;
-        return false;
+        return i == n - 1 && cnt == 0;
     };
 };

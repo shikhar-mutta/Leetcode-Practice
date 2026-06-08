@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "3375.cpp"
+#include "3452.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -62,7 +62,7 @@ int main() {
         auto nums = _rvi();
         int k = _ri();
         Solution sol;
-        auto res = sol.minOperations(nums, k);
+        auto res = sol.sumOfGoodNumbers(nums, k);
         cout << res << "\n";
     }
     return 0;

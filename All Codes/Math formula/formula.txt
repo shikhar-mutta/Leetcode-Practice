@@ -153,5 +153,32 @@
     p=5  (101):  j=1, k=2  → x = 5-1  = 4   | 4|5  = 101 = 5  ✓
     p=11 (1011): j=2, k=4  → x = 11-2 = 9   | 9|10 = 1011 = 11 ✓
 
+----------------------------------------
+
+[10] LCM, GCD, Product — Equal Products Condition (LC 3411)
+
+    Classical identity (2 numbers):
+        lcm(a, b) * gcd(a, b) = a * b   (always true)
+
+    Incremental LCM update (avoids overflow — divide before multiply):
+        lcm = lcm / gcd(lcm, x) * x
+
+    Incremental GCD update:
+        g = gcd(g, x)
+        Init with g = 0, since gcd(0, x) = x  →  first step gives g = nums[0]
+
+    Equal Products Condition:
+        product(subarray) == lcm(subarray) * gcd(subarray)
+
+    Key property (for early break):
+        Once product > lcm * gcd, it stays that way forever.
+        Proof: adding element x gives new_lcm * new_gcd ≤ lcm*x*gcd < prod*x = new_prod
+        So equality can never be restored → safe to break early.
+
+    Observation:
+        k=1 → product < lcm*gcd  (product=a, lcm*gcd=a²)
+        k=2 → product = lcm*gcd  (always, by the classical identity)
+        k≥3 → product ≥ lcm*gcd  (equality is the condition we want)
+
 ========================================
 

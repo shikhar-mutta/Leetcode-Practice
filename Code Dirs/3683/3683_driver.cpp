@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "3678.cpp"
+#include "3683.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,9 +59,9 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto nums = _rvi();
+        auto tasks = _rvvi();
         Solution sol;
-        auto res = sol.smallestAbsent(nums);
+        auto res = sol.earliestTime(tasks);
         cout << res << "\n";
     }
     return 0;

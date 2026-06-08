@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "3697.cpp"
+#include "3712.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,11 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        int n = _ri();
+        auto nums = _rvi();
+        int k = _ri();
         Solution sol;
-        auto res = sol.decimalRepresentation(n);
-        for (int _i=0;_i<(int)res.size();_i++){if(_i)cout<<" ";cout<<res[_i];}cout<<"\n";
+        auto res = sol.sumDivisibleByK(nums, k);
+        cout << res << "\n";
     }
     return 0;
 }

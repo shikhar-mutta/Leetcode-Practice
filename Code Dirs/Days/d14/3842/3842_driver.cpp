@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "3838.cpp"
+#include "3842.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,11 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto words = _rvs();
-        auto weights = _rvi();
+        auto bulbs = _rvi();
         Solution sol;
-        auto res = sol.mapWordWeights(words, weights);
-        cout << res << "\n";
+        auto res = sol.toggleLightBulbs(bulbs);
+        for (int _i=0;_i<(int)res.size();_i++){if(_i)cout<<" ";cout<<res[_i];}cout<<"\n";
     }
     return 0;
 }

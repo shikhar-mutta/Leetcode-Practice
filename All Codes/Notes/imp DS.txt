@@ -422,3 +422,37 @@
     - TC: O(n) for conversion + O(n log n) for sort.
     - Alternative for unordered_map: same syntax works — but iteration order is arbitrary,
       so the resulting vector won't be key-sorted (doesn't matter if you sort afterwards).
+
+──────────────────────────────────────────────────────────────
+
+25. std::binary_search / lower_bound / upper_bound — cheat sheet
+
+    REQUIRES sorted range. All are O(log n).
+
+    ┌─────────────────────────────────────────────────────────────────┐
+    │ Function          │ Returns  │ Meaning                          │
+    ├─────────────────────────────────────────────────────────────────┤
+    │ binary_search     │ bool     │ does val exist in range?         │
+    │ lower_bound       │ iterator │ first element >= val             │
+    │ upper_bound       │ iterator │ first element >  val             │
+    └─────────────────────────────────────────────────────────────────┘
+
+    binary_search(v.begin(), v.end(), x)         // true if x exists
+    lower_bound(v.begin(), v.end(), x)           // ptr to first >= x
+    upper_bound(v.begin(), v.end(), x)           // ptr to first >  x
+
+    ── Derived queries (index = iterator - begin) ────────────────────
+    lower_bound(..., x) - v.begin()              // count of elements < x
+    upper_bound(..., x) - v.begin()              // count of elements <= x
+    upper_bound(...,x) - lower_bound(...,x)      // count of elements == x
+
+    ── Custom comparator ─────────────────────────────────────────────
+    // Works the same for all three; comp must be consistent with sort order
+    binary_search(v.begin(), v.end(), x, cmp);
+    lower_bound(v.begin(), v.end(), x, cmp);
+
+    ── Common mistake ────────────────────────────────────────────────
+    // binary_search on UNSORTED vector → undefined behavior, wrong answers
+    // Always sort first, or use an unordered_set for O(1) lookup instead:
+    unordered_set<int> s(v.begin(), v.end());
+    if (s.count(x)) { ... }   // O(1) avg, no sort needed

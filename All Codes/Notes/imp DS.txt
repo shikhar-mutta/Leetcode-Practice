@@ -456,3 +456,21 @@
     // Always sort first, or use an unordered_set for O(1) lookup instead:
     unordered_set<int> s(v.begin(), v.end());
     if (s.count(x)) { ... }   // O(1) avg, no sort needed
+
+──────────────────────────────────────────────────────────────
+
+26. stringstream — split sentence into words
+    - Treats a string like an input stream; >> reads one whitespace-delimited token at a time.
+    - Cleanest way to split a sentence into words without manually scanning for spaces.
+
+    string sentence = "dog cat cat dog";
+    stringstream ss(sentence);
+    string w;
+    vector<string> words;
+    while (ss >> w) words.push_back(w);
+    // words = ["dog", "cat", "cat", "dog"]
+
+    - ss >> w returns false at end of stream → loop exits automatically.
+    - Handles multiple spaces between words (like cin >> skips all whitespace).
+    - Use case: word-pattern matching, anagram checks, any problem where input
+      is a space-separated list of words inside a string.

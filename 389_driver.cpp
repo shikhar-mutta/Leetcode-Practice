@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "3940.cpp"
+#include "389.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,11 +59,11 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto nums = _rvi();
-        int k = _ri();
+        string s = _rs();
+        string t = _rs();
         Solution sol;
-        auto res = sol.limitOccurrences(nums, k);
-        for (int _i=0;_i<(int)res.size();_i++){if(_i)cout<<" ";cout<<res[_i];}cout<<"\n";
+        auto res = sol.findTheDifference(s, t);
+        cout << "\"" << res << "\"\n";
     }
     return 0;
 }

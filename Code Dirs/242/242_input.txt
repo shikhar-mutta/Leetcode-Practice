@@ -1,0 +1,5 @@
+2
+"anagram"
+"nagaram"
+"rat"
+"car"

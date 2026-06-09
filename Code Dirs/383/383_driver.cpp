@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "345.cpp"
+#include "383.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,11 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        string s = _rs();
+        string ransomNote = _rs();
+        string magazine = _rs();
         Solution sol;
-        auto res = sol.reverseVowels(s);
-        cout << res << "\n";
+        auto res = sol.canConstruct(ransomNote, magazine);
+        cout << (res ? "true" : "false") << "\n";
     }
     return 0;
 }

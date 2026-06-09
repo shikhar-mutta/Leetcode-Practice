@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "2578.cpp"
+#include "3545.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,9 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        int num = _ri();
+        string s = _rs();
+        int k = _ri();
         Solution sol;
-        auto res = sol.splitNum(num);
+        auto res = sol.minDeletion(s, k);
         cout << res << "\n";
     }
     return 0;

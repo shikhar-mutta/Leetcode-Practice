@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "387.cpp"
+#include "392.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -60,9 +60,10 @@ int main() {
     cin.ignore();
     while (t--) {
         string s = _rs();
+        string t = _rs();
         Solution sol;
-        auto res = sol.firstUniqChar(s);
-        cout << res << "\n";
+        auto res = sol.isSubsequence(s, t);
+        cout << (res ? "true" : "false") << "\n";
     }
     return 0;
 }

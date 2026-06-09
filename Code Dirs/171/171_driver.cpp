@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "3545.cpp"
+#include "171.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,9 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        string s = _rs();
-        int k = _ri();
+        string columnTitle = _rs();
         Solution sol;
-        auto res = sol.minDeletion(s, k);
+        auto res = sol.titleToNumber(columnTitle);
         cout << res << "\n";
     }
     return 0;

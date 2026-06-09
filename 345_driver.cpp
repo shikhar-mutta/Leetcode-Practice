@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "344.cpp"
+#include "345.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        // TODO: read vector<char> s
+        string s = _rs();
         Solution sol;
-        sol.reverseString(s);
-
+        auto res = sol.reverseVowels(s);
+        cout << res << "\n";
     }
     return 0;
 }

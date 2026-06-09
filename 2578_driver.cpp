@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "2231.cpp"
+#include "2578.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -61,7 +61,7 @@ int main() {
     while (t--) {
         int num = _ri();
         Solution sol;
-        auto res = sol.largestInteger(num);
+        auto res = sol.splitNum(num);
         cout << res << "\n";
     }
     return 0;

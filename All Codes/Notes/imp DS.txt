@@ -474,3 +474,16 @@
     - Handles multiple spaces between words (like cin >> skips all whitespace).
     - Use case: word-pattern matching, anagram checks, any problem where input
       is a space-separated list of words inside a string.
+
+──────────────────────────────────────────────────────────────
+
+27. Bit Masking & Arithmetic Right Shift
+
+    num & 0xf    // extract lowest 4 bits (0..15) — one hex digit
+    num >>= 4    // shift right by 4, expose next group
+
+    signed >> k  → arithmetic shift: fills top with sign bit (negative stays negative forever)
+    unsigned >> k → logical shift: fills top with 0s
+
+    Negative nums (two's complement): -1 = 0xFFFFFFFF, so & 0xf extracts correctly.
+    But -1 >> 4 = -1 (never reaches 0) → ALWAYS cap with res.size() < 8 guard.

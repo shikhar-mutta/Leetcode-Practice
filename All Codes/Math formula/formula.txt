@@ -219,5 +219,24 @@
 
     Common use: split an array into two groups by a differing bit (e.g. Single Number III).
 
+----------------------------------------
+
+[13] Integer Ceiling Division (no float / no ceil())
+
+    ceil(a / b)  =  (a + b - 1) / b      // pure integer arithmetic
+
+    Why it works:
+      - If a % b == 0: adding (b-1) doesn't reach the next multiple → same as a/b
+      - If a % b != 0: adding (b-1) pushes past the next multiple → rounds up by 1
+
+    Examples:
+      ceil(7/3) = (7+2)/3 = 9/3  = 3 ✓
+      ceil(6/3) = (6+2)/3 = 8/3  = 2 ✓
+      ceil(1/4) = (1+3)/4 = 4/4  = 1 ✓
+
+    Code: sum += (i + mid - 1) / mid;   // replaces ceil((double)i / mid)
+
+    Advantage: avoids floating-point precision issues entirely.
+
 ========================================
 

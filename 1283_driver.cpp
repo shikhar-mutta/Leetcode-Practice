@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1482.cpp"
+#include "1283.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,11 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto bloomDay = _rvi();
-        int m = _ri();
-        int k = _ri();
+        auto nums = _rvi();
+        int threshold = _ri();
         Solution sol;
-        auto res = sol.minDays(bloomDay, m, k);
+        auto res = sol.smallestDivisor(nums, threshold);
         cout << res << "\n";
     }
     return 0;

@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "482.cpp"
+#include "521.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        string s = _rs();
-        int k = _ri();
+        string a = _rs();
+        string b = _rs();
         Solution sol;
-        auto res = sol.licenseKeyFormatting(s, k);
+        auto res = sol.findLUSlength(a, b);
         cout << res << "\n";
     }
     return 0;

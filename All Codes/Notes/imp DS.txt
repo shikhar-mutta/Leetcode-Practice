@@ -508,3 +508,29 @@
 
     Example: "abab" → lps = [0,0,1,2], lps[3]=2 → pattern len = 4-2 = 2, 4%2==0 → true
     Example: "abac" → lps = [0,0,1,0], lps[3]=0 → false
+
+──────────────────────────────────────────────────────────────
+
+29. pow() — floating-point power, integer gotcha
+    - pow(base, exp) from <cmath>; returns double.
+    - NEVER cast directly to int without rounding — floating error may give 26 instead of 27.
+
+    (int)pow(3, 3)              // might be 26 (wrong) — floating error
+    (int)round(pow(3, 3))       // → 27  ✓
+
+    // Safe integer power (no float involved):
+    long long ipow(long long b, int e) {
+        long long r = 1;
+        for (; e--; r *= b);
+        return r;
+    }
+
+    // Modular fast power — O(log e):
+    long long powmod(long long b, long long e, long long mod) {
+        long long r = 1; b %= mod;
+        for (; e > 0; e >>= 1) {
+            if (e & 1) r = r * b % mod;
+            b = b * b % mod;
+        }
+        return r;
+    }

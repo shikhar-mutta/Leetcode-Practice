@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "557.cpp"
+#include "875.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,9 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        string s = _rs();
+        auto piles = _rvi();
+        int h = _ri();
         Solution sol;
-        auto res = sol.reverseWords(s);
+        auto res = sol.minEatingSpeed(piles, h);
         cout << res << "\n";
     }
     return 0;

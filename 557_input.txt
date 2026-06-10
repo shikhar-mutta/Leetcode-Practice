@@ -1,3 +1,0 @@
-2
-"Let's take LeetCode contest"
-"Mr Ding"

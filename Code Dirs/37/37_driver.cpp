@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "521.cpp"
+#include "37.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -53,17 +53,40 @@ vector<vector<int>> _rvvi() {
     }
     return v;
 }
+vector<vector<char>> _rvvc() {
+    string s; getline(cin,s);
+    vector<vector<char>> v;
+    vector<char> row;
+    for (int i = 0; i < (int)s.size(); i++) {
+        if (s[i] == '"' && i+2 < (int)s.size() && s[i+2] == '"') {
+            row.push_back(s[i+1]);
+            i += 2;
+        } else if (s[i] == ']' && !row.empty()) {
+            v.push_back(row); row.clear();
+        }
+    }
+    return v;
+}
 
 int main() {
     int t;
     cin >> t;
     cin.ignore();
     while (t--) {
-        string a = _rs();
-        string b = _rs();
+        auto board = _rvvc();
         Solution sol;
-        auto res = sol.findLUSlength(a, b);
-        cout << res << "\n";
+        sol.solveSudoku(board);
+        cout << "[";
+        for (int i = 0; i < 9; i++) {
+            cout << "[";
+            for (int j = 0; j < 9; j++) {
+                cout << "\"" << board[i][j] << "\"";
+                if (j < 8) cout << ",";
+            }
+            cout << "]";
+            if (i < 8) cout << ",";
+        }
+        cout << "]\n";
     }
     return 0;
 }

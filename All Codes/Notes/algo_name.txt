@@ -1,0 +1,24 @@
+sorting
+1. Bubble
+2. Insertion
+3. Selection
+4. Merge
+5. Quick
+
+
+Searching
+1. Linear
+2. Binary
+
+
+Algorithms
+1. KMP - uses LPS = length of longest proper prefix/suffix
+2. Dutch National Flag algorithm - for sorting 3 number
+3. Kadane's algorithm - max subarray sum. add till become <0.
+4. next_permutation algorithm
+5. Moore's Voting Algorithm (freq >n/3 )
+
+
+
+
+subarray sum - prefix/suffix Sum

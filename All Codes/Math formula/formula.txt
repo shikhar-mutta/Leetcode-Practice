@@ -205,5 +205,19 @@
 
     Speed: checks only ~n/3 divisors vs ~n/2 for odd-only → 33% faster.
 
+----------------------------------------
+
+[12] Rightmost Set Bit Isolation
+
+    int bit = x & ~(x - 1);   // or equivalently: x & (-x)
+
+    x-1 flips the lowest set bit and sets all bits below it.
+    ~(x-1) then has 1s at the lowest set bit and above.
+    ANDing with x isolates only the lowest set bit.
+
+    Example: x = 12 (1100) → x-1 = 11 (1011) → ~(x-1) = ...0100 → x & ~(x-1) = 0100
+
+    Common use: split an array into two groups by a differing bit (e.g. Single Number III).
+
 ========================================
 

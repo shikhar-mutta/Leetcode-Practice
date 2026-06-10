@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1283.cpp"
+#include "1011.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto nums = _rvi();
-        int threshold = _ri();
+        auto weights = _rvi();
+        int days = _ri();
         Solution sol;
-        auto res = sol.smallestDivisor(nums, threshold);
+        auto res = sol.shipWithinDays(weights, days);
         cout << res << "\n";
     }
     return 0;

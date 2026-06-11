@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "151.cpp"
+#include "1903.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,9 +59,9 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        string s = _rs();
+        string num = _rs();
         Solution sol;
-        auto res = sol.reverseWords(s);
+        auto res = sol.largestOddNumber(num);
         cout << res << "\n";
     }
     return 0;

@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "796.cpp"
+#include "451.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -60,10 +60,9 @@ int main() {
     cin.ignore();
     while (t--) {
         string s = _rs();
-        string goal = _rs();
         Solution sol;
-        auto res = sol.rotateString(s, goal);
-        cout << (res ? "true" : "false") << "\n";
+        auto res = sol.frequencySort(s);
+        cout << res << "\n";
     }
     return 0;
 }

@@ -561,3 +561,13 @@
     s.resize(w);
 
     // Naive find+replace is O(n²) — avoid.
+
+──────────────────────────────────────────────────────────────
+
+32. string(n, c) — repeat a character n times
+
+    string(3, 'a')  // → "aaa"
+    string(5, 'b')  // → "bbbbb"
+
+    // Common use: build result from frequency map
+    result += string(freq, ch);  // appends ch repeated freq times

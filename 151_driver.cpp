@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1021.cpp"
+#include "151.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -61,7 +61,7 @@ int main() {
     while (t--) {
         string s = _rs();
         Solution sol;
-        auto res = sol.removeOuterParentheses(s);
+        auto res = sol.reverseWords(s);
         cout << res << "\n";
     }
     return 0;

@@ -534,3 +534,30 @@
         }
         return r;
     }
+
+──────────────────────────────────────────────────────────────
+
+30. std::string — Trim (no built-in in STL)
+
+    s.erase(0, s.find_first_not_of(' '));   // trim left   — O(n), in-place
+    s.erase(s.find_last_not_of(' ') + 1);  // trim right
+
+    // one-liner (allocates copy):
+    auto l = s.find_first_not_of(' '), r = s.find_last_not_of(' ');
+    s = s.substr(l, r - l + 1);
+
+──────────────────────────────────────────────────────────────
+
+31. std::string — Collapse multiple spaces into one
+
+    // Way 1: unique  O(n)  ← preferred
+    s.erase(unique(s.begin(), s.end(), [](char a, char b){
+        return a == ' ' && b == ' ';
+    }), s.end());
+
+    // Way 2: two-pointer  O(n)
+    int w = 0; bool prev = false;
+    for (char c : s) { if (c==' ' && prev) continue; s[w++]=c; prev=(c==' '); }
+    s.resize(w);
+
+    // Naive find+replace is O(n²) — avoid.

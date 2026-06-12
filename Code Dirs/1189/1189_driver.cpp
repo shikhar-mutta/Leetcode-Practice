@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1071.cpp"
+#include "1189.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,9 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        string str1 = _rs();
-        string str2 = _rs();
+        string text = _rs();
         Solution sol;
-        auto res = sol.gcdOfStrings(str1, str2);
+        auto res = sol.maxNumberOfBalloons(text);
         cout << res << "\n";
     }
     return 0;

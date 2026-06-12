@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "260.cpp"
+#include "1360.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,11 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto nums = _rvi();
+        string date1 = _rs();
+        string date2 = _rs();
         Solution sol;
-        auto res = sol.singleNumber(nums);
-        for (int _i=0;_i<(int)res.size();_i++){if(_i)cout<<" ";cout<<res[_i];}cout<<"\n";
+        auto res = sol.daysBetweenDates(date1, date2);
+        cout << res << "\n";
     }
     return 0;
 }

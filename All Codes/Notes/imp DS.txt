@@ -571,3 +571,26 @@
 
     // Common use: build result from frequency map
     result += string(freq, ch);  // appends ch repeated freq times
+
+──────────────────────────────────────────────────────────────
+
+33. Number ↔ Character conversions
+
+    // int (1–26) → lowercase letter
+    char(num + 'a' - 1)   // 1→'a', 2→'b', ..., 26→'z'
+    char(num - 1 + 'a')   // same thing, written differently
+
+    // digit char → int
+    s[i] - '0'            // '3' → 3
+
+    // lowercase letter → int (1-indexed)
+    c - 'a' + 1           // 'a'→1, 'b'→2, ..., 'z'→26
+
+    // lowercase letter → int (0-indexed)
+    c - 'a'               // 'a'→0, 'b'→1, ..., 'z'→25
+
+    // int → digit char
+    char('0' + num)       // 3 → '3'  (only for 0–9)
+
+    // Key insight: 'a' = 97, 'A' = 65, '0' = 48
+    //   char arithmetic works because chars are just integers under the hood.

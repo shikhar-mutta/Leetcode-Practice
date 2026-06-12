@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1047.cpp"
+#include "1071.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,9 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        string s = _rs();
+        string str1 = _rs();
+        string str2 = _rs();
         Solution sol;
-        auto res = sol.removeDuplicates(s);
+        auto res = sol.gcdOfStrings(str1, str2);
         cout << res << "\n";
     }
     return 0;

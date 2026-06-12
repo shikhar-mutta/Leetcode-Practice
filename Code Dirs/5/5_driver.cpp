@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "8.cpp"
+#include "5.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -61,7 +61,7 @@ int main() {
     while (t--) {
         string s = _rs();
         Solution sol;
-        auto res = sol.myAtoi(s);
+        auto res = sol.longestPalindrome(s);
         cout << res << "\n";
     }
     return 0;

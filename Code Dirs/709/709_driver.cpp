@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "696.cpp"
+#include "709.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -61,7 +61,7 @@ int main() {
     while (t--) {
         string s = _rs();
         Solution sol;
-        auto res = sol.countBinarySubstrings(s);
+        auto res = sol.toLowerCase(s);
         cout << res << "\n";
     }
     return 0;

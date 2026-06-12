@@ -1,3 +1,0 @@
-1
-"this apple is sweet"
-"this apple is sour"

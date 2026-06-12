@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "844.cpp"
+#include "859.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -60,9 +60,9 @@ int main() {
     cin.ignore();
     while (t--) {
         string s = _rs();
-        string t = _rs();
+        string goal = _rs();
         Solution sol;
-        auto res = sol.backspaceCompare(s, t);
+        auto res = sol.buddyStrings(s, goal);
         cout << (res ? "true" : "false") << "\n";
     }
     return 0;

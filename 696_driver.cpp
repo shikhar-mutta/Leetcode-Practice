@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "680.cpp"
+#include "696.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -61,8 +61,8 @@ int main() {
     while (t--) {
         string s = _rs();
         Solution sol;
-        auto res = sol.validPalindrome(s);
-        cout << (res ? "true" : "false") << "\n";
+        auto res = sol.countBinarySubstrings(s);
+        cout << res << "\n";
     }
     return 0;
 }

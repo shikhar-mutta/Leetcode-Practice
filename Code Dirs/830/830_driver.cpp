@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "824.cpp"
+#include "830.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,11 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        string sentence = _rs();
+        string s = _rs();
         Solution sol;
-        auto res = sol.toGoatLatin(sentence);
-        cout << res << "\n";
+        auto res = sol.largeGroupPositions(s);
+        if(res.empty()) cout<<"\n";
+        else for(auto&row:res){for(int _i=0;_i<(int)row.size();_i++){if(_i)cout<<" ";cout<<row[_i];}cout<<"\n";}
     }
     return 0;
 }

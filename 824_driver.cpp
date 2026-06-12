@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "771.cpp"
+#include "824.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,9 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        string jewels = _rs();
-        string stones = _rs();
+        string sentence = _rs();
         Solution sol;
-        auto res = sol.numJewelsInStones(jewels, stones);
+        auto res = sol.toGoatLatin(sentence);
         cout << res << "\n";
     }
     return 0;

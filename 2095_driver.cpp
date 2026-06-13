@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "234.cpp"
+#include "2095.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -65,6 +65,15 @@ ListNode* buildList(vector<int>& v) {
     return head;
 }
 
+void printList(ListNode* head) {
+    cout << "[";
+    for (ListNode* cur = head; cur; cur = cur->next) {
+        if (cur != head) cout << ",";
+        cout << cur->val;
+    }
+    cout << "]\n";
+}
+
 int main() {
     int t;
     cin >> t;
@@ -73,8 +82,8 @@ int main() {
         auto v = _rvi();
         ListNode* head = buildList(v);
         Solution sol;
-        auto res = sol.isPalindrome(head);
-        cout << (res ? "true" : "false") << "\n";
+        auto res = sol.deleteMiddle(head);
+        printList(res);
     }
     return 0;
 }

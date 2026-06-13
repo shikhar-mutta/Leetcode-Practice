@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1507.cpp"
+#include "1556.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,9 +59,9 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        string date = _rs();
+        int n = _ri();
         Solution sol;
-        auto res = sol.reformatDate(date);
+        auto res = sol.thousandSeparator(n);
         cout << res << "\n";
     }
     return 0;

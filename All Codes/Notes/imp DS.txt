@@ -617,3 +617,14 @@
     C) Merge two sorted lists (LC 21/148): tail starts at &dummy → no special-case for first node
 
     NOTE: Never `delete` nodes on LeetCode — judge's freeList handles it → double-free crash.
+
+──────────────────────────────────────────────────────────────
+
+35. Array initialization pitfall — int arr[N] = {val}
+
+    int index[26] = {-1};        // ✗ index[0]=-1, index[1..25]=0  (only first element set)
+    memset(index, -1, sizeof(index)); // ✓ all elements = -1 (sets every byte to 0xFF = -1 in two's complement)
+
+    - {val} in initializer list only sets the first element; rest zero-initialized.
+    - Use memset for -1 or 0. For other values, use std::fill:
+      fill(index, index+26, val);

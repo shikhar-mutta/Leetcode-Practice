@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "274.cpp"
+#include "142.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -54,15 +54,31 @@ vector<vector<int>> _rvvi() {
     return v;
 }
 
+ListNode* buildCycleList(vector<int>& v, int pos) {
+    if (v.empty()) return nullptr;
+    ListNode* head = new ListNode(v[0]);
+    ListNode* cur = head;
+    ListNode* cycleTarget = (pos == 0) ? head : nullptr;
+    for (int i = 1; i < (int)v.size(); i++) {
+        cur->next = new ListNode(v[i]);
+        cur = cur->next;
+        if (i == pos) cycleTarget = cur;
+    }
+    if (cycleTarget) cur->next = cycleTarget;
+    return head;
+}
+
 int main() {
     int t;
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto citations = _rvi();
+        auto v = _rvi();
+        int pos = _ri();
+        ListNode* head = buildCycleList(v, pos);
         Solution sol;
-        auto res = sol.hIndex(citations);
-        cout << res << "\n";
+        auto res = sol.detectCycle(head);
+        cout << (res ? to_string(res->val) : "-1") << "\n";
     }
     return 0;
 }

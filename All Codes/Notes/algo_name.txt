@@ -17,6 +17,10 @@ Algorithms
 3. Kadane's algorithm - max subarray sum. add till become <0.
 4. next_permutation algorithm
 5. Moore's Voting Algorithm (freq >n/3 )
+6. Tortoise and Hare Algorithm (Cycle Detection in LinkList)
+7. Floyd's cycle detection (Cycle start Detection in LinkList)
+
+
 
 
 

@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1455.cpp"
+#include "274.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,9 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        string sentence = _rs();
-        string searchWord = _rs();
+        auto citations = _rvi();
         Solution sol;
-        auto res = sol.isPrefixOfWord(sentence, searchWord);
+        auto res = sol.hIndex(citations);
         cout << res << "\n";
     }
     return 0;

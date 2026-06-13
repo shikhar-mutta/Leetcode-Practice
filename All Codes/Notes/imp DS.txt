@@ -597,35 +597,18 @@
 
 ──────────────────────────────────────────────────────────────
 
-34. Dummy Node pattern — Linked List (head-deletion & midpoint)
+34. Dummy Node pattern — Linked List
 
-    ListNode dummy(0, head);   // stack-allocated node before head
-    ListNode *slow = &dummy;   // start slow one step BEFORE head
+    ListNode dummy(0, head);  // object on stack (not pointer), no new/delete
+    ListNode *p = &dummy;     // use &dummy to get address, dummy.next (NOT dummy->next)
+    ...
+    return dummy.next;        // always return dummy.next — head may have been deleted/changed
 
-    WHY: If slow starts at head, it ends up one node too far when
-         the loop terminates. Starting at dummy shifts it back by one,
-         so slow->next is the target node, not slow itself.
+    WHY: dummy gives a valid node to attach to before the real head exists or is known.
+         Starting slow/tail at dummy shifts it back by 1 so slow->next is the target.
 
-    Two uses:
+    A) Delete middle (LC 2095):  slow starts at &dummy → stops one before middle
+    B) Remove nth from end (LC 19): fast/slow both start at &dummy, gap of n+1
+    C) Merge two sorted lists (LC 21/148): tail starts at &dummy → no special-case for first node
 
-    A) Delete middle node (LC 2095) — floor(n/2) index, 0-based:
-        ListNode *temp = head, *slow = &dummy;
-        while (temp && temp->next) {
-            temp = temp->next->next;
-            slow = slow->next;
-        }
-        slow->next = slow->next->next;   // unlink middle
-        return dummy.next;               // head may have changed
-
-    B) Remove nth from end (LC 19):
-        ListNode *fast = &dummy, *slow = &dummy;
-        for (int i = 0; i <= n; i++) fast = fast->next;  // gap of n+1
-        while (fast) { fast = fast->next; slow = slow->next; }
-        slow->next = slow->next->next;
-        return dummy.next;
-
-    KEY POINTS:
-    - Use ListNode dummy(0, head)  (object, not pointer) — lives on stack, no new/delete.
-    - Access via &dummy (address) and dummy.next (member), NOT dummy->next.
-    - Always return dummy.next, not head — head itself may have been deleted.
-    - Do NOT delete nodes on LeetCode — the judge's freeList does it; manual delete → heap-use-after-free.
+    NOTE: Never `delete` nodes on LeetCode — judge's freeList handles it → double-free crash.

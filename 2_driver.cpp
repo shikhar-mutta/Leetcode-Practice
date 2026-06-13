@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "2095.cpp"
+#include "2.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -54,36 +54,17 @@ vector<vector<int>> _rvvi() {
     return v;
 }
 
-ListNode* buildList(vector<int>& v) {
-    if (v.empty()) return nullptr;
-    ListNode* head = new ListNode(v[0]);
-    ListNode* cur = head;
-    for (int i = 1; i < (int)v.size(); i++) {
-        cur->next = new ListNode(v[i]);
-        cur = cur->next;
-    }
-    return head;
-}
-
-void printList(ListNode* head) {
-    cout << "[";
-    for (ListNode* cur = head; cur; cur = cur->next) {
-        if (cur != head) cout << ",";
-        cout << cur->val;
-    }
-    cout << "]\n";
-}
-
 int main() {
     int t;
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto v = _rvi();
-        ListNode* head = buildList(v);
+        // TODO: read ListNode* l1
+        // TODO: read ListNode* l2
         Solution sol;
-        auto res = sol.deleteMiddle(head);
-        printList(res);
+        auto res = sol.addTwoNumbers(l1, l2);
+        // TODO: print result
+cout << "TODO\n";
     }
     return 0;
 }

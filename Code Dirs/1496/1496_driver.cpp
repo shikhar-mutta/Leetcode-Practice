@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "2.cpp"
+#include "1496.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,12 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        // TODO: read ListNode* l1
-        // TODO: read ListNode* l2
+        string path = _rs();
         Solution sol;
-        auto res = sol.addTwoNumbers(l1, l2);
-        // TODO: print result
-cout << "TODO\n";
+        auto res = sol.isPathCrossing(path);
+        cout << (res ? "true" : "false") << "\n";
     }
     return 0;
 }

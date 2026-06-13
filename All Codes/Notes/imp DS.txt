@@ -475,6 +475,11 @@
     - Use case: word-pattern matching, anagram checks, any problem where input
       is a space-separated list of words inside a string.
 
+    // When token count is known, extract directly into named variables:
+    stringstream ss("20 Jan 2023");
+    string day, month, year;
+    ss >> day >> month >> year;   // day="20", month="Jan", year="2023"  (LC 1507)
+
 ──────────────────────────────────────────────────────────────
 
 27. Bit Masking & Arithmetic Right Shift

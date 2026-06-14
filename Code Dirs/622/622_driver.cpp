@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "445.cpp"
+#include "622.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,12 +59,23 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        // TODO: read ListNode* l1
-        // TODO: read ListNode* l2
-        Solution sol;
-        auto res = sol.addTwoNumbers(l1, l2);
-        // TODO: print result
-cout << "TODO\n";
+        vector<string> ops = _rvs();
+        vector<vector<int>> args = _rvvi();
+
+        MyCircularQueue* obj = nullptr;
+        cout << "[";
+        for (size_t i = 0; i < ops.size(); i++) {
+            if (i) cout << ", ";
+            const string& op = ops[i];
+            if (op == "MyCircularQueue") { obj = new MyCircularQueue(args[i][0]); cout << "null"; }
+            else if (op == "enQueue") cout << (obj->enQueue(args[i][0]) ? "true" : "false");
+            else if (op == "deQueue") cout << (obj->deQueue() ? "true" : "false");
+            else if (op == "Front")   cout << obj->Front();
+            else if (op == "Rear")    cout << obj->Rear();
+            else if (op == "isEmpty") cout << (obj->isEmpty() ? "true" : "false");
+            else if (op == "isFull")  cout << (obj->isFull() ? "true" : "false");
+        }
+        cout << "]\n";
     }
     return 0;
 }

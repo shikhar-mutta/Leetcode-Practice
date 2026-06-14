@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "445.cpp"
+#include "460.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -54,28 +54,22 @@ vector<vector<int>> _rvvi() {
     return v;
 }
 
-ListNode* _buildList(const vector<int>& v) {
-    ListNode dummy; ListNode* cur = &dummy;
-    for (int x : v) { cur->next = new ListNode(x); cur = cur->next; }
-    return dummy.next;
-}
-
 int main() {
     int t;
     cin >> t;
     cin.ignore();
     while (t--) {
-        ListNode* l1 = _buildList(_rvi());
-        ListNode* l2 = _buildList(_rvi());
-        Solution sol;
-        ListNode* res = sol.addTwoNumbers(l1, l2);
+        vector<string> ops = _rvs();
+        vector<vector<int>> args = _rvvi();
 
+        LFUCache* obj = nullptr;
         cout << "[";
-        bool first = true;
-        for (ListNode* p = res; p; p = p->next) {
-            if (!first) cout << ",";
-            cout << p->val;
-            first = false;
+        for (size_t i = 0; i < ops.size(); i++) {
+            if (i) cout << ", ";
+            const string& op = ops[i];
+            if (op == "LFUCache") { obj = new LFUCache(args[i][0]);     cout << "null"; }
+            else if (op == "put") { obj->put(args[i][0], args[i][1]);   cout << "null"; }
+            else if (op == "get") { cout << obj->get(args[i][0]); }
         }
         cout << "]\n";
     }

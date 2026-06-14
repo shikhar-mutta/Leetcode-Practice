@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1290.cpp"
+#include "82.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -63,11 +63,19 @@ int main() {
         for (int x : v) { cur->next = new ListNode(x); cur = cur->next; }
         return dummy.next;
     };
+    auto printList = [](ListNode* head) {
+        cout << "[";
+        for (ListNode* cur = head; cur; cur = cur->next) {
+            if (cur != head) cout << ",";
+            cout << cur->val;
+        }
+        cout << "]\n";
+    };
     while (t--) {
         auto v = _rvi(); ListNode* head = buildList(v);
         Solution sol;
-        auto res = sol.getDecimalValue(head);
-        cout << res << "\n";
+        auto res = sol.deleteDuplicates(head);
+        printList(res);
     }
     return 0;
 }

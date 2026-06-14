@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "92.cpp"
+#include "23.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -72,11 +72,11 @@ int main() {
         cout << "]\n";
     };
     while (t--) {
-        auto v = _rvi(); ListNode* head = buildList(v);
-        int left = _ri();
-        int right = _ri();
+        auto vv = _rvvi();
+        vector<ListNode*> lists;
+        for (auto& v : vv) lists.push_back(buildList(v));
         Solution sol;
-        auto res = sol.reverseBetween(head, left, right);
+        auto res = sol.mergeKLists(lists);
         printList(res);
     }
     return 0;

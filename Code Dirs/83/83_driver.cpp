@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "21.cpp"
+#include "83.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -72,10 +72,9 @@ int main() {
         cout << "]\n";
     };
     while (t--) {
-        auto v1 = _rvi(); ListNode* list1 = buildList(v1);
-        auto v2 = _rvi(); ListNode* list2 = buildList(v2);
+        auto v = _rvi(); ListNode* head = buildList(v);
         Solution sol;
-        auto res = sol.mergeTwoLists(list1, list2);
+        auto res = sol.deleteDuplicates(head);
         printList(res);
     }
     return 0;

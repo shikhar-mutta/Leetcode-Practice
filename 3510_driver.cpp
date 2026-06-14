@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "707.cpp"
+#include "3510.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,22 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        vector<string> ops = _rvs();
-        vector<vector<int>> args = _rvvi();
-
-        MyLinkedList* obj = nullptr;
-        cout << "[";
-        for (size_t i = 0; i < ops.size(); i++) {
-            if (i) cout << ", ";
-            const string& op = ops[i];
-            if (op == "MyLinkedList")        { obj = new MyLinkedList();                  cout << "null"; }
-            else if (op == "addAtHead")      { obj->addAtHead(args[i][0]);                cout << "null"; }
-            else if (op == "addAtTail")      { obj->addAtTail(args[i][0]);                cout << "null"; }
-            else if (op == "addAtIndex")     { obj->addAtIndex(args[i][0], args[i][1]);   cout << "null"; }
-            else if (op == "deleteAtIndex")  { obj->deleteAtIndex(args[i][0]);            cout << "null"; }
-            else if (op == "get")            { cout << obj->get(args[i][0]); }
-        }
-        cout << "]\n";
+        auto nums = _rvi();
+        Solution sol;
+        auto res = sol.minimumPairRemoval(nums);
+        cout << res << "\n";
     }
     return 0;
 }

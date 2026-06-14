@@ -1,2 +1,0 @@
-1
-["MyLinkedList","addAtHead","addAtTail","addAtIndex","get","deleteAtIndex","get"]

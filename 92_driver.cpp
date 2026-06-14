@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "82.cpp"
+#include "92.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -73,8 +73,10 @@ int main() {
     };
     while (t--) {
         auto v = _rvi(); ListNode* head = buildList(v);
+        int left = _ri();
+        int right = _ri();
         Solution sol;
-        auto res = sol.deleteDuplicates(head);
+        auto res = sol.reverseBetween(head, left, right);
         printList(res);
     }
     return 0;

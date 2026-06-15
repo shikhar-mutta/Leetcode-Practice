@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "725.cpp"
+#include "817.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -54,35 +54,22 @@ vector<vector<int>> _rvvi() {
     return v;
 }
 
-ListNode* _buildList(const vector<int>& v) {
-    ListNode dummy; ListNode* cur = &dummy;
-    for (int x : v) { cur->next = new ListNode(x); cur = cur->next; }
-    return dummy.next;
-}
-
 int main() {
     int t;
     cin >> t;
     cin.ignore();
     while (t--) {
-        ListNode* head = _buildList(_rvi());
-        int k = _ri();
-        Solution sol;
-        vector<ListNode*> res = sol.splitListToParts(head, k);
-
-        cout << "[";
-        for (size_t i = 0; i < res.size(); i++) {
-            if (i) cout << ",";
-            cout << "[";
-            bool first = true;
-            for (ListNode* p = res[i]; p; p = p->next) {
-                if (!first) cout << ",";
-                cout << p->val;
-                first = false;
-            }
-            cout << "]";
+        auto vals = _rvi();
+        ListNode *head = nullptr, *tail = nullptr;
+        for (int x : vals) {
+            ListNode *node = new ListNode(x);
+            if (!head) head = tail = node;
+            else { tail->next = node; tail = node; }
         }
-        cout << "]\n";
+        auto nums = _rvi();
+        Solution sol;
+        auto res = sol.numComponents(head, nums);
+        cout << res << "\n";
     }
     return 0;
 }

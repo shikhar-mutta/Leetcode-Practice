@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "3217.cpp"
+#include "1721.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,7 +59,6 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto nums = _rvi();
         auto vals = _rvi();
         ListNode *head = nullptr, *tail = nullptr;
         for (int x : vals) {
@@ -67,8 +66,9 @@ int main() {
             if (!head) head = tail = node;
             else { tail->next = node; tail = node; }
         }
+        int k = _ri();
         Solution sol;
-        auto res = sol.modifiedList(nums, head);
+        auto res = sol.swapNodes(head, k);
         cout << "[";
         for (ListNode *p = res; p; p = p->next) {
             if (p != res) cout << ",";

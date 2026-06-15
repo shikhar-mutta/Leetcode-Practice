@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1721.cpp"
+#include "2296.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -54,27 +54,51 @@ vector<vector<int>> _rvvi() {
     return v;
 }
 
+// parse a line like [[],["leetcode"],[4]] -> token list per inner array
+static vector<vector<string>> _rargs2() {
+    string s; getline(cin, s);
+    vector<vector<string>> res;
+    int dep = 0; string cur; vector<string> inner;
+    auto flush = [&]() {
+        string t = cur;
+        while (!t.empty() && (t.front() == ' ' || t.front() == '"')) t.erase(t.begin());
+        while (!t.empty() && (t.back()  == ' ' || t.back()  == '"')) t.pop_back();
+        if (!t.empty()) inner.push_back(t);
+        cur.clear();
+    };
+    for (char c : s) {
+        if (c == '[') dep++;
+        else if (c == ']') {
+            if (dep == 2) { flush(); res.push_back(inner); inner.clear(); }
+            dep--;
+        } else if (dep == 2) {
+            if (c == ',') flush();
+            else cur += c;
+        }
+    }
+    return res;
+}
+
 int main() {
-    int t;
-    cin >> t;
-    cin.ignore();
-    while (t--) {
-        auto vals = _rvi();
-        ListNode *head = nullptr, *tail = nullptr;
-        for (int x : vals) {
-            ListNode *node = new ListNode(x);
-            if (!head) head = tail = node;
-            else { tail->next = node; tail = node; }
+    string countLine;
+    getline(cin, countLine); // leading line-count, ignored for design format
+    while (cin.peek() != EOF) {
+        auto ops  = _rvs();
+        auto args = _rargs2();
+        TextEditor *ed = nullptr;
+        string out = "[";
+        for (int i = 0; i < (int)ops.size(); i++) {
+            if (i) out += ", ";
+            const string &op = ops[i];
+            auto &a = args[i];
+            if (op == "TextEditor")       { ed = new TextEditor(); out += "null"; }
+            else if (op == "addText")     { ed->addText(a[0]); out += "null"; }
+            else if (op == "deleteText")  { out += to_string(ed->deleteText(stoi(a[0]))); }
+            else if (op == "cursorLeft")  { out += "\"" + ed->cursorLeft(stoi(a[0]))  + "\""; }
+            else if (op == "cursorRight") { out += "\"" + ed->cursorRight(stoi(a[0])) + "\""; }
         }
-        int k = _ri();
-        Solution sol;
-        auto res = sol.swapNodes(head, k);
-        cout << "[";
-        for (ListNode *p = res; p; p = p->next) {
-            if (p != res) cout << ",";
-            cout << p->val;
-        }
-        cout << "]\n";
+        out += "]";
+        cout << out << "\n";
     }
     return 0;
 }

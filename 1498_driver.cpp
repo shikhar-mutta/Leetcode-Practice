@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1488.cpp"
+#include "1498.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,11 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto rains = _rvi();
+        auto nums = _rvi();
+        int target = _ri();
         Solution sol;
-        auto res = sol.avoidFlood(rains);
-        for (int _i=0;_i<(int)res.size();_i++){if(_i)cout<<" ";cout<<res[_i];}cout<<"\n";
+        auto res = sol.numSubseq(nums, target);
+        cout << res << "\n";
     }
     return 0;
 }

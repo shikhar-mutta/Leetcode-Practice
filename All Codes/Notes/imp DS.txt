@@ -628,3 +628,26 @@
     - {val} in initializer list only sets the first element; rest zero-initialized.
     - Use memset for -1 or 0. For other values, use std::fill:
       fill(index, index+26, val);
+
+──────────────────────────────────────────────────────────────
+
+36. std::fill — set a range to one value (half-open [first, last))
+
+    fill(nums.begin() + idx, nums.begin() + idx + f, x);  // write x into f slots starting at idx
+    fill(arr, arr + n, 0);                                // whole C-array
+    fill(grid[r].begin(), grid[r].end(), -1);             // one row of a 2D vector
+
+    - Range is [first, last): last is ONE PAST the end, so the call above writes
+      exactly f elements (indices idx .. idx+f-1). Make sure idx+f <= size().
+    - Works on any value type (unlike memset, which sets BYTES — memset only safe
+      for 0 / -1 on int). Use fill for arbitrary values. See #35.
+
+    Use case — COUNT SORT (LC 1498): instead of sort() O(n log n), when values are
+    bounded (e.g. <= 1e6), tally freq[x]++ then rebuild the array sorted in O(n + maxVal):
+      int idx = 0;
+      for (int x = 1; x <= largest; x++) {
+          int f = freq[x];
+          if (!f) continue;
+          fill(nums.begin()+idx, nums.begin()+idx+f, x);  // place x, f times
+          idx += f;
+      }

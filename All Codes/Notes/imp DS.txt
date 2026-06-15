@@ -651,3 +651,28 @@
           fill(nums.begin()+idx, nums.begin()+idx+f, x);  // place x, f times
           idx += f;
       }
+
+──────────────────────────────────────────────────────────────
+
+37. Generating random numbers in C++ (<random>) — modern, replaces rand()
+
+    // 1. Make an engine (PRNG), seed it ONCE from hardware entropy:
+    mt19937 rng(random_device{}());        // 32-bit Mersenne Twister
+    // mt19937_64 for 64-bit. Keep rng as a member so it isn't re-seeded each call.
+
+    // 2. Draw values:
+    int r = rng() % n;                     // quick: raw uint mod n -> [0, n-1]
+    int target = rng() % total + 1;        // -> [1, total]
+
+    // Cleaner / unbiased way using a distribution:
+    uniform_int_distribution<int> dist(0, n-1);   // inclusive [0, n-1]
+    int r = dist(rng);
+    uniform_real_distribution<double> d(0.0, 1.0); // [0,1) doubles
+
+    WHY random_device{}() : without a seed, mt19937 uses a FIXED default seed ->
+      same "random" sequence every run (and every object). random_device pulls
+      OS entropy (/dev/urandom) so each run differs. Alt seed: chrono clock count.
+
+    - rng() returns a full unsigned int; rng() % n is fine for contests (slight
+      low-bit bias, negligible). uniform_int_distribution avoids that bias.
+    - Used in: LC 528 (pick by weight, rng()%total+1), LC 710 (rng()%m).

@@ -1,6 +1,36 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "2487.cpp"
+#include "222.cpp"
+
+// ── tree builder (level-order, "null" tokens) ─────────────────────
+vector<string> _rtok() {
+    string s; getline(cin,s);
+    vector<string> v;
+    if (s.size() < 2) return v;        // "[]" or empty
+    auto body = s.substr(1, s.size()-2);
+    stringstream ss(body); string t;
+    while (getline(ss,t,',')) {
+        // trim spaces
+        int a=0,b=(int)t.size();
+        while(a<b && isspace((unsigned char)t[a])) a++;
+        while(b>a && isspace((unsigned char)t[b-1])) b--;
+        v.push_back(t.substr(a,b-a));
+    }
+    return v;
+}
+TreeNode* _rtree() {
+    auto tok = _rtok();
+    if (tok.empty() || tok[0]=="null") return nullptr;
+    TreeNode* root = new TreeNode(stoi(tok[0]));
+    queue<TreeNode*> q; q.push(root);
+    size_t i = 1;
+    while (!q.empty() && i < tok.size()) {
+        TreeNode* cur = q.front(); q.pop();
+        if (i < tok.size() && tok[i] != "null") { cur->left  = new TreeNode(stoi(tok[i])); q.push(cur->left); }  i++;
+        if (i < tok.size() && tok[i] != "null") { cur->right = new TreeNode(stoi(tok[i])); q.push(cur->right); } i++;
+    }
+    return root;
+}
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,21 +89,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto vals = _rvi();
-        ListNode *head = nullptr, *tail = nullptr;
-        for (int x : vals) {
-            ListNode *node = new ListNode(x);
-            if (!head) head = tail = node;
-            else { tail->next = node; tail = node; }
-        }
+        TreeNode* root = _rtree();
         Solution sol;
-        auto res = sol.removeNodes(head);
-        cout << "[";
-        for (ListNode *p = res; p; p = p->next) {
-            if (p != res) cout << ",";
-            cout << p->val;
-        }
-        cout << "]\n";
+        auto res = sol.countNodes(root);
+        cout << res << "\n";
     }
     return 0;
 }

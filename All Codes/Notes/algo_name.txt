@@ -19,6 +19,7 @@ Algorithms
 5. Moore's Voting Algorithm (freq >n/3 )
 6. Tortoise and Hare Algorithm (Cycle Detection in LinkList)
 7. Floyd's cycle detection (Cycle start Detection in LinkList)
+8. Boyer-Moore segment tree
 
 
 

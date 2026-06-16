@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "3707.cpp"
+#include "3210.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -60,9 +60,10 @@ int main() {
     cin.ignore();
     while (t--) {
         string s = _rs();
+        int k = _ri();
         Solution sol;
-        auto res = sol.scoreBalance(s);
-        cout << (res ? "true" : "false") << "\n";
+        auto res = sol.getEncryptedString(s, k);
+        cout << res << "\n";
     }
     return 0;
 }

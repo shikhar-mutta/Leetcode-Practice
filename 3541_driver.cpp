@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "3461.cpp"
+#include "3541.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -61,8 +61,8 @@ int main() {
     while (t--) {
         string s = _rs();
         Solution sol;
-        auto res = sol.hasSameDigits(s);
-        cout << (res ? "true" : "false") << "\n";
+        auto res = sol.maxFreqSum(s);
+        cout << res << "\n";
     }
     return 0;
 }

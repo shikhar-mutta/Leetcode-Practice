@@ -676,3 +676,20 @@
     - rng() returns a full unsigned int; rng() % n is fine for contests (slight
       low-bit bias, negligible). uniform_int_distribution avoids that bias.
     - Used in: LC 528 (pick by weight, rng()%total+1), LC 710 (rng()%m).
+
+──────────────────────────────────────────────────────────────
+
+38. 1LL — force 64-bit math to avoid int overflow
+
+    long long cube = n * n * n;        // ✗ computed as int FIRST → overflows, then widened
+    long long cube = 1LL * n * n * n;  // ✓ promotes first operand → whole chain is long long
+    long long cube = (long long)n * n * n;  // ✓ same effect via explicit cast
+
+    - Expression type is decided by operands, BEFORE assignment — a long long
+      target does NOT save you if the int multiply already overflowed.
+    - 1LL * x promotes x to long long, dragging the rest of the chain to 64-bit.
+
+    Suffixes (case-insensitive, but both letters must match case):
+      1LL / 1ll  → long long      ✓     1Ll / 1lL  → illegal (mixed case)
+      1U / 1u    → unsigned       1ULL → unsigned long long
+    - Prefer uppercase LL: lowercase 1ll looks like 111.

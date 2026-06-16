@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "2490.cpp"
+#include "2379.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,11 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        string sentence = _rs();
+        string blocks = _rs();
+        int k = _ri();
         Solution sol;
-        auto res = sol.isCircularSentence(sentence);
-        cout << (res ? "true" : "false") << "\n";
+        auto res = sol.minimumRecolors(blocks, k);
+        cout << res << "\n";
     }
     return 0;
 }

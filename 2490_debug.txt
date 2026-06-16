@@ -1,2 +1,0 @@
-1
-"leetcode exercises sound delightful"

@@ -1,0 +1,4 @@
+3
+"abcacbd"
+"abc"
+"abcdab"

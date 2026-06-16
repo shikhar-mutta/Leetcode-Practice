@@ -1,0 +1,4 @@
+3
+"leetcode exercises sound delightful"
+"eetcode"
+"Leetcode is cool"

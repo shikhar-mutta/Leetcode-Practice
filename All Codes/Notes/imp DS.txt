@@ -693,3 +693,24 @@
       1LL / 1ll  → long long      ✓     1Ll / 1lL  → illegal (mixed case)
       1U / 1u    → unsigned       1ULL → unsigned long long
     - Prefer uppercase LL: lowercase 1ll looks like 111.
+
+──────────────────────────────────────────────────────────────
+
+39. Ternary as an lvalue — pick a target, then write to it
+
+    (cond ? a : b) += c;     // appends c to a if cond else to b
+    (cond ? a : b) = x;      // assigns into whichever was chosen
+
+    - In C++ the ?: operator yields an LVALUE (a reference) when both
+      branches are lvalues of the same type → you can assign/append to it.
+    - Lets you route a value into one of two containers without an if/else.
+
+    // Split chars into letters vs specials in one line (LC 3823):
+    string letters, specials;
+    for (char c : s)
+        (isalpha((unsigned char)c) ? letters : specials) += c;
+
+    - Cast to unsigned char in isalpha/isdigit/etc: these <cctype> funcs are
+      UB on negative char values; (unsigned char) makes it safe.
+    - Branches must be the SAME type (both string&). Mixed types decay to a
+      prvalue and this won't compile as an lvalue.

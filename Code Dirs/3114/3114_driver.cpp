@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "3692.cpp"
+#include "3114.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -61,7 +61,7 @@ int main() {
     while (t--) {
         string s = _rs();
         Solution sol;
-        auto res = sol.majorityFrequencyGroup(s);
+        auto res = sol.findLatestTime(s);
         cout << res << "\n";
     }
     return 0;

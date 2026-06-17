@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1894.cpp"
+#include "852.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,9 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto chalk = _rvi();
-        int k = _ri();
+        auto arr = _rvi();
         Solution sol;
-        auto res = sol.chalkReplacer(chalk, k);
+        auto res = sol.peakIndexInMountainArray(arr);
         cout << res << "\n";
     }
     return 0;

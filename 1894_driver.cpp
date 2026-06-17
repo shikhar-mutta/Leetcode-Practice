@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1668.cpp"
+#include "1894.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        string sequence = _rs();
-        string word = _rs();
+        auto chalk = _rvi();
+        int k = _ri();
         Solution sol;
-        auto res = sol.maxRepeating(sequence, word);
+        auto res = sol.chalkReplacer(chalk, k);
         cout << res << "\n";
     }
     return 0;

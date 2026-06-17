@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "2062.cpp"
+#include "1974.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -61,7 +61,7 @@ int main() {
     while (t--) {
         string word = _rs();
         Solution sol;
-        auto res = sol.countVowelSubstrings(word);
+        auto res = sol.minTimeToType(word);
         cout << res << "\n";
     }
     return 0;

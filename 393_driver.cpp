@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "12.cpp"
+#include "393.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        int num = _ri();
+        auto data = _rvi();
         Solution sol;
-        auto res = sol.intToRoman(num);
-        cout << res << "\n";
+        auto res = sol.validUtf8(data);
+        cout << (res ? "true" : "false") << "\n";
     }
     return 0;
 }

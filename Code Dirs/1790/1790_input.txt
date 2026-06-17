@@ -1,0 +1,7 @@
+3
+"bank"
+"kanb"
+"attack"
+"defend"
+"kelb"
+"kelb"

@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "2379.cpp"
+#include "2269.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        string blocks = _rs();
+        int num = _ri();
         int k = _ri();
         Solution sol;
-        auto res = sol.minimumRecolors(blocks, k);
+        auto res = sol.divisorSubstrings(num, k);
         cout << res << "\n";
     }
     return 0;

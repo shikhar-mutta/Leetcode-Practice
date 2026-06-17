@@ -714,3 +714,19 @@
       UB on negative char values; (unsigned char) makes it safe.
     - Branches must be the SAME type (both string&). Mixed types decay to a
       prvalue and this won't compile as an lvalue.
+
+──────────────────────────────────────────────────────────────
+
+40. Range-for over a brace list — loop a fixed set of values inline
+
+    for (int step : {60, 15, 5, 1}) { ops += diff / step; diff %= step; }
+
+    - {a, b, c} is a std::initializer_list; range-for iterates its elements
+      with no named array/vector needed. Great for a small fixed sequence.
+    - Element type is deduced from the braces; use `auto` if you like:
+      for (auto x : {1, 2, 3}) ...
+    - Handy for greedy denominations, direction deltas, etc.
+
+    // Greedy step count (LC 2224 convert time):
+    int ops = 0;
+    for (int step : {60, 15, 5, 1}) { ops += diff / step; diff %= step; }

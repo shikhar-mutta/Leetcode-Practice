@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "2264.cpp"
+#include "2124.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        string num = _rs();
+        string s = _rs();
         Solution sol;
-        auto res = sol.largestGoodInteger(num);
-        cout << res << "\n";
+        auto res = sol.checkString(s);
+        cout << (res ? "true" : "false") << "\n";
     }
     return 0;
 }

@@ -1,0 +1,7 @@
+3
+"aaaa"
+"bccb"
+"abcdeef"
+"abaaacc"
+"cccddabba"
+"babababab"

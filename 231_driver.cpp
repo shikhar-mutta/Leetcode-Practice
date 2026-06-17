@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "852.cpp"
+#include "231.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto arr = _rvi();
+        int n = _ri();
         Solution sol;
-        auto res = sol.peakIndexInMountainArray(arr);
-        cout << res << "\n";
+        auto res = sol.isPowerOfTwo(n);
+        cout << (res ? "true" : "false") << "\n";
     }
     return 0;
 }

@@ -13,7 +13,7 @@ public:
         while (left < right)
         {
             int mid = left + (right - left) / 2;
-            if (nums[mid] < nums[mid + 1]) // fUse Slop to find maxima
+            if (nums[mid] < nums[mid + 1]) // Use Slop to find maxima
                 left = mid + 1;            // ascending slope → peak is to the right
             else
                 right = mid; // descending slope → peak is here or to the left

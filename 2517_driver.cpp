@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1562.cpp"
+#include "2517.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto arr = _rvi();
-        int m = _ri();
+        auto price = _rvi();
+        int k = _ri();
         Solution sol;
-        auto res = sol.findLatestStep(arr, m);
+        auto res = sol.maximumTastiness(price, k);
         cout << res << "\n";
     }
     return 0;

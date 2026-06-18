@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "393.cpp"
+#include "162.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto data = _rvi();
+        auto nums = _rvi();
         Solution sol;
-        auto res = sol.validUtf8(data);
-        cout << (res ? "true" : "false") << "\n";
+        auto res = sol.findPeakElement(nums);
+        cout << res << "\n";
     }
     return 0;
 }

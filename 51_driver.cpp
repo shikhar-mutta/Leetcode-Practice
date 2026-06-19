@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "79.cpp"
+#include "51.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -54,30 +54,26 @@ vector<vector<int>> _rvvi() {
     return v;
 }
 
-// parse [["A","B"],["C","D"]] into vector<vector<char>>
-vector<vector<char>> _rvvc() {
-    string s; getline(cin, s);
-    vector<vector<char>> v;
-    int dep = 0; bool inq = false; vector<char> row;
-    for (char c : s) {
-        if (c == '"') { inq = !inq; continue; }
-        if (inq) { row.push_back(c); continue; }   // the cell character itself
-        if (c == '[') { dep++; if (dep == 2) row.clear(); }
-        else if (c == ']') { if (dep == 2) v.push_back(row); dep--; }
-    }
-    return v;
-}
-
 int main() {
     int t;
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto board = _rvvc();
-        string word = _rs();
+        int n = _ri();
         Solution sol;
-        auto res = sol.exist(board, word);
-        cout << (res ? "true" : "false") << "\n";
+        auto res = sol.solveNQueens(n);
+        // print as [["..Q.",...],[...]]
+        cout << "[";
+        for (int s = 0; s < (int)res.size(); s++) {
+            if (s) cout << ",";
+            cout << "[";
+            for (int r = 0; r < (int)res[s].size(); r++) {
+                if (r) cout << ",";
+                cout << "\"" << res[s][r] << "\"";
+            }
+            cout << "]";
+        }
+        cout << "]\n";
     }
     return 0;
 }

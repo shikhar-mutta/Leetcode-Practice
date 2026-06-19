@@ -790,3 +790,18 @@
         auto tmp = current; sort(tmp.begin(), tmp.end()); res.push_back(tmp);
     - Same rule for any shared backtracking state: a visited[] / used[] flag set
       on the way down must be unset on the way up — mirror every change.
+
+──────────────────────────────────────────────────────────────
+
+43. Chained (multiple) assignment — a = b = c = val
+
+    cols[col] = diag1[d1] = diag2[d2] = true;   // set all three to true
+
+    - `=` is RIGHT-associative: evaluated as cols[col] = (diag1[d1] = (diag2[d2] = true)).
+    - Each assignment returns the assigned value, which feeds the next one left.
+    - All targets end up with the SAME value (true here). Great for setting several
+      flags at once (e.g. N-Queens: column + both diagonals in one line, LC 51).
+    - To UNDO, mirror it: cols[col] = diag1[d1] = diag2[d2] = false;
+    - Targets can be different lvalues but the value must be assignable to each.
+    - Don't confuse with a == b == c (comparison) — that compares left-to-right and
+      is almost always a bug.

@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "39.cpp"
+#include "40.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -62,7 +62,7 @@ int main() {
         auto candidates = _rvi();
         int target = _ri();
         Solution sol;
-        auto res = sol.combinationSum(candidates, target);
+        auto res = sol.combinationSum2(candidates, target);
         for(auto&row:res){for(int _i=0;_i<(int)row.size();_i++){if(_i)cout<<" ";cout<<row[_i];}cout<<"\n";}
     }
     return 0;

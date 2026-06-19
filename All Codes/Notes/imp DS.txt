@@ -730,3 +730,63 @@
     // Greedy step count (LC 2224 convert time):
     int ops = 0;
     for (int step : {60, 15, 5, 1}) { ops += diff / step; diff %= step; }
+
+──────────────────────────────────────────────────────────────
+
+41. Range constructor — convert one container to another via (begin, end)
+
+    Container2 name(src.begin(), src.end());   // copies every element of src
+
+    - Any container with a range constructor can be built from another container's
+      iterator pair. Element types must be compatible (copyable into the target).
+    - Copies in the SOURCE's iteration order (a set/map iterates sorted).
+
+    // set<vector<int>> -> vector<vector<int>>  (LC 40 Combination Sum II):
+    set<vector<int>> res;                       // set auto-dedupes combinations
+    ...
+    return vector<vector<int>>(res.begin(), res.end());  // sorted, unique result
+
+    WHY a set here: backtracking can produce duplicate combinations when the input
+    has repeated numbers; inserting into a set drops duplicates for free, then the
+    range constructor hands back the vector<vector<int>> the signature requires.
+
+    Other handy conversions (same idiom):
+      vector<int> v(s.begin(), s.end());        // set/list -> vector
+      set<int> s(v.begin(), v.end());           // vector -> sorted unique set
+      vector<pair<int,int>> v(mp.begin(), mp.end()); // map -> vector (see #24)
+
+    - TC: O(n) copy (+ O(n log n) if the source is an ordered set/map being filled).
+    - Cleaner alternative to dedup: sort + unique on a vector (see #8) avoids the
+      tree overhead, but a set is simpler when you're inserting during recursion.
+
+──────────────────────────────────────────────────────────────
+
+42. Backtracking — NEVER mutate the accumulator except via push/pop
+
+    RULE: in backtracking, `current` is ONE shared vector passed by reference
+    through every recursive call. The only allowed edits are the matching pair:
+        current.push_back(x);   // before recursing
+        backTrack(...);
+        current.pop_back();     // undo, restoring parent's exact state
+    Any OTHER in-place change (sort, erase, reverse, clear...) reorders elements
+    that ancestor frames still depend on. Their pop_back() then removes the WRONG
+    element -> corrupted state -> impossible results leak out.
+
+    // BUG (LC 40): sorting the accumulator to get ordered output
+    if (target == 0) {
+        sort(current.begin(), current.end());  // ✗ reorders shared vector
+        res.insert(current);                   //   parent's pop_back now wrong
+        return;                                //   -> e.g. [1,1,2] from a single 1
+    }
+
+    // FIX: sort the INPUT once; every `current` is then built in sorted order
+    sort(candidates.begin(), candidates.end());   // ✓ once, up front
+    ...
+    if (target == 0) { res.push_back(current); return; }  // already ordered
+
+    - Symptom of this bug: outputs contain elements/duplicates the input can't
+      produce (state got scrambled mid-recursion).
+    - Need per-result post-processing? Do it on a COPY, not on `current`:
+        auto tmp = current; sort(tmp.begin(), tmp.end()); res.push_back(tmp);
+    - Same rule for any shared backtracking state: a visited[] / used[] flag set
+      on the way down must be unset on the way up — mirror every change.

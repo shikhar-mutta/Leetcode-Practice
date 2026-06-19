@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "50.cpp"
+#include "1922.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,11 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        double x = _rd();
-        int n = _ri();
+        long long n = _rll();
         Solution sol;
-        auto res = sol.myPow(x, n);
-        cout << fixed << setprecision(5) << res << "\n";
+        auto res = sol.countGoodNumbers(n);
+        cout << res << "\n";
     }
     return 0;
 }

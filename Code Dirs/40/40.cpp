@@ -6,6 +6,7 @@ using namespace std;
 class Solution
 {
 public:
+    // TC: O(2^N) . SC: O(N)
     void backTrack(vector<vector<int>> &res, vector<int> &candidates, int target, int ind, vector<int> &current)
     {
         if (target == 0) // Early Stop

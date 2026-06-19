@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "90.cpp"
+#include "216.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,9 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto nums = _rvi();
+        int k = _ri();
+        int n = _ri();
         Solution sol;
-        auto res = sol.subsetsWithDup(nums);
+        auto res = sol.combinationSum3(k, n);
         for(auto&row:res){for(int _i=0;_i<(int)row.size();_i++){if(_i)cout<<" ";cout<<row[_i];}cout<<"\n";}
     }
     return 0;

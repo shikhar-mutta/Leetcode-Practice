@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "401.cpp"
+#include "461.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,11 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        int turnedOn = _ri();
+        int x = _ri();
+        int y = _ri();
         Solution sol;
-        auto res = sol.readBinaryWatch(turnedOn);
-        for (int _i=0;_i<(int)res.size();_i++){if(_i)cout<<" ";cout<<res[_i];}cout<<"\n";
+        auto res = sol.hammingDistance(x, y);
+        cout << res << "\n";
     }
     return 0;
 }

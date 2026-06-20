@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "282.cpp"
+#include "231.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,11 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        string num = _rs();
-        int target = _ri();
+        int n = _ri();
         Solution sol;
-        auto res = sol.addOperators(num, target);
-        for (int _i=0;_i<(int)res.size();_i++){if(_i)cout<<" ";cout<<res[_i];}cout<<"\n";
+        auto res = sol.isPowerOfTwo(n);
+        cout << (res ? "true" : "false") << "\n";
     }
     return 0;
 }

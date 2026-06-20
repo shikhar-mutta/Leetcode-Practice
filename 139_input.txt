@@ -1,7 +1,0 @@
-3
-"leetcode"
-["leet","code"]
-"applepenapple"
-["apple","pen"]
-"catsandog"
-["cats","dog","sand","and","cat"]

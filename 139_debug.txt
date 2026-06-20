@@ -1,3 +1,0 @@
-1
-"leetcode"
-["leet","code"]

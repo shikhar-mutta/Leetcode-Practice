@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "139.cpp"
+#include "282.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,11 +59,11 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        string s = _rs();
-        auto wordDict = _rvs();
+        string num = _rs();
+        int target = _ri();
         Solution sol;
-        auto res = sol.wordBreak(s, wordDict);
-        cout << (res ? "true" : "false") << "\n";
+        auto res = sol.addOperators(num, target);
+        for (int _i=0;_i<(int)res.size();_i++){if(_i)cout<<" ";cout<<res[_i];}cout<<"\n";
     }
     return 0;
 }

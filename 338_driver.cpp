@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "191.cpp"
+#include "338.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -61,8 +61,8 @@ int main() {
     while (t--) {
         int n = _ri();
         Solution sol;
-        auto res = sol.hammingWeight(n);
-        cout << res << "\n";
+        auto res = sol.countBits(n);
+        for (int _i=0;_i<(int)res.size();_i++){if(_i)cout<<" ";cout<<res[_i];}cout<<"\n";
     }
     return 0;
 }

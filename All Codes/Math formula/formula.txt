@@ -238,5 +238,26 @@
 
     Advantage: avoids floating-point precision issues entirely.
 
+----------------------------------------
+
+[14] Popcount DP — Count Set Bits 0..n (LC 338)
+
+    result[i] = result[i >> 1] + (i & 1);
+
+    Idea: binary of i = binary of (i>>1) with one extra bit appended.
+          So i has all the 1s of (i>>1), plus the dropped last bit.
+      - i >> 1  : i with its lowest bit removed (already computed, < i)
+      - i & 1   : the dropped bit — 1 if i is odd, else 0
+
+    Example: i = 13 (1101) → i>>1 = 6 (110), result[6]=2; i&1=1 → result[13]=3 ✓
+
+    Builds whole table in O(n) (each value reuses a smaller, ready one)
+    vs O(n log n) counting bits per number from scratch.
+
+    Code:
+        vector<int> result(n + 1, 0);
+        for (int i = 1; i <= n; ++i)
+            result[i] = result[i >> 1] + (i & 1);
+
 ========================================
 

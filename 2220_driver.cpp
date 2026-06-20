@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "29.cpp"
+#include "2220.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        int dividend = _ri();
-        int divisor = _ri();
+        int start = _ri();
+        int goal = _ri();
         Solution sol;
-        auto res = sol.divide(dividend, divisor);
+        auto res = sol.minBitFlips(start, goal);
         cout << res << "\n";
     }
     return 0;

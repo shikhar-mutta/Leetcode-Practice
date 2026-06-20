@@ -20,6 +20,7 @@ Algorithms
 6. Tortoise and Hare Algorithm (Cycle Detection in LinkList)
 7. Floyd's cycle detection (Cycle start Detection in LinkList)
 8. Boyer-Moore segment tree
+9. Gap Method for merge 2 sorted array
 
 
 

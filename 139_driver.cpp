@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "51.cpp"
+#include "139.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,21 +59,11 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        int n = _ri();
+        string s = _rs();
+        auto wordDict = _rvs();
         Solution sol;
-        auto res = sol.solveNQueens(n);
-        // print as [["..Q.",...],[...]]
-        cout << "[";
-        for (int s = 0; s < (int)res.size(); s++) {
-            if (s) cout << ",";
-            cout << "[";
-            for (int r = 0; r < (int)res[s].size(); r++) {
-                if (r) cout << ",";
-                cout << "\"" << res[s][r] << "\"";
-            }
-            cout << "]";
-        }
-        cout << "]\n";
+        auto res = sol.wordBreak(s, wordDict);
+        cout << (res ? "true" : "false") << "\n";
     }
     return 0;
 }

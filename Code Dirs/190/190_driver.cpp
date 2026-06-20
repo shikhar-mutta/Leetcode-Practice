@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "231.cpp"
+#include "190.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -61,8 +61,8 @@ int main() {
     while (t--) {
         int n = _ri();
         Solution sol;
-        auto res = sol.isPowerOfTwo(n);
-        cout << (res ? "true" : "false") << "\n";
+        auto res = sol.reverseBits(n);
+        cout << res << "\n";
     }
     return 0;
 }

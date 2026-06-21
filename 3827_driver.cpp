@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "3950.cpp"
+#include "3827.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -61,8 +61,8 @@ int main() {
     while (t--) {
         int n = _ri();
         Solution sol;
-        auto res = sol.consecutiveSetBits(n);
-        cout << (res ? "true" : "false") << "\n";
+        auto res = sol.countMonobit(n);
+        cout << res << "\n";
     }
     return 0;
 }

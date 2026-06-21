@@ -259,5 +259,23 @@
         for (int i = 1; i <= n; ++i)
             result[i] = result[i >> 1] + (i & 1);
 
+----------------------------------------
+
+[15] Count Adjacent Set-Bit Pairs (LC 3950)
+
+    pairs = popcount(n & (n >> 1));
+
+    Idea: shifting n right by 1 lines up each bit with its left neighbour.
+          A bit survives the AND only where BOTH n's bit i and bit i+1 are 1,
+          i.e. exactly at each adjacent "11" pair. Popcount = number of pairs.
+
+    Example: n = 6 (110)  → n>>1 = 011 → AND = 010 → popcount 1 → 1 pair
+             n = 7 (111)  → n>>1 = 011 → AND = 011 → popcount 2 → 2 pairs
+             n = 5 (101)  → n>>1 = 010 → AND = 000 → popcount 0 → 0 pairs
+
+    Use case: "exactly one consecutive set bits pair" → check pairs == 1.
+
+    Code: return __builtin_popcount(n & (n >> 1)) == 1;
+
 ========================================
 

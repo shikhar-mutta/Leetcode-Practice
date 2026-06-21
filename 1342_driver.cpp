@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1486.cpp"
+#include "1342.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,9 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        int n = _ri();
-        int start = _ri();
+        int num = _ri();
         Solution sol;
-        auto res = sol.xorOperation(n, start);
+        auto res = sol.numberOfSteps(num);
         cout << res << "\n";
     }
     return 0;

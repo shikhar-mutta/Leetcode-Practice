@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "3370.cpp"
+#include "3304.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,11 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        int n = _ri();
+        int k = _ri();
         Solution sol;
-        auto res = sol.smallestNumber(n);
-        cout << res << "\n";
+        auto res = sol.kthCharacter(k);
+        // TODO: print result
+cout << "TODO\n";
     }
     return 0;
 }

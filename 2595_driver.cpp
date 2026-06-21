@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "3226.cpp"
+#include "2595.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -60,10 +60,9 @@ int main() {
     cin.ignore();
     while (t--) {
         int n = _ri();
-        int k = _ri();
         Solution sol;
-        auto res = sol.minChanges(n, k);
-        cout << res << "\n";
+        auto res = sol.evenOddBit(n);
+        for (int _i=0;_i<(int)res.size();_i++){if(_i)cout<<" ";cout<<res[_i];}cout<<"\n";
     }
     return 0;
 }

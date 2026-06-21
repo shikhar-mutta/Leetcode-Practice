@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "461.cpp"
+#include "3954.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        int x = _ri();
-        int y = _ri();
+        int n = _ri();
+        int k = _ri();
         Solution sol;
-        auto res = sol.hammingDistance(x, y);
+        auto res = sol.sumOfGoodIntegers(n, k);
         cout << res << "\n";
     }
     return 0;

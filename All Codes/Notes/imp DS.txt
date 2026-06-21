@@ -805,3 +805,56 @@
     - Targets can be different lvalues but the value must be assignable to each.
     - Don't confuse with a == b == c (comparison) — that compares left-to-right and
       is almost always a bug.
+
+──────────────────────────────────────────────────────────────
+
+44. __builtin_clz(n) — count leading zeros (bit-length / log2)
+
+    - GCC/Clang built-in: number of leading 0 bits in a 32-bit unsigned int,
+      counting from the MSB. O(1) — single CPU instruction (lzcnt/bsr).
+    - UB if n == 0 (no highest set bit) → always guard n == 0 first.
+    - Variants: __builtin_clzl (long), __builtin_clzll (long long, 64-bit).
+
+    bit-length of n   = 32 - __builtin_clz(n)        // e.g. 10=1010 → 4
+    floor(log2(n))    = 31 - __builtin_clz(n)
+    highest set bit   = 1 << (31 - __builtin_clz(n))
+
+    // All-1s mask as wide as n, then flip every bit (LC 1009 complement):
+    int mask = (1 << (32 - __builtin_clz(n))) - 1;   // n=5 → 0b111
+    return n ^ mask;                                  // 101 ^ 111 = 010 = 2
+
+    - Cousin: __builtin_ctz(n) = count TRAILING zeros → index of lowest set bit.
+      See #9 (__builtin_popcount) for counting set bits.
+
+    ── The __builtin_* bit family (GCC/Clang, O(1), n=10=1010) ──────
+      __builtin_clz(n)      // leading zeros  → 28   (UB if n==0)
+      __builtin_ctz(n)      // trailing zeros → 1    (UB if n==0; lowest set bit idx)
+      __builtin_popcount(n) // set bits (1s)  → 2
+      __builtin_parity(n)   // popcount & 1   → 0    (1 if odd # of set bits)
+      __builtin_ffs(n)      // 1 + index of lowest set bit → 2  (ffs(0)=0, safe)
+
+    - Add suffix l / ll for long / long long (e.g. __builtin_popcountll(x)).
+      clz/ctz default to 32-bit int → use the ll form for 64-bit values.
+    - C++20 alt (no UB, unsigned): std::countl_zero / countr_zero / popcount — see #45.
+
+──────────────────────────────────────────────────────────────
+
+45. C++20 <bit> header — clean, portable replacements (no hardcoded 32)
+
+    #include <bit>   // needs -std=c++20, args must be UNSIGNED (pass 10u or cast)
+
+    std::bit_width(n)   // bits needed to represent n  = 32 - clz(n), but cleaner
+    std::popcount(n)    // count set bits (1s)
+    std::countl_zero(n) // leading zeros  (= __builtin_clz)
+    std::countr_zero(n) // trailing zeros (= __builtin_ctz)
+
+    Example (n = 10 = 1010):
+        std::bit_width(10u)    // → 4   (bit-length)
+        std::popcount(10u)     // → 2   (number of 1s)
+        std::countl_zero(10u)  // → 28
+        std::countr_zero(10u)  // → 1   (lowest set bit index)
+
+    - bit_width(0)=0, popcount(0)=0 — well-defined, NO n==0 guard needed (unlike #44).
+    - Avoids hardcoding 32: bit_width replaces 32 - __builtin_clz(n) directly.
+    - To get type width without a literal: sizeof(n)*8  or
+      std::numeric_limits<unsigned>::digits  (→ 32).

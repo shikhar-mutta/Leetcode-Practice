@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "3882.cpp"
+#include "3858.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -61,7 +61,7 @@ int main() {
     while (t--) {
         auto grid = _rvvi();
         Solution sol;
-        auto res = sol.minCost(grid);
+        auto res = sol.minimumOR(grid);
         cout << res << "\n";
     }
     return 0;

@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1009.cpp"
+#include "476.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,9 +59,9 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        int n = _ri();
+        int num = _ri();
         Solution sol;
-        auto res = sol.bitwiseComplement(n);
+        auto res = sol.findComplement(num);
         cout << res << "\n";
     }
     return 0;

@@ -858,3 +858,27 @@
     - Avoids hardcoding 32: bit_width replaces 32 - __builtin_clz(n) directly.
     - To get type width without a literal: sizeof(n)*8  or
       std::numeric_limits<unsigned>::digits  (→ 32).
+
+──────────────────────────────────────────────────────────────
+
+46. Recursive lambda (C++17) — self-passing idiom
+
+    auto dfs = [&](auto&& dfs, int i, int j) -> void {
+        ...
+        dfs(dfs, i-1, j);      // must pass itself every call
+    };
+    dfs(dfs, n-1, m-1);        // seed call also passes it
+
+    - A plain lambda CAN'T call itself by name: the variable's type isn't
+      deduced yet inside its own body. Fix: take itself as 1st param
+      (auto&& dfs) and forward it on each recursive call.
+    - -> void is REQUIRED: return type can't be auto-deduced through recursion.
+    - [&] captures grid/dp/ans by reference so writes persist.
+
+    C++23 alt ("deducing this") — names itself, no self-passing:
+        auto dfs = [&](this auto&& self, int i, int j) -> void { self(i-1,j); };
+        dfs(n-1, m-1);
+      (needs -std=c++23; GCC only warns + accepts as extension otherwise.)
+
+    C++17 alt: std::function<void(int,int)> dfs = ...; can use its own
+      name directly, but adds indirection/allocation overhead.

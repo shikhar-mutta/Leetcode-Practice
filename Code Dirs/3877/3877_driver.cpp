@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1915.cpp"
+#include "3877.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,9 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        string word = _rs();
+        auto nums = _rvi();
+        int target = _ri();
         Solution sol;
-        auto res = sol.wonderfulSubstrings(word);
+        auto res = sol.minRemovals(nums, target);
         cout << res << "\n";
     }
     return 0;

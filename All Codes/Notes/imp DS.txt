@@ -910,3 +910,28 @@
       class is not enough — omit them and it won't link.
     - Common use: precompute all binary palindromes / primes / etc., then
       binary-search nearest with lower_bound.
+
+──────────────────────────────────────────────────────────────
+
+48. unordered_map with a pair key — needs a custom hash
+
+    std::unordered_map<pair<int,int>, int> WON'T compile: no std::hash
+    for std::pair. Supply your own hash functor:
+
+    struct PairHash {
+        size_t operator()(const pair<int,int>& p) const {
+            return hash<long long>()((long long)p.first << 32 ^ (unsigned)p.second);
+        }
+    };
+    unordered_map<pair<int,int>, int, PairHash> mp;   // 3rd template arg
+
+    - Pack the two ints into one 64-bit value, then hash that.
+    - Simpler alts: encode key as one long long  ((ll)a<<32 | (unsigned)b),
+      or as a string  to_string(a)+","+to_string(b)  (slower, allocates).
+
+    KEY-TYPE rule (what each container accepts as key):
+      map / set            -> needs operator<  (ORDERING).
+          pair, tuple, string, int... all have it -> work out of the box.
+      unordered_map/set    -> needs std::hash + operator== (HASHING).
+          built-ins (int, long long, double, string, pointers) have std::hash;
+          pair/tuple/struct DON'T -> must pass a custom hash functor.

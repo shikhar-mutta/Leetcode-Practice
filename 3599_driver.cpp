@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "3644.cpp"
+#include "3599.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -60,8 +60,9 @@ int main() {
     cin.ignore();
     while (t--) {
         auto nums = _rvi();
+        int k = _ri();
         Solution sol;
-        auto res = sol.sortPermutation(nums);
+        auto res = sol.minXor(nums, k);
         cout << res << "\n";
     }
     return 0;

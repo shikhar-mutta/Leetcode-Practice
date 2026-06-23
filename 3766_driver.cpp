@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "3811.cpp"
+#include "3766.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -60,11 +60,9 @@ int main() {
     cin.ignore();
     while (t--) {
         auto nums = _rvi();
-        int target1 = _ri();
-        int target2 = _ri();
         Solution sol;
-        auto res = sol.alternatingXOR(nums, target1, target2);
-        cout << res << "\n";
+        auto res = sol.minOperations(nums);
+        for (int _i=0;_i<(int)res.size();_i++){if(_i)cout<<" ";cout<<res[_i];}cout<<"\n";
     }
     return 0;
 }

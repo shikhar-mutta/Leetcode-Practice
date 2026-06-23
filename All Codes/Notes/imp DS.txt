@@ -882,3 +882,31 @@
 
     C++17 alt: std::function<void(int,int)> dfs = ...; can use its own
       name directly, but adds indirection/allocation overhead.
+
+──────────────────────────────────────────────────────────────
+
+47. static class member + "done" guard — precompute once across calls
+
+    LeetCode reuses the Solution object and calls the method MANY times.
+    A static member exists once for the whole class (not per object) and
+    keeps its value between calls — perfect for a precomputed table.
+
+    class Solution {
+    public:
+        static vector<int> v;     // shared, persists across all calls
+        static bool done;         // already filled?
+        vector<int> solve(...) {
+            if (!done) { done = true; /* fill v ONCE */ }
+            ... // use v
+        }
+    };
+    vector<int> Solution::v;       // out-of-class DEFINITION (required to link)
+    bool Solution::done = false;
+
+    - WITHOUT the guard, a static vector keeps growing: each call re-pushes
+      the whole table → duplicates → v no longer sorted → lower_bound breaks.
+    - The guard makes the fill happen exactly once (lazy precompute, cached).
+    - The two lines after '};' are DEFINITIONS; declaring static inside the
+      class is not enough — omit them and it won't link.
+    - Common use: precompute all binary palindromes / primes / etc., then
+      binary-search nearest with lower_bound.

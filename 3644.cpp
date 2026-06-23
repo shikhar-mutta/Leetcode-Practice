@@ -9,7 +9,7 @@ public:
     // TC: O(n), SC: O(1)
     int sortPermutation(vector<int> &nums)
     // Each misplaced value v must be swapped, and any swap forces K to be a
-    // submask of v. So the largest valid K is the AND of all misplaced values.
+    // submask of v. So the largest valid K is the AND of all misplaced values. 
     {
         int ans = -1; // all ones, identity for AND
         for (int i = 0; i < (int)nums.size(); i++)

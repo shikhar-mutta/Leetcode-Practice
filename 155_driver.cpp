@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "225.cpp"
+#include "155.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -56,26 +56,27 @@ vector<vector<int>> _rvvi() {
 
 int main() {
     string countLine; getline(cin, countLine); // leading count line — ignore
-    auto ops  = _rvs();   // ["MyStack","push","push","top","pop","empty"]
-    auto args = _rvvi();  // [[],[1],[2],[],[],[]]
+    auto ops  = _rvs();   // ["MinStack","push",...,"getMin"]
+    auto args = _rvvi();  // [[],[-2],[0],[-3],[],[],[],[]]
 
-    MyStack* obj = nullptr;
+    MinStack* obj = nullptr;
     cout << "[";
     for (size_t i = 0; i < ops.size(); i++) {
-        if (i) cout << ", ";
+        if (i) cout << ",";
         const string& op = ops[i];
-        if (op == "MyStack") {
-            obj = new MyStack();
+        if (op == "MinStack") {
+            obj = new MinStack();
             cout << "null";
         } else if (op == "push") {
             obj->push(args[i][0]);
             cout << "null";
         } else if (op == "pop") {
-            cout << obj->pop();
+            obj->pop();
+            cout << "null";
         } else if (op == "top") {
             cout << obj->top();
-        } else if (op == "empty") {
-            cout << (obj->empty() ? "true" : "false");
+        } else if (op == "getMin") {
+            cout << obj->getMin();
         }
     }
     cout << "]\n";

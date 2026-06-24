@@ -1,3 +1,0 @@
-2
-["MyStack","push","push","top","pop","empty"]
-[[],[1],[2],[],[],[]]

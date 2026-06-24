@@ -1,0 +1,2 @@
+1
+["MinStack","push","push","push","getMin","pop","top","getMin"]

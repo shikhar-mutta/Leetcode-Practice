@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "3599.cpp"
+#include "225.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -55,15 +55,30 @@ vector<vector<int>> _rvvi() {
 }
 
 int main() {
-    int t;
-    cin >> t;
-    cin.ignore();
-    while (t--) {
-        auto nums = _rvi();
-        int k = _ri();
-        Solution sol;
-        auto res = sol.minXor(nums, k);
-        cout << res << "\n";
+    string countLine; getline(cin, countLine); // leading count line — ignore
+    auto ops  = _rvs();   // ["MyStack","push","push","top","pop","empty"]
+    auto args = _rvvi();  // [[],[1],[2],[],[],[]]
+
+    MyStack* obj = nullptr;
+    cout << "[";
+    for (size_t i = 0; i < ops.size(); i++) {
+        if (i) cout << ", ";
+        const string& op = ops[i];
+        if (op == "MyStack") {
+            obj = new MyStack();
+            cout << "null";
+        } else if (op == "push") {
+            obj->push(args[i][0]);
+            cout << "null";
+        } else if (op == "pop") {
+            cout << obj->pop();
+        } else if (op == "top") {
+            cout << obj->top();
+        } else if (op == "empty") {
+            cout << (obj->empty() ? "true" : "false");
+        }
     }
+    cout << "]\n";
+    delete obj;
     return 0;
 }

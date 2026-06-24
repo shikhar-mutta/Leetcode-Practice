@@ -1,0 +1,2 @@
+1
+["MyStack","push","push","top","pop","empty"]

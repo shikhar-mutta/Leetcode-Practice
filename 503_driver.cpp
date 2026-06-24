@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "496.cpp"
+#include "503.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,9 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto nums1 = _rvi();
-        auto nums2 = _rvi();
+        auto nums = _rvi();
         Solution sol;
-        auto res = sol.nextGreaterElement(nums1, nums2);
+        auto res = sol.nextGreaterElements(nums);
         for (int _i=0;_i<(int)res.size();_i++){if(_i)cout<<" ";cout<<res[_i];}cout<<"\n";
     }
     return 0;

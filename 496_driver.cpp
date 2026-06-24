@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "155.cpp"
+#include "496.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -55,31 +55,15 @@ vector<vector<int>> _rvvi() {
 }
 
 int main() {
-    string countLine; getline(cin, countLine); // leading count line — ignore
-    auto ops  = _rvs();   // ["MinStack","push",...,"getMin"]
-    auto args = _rvvi();  // [[],[-2],[0],[-3],[],[],[],[]]
-
-    MinStack* obj = nullptr;
-    cout << "[";
-    for (size_t i = 0; i < ops.size(); i++) {
-        if (i) cout << ",";
-        const string& op = ops[i];
-        if (op == "MinStack") {
-            obj = new MinStack();
-            cout << "null";
-        } else if (op == "push") {
-            obj->push(args[i][0]);
-            cout << "null";
-        } else if (op == "pop") {
-            obj->pop();
-            cout << "null";
-        } else if (op == "top") {
-            cout << obj->top();
-        } else if (op == "getMin") {
-            cout << obj->getMin();
-        }
+    int t;
+    cin >> t;
+    cin.ignore();
+    while (t--) {
+        auto nums1 = _rvi();
+        auto nums2 = _rvi();
+        Solution sol;
+        auto res = sol.nextGreaterElement(nums1, nums2);
+        for (int _i=0;_i<(int)res.size();_i++){if(_i)cout<<" ";cout<<res[_i];}cout<<"\n";
     }
-    cout << "]\n";
-    delete obj;
     return 0;
 }

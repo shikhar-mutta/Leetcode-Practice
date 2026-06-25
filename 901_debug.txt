@@ -1,2 +1,0 @@
-1
-["StockSpanner","next","next","next","next","next","next","next"]

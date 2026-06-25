@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "84.cpp"
+#include "85.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -53,15 +53,27 @@ vector<vector<int>> _rvvi() {
     }
     return v;
 }
+vector<vector<char>> _rvvc() {
+    string s; getline(cin,s);
+    vector<vector<char>> v;
+    int dep=0; vector<char> row; bool in=false;
+    for (char c : s) {
+        if (c=='"') { in=!in; continue; }
+        if (in) { row.push_back(c); continue; }
+        if (c=='[') { dep++; if(dep==2) row.clear(); }
+        else if (c==']') { dep--; if(dep==1) v.push_back(row); }
+    }
+    return v;
+}
 
 int main() {
     int t;
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto heights = _rvi();
+        auto matrix = _rvvc();
         Solution sol;
-        auto res = sol.largestRectangleArea(heights);
+        auto res = sol.maximalRectangle(matrix);
         cout << res << "\n";
     }
     return 0;

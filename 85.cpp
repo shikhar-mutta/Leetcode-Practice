@@ -1,4 +1,4 @@
-// Link: https://leetcode.com/problems/largest-rectangle-in-histogram/description/
+// Link: https://leetcode.com/problems/maximal-rectangle/description/
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -6,7 +6,7 @@ using namespace std;
 class Solution
 {
 public:
-    // TC: O(n), SC: O(n)
+    // TC: O(n*m), SC: O(m)
     int largestRectangleArea(vector<int> &heights)
     {
         int n = heights.size(), best = 0;
@@ -24,5 +24,22 @@ public:
             st.push(i);
         }
         return best;
+    }
+
+    int maximalRectangle(vector<vector<char>> &matrix)
+    {
+        vector<int> heights(matrix[0].size(), 0);
+        int maxArea = 0;
+
+        for (const auto &row : matrix)
+        {
+            for (int j = 0; j < row.size(); j++)
+            {
+                heights[j] = (row[j] == '1') ? heights[j] + 1 : 0;
+            }
+            maxArea = max(maxArea, largestRectangleArea(heights));
+        }
+
+        return maxArea;
     }
 };

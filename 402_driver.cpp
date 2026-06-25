@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "2104.cpp"
+#include "402.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,9 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto nums = _rvi();
+        string num = _rs();
+        int k = _ri();
         Solution sol;
-        auto res = sol.subArrayRanges(nums);
+        auto res = sol.removeKdigits(num, k);
         cout << res << "\n";
     }
     return 0;

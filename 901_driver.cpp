@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "239.cpp"
+#include "901.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -55,15 +55,17 @@ vector<vector<int>> _rvvi() {
 }
 
 int main() {
-    int t;
-    cin >> t;
-    cin.ignore();
-    while (t--) {
-        auto nums = _rvi();
-        int k = _ri();
-        Solution sol;
-        auto res = sol.maxSlidingWindow(nums, k);
-        for (int _i=0;_i<(int)res.size();_i++){if(_i)cout<<" ";cout<<res[_i];}cout<<"\n";
+    string skip; getline(cin, skip);   // leading count line (number of input lines)
+    auto ops  = _rvs();                // ["StockSpanner","next",...]
+    auto args = _rvvi();               // [[],[100],[80],...]
+
+    StockSpanner* obj = nullptr;
+    cout << "[";
+    for (size_t i = 0; i < ops.size(); i++) {
+        if (i) cout << ", ";
+        if (ops[i] == "StockSpanner") { obj = new StockSpanner(); cout << "null"; }
+        else                          { cout << obj->next(args[i][0]); }
     }
+    cout << "]\n";
     return 0;
 }

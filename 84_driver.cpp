@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "402.cpp"
+#include "84.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,9 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        string num = _rs();
-        int k = _ri();
+        auto heights = _rvi();
         Solution sol;
-        auto res = sol.removeKdigits(num, k);
+        auto res = sol.largestRectangleArea(heights);
         cout << res << "\n";
     }
     return 0;

@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "85.cpp"
+#include "239.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -53,28 +53,17 @@ vector<vector<int>> _rvvi() {
     }
     return v;
 }
-vector<vector<char>> _rvvc() {
-    string s; getline(cin,s);
-    vector<vector<char>> v;
-    int dep=0; vector<char> row; bool in=false;
-    for (char c : s) {
-        if (c=='"') { in=!in; continue; }
-        if (in) { row.push_back(c); continue; }
-        if (c=='[') { dep++; if(dep==2) row.clear(); }
-        else if (c==']') { dep--; if(dep==1) v.push_back(row); }
-    }
-    return v;
-}
 
 int main() {
     int t;
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto matrix = _rvvc();
+        auto nums = _rvi();
+        int k = _ri();
         Solution sol;
-        auto res = sol.maximalRectangle(matrix);
-        cout << res << "\n";
+        auto res = sol.maxSlidingWindow(nums, k);
+        for (int _i=0;_i<(int)res.size();_i++){if(_i)cout<<" ";cout<<res[_i];}cout<<"\n";
     }
     return 0;
 }

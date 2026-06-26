@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "295.cpp"
+#include "347.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -54,61 +54,16 @@ vector<vector<int>> _rvvi() {
     return v;
 }
 
-// Split the outer [...] args line into its top-level bracket groups.
-vector<string> _splitGroups(const string& line) {
-    string body = line.substr(1, line.size() - 2);
-    vector<string> groups;
-    int dep = 0; string cur;
-    for (char c : body) {
-        if (c == '[') { if (dep == 0) cur.clear(); dep++; cur += c; }
-        else if (c == ']') { dep--; cur += c; if (dep == 0) groups.push_back(cur); }
-        else if (dep > 0) cur += c;
-    }
-    return groups;
-}
-
-// Pull every integer out of a string.
-vector<int> _ints(const string& s) {
-    vector<int> v; int i = 0, n = s.size();
-    while (i < n) {
-        if (s[i] == '-' || isdigit((unsigned char)s[i])) {
-            int j = i + 1;
-            while (j < n && isdigit((unsigned char)s[j])) j++;
-            v.push_back(stoi(s.substr(i, j - i)));
-            i = j;
-        } else i++;
-    }
-    return v;
-}
-
-// Format a double the way LeetCode prints it: trim trailing zeros but keep one decimal.
-string _fmtD(double d) {
-    ostringstream o; o << d; string s = o.str();
-    if (s.find('.') == string::npos) s += ".0";
-    return s;
-}
-
 int main() {
     int t;
-    cin >> t;          // number of input lines that follow (2 per test case)
+    cin >> t;
     cin.ignore();
-    int cases = t / 2;
-    while (cases--) {
-        auto ops = _rvs();                 // ["MedianFinder","addNum",...]
-        string argsLine; getline(cin, argsLine);
-        auto groups = _splitGroups(argsLine);
-
-        MedianFinder obj;
-        cout << "[null";
-        for (size_t i = 1; i < ops.size(); i++) {
-            if (ops[i] == "addNum") {
-                obj.addNum(_ints(groups[i])[0]);
-                cout << ", null";
-            } else { // findMedian
-                cout << ", " << _fmtD(obj.findMedian());
-            }
-        }
-        cout << "]\n";
+    while (t--) {
+        auto nums = _rvi();
+        int k = _ri();
+        Solution sol;
+        auto res = sol.topKFrequent(nums, k);
+        for (int _i=0;_i<(int)res.size();_i++){if(_i)cout<<" ";cout<<res[_i];}cout<<"\n";
     }
     return 0;
 }

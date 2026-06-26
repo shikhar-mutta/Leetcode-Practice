@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "992.cpp"
+#include "621.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,14 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto nums = _rvi();
-        int k = _ri();
+        auto _ts = _rvs();
+        vector<char> tasks;
+        for (auto& x : _ts)
+            for (char c : x)
+                if (!isspace((unsigned char)c)) { tasks.push_back(c); break; }
+        int n = _ri();
         Solution sol;
-        auto res = sol.subarraysWithKDistinct(nums, k);
+        auto res = sol.leastInterval(tasks, n);
         cout << res << "\n";
     }
     return 0;

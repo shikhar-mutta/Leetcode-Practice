@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "703.cpp"
+#include "295.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -54,10 +54,9 @@ vector<vector<int>> _rvvi() {
     return v;
 }
 
-// Split the outer [...] args line into its top-level bracket groups,
-// e.g. "[[3,[4,5,8,2]],[3],[5]]" -> {"[3,[4,5,8,2]]", "[3]", "[5]"}.
+// Split the outer [...] args line into its top-level bracket groups.
 vector<string> _splitGroups(const string& line) {
-    string body = line.substr(1, line.size() - 2); // drop outer [ ]
+    string body = line.substr(1, line.size() - 2);
     vector<string> groups;
     int dep = 0; string cur;
     for (char c : body) {
@@ -68,7 +67,7 @@ vector<string> _splitGroups(const string& line) {
     return groups;
 }
 
-// Pull every integer out of a string (handles nested brackets/commas).
+// Pull every integer out of a string.
 vector<int> _ints(const string& s) {
     vector<int> v; int i = 0, n = s.size();
     while (i < n) {
@@ -82,26 +81,32 @@ vector<int> _ints(const string& s) {
     return v;
 }
 
+// Format a double the way LeetCode prints it: trim trailing zeros but keep one decimal.
+string _fmtD(double d) {
+    ostringstream o; o << d; string s = o.str();
+    if (s.find('.') == string::npos) s += ".0";
+    return s;
+}
+
 int main() {
     int t;
     cin >> t;          // number of input lines that follow (2 per test case)
     cin.ignore();
     int cases = t / 2;
     while (cases--) {
-        auto ops = _rvs();                 // ["KthLargest","add",...]
+        auto ops = _rvs();                 // ["MedianFinder","addNum",...]
         string argsLine; getline(cin, argsLine);
         auto groups = _splitGroups(argsLine);
 
-        // First group constructs the object: k + initial nums array.
-        auto ctor = _ints(groups[0]);
-        int k = ctor[0];
-        vector<int> nums(ctor.begin() + 1, ctor.end());
-        KthLargest obj(k, nums);
-
+        MedianFinder obj;
         cout << "[null";
         for (size_t i = 1; i < ops.size(); i++) {
-            int val = _ints(groups[i])[0];
-            cout << ", " << obj.add(val);
+            if (ops[i] == "addNum") {
+                obj.addNum(_ints(groups[i])[0]);
+                cout << ", null";
+            } else { // findMedian
+                cout << ", " << _fmtD(obj.findMedian());
+            }
         }
         cout << "]\n";
     }

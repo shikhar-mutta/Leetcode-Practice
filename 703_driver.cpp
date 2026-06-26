@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "846.cpp"
+#include "703.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -54,16 +54,56 @@ vector<vector<int>> _rvvi() {
     return v;
 }
 
+// Split the outer [...] args line into its top-level bracket groups,
+// e.g. "[[3,[4,5,8,2]],[3],[5]]" -> {"[3,[4,5,8,2]]", "[3]", "[5]"}.
+vector<string> _splitGroups(const string& line) {
+    string body = line.substr(1, line.size() - 2); // drop outer [ ]
+    vector<string> groups;
+    int dep = 0; string cur;
+    for (char c : body) {
+        if (c == '[') { if (dep == 0) cur.clear(); dep++; cur += c; }
+        else if (c == ']') { dep--; cur += c; if (dep == 0) groups.push_back(cur); }
+        else if (dep > 0) cur += c;
+    }
+    return groups;
+}
+
+// Pull every integer out of a string (handles nested brackets/commas).
+vector<int> _ints(const string& s) {
+    vector<int> v; int i = 0, n = s.size();
+    while (i < n) {
+        if (s[i] == '-' || isdigit((unsigned char)s[i])) {
+            int j = i + 1;
+            while (j < n && isdigit((unsigned char)s[j])) j++;
+            v.push_back(stoi(s.substr(i, j - i)));
+            i = j;
+        } else i++;
+    }
+    return v;
+}
+
 int main() {
     int t;
-    cin >> t;
+    cin >> t;          // number of input lines that follow (2 per test case)
     cin.ignore();
-    while (t--) {
-        auto hand = _rvi();
-        int groupSize = _ri();
-        Solution sol;
-        auto res = sol.isNStraightHand(hand, groupSize);
-        cout << (res ? "true" : "false") << "\n";
+    int cases = t / 2;
+    while (cases--) {
+        auto ops = _rvs();                 // ["KthLargest","add",...]
+        string argsLine; getline(cin, argsLine);
+        auto groups = _splitGroups(argsLine);
+
+        // First group constructs the object: k + initial nums array.
+        auto ctor = _ints(groups[0]);
+        int k = ctor[0];
+        vector<int> nums(ctor.begin() + 1, ctor.end());
+        KthLargest obj(k, nums);
+
+        cout << "[null";
+        for (size_t i = 1; i < ops.size(); i++) {
+            int val = _ints(groups[i])[0];
+            cout << ", " << obj.add(val);
+        }
+        cout << "]\n";
     }
     return 0;
 }

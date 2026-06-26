@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "621.cpp"
+#include "846.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,15 +59,11 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto _ts = _rvs();
-        vector<char> tasks;
-        for (auto& x : _ts)
-            for (char c : x)
-                if (!isspace((unsigned char)c)) { tasks.push_back(c); break; }
-        int n = _ri();
+        auto hand = _rvi();
+        int groupSize = _ri();
         Solution sol;
-        auto res = sol.leastInterval(tasks, n);
-        cout << res << "\n";
+        auto res = sol.isNStraightHand(hand, groupSize);
+        cout << (res ? "true" : "false") << "\n";
     }
     return 0;
 }

@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1248.cpp"
+#include "1358.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,9 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto nums = _rvi();
-        int k = _ri();
+        string s = _rs();
         Solution sol;
-        auto res = sol.numberOfSubarrays(nums, k);
+        auto res = sol.numberOfSubstrings(s);
         cout << res << "\n";
     }
     return 0;

@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "144.cpp"
+#include "94.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -60,7 +60,6 @@ vector<string> _rtok() {
     auto body = s.substr(1, s.size()-2);
     stringstream ss(body); string t;
     while (getline(ss,t,',')) {
-        // trim spaces
         int a=0,b=t.size();
         while(a<b && isspace((unsigned char)t[a])) a++;
         while(b>a && isspace((unsigned char)t[b-1])) b--;
@@ -96,7 +95,7 @@ int main() {
     while (t--) {
         TreeNode* root = _buildTree();
         Solution sol;
-        auto res = sol.preorderTraversal(root);
+        auto res = sol.inorderTraversal(root);
         for (int _i=0;_i<(int)res.size();_i++){if(_i)cout<<" ";cout<<res[_i];}cout<<"\n";
     }
     return 0;

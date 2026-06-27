@@ -6,6 +6,7 @@ using namespace std;
 class Solution
 {
 public:
+    // TC: O(n). SC: O(1).
     int jump(vector<int> &nums)
     {
         int jumps = 0, curEnd = 0, farthest = 0;

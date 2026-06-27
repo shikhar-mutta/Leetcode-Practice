@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "94.cpp"
+#include "145.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -95,7 +95,7 @@ int main() {
     while (t--) {
         TreeNode* root = _buildTree();
         Solution sol;
-        auto res = sol.inorderTraversal(root);
+        auto res = sol.postorderTraversal(root);
         for (int _i=0;_i<(int)res.size();_i++){if(_i)cout<<" ";cout<<res[_i];}cout<<"\n";
     }
     return 0;

@@ -1,4 +1,4 @@
-// Link: https://leetcode.com/problems/binary-tree-inorder-traversal/description/
+// Link: https://leetcode.com/problems/binary-tree-postorder-traversal/description/
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -17,23 +17,23 @@ class Solution
 {
 public:
     // TC: O(n), SC: O(n). Iterative solution.
-    vector<int> inorderTraversal(TreeNode *root)
+    vector<int> postorderTraversal(TreeNode *root)
     {
         vector<int> res;
         stack<TreeNode *> st;
-        TreeNode *cur = root;
-        while (cur || !st.empty())
+        if (root)
+            st.push(root);
+        while (!st.empty())
         {
-            while (cur)
-            {
-                st.push(cur);
-                cur = cur->left;
-            }
-            cur = st.top();
+            TreeNode *node = st.top();
             st.pop();
-            res.push_back(cur->val);
-            cur = cur->right;
+            res.push_back(node->val);
+            if (node->left)
+                st.push(node->left);
+            if (node->right)
+                st.push(node->right);
         }
+        reverse(res.begin(), res.end());
         return res;
     }
 };

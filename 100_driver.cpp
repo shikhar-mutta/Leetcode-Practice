@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "124.cpp"
+#include "100.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -96,10 +96,11 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        TreeNode* root = _rtree();
+        TreeNode* p = _rtree();
+        TreeNode* q = _rtree();
         Solution sol;
-        auto res = sol.maxPathSum(root);
-        cout << res << "\n";
+        auto res = sol.isSameTree(p, q);
+        cout << (res ? "true" : "false") << "\n";
     }
     return 0;
 }

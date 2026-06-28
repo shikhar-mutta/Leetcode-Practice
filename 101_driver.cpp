@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "199.cpp"
+#include "101.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -98,8 +98,8 @@ int main() {
     while (t--) {
         TreeNode* root = _rtree();
         Solution sol;
-        auto res = sol.rightSideView(root);
-        for (int _i=0;_i<(int)res.size();_i++){if(_i)cout<<" ";cout<<res[_i];}cout<<"\n";
+        auto res = sol.isSymmetric(root);
+        cout << (res ? "true" : "false") << "\n";
     }
     return 0;
 }

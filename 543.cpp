@@ -1,4 +1,4 @@
-// Link: https://leetcode.com/problems/balanced-binary-tree/description/
+// Link: https://leetcode.com/problems/diameter-of-binary-tree/description/
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -13,27 +13,25 @@ struct TreeNode
     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 };
 
-// TC: O(n), SC: O(h) where h is the height of the tree. In worst case, h = n (skewed tree).
+// TC: O(n), SC: O(h) where h is the height of the tree. In worst case, h = n.
 class Solution
 {
 public:
-    // Returns height if balanced, -1 if any subtree is unbalanced.
+    int best = 0;
+    // Returns height; updates best with the longest path (in edges) through this node.
     int height(TreeNode *root)
     {
         if (!root)
             return 0;
         int l = height(root->left);
-        if (l == -1)
-            return -1;
         int r = height(root->right);
-        if (r == -1)
-            return -1;
-        if (abs(l - r) > 1)
-            return -1;
+        best = max(best, l + r);
         return 1 + max(l, r);
     }
-    bool isBalanced(TreeNode *root)
+    int diameterOfBinaryTree(TreeNode *root)
     {
-        return height(root) != -1;
+        best = 0;
+        height(root);
+        return best;
     }
 };

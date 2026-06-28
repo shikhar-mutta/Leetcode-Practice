@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "103.cpp"
+#include "987.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -98,7 +98,7 @@ int main() {
     while (t--) {
         TreeNode* root = _rtree();
         Solution sol;
-        auto res = sol.zigzagLevelOrder(root);
+        auto res = sol.verticalTraversal(root);
         for(auto&row:res){for(int _i=0;_i<(int)row.size();_i++){if(_i)cout<<" ";cout<<row[_i];}cout<<"\n";}
     }
     return 0;

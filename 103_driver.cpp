@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "100.cpp"
+#include "103.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -96,11 +96,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        TreeNode* p = _rtree();
-        TreeNode* q = _rtree();
+        TreeNode* root = _rtree();
         Solution sol;
-        auto res = sol.isSameTree(p, q);
-        cout << (res ? "true" : "false") << "\n";
+        auto res = sol.zigzagLevelOrder(root);
+        for(auto&row:res){for(int _i=0;_i<(int)row.size();_i++){if(_i)cout<<" ";cout<<row[_i];}cout<<"\n";}
     }
     return 0;
 }

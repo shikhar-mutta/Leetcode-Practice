@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "543.cpp"
+#include "124.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -98,7 +98,7 @@ int main() {
     while (t--) {
         TreeNode* root = _rtree();
         Solution sol;
-        auto res = sol.diameterOfBinaryTree(root);
+        auto res = sol.maxPathSum(root);
         cout << res << "\n";
     }
     return 0;

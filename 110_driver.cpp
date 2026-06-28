@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "104.cpp"
+#include "110.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -54,49 +54,15 @@ vector<vector<int>> _rvvi() {
     return v;
 }
 
-vector<string> _rtok() {
-    string s; getline(cin,s);
-    vector<string> v;
-    auto body = s.substr(1, s.size()-2);
-    stringstream ss(body); string t;
-    while (getline(ss,t,',')) {
-        int a=0,b=t.size();
-        while(a<b && isspace((unsigned char)t[a])) a++;
-        while(b>a && isspace((unsigned char)t[b-1])) b--;
-        v.push_back(t.substr(a,b-a));
-    }
-    return v;
-}
-
-TreeNode* _buildTree() {
-    auto tok = _rtok();
-    if (tok.empty() || tok[0]=="" || tok[0]=="null") return nullptr;
-    TreeNode* root = new TreeNode(stoi(tok[0]));
-    queue<TreeNode*> q; q.push(root);
-    size_t i = 1;
-    while (!q.empty() && i < tok.size()) {
-        TreeNode* cur = q.front(); q.pop();
-        if (i < tok.size()) {
-            if (tok[i] != "null") { cur->left = new TreeNode(stoi(tok[i])); q.push(cur->left); }
-            i++;
-        }
-        if (i < tok.size()) {
-            if (tok[i] != "null") { cur->right = new TreeNode(stoi(tok[i])); q.push(cur->right); }
-            i++;
-        }
-    }
-    return root;
-}
-
 int main() {
     int t;
     cin >> t;
     cin.ignore();
     while (t--) {
-        TreeNode* root = _buildTree();
+        // TODO: read TreeNode* root
         Solution sol;
-        auto res = sol.maxDepth(root);
-        cout << res << "\n";
+        auto res = sol.isBalanced(root);
+        cout << (res ? "true" : "false") << "\n";
     }
     return 0;
 }

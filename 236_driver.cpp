@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "101.cpp"
+#include "236.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -91,15 +91,25 @@ TreeNode* _rtree() {
     return root;
 }
 
+// Find the node holding value x (values are unique in this problem).
+TreeNode* _find(TreeNode* root, int x) {
+    if (!root) return nullptr;
+    if (root->val == x) return root;
+    TreeNode* l = _find(root->left, x);
+    return l ? l : _find(root->right, x);
+}
+
 int main() {
     int t;
     cin >> t;
     cin.ignore();
     while (t--) {
         TreeNode* root = _rtree();
+        TreeNode* p = _find(root, _ri());
+        TreeNode* q = _find(root, _ri());
         Solution sol;
-        auto res = sol.isSymmetric(root);
-        cout << (res ? "true" : "false") << "\n";
+        auto res = sol.lowestCommonAncestor(root, p, q);
+        cout << res->val << "\n";
     }
     return 0;
 }

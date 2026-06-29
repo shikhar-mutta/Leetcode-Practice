@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "106.cpp"
+#include "297.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -54,29 +54,43 @@ vector<vector<int>> _rvvi() {
     return v;
 }
 
+// Split a "[a,b,null,...]" line into raw tokens (keeps "null").
+vector<string> _rtok() {
+    string s; getline(cin,s);
+    vector<string> v;
+    auto body = s.substr(1, s.size()-2);
+    stringstream ss(body); string t;
+    while (getline(ss,t,',')) {
+        while(!t.empty() && (t.front()==' '||t.front()=='"')) t.erase(t.begin());
+        while(!t.empty() && (t.back()==' '||t.back()=='"'))    t.pop_back();
+        if(!t.empty()) v.push_back(t);
+    }
+    return v;
+}
+
+TreeNode* buildTree(const vector<string>& toks) {
+    if (toks.empty() || toks[0]=="null") return nullptr;
+    TreeNode* root = new TreeNode(stoi(toks[0]));
+    queue<TreeNode*> q; q.push(root);
+    size_t i = 1;
+    while (!q.empty() && i < toks.size()) {
+        TreeNode* node = q.front(); q.pop();
+        if (i < toks.size()) { if(toks[i]!="null"){ node->left  = new TreeNode(stoi(toks[i])); q.push(node->left);  } i++; }
+        if (i < toks.size()) { if(toks[i]!="null"){ node->right = new TreeNode(stoi(toks[i])); q.push(node->right); } i++; }
+    }
+    return root;
+}
+
 int main() {
     int t;
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto inorder = _rvi();
-        auto postorder = _rvi();
-        Solution sol;
-        auto res = sol.buildTree(inorder, postorder);
-        // Level-order serialize, LeetCode style (trailing nulls trimmed).
-        vector<string> out;
-        if (res) {
-            queue<TreeNode*> q; q.push(res);
-            while (!q.empty()) {
-                TreeNode* node = q.front(); q.pop();
-                if (node) { out.push_back(to_string(node->val)); q.push(node->left); q.push(node->right); }
-                else out.push_back("null");
-            }
-            while (!out.empty() && out.back()=="null") out.pop_back();
-        }
-        cout << "[";
-        for (int _i=0;_i<(int)out.size();_i++){ if(_i)cout<<","; cout<<out[_i]; }
-        cout << "]\n";
+        TreeNode* root = buildTree(_rtok());
+        Codec sol;
+        // Round-trip through deserialize to exercise both directions.
+        auto res = sol.serialize(sol.deserialize(sol.serialize(root)));
+        cout << res << "\n";
     }
     return 0;
 }

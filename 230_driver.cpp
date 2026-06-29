@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "450.cpp"
+#include "230.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -81,32 +81,16 @@ TreeNode* buildTree(const vector<string>& toks) {
     return root;
 }
 
-// Level-order serialize, LeetCode style (trailing nulls trimmed).
-string serializeTree(TreeNode* root) {
-    if (!root) return "[]";
-    vector<string> out;
-    queue<TreeNode*> q; q.push(root);
-    while (!q.empty()) {
-        TreeNode* node = q.front(); q.pop();
-        if (node) { out.push_back(to_string(node->val)); q.push(node->left); q.push(node->right); }
-        else out.push_back("null");
-    }
-    while (!out.empty() && out.back()=="null") out.pop_back();
-    string s = "[";
-    for (int i = 0; i < (int)out.size(); i++) { if(i) s += ","; s += out[i]; }
-    return s + "]";
-}
-
 int main() {
     int t;
     cin >> t;
     cin.ignore();
     while (t--) {
         TreeNode* root = buildTree(_rtok());
-        int key = _ri();
+        int k = _ri();
         Solution sol;
-        auto res = sol.deleteNode(root, key);
-        cout << serializeTree(res) << "\n";
+        auto res = sol.kthSmallest(root, k);
+        cout << res << "\n";
     }
     return 0;
 }

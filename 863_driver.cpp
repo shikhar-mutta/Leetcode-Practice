@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "662.cpp"
+#include "863.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -54,52 +54,17 @@ vector<vector<int>> _rvvi() {
     return v;
 }
 
-// Split a "[a,b,null,...]" line into raw string tokens (keeps "null").
-vector<string> _rtok() {
-    string s; getline(cin,s);
-    vector<string> v;
-    auto body = s.substr(1, s.size()-2);
-    stringstream ss(body); string t;
-    while (getline(ss,t,',')) {
-        size_t a=t.find_first_not_of(" "); size_t b=t.find_last_not_of(" ");
-        if (a==string::npos) continue;
-        v.push_back(t.substr(a, b-a+1));
-    }
-    return v;
-}
-
-// Build a tree from level-order tokens (LeetCode format, "null" = missing).
-TreeNode* _rtree() {
-    auto tok = _rtok();
-    if (tok.empty() || tok[0]=="null") return nullptr;
-    TreeNode* root = new TreeNode(stoi(tok[0]));
-    queue<TreeNode*> q; q.push(root);
-    size_t i = 1;
-    while (!q.empty() && i < tok.size()) {
-        TreeNode* cur = q.front(); q.pop();
-        if (i < tok.size() && tok[i] != "null") {
-            cur->left = new TreeNode(stoi(tok[i]));
-            q.push(cur->left);
-        }
-        i++;
-        if (i < tok.size() && tok[i] != "null") {
-            cur->right = new TreeNode(stoi(tok[i]));
-            q.push(cur->right);
-        }
-        i++;
-    }
-    return root;
-}
-
 int main() {
     int t;
     cin >> t;
     cin.ignore();
     while (t--) {
-        TreeNode* root = _rtree();
+        // TODO: read TreeNode* root
+        // TODO: read TreeNode* target
+        int k = _ri();
         Solution sol;
-        auto res = sol.widthOfBinaryTree(root);
-        cout << res << "\n";
+        auto res = sol.distanceK(root, target, k);
+        for (int _i=0;_i<(int)res.size();_i++){if(_i)cout<<" ";cout<<res[_i];}cout<<"\n";
     }
     return 0;
 }

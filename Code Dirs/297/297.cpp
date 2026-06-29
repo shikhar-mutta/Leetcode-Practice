@@ -54,6 +54,8 @@ int speedUp = []
     cout.tie(nullptr);
     return 0;
 }();
+
+// TC: O(n), SC: O(n)
 class Codec
 {
 public:

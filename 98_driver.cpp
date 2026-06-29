@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "230.cpp"
+#include "98.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -87,10 +87,9 @@ int main() {
     cin.ignore();
     while (t--) {
         TreeNode* root = buildTree(_rtok());
-        int k = _ri();
         Solution sol;
-        auto res = sol.kthSmallest(root, k);
-        cout << res << "\n";
+        auto res = sol.isValidBST(root);
+        cout << (res ? "true" : "false") << "\n";
     }
     return 0;
 }

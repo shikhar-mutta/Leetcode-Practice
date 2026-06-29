@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "105.cpp"
+#include "106.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto preorder = _rvi();
         auto inorder = _rvi();
+        auto postorder = _rvi();
         Solution sol;
-        auto res = sol.buildTree(preorder, inorder);
+        auto res = sol.buildTree(inorder, postorder);
         // Level-order serialize, LeetCode style (trailing nulls trimmed).
         vector<string> out;
         if (res) {

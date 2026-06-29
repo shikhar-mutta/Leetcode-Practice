@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "701.cpp"
+#include "450.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -103,9 +103,9 @@ int main() {
     cin.ignore();
     while (t--) {
         TreeNode* root = buildTree(_rtok());
-        int val = _ri();
+        int key = _ri();
         Solution sol;
-        auto res = sol.insertIntoBST(root, val);
+        auto res = sol.deleteNode(root, key);
         cout << serializeTree(res) << "\n";
     }
     return 0;

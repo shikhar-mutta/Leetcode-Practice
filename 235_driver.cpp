@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "98.cpp"
+#include "235.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -81,15 +81,24 @@ TreeNode* buildTree(const vector<string>& toks) {
     return root;
 }
 
+TreeNode* findNode(TreeNode* root, int val) {
+    if (!root) return nullptr;
+    if (root->val == val) return root;
+    if (TreeNode* l = findNode(root->left, val)) return l;
+    return findNode(root->right, val);
+}
+
 int main() {
     int t;
     cin >> t;
     cin.ignore();
     while (t--) {
         TreeNode* root = buildTree(_rtok());
+        TreeNode* p = findNode(root, _ri());
+        TreeNode* q = findNode(root, _ri());
         Solution sol;
-        auto res = sol.isValidBST(root);
-        cout << (res ? "true" : "false") << "\n";
+        auto res = sol.lowestCommonAncestor(root, p, q);
+        cout << (res ? to_string(res->val) : "null") << "\n";
     }
     return 0;
 }

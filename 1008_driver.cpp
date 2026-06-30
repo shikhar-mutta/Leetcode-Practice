@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "235.cpp"
+#include "1008.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -54,51 +54,27 @@ vector<vector<int>> _rvvi() {
     return v;
 }
 
-// Split a "[a,b,null,...]" line into raw tokens (keeps "null").
-vector<string> _rtok() {
-    string s; getline(cin,s);
-    vector<string> v;
-    auto body = s.substr(1, s.size()-2);
-    stringstream ss(body); string t;
-    while (getline(ss,t,',')) {
-        while(!t.empty() && (t.front()==' '||t.front()=='"')) t.erase(t.begin());
-        while(!t.empty() && (t.back()==' '||t.back()=='"'))    t.pop_back();
-        if(!t.empty()) v.push_back(t);
-    }
-    return v;
-}
-
-TreeNode* buildTree(const vector<string>& toks) {
-    if (toks.empty() || toks[0]=="null") return nullptr;
-    TreeNode* root = new TreeNode(stoi(toks[0]));
-    queue<TreeNode*> q; q.push(root);
-    size_t i = 1;
-    while (!q.empty() && i < toks.size()) {
-        TreeNode* node = q.front(); q.pop();
-        if (i < toks.size()) { if(toks[i]!="null"){ node->left  = new TreeNode(stoi(toks[i])); q.push(node->left);  } i++; }
-        if (i < toks.size()) { if(toks[i]!="null"){ node->right = new TreeNode(stoi(toks[i])); q.push(node->right); } i++; }
-    }
-    return root;
-}
-
-TreeNode* findNode(TreeNode* root, int val) {
-    if (!root) return nullptr;
-    if (root->val == val) return root;
-    if (TreeNode* l = findNode(root->left, val)) return l;
-    return findNode(root->right, val);
-}
-
 int main() {
     int t;
     cin >> t;
     cin.ignore();
     while (t--) {
-        TreeNode* root = buildTree(_rtok());
-        TreeNode* p = findNode(root, _ri());
-        TreeNode* q = findNode(root, _ri());
+        auto preorder = _rvi();
         Solution sol;
-        auto res = sol.lowestCommonAncestor(root, p, q);
-        cout << (res ? to_string(res->val) : "null") << "\n";
+        auto res = sol.bstFromPreorder(preorder);
+        // Print as LeetCode level-order with trailing nulls trimmed.
+        vector<string> out;
+        queue<TreeNode*> q; q.push(res);
+        while (!q.empty()) {
+            TreeNode* n = q.front(); q.pop();
+            if (!n) { out.push_back("null"); continue; }
+            out.push_back(to_string(n->val));
+            q.push(n->left); q.push(n->right);
+        }
+        while (!out.empty() && out.back()=="null") out.pop_back();
+        cout << "[";
+        for (size_t i=0;i<out.size();i++){ if(i)cout<<","; cout<<out[i]; }
+        cout << "]\n";
     }
     return 0;
 }

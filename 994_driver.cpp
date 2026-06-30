@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "547.cpp"
+#include "994.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,9 +59,9 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto isConnected = _rvvi();
+        auto grid = _rvvi();
         Solution sol;
-        auto res = sol.findCircleNum(isConnected);
+        auto res = sol.orangesRotting(grid);
         cout << res << "\n";
     }
     return 0;

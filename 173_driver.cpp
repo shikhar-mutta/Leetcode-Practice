@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1008.cpp"
+#include "173.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -54,27 +54,51 @@ vector<vector<int>> _rvvi() {
     return v;
 }
 
-int main() {
-    int t;
-    cin >> t;
-    cin.ignore();
-    while (t--) {
-        auto preorder = _rvi();
-        Solution sol;
-        auto res = sol.bstFromPreorder(preorder);
-        // Print as LeetCode level-order with trailing nulls trimmed.
-        vector<string> out;
-        queue<TreeNode*> q; q.push(res);
-        while (!q.empty()) {
-            TreeNode* n = q.front(); q.pop();
-            if (!n) { out.push_back("null"); continue; }
-            out.push_back(to_string(n->val));
-            q.push(n->left); q.push(n->right);
-        }
-        while (!out.empty() && out.back()=="null") out.pop_back();
-        cout << "[";
-        for (size_t i=0;i<out.size();i++){ if(i)cout<<","; cout<<out[i]; }
-        cout << "]\n";
+// Build a tree from LeetCode level-order tokens (with "null" markers).
+TreeNode* buildTree(const vector<string>& tok) {
+    if (tok.empty() || tok[0]=="null") return nullptr;
+    TreeNode* root = new TreeNode(stoi(tok[0]));
+    queue<TreeNode*> q; q.push(root);
+    size_t i = 1;
+    while (!q.empty() && i < tok.size()) {
+        TreeNode* n = q.front(); q.pop();
+        if (i < tok.size()) { if (tok[i]!="null") { n->left  = new TreeNode(stoi(tok[i])); q.push(n->left); }  i++; }
+        if (i < tok.size()) { if (tok[i]!="null") { n->right = new TreeNode(stoi(tok[i])); q.push(n->right); } i++; }
     }
+    return root;
+}
+
+int main() {
+    string countLine; getline(cin, countLine);   // leading count — ignore
+    auto ops = _rvs();                            // ["BSTIterator","next",...]
+    string argsLine; getline(cin, argsLine);      // [[[7,3,...]],[],[],...]
+
+    // Extract the constructor's tree tokens: the first depth-3 [..] group.
+    vector<string> treeTok;
+    size_t p = argsLine.find('[');
+    p = argsLine.find('[', p+1);
+    p = argsLine.find('[', p+1);
+    if (p != string::npos) {
+        string cur;
+        for (size_t q = p+1; q < argsLine.size() && argsLine[q] != ']'; q++) {
+            char c = argsLine[q];
+            if (c == ',') { treeTok.push_back(cur); cur=""; }
+            else cur += c;
+        }
+        if (!cur.empty()) treeTok.push_back(cur);
+    }
+    TreeNode* root = buildTree(treeTok);
+
+    BSTIterator* it = nullptr;
+    vector<string> out;
+    for (const string& op : ops) {
+        if (op == "BSTIterator")   { it = new BSTIterator(root); out.push_back("null"); }
+        else if (op == "next")     { out.push_back(to_string(it->next())); }
+        else if (op == "hasNext")  { out.push_back(it->hasNext() ? "true" : "false"); }
+    }
+
+    cout << "[";
+    for (size_t i = 0; i < out.size(); i++) { if (i) cout << ", "; cout << out[i]; }
+    cout << "]\n";
     return 0;
 }

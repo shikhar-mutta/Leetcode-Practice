@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "994.cpp"
+#include "207.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,11 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto grid = _rvvi();
+        int numCourses = _ri();
+        auto prerequisites = _rvvi();
         Solution sol;
-        auto res = sol.orangesRotting(grid);
-        cout << res << "\n";
+        auto res = sol.canFinish(numCourses, prerequisites);
+        cout << (res ? "true" : "false") << "\n";
     }
     return 0;
 }

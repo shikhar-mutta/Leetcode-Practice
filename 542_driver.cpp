@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "207.cpp"
+#include "542.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,11 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        int numCourses = _ri();
-        auto prerequisites = _rvvi();
+        auto mat = _rvvi();
         Solution sol;
-        auto res = sol.canFinish(numCourses, prerequisites);
-        cout << (res ? "true" : "false") << "\n";
+        auto res = sol.updateMatrix(mat);
+        for(auto&row:res){for(int _i=0;_i<(int)row.size();_i++){if(_i)cout<<" ";cout<<row[_i];}cout<<"\n";}
     }
     return 0;
 }

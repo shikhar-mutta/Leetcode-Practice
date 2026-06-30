@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "99.cpp"
+#include "1373.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -82,22 +82,6 @@ TreeNode* buildTree(const vector<string>& tok) {
     return root;
 }
 
-// Serialize as LeetCode level-order with trailing nulls trimmed.
-void printTree(TreeNode* root) {
-    vector<string> out;
-    queue<TreeNode*> q; q.push(root);
-    while (!q.empty()) {
-        TreeNode* n = q.front(); q.pop();
-        if (!n) { out.push_back("null"); continue; }
-        out.push_back(to_string(n->val));
-        q.push(n->left); q.push(n->right);
-    }
-    while (!out.empty() && out.back()=="null") out.pop_back();
-    cout << "[";
-    for (size_t i=0;i<out.size();i++){ if(i)cout<<","; cout<<out[i]; }
-    cout << "]\n";
-}
-
 int main() {
     int t;
     cin >> t;
@@ -105,8 +89,8 @@ int main() {
     while (t--) {
         TreeNode* root = buildTree(_rtok());
         Solution sol;
-        sol.recoverTree(root);
-        printTree(root);
+        auto res = sol.maxSumBST(root);
+        cout << res << "\n";
     }
     return 0;
 }

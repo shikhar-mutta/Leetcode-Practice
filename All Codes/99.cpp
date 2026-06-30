@@ -25,7 +25,7 @@ class Solution
         inorder(node->left);
         if (prev && prev->val > node->val)
         {
-            if (!first)
+            if (!first)       // if first is not set, this is the first dip
                 first = prev; // first dip: take the larger (prev)
             second = node;    // last dip: take the smaller (node)
         }

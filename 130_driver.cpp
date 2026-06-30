@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "542.cpp"
+#include "130.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -54,15 +54,40 @@ vector<vector<int>> _rvvi() {
     return v;
 }
 
+// Read a char matrix line like [["X","O"],["X","X"]] (single-char cells).
+vector<vector<char>> _rvvc() {
+    string s; getline(cin,s);
+    vector<vector<char>> b;
+    vector<char> row;
+    int depth = 0; bool inq = false;
+    for (char c : s) {
+        if (c=='[')      { depth++; if (depth==2) row.clear(); }
+        else if (c==']') { if (depth==2) b.push_back(row); depth--; }
+        else if (c=='"') { inq = !inq; }
+        else if (inq)    { row.push_back(c); }
+    }
+    return b;
+}
+
 int main() {
     int t;
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto mat = _rvvi();
+        auto board = _rvvc();
         Solution sol;
-        auto res = sol.updateMatrix(mat);
-        for(auto&row:res){for(int _i=0;_i<(int)row.size();_i++){if(_i)cout<<" ";cout<<row[_i];}cout<<"\n";}
+        sol.solve(board);
+        cout << "[";
+        for (size_t i = 0; i < board.size(); i++) {
+            if (i) cout << ",";
+            cout << "[";
+            for (size_t j = 0; j < board[i].size(); j++) {
+                if (j) cout << ",";
+                cout << "\"" << board[i][j] << "\"";
+            }
+            cout << "]";
+        }
+        cout << "]\n";
     }
     return 0;
 }

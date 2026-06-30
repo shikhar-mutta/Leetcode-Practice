@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1373.cpp"
+#include "547.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -54,42 +54,14 @@ vector<vector<int>> _rvvi() {
     return v;
 }
 
-// Split a "[..]" line into raw string tokens (keeps "null").
-vector<string> _rtok() {
-    string s; getline(cin,s);
-    vector<string> v;
-    auto body = s.substr(1, s.size()-2);
-    stringstream ss(body); string t;
-    while (getline(ss,t,',')) {
-        while (!t.empty() && t.front()==' ') t.erase(t.begin());
-        while (!t.empty() && t.back()==' ')  t.pop_back();
-        if (!t.empty()) v.push_back(t);
-    }
-    return v;
-}
-
-// Build a tree from LeetCode level-order tokens (with "null" markers).
-TreeNode* buildTree(const vector<string>& tok) {
-    if (tok.empty() || tok[0]=="null") return nullptr;
-    TreeNode* root = new TreeNode(stoi(tok[0]));
-    queue<TreeNode*> q; q.push(root);
-    size_t i = 1;
-    while (!q.empty() && i < tok.size()) {
-        TreeNode* n = q.front(); q.pop();
-        if (i < tok.size()) { if (tok[i]!="null") { n->left  = new TreeNode(stoi(tok[i])); q.push(n->left); }  i++; }
-        if (i < tok.size()) { if (tok[i]!="null") { n->right = new TreeNode(stoi(tok[i])); q.push(n->right); } i++; }
-    }
-    return root;
-}
-
 int main() {
     int t;
     cin >> t;
     cin.ignore();
     while (t--) {
-        TreeNode* root = buildTree(_rtok());
+        auto isConnected = _rvvi();
         Solution sol;
-        auto res = sol.maxSumBST(root);
+        auto res = sol.findCircleNum(isConnected);
         cout << res << "\n";
     }
     return 0;

@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1020.cpp"
+#include "127.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,9 +59,11 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto grid = _rvvi();
+        string beginWord = _rs();
+        string endWord = _rs();
+        auto wordList = _rvs();
         Solution sol;
-        auto res = sol.numEnclaves(grid);
+        auto res = sol.ladderLength(beginWord, endWord, wordList);
         cout << res << "\n";
     }
     return 0;

@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1091.cpp"
+#include "1631.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,9 +59,9 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto grid = _rvvi();
+        auto heights = _rvvi();
         Solution sol;
-        auto res = sol.shortestPathBinaryMatrix(grid);
+        auto res = sol.minimumEffortPath(heights);
         cout << res << "\n";
     }
     return 0;

@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "126.cpp"
+#include "200.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -54,29 +54,28 @@ vector<vector<int>> _rvvi() {
     return v;
 }
 
+// grid of quoted single chars, e.g. [["1","1","0"],["0","1","0"]]
+vector<vector<char>> _rvvc() {
+    string s; getline(cin,s);
+    vector<vector<char>> v;
+    int dep=0; vector<char> row;
+    for (char c : s) {
+        if (c=='[') { dep++; if(dep==2) row.clear(); }
+        else if (c==']') { if(dep==2) v.push_back(row); dep--; }
+        else if (dep==2 && c!='"' && c!=',' && c!=' ') row.push_back(c);
+    }
+    return v;
+}
+
 int main() {
     int t;
     cin >> t;
     cin.ignore();
     while (t--) {
-        string beginWord = _rs();
-        string endWord = _rs();
-        auto wordList = _rvs();
+        auto grid = _rvvc();
         Solution sol;
-        auto res = sol.findLadders(beginWord, endWord, wordList);
-        // sort for deterministic, diff-friendly output (LeetCode allows any order)
-        sort(res.begin(), res.end());
-        cout << "[";
-        for (size_t a = 0; a < res.size(); a++) {
-            if (a) cout << ",";
-            cout << "[";
-            for (size_t b = 0; b < res[a].size(); b++) {
-                if (b) cout << ",";
-                cout << "\"" << res[a][b] << "\"";
-            }
-            cout << "]";
-        }
-        cout << "]\n";
+        auto res = sol.numIslands(grid);
+        cout << res << "\n";
     }
     return 0;
 }

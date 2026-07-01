@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1631.cpp"
+#include "787.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,9 +59,13 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto heights = _rvvi();
+        int n = _ri();
+        auto flights = _rvvi();
+        int src = _ri();
+        int dst = _ri();
+        int k = _ri();
         Solution sol;
-        auto res = sol.minimumEffortPath(heights);
+        auto res = sol.findCheapestPrice(n, flights, src, dst, k);
         cout << res << "\n";
     }
     return 0;

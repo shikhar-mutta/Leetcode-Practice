@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "127.cpp"
+#include "126.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -63,8 +63,20 @@ int main() {
         string endWord = _rs();
         auto wordList = _rvs();
         Solution sol;
-        auto res = sol.ladderLength(beginWord, endWord, wordList);
-        cout << res << "\n";
+        auto res = sol.findLadders(beginWord, endWord, wordList);
+        // sort for deterministic, diff-friendly output (LeetCode allows any order)
+        sort(res.begin(), res.end());
+        cout << "[";
+        for (size_t a = 0; a < res.size(); a++) {
+            if (a) cout << ",";
+            cout << "[";
+            for (size_t b = 0; b < res[a].size(); b++) {
+                if (b) cout << ",";
+                cout << "\"" << res[a][b] << "\"";
+            }
+            cout << "]";
+        }
+        cout << "]\n";
     }
     return 0;
 }

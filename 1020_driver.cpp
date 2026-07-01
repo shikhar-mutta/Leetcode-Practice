@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "130.cpp"
+#include "1020.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -54,40 +54,15 @@ vector<vector<int>> _rvvi() {
     return v;
 }
 
-// Read a char matrix line like [["X","O"],["X","X"]] (single-char cells).
-vector<vector<char>> _rvvc() {
-    string s; getline(cin,s);
-    vector<vector<char>> b;
-    vector<char> row;
-    int depth = 0; bool inq = false;
-    for (char c : s) {
-        if (c=='[')      { depth++; if (depth==2) row.clear(); }
-        else if (c==']') { if (depth==2) b.push_back(row); depth--; }
-        else if (c=='"') { inq = !inq; }
-        else if (inq)    { row.push_back(c); }
-    }
-    return b;
-}
-
 int main() {
     int t;
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto board = _rvvc();
+        auto grid = _rvvi();
         Solution sol;
-        sol.solve(board);
-        cout << "[";
-        for (size_t i = 0; i < board.size(); i++) {
-            if (i) cout << ",";
-            cout << "[";
-            for (size_t j = 0; j < board[i].size(); j++) {
-                if (j) cout << ",";
-                cout << "\"" << board[i][j] << "\"";
-            }
-            cout << "]";
-        }
-        cout << "]\n";
+        auto res = sol.numEnclaves(grid);
+        cout << res << "\n";
     }
     return 0;
 }

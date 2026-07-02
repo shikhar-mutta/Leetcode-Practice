@@ -1,9 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "Bash(*)",
-      "Bash(./run.sh *)",      
-      "Bash(./run.sh 743)"
+      "Bash(./run.sh)",
+      "Bash(./run.sh *)",
+      "Bash(./run.sh 947)"
     ]
   }
 }

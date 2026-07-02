@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1334.cpp"
+#include "1319.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -60,10 +60,9 @@ int main() {
     cin.ignore();
     while (t--) {
         int n = _ri();
-        auto edges = _rvvi();
-        int distanceThreshold = _ri();
+        auto connections = _rvvi();
         Solution sol;
-        auto res = sol.findTheCity(n, edges, distanceThreshold);
+        auto res = sol.makeConnected(n, connections);
         cout << res << "\n";
     }
     return 0;

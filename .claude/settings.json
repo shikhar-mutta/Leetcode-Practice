@@ -2,6 +2,7 @@
   "permissions": {
     "allow": [
       "Bash(*)",
+      "Bash(./run.sh *)",      
       "Bash(./run.sh 743)"
     ]
   }

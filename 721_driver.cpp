@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "947.cpp"
+#include "721.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -54,15 +54,47 @@ vector<vector<int>> _rvvi() {
     return v;
 }
 
+// Read a vector<vector<string>> like [["John","a@x"],["Mary","b@y"]]
+vector<vector<string>> _rvvs() {
+    string s; getline(cin,s);
+    vector<vector<string>> v;
+    int dep=0; bool inq=false; string cur; vector<string> row;
+    for (char c : s) {
+        if (c=='"') { inq=!inq; continue; }
+        if (inq) { cur+=c; continue; }
+        if (c=='[') { dep++; if (dep==2) row.clear(); }
+        else if (c==']') {
+            if (dep==2) { if(!cur.empty()){row.push_back(cur);cur="";} v.push_back(row); }
+            dep--;
+        } else if (c==',' && dep==2) {
+            if(!cur.empty()){ row.push_back(cur); cur=""; }
+        }
+    }
+    return v;
+}
+
 int main() {
     int t;
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto stones = _rvvi();
+        auto accounts = _rvvs();
         Solution sol;
-        auto res = sol.removeStones(stones);
-        cout << res << "\n";
+        auto res = sol.accountsMerge(accounts);
+        // Canonicalize: sort rows so output is order-independent
+        // (LeetCode accepts any order; expected.txt is stored sorted).
+        sort(res.begin(), res.end());
+        cout << "[";
+        for (size_t i = 0; i < res.size(); i++) {
+            if (i) cout << ",";
+            cout << "[";
+            for (size_t j = 0; j < res[i].size(); j++) {
+                if (j) cout << ",";
+                cout << "\"" << res[i][j] << "\"";
+            }
+            cout << "]";
+        }
+        cout << "]\n";
     }
     return 0;
 }

@@ -8,7 +8,8 @@
       "Bash(ls 1976*)",
       "Bash(ls run.sh)",
       "Bash(ls -d */)",
-      "Bash(./run.sh 1192)"
+      "Bash(./run.sh 1192)",
+      "Bash(./run.sh 1520)"
     ]
   }
 }

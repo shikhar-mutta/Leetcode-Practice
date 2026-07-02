@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1976.cpp"
+#include "1334.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -60,9 +60,10 @@ int main() {
     cin.ignore();
     while (t--) {
         int n = _ri();
-        auto roads = _rvvi();
+        auto edges = _rvvi();
+        int distanceThreshold = _ri();
         Solution sol;
-        auto res = sol.countPaths(n, roads);
+        auto res = sol.findTheCity(n, edges, distanceThreshold);
         cout << res << "\n";
     }
     return 0;

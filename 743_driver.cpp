@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "787.cpp"
+#include "743.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,13 +59,11 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
+        auto times = _rvvi();
         int n = _ri();
-        auto flights = _rvvi();
-        int src = _ri();
-        int dst = _ri();
         int k = _ri();
         Solution sol;
-        auto res = sol.findCheapestPrice(n, flights, src, dst, k);
+        auto res = sol.networkDelayTime(times, n, k);
         cout << res << "\n";
     }
     return 0;

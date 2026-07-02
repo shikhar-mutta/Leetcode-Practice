@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "743.cpp"
+#include "1976.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,11 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto times = _rvvi();
         int n = _ri();
-        int k = _ri();
+        auto roads = _rvvi();
         Solution sol;
-        auto res = sol.networkDelayTime(times, n, k);
+        auto res = sol.countPaths(n, roads);
         cout << res << "\n";
     }
     return 0;

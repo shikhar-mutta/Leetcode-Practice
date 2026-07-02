@@ -3,7 +3,12 @@
     "allow": [
       "Bash(./run.sh)",
       "Bash(./run.sh *)",
-      "Bash(./run.sh 947)"
+      "Bash(./run.sh 947)",
+      "Bash(./run.sh 778)",
+      "Bash(ls 1976*)",
+      "Bash(ls run.sh)",
+      "Bash(ls -d */)",
+      "Bash(./run.sh 1192)"
     ]
   }
 }

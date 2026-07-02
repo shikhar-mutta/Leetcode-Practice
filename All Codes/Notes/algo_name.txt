@@ -12,15 +12,16 @@ Searching
 
 
 Algorithms
-1. KMP - uses LPS = length of longest proper prefix/suffix
-2. Dutch National Flag algorithm - for sorting 3 number
-3. Kadane's algorithm - max subarray sum. add till become <0.
-4. next_permutation algorithm
-5. Moore's Voting Algorithm (freq >n/3 )
-6. Tortoise and Hare Algorithm (Cycle Detection in LinkList)
-7. Floyd's cycle detection (Cycle start Detection in LinkList)
-8. Boyer-Moore segment tree
-9. Gap Method for merge 2 sorted array
+1.  KMP - uses LPS = length of longest proper prefix/suffix
+2.  Dutch National Flag algorithm - for sorting 3 number
+3.  Kadane's algorithm - max subarray sum. add till become <0.
+4.  next_permutation algorithm
+5.  Moore's Voting Algorithm (freq >n/3 )
+6.  Tortoise and Hare Algorithm (Cycle Detection in LinkList)
+7.  Floyd's cycle detection (Cycle start Detection in LinkList)
+8.  Boyer-Moore segment tree
+9.  Gap Method for merge 2 sorted array
+10. Tarjan's Algorithm for finding bridges in a graph 
 
 
 

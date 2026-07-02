@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "778.cpp"
+#include "1192.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,11 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto grid = _rvvi();
+        int n = _ri();
+        auto connections = _rvvi();
         Solution sol;
-        auto res = sol.swimInWater(grid);
-        cout << res << "\n";
+        auto res = sol.criticalConnections(n, connections);
+        for(auto&row:res){for(int _i=0;_i<(int)row.size();_i++){if(_i)cout<<" ";cout<<row[_i];}cout<<"\n";}
     }
     return 0;
 }

@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "120.cpp"
+#include "416.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto triangle = _rvvi();
+        auto nums = _rvi();
         Solution sol;
-        auto res = sol.minimumTotal(triangle);
-        cout << res << "\n";
+        auto res = sol.canPartition(nums);
+        cout << (res ? "true" : "false") << "\n";
     }
     return 0;
 }

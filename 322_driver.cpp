@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "2035.cpp"
+#include "322.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,9 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto nums = _rvi();
+        auto coins = _rvi();
+        int amount = _ri();
         Solution sol;
-        auto res = sol.minimumDifference(nums);
+        auto res = sol.coinChange(coins, amount);
         cout << res << "\n";
     }
     return 0;

@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "213.cpp"
+#include "2035.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -61,7 +61,7 @@ int main() {
     while (t--) {
         auto nums = _rvi();
         Solution sol;
-        auto res = sol.rob(nums);
+        auto res = sol.minimumDifference(nums);
         cout << res << "\n";
     }
     return 0;

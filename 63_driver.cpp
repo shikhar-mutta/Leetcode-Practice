@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "62.cpp"
+#include "63.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,9 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        int m = _ri();
-        int n = _ri();
+        auto obstacleGrid = _rvvi();
         Solution sol;
-        auto res = sol.uniquePaths(m, n);
+        auto res = sol.uniquePathsWithObstacles(obstacleGrid);
         cout << res << "\n";
     }
     return 0;

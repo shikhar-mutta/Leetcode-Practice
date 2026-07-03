@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "416.cpp"
+#include "70.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto nums = _rvi();
+        int n = _ri();
         Solution sol;
-        auto res = sol.canPartition(nums);
-        cout << (res ? "true" : "false") << "\n";
+        auto res = sol.climbStairs(n);
+        cout << res << "\n";
     }
     return 0;
 }

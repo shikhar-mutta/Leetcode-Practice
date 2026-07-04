@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "115.cpp"
+#include "72.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        string s = _rs();
-        string t = _rs();
+        string word1 = _rs();
+        string word2 = _rs();
         Solution sol;
-        auto res = sol.numDistinct(s, t);
+        auto res = sol.minDistance(word1, word2);
         cout << res << "\n";
     }
     return 0;

@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "494.cpp"
+#include "518.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto nums = _rvi();
-        int target = _ri();
+        int amount = _ri();
+        auto coins = _rvi();
         Solution sol;
-        auto res = sol.findTargetSumWays(nums, target);
+        auto res = sol.change(amount, coins);
         cout << res << "\n";
     }
     return 0;

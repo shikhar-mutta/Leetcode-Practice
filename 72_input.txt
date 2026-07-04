@@ -1,5 +1,0 @@
-2
-"horse"
-"ros"
-"intention"
-"execution"

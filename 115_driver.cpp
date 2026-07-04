@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1092.cpp"
+#include "115.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        string str1 = _rs();
-        string str2 = _rs();
+        string s = _rs();
+        string t = _rs();
         Solution sol;
-        auto res = sol.shortestCommonSupersequence(str1, str2);
+        auto res = sol.numDistinct(s, t);
         cout << res << "\n";
     }
     return 0;

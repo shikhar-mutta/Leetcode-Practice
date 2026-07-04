@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "518.cpp"
+#include "516.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,9 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        int amount = _ri();
-        auto coins = _rvi();
+        string s = _rs();
         Solution sol;
-        auto res = sol.change(amount, coins);
+        auto res = sol.longestPalindromeSubseq(s);
         cout << res << "\n";
     }
     return 0;

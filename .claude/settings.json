@@ -16,7 +16,10 @@
       "Bash(./run.sh 518)",
       "Bash(./run.sh 583)",
       "Bash(./run.sh 72)",
-      "Bash(./run.sh 44)"
+      "Bash(./run.sh 44)",
+      "Bash(python3 \"/tmp/claude-1000/-home-shikhar-Sem-2-Coding-Practice-Leetcode-Practice/8be4d6ec-83ef-4eca-b7d0-3bb07c3ae424/scratchpad/q3_check.py\")",
+      "Bash(python3 \"/tmp/claude-1000/-home-shikhar-Sem-2-Coding-Practice-Leetcode-Practice/8be4d6ec-83ef-4eca-b7d0-3bb07c3ae424/scratchpad/q4_check.py\")",
+      "Bash(./run.sh 123)"
     ]
   }
 }

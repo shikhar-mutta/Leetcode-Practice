@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "312.cpp"
+#include "1106.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto nums = _rvi();
+        string expression = _rs();
         Solution sol;
-        auto res = sol.maxCoins(nums);
-        cout << res << "\n";
+        auto res = sol.parseBoolExpr(expression);
+        cout << (res ? "true" : "false") << "\n";
     }
     return 0;
 }

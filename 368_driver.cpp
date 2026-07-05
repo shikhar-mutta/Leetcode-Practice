@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "714.cpp"
+#include "368.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,11 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto prices = _rvi();
-        int fee = _ri();
+        auto nums = _rvi();
         Solution sol;
-        auto res = sol.maxProfit(prices, fee);
-        cout << res << "\n";
+        auto res = sol.largestDivisibleSubset(nums);
+        for (int _i=0;_i<(int)res.size();_i++){if(_i)cout<<" ";cout<<res[_i];}cout<<"\n";
     }
     return 0;
 }

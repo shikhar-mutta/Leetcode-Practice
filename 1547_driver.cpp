@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "673.cpp"
+#include "1547.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,9 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto nums = _rvi();
+        int n = _ri();
+        auto cuts = _rvi();
         Solution sol;
-        auto res = sol.findNumberOfLIS(nums);
+        auto res = sol.minCost(n, cuts);
         cout << res << "\n";
     }
     return 0;

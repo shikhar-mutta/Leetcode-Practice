@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "368.cpp"
+#include "1048.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto nums = _rvi();
+        auto words = _rvs();
         Solution sol;
-        auto res = sol.largestDivisibleSubset(nums);
-        for (int _i=0;_i<(int)res.size();_i++){if(_i)cout<<" ";cout<<res[_i];}cout<<"\n";
+        auto res = sol.longestStrChain(words);
+        cout << res << "\n";
     }
     return 0;
 }

@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "132.cpp"
+#include "1043.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,9 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        string s = _rs();
+        auto arr = _rvi();
+        int k = _ri();
         Solution sol;
-        auto res = sol.minCut(s);
+        auto res = sol.maxSumAfterPartitioning(arr, k);
         cout << res << "\n";
     }
     return 0;

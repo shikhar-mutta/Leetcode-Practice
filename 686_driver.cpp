@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "38.cpp"
+#include "686.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,9 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        int n = _ri();
+        string a = _rs();
+        string b = _rs();
         Solution sol;
-        auto res = sol.countAndSay(n);
+        auto res = sol.repeatedStringMatch(a, b);
         cout << res << "\n";
     }
     return 0;

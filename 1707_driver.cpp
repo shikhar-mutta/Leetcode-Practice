@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "208.cpp"
+#include "1707.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -54,45 +54,16 @@ vector<vector<int>> _rvvi() {
     return v;
 }
 
-// split [[],["apple"],["app"]] into one string arg per op ("" for [])
-vector<string> _rargs() {
-    string s; getline(cin,s);
-    vector<string> v;
-    int dep=0; string cur;
-    for (char c : s) {
-        if (c=='[') { dep++; if (dep==2) cur=""; }
-        else if (c==']') { if (dep==2) { string t; for(char x:cur) if(x!='"') t+=x; v.push_back(t); } dep--; }
-        else if (dep==2) cur += c;
-    }
-    return v;
-}
-
 int main() {
-    string dummy; getline(cin, dummy);   // count line (unreliable for design problems)
-    string opsLine;
-    while (getline(cin, opsLine)) {
-        if (opsLine.empty()) continue;
-        vector<string> ops;
-        {
-            bool in=false; string cur;
-            for (char c : opsLine.substr(1, opsLine.size()-2)) {
-                if (c=='"') { in=!in; continue; }
-                if (c==',' && !in) { ops.push_back(cur); cur=""; continue; }
-                cur += c;
-            }
-            if (!cur.empty()) ops.push_back(cur);
-        }
-        auto args = _rargs();
-        Trie *trie = nullptr;
-        cout << "[";
-        for (size_t i=0;i<ops.size();i++) {
-            if (i) cout << ", ";
-            if (ops[i]=="Trie")            { trie = new Trie(); cout << "null"; }
-            else if (ops[i]=="insert")     { trie->insert(args[i]); cout << "null"; }
-            else if (ops[i]=="search")     { cout << (trie->search(args[i]) ? "true" : "false"); }
-            else if (ops[i]=="startsWith") { cout << (trie->startsWith(args[i]) ? "true" : "false"); }
-        }
-        cout << "]\n";
+    int t;
+    cin >> t;
+    cin.ignore();
+    while (t--) {
+        auto nums = _rvi();
+        auto queries = _rvvi();
+        Solution sol;
+        auto res = sol.maximizeXor(nums, queries);
+        for (int _i=0;_i<(int)res.size();_i++){if(_i)cout<<" ";cout<<res[_i];}cout<<"\n";
     }
     return 0;
 }

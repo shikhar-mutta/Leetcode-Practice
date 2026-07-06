@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "921.cpp"
+#include "38.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,9 +59,9 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        string s = _rs();
+        int n = _ri();
         Solution sol;
-        auto res = sol.minAddToMakeValid(s);
+        auto res = sol.countAndSay(n);
         cout << res << "\n";
     }
     return 0;

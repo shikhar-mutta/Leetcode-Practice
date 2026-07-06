@@ -23,6 +23,7 @@ Algorithms
 9.  Gap Method for merge 2 sorted array
 10. Tarjan's Algorithm for finding bridges in a graph 
 11. Kosaraju algorithm
+12. Palindromic Tree (Eertree) + Dynamic Programming
 
 
 

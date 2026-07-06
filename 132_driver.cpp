@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1106.cpp"
+#include "132.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        string expression = _rs();
+        string s = _rs();
         Solution sol;
-        auto res = sol.parseBoolExpr(expression);
-        cout << (res ? "true" : "false") << "\n";
+        auto res = sol.minCut(s);
+        cout << res << "\n";
     }
     return 0;
 }

@@ -22,7 +22,8 @@
       "Bash(./run.sh 123)",
       "Bash(./run.sh 309)",
       "Bash(./run.sh 714)",
-      "Bash(./run.sh 1048)"
+      "Bash(./run.sh 1048)",
+      "Bash(./run.sh 132)"
     ]
   }
 }

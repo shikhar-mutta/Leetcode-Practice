@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1707.cpp"
+#include "921.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,11 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto nums = _rvi();
-        auto queries = _rvvi();
+        string s = _rs();
         Solution sol;
-        auto res = sol.maximizeXor(nums, queries);
-        for (int _i=0;_i<(int)res.size();_i++){if(_i)cout<<" ";cout<<res[_i];}cout<<"\n";
+        auto res = sol.minAddToMakeValid(s);
+        cout << res << "\n";
     }
     return 0;
 }

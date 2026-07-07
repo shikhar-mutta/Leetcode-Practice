@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "522.cpp"
+#include "524.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,9 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto strs = _rvs();
+        string s = _rs();
+        auto dictionary = _rvs();
         Solution sol;
-        auto res = sol.findLUSlength(strs);
+        auto res = sol.findLongestWord(s, dictionary);
         cout << res << "\n";
     }
     return 0;

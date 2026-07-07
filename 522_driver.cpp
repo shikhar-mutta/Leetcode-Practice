@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "475.cpp"
+#include "522.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,9 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto houses = _rvi();
-        auto heaters = _rvi();
+        auto strs = _rvs();
         Solution sol;
-        auto res = sol.findRadius(houses, heaters);
+        auto res = sol.findLUSlength(strs);
         cout << res << "\n";
     }
     return 0;

@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "452.cpp"
+#include "462.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,9 +59,9 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto points = _rvvi();
+        auto nums = _rvi();
         Solution sol;
-        auto res = sol.findMinArrowShots(points);
+        auto res = sol.minMoves2(nums);
         cout << res << "\n";
     }
     return 0;

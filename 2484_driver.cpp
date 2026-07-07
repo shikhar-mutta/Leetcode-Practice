@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1392.cpp"
+#include "2484.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -61,7 +61,7 @@ int main() {
     while (t--) {
         string s = _rs();
         Solution sol;
-        auto res = sol.longestPrefix(s);
+        auto res = sol.countPalindromes(s);
         cout << res << "\n";
     }
     return 0;

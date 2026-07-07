@@ -3,6 +3,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// TC: O(n*10*10) = O(n). SC: O(10*10) = O(1)
+//  Approach: Count the number of pairs of digits in the prefix and suffix. For each digit in the middle, multiply the number of pairs in the prefix and suffix to get the total number of palindromic subsequences.
 class Solution
 {
 public:

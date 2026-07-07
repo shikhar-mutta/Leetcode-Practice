@@ -1,3 +1,0 @@
-1
-"abpcplea"
-["ale","apple","monkey","plea"]

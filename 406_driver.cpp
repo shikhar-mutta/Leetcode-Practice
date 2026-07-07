@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "436.cpp"
+#include "406.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto intervals = _rvvi();
+        auto people = _rvvi();
         Solution sol;
-        auto res = sol.findRightInterval(intervals);
-        for (int _i=0;_i<(int)res.size();_i++){if(_i)cout<<" ";cout<<res[_i];}cout<<"\n";
+        auto res = sol.reconstructQueue(people);
+        for(auto&row:res){for(int _i=0;_i<(int)row.size();_i++){if(_i)cout<<" ";cout<<row[_i];}cout<<"\n";}
     }
     return 0;
 }

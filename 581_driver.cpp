@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "532.cpp"
+#include "581.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -60,9 +60,8 @@ int main() {
     cin.ignore();
     while (t--) {
         auto nums = _rvi();
-        int k = _ri();
         Solution sol;
-        auto res = sol.findPairs(nums, k);
+        auto res = sol.findUnsortedSubarray(nums);
         cout << res << "\n";
     }
     return 0;

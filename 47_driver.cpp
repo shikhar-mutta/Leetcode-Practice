@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "2484.cpp"
+#include "47.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        string s = _rs();
+        auto nums = _rvi();
         Solution sol;
-        auto res = sol.countPalindromes(s);
-        cout << res << "\n";
+        auto res = sol.permuteUnique(nums);
+        for(auto&row:res){for(int _i=0;_i<(int)row.size();_i++){if(_i)cout<<" ";cout<<row[_i];}cout<<"\n";}
     }
     return 0;
 }

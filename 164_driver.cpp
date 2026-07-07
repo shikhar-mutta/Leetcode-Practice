@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "49.cpp"
+#include "164.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -27,13 +27,13 @@ vector<string> _rvs() {
     string s; getline(cin,s);
     vector<string> v;
     auto body = s.substr(1, s.size()-2);
-    bool in = false, has = false; string cur;
+    bool in = false; string cur;
     for (char c : body) {
-        if (c=='"') { in=!in; has=true; continue; }
-        if (c==',' && !in) { v.push_back(cur); cur=""; has=false; continue; }
-        cur += c; has = true;
+        if (c=='"') { in=!in; continue; }
+        if (c==',' && !in) { v.push_back(cur); cur=""; continue; }
+        cur += c;
     }
-    if (has) v.push_back(cur);   // 'has' so [""] yields one empty string, [] yields none
+    if (!cur.empty()) v.push_back(cur);
     return v;
 }
 vector<vector<int>> _rvvi() {
@@ -59,23 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto strs = _rvs();
+        auto nums = _rvi();
         Solution sol;
-        auto res = sol.groupAnagrams(strs);
-        // canonicalize: LeetCode accepts any order, so sort for a stable diff
-        for (auto& g : res) sort(g.begin(), g.end());
-        sort(res.begin(), res.end());
-        cout << "[";
-        for (size_t i = 0; i < res.size(); i++) {
-            if (i) cout << ",";
-            cout << "[";
-            for (size_t j = 0; j < res[i].size(); j++) {
-                if (j) cout << ",";
-                cout << "\"" << res[i][j] << "\"";
-            }
-            cout << "]";
-        }
-        cout << "]\n";
+        auto res = sol.maximumGap(nums);
+        cout << res << "\n";
     }
     return 0;
 }

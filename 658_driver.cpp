@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "611.cpp"
+#include "658.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,12 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto nums = _rvi();
+        auto arr = _rvi();
+        int k = _ri();
+        int x = _ri();
         Solution sol;
-        auto res = sol.triangleNumber(nums);
-        cout << res << "\n";
+        auto res = sol.findClosestElements(arr, k, x);
+        for (int _i=0;_i<(int)res.size();_i++){if(_i)cout<<" ";cout<<res[_i];}cout<<"\n";
     }
     return 0;
 }

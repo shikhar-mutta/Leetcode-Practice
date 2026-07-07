@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "47.cpp"
+#include "49.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -27,13 +27,13 @@ vector<string> _rvs() {
     string s; getline(cin,s);
     vector<string> v;
     auto body = s.substr(1, s.size()-2);
-    bool in = false; string cur;
+    bool in = false, has = false; string cur;
     for (char c : body) {
-        if (c=='"') { in=!in; continue; }
-        if (c==',' && !in) { v.push_back(cur); cur=""; continue; }
-        cur += c;
+        if (c=='"') { in=!in; has=true; continue; }
+        if (c==',' && !in) { v.push_back(cur); cur=""; has=false; continue; }
+        cur += c; has = true;
     }
-    if (!cur.empty()) v.push_back(cur);
+    if (has) v.push_back(cur);   // 'has' so [""] yields one empty string, [] yields none
     return v;
 }
 vector<vector<int>> _rvvi() {
@@ -59,10 +59,23 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto nums = _rvi();
+        auto strs = _rvs();
         Solution sol;
-        auto res = sol.permuteUnique(nums);
-        for(auto&row:res){for(int _i=0;_i<(int)row.size();_i++){if(_i)cout<<" ";cout<<row[_i];}cout<<"\n";}
+        auto res = sol.groupAnagrams(strs);
+        // canonicalize: LeetCode accepts any order, so sort for a stable diff
+        for (auto& g : res) sort(g.begin(), g.end());
+        sort(res.begin(), res.end());
+        cout << "[";
+        for (size_t i = 0; i < res.size(); i++) {
+            if (i) cout << ",";
+            cout << "[";
+            for (size_t j = 0; j < res[i].size(); j++) {
+                if (j) cout << ",";
+                cout << "\"" << res[i][j] << "\"";
+            }
+            cout << "]";
+        }
+        cout << "]\n";
     }
     return 0;
 }

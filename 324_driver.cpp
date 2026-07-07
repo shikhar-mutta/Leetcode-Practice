@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "406.cpp"
+#include "324.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,15 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto people = _rvvi();
+        auto nums = _rvi();
         Solution sol;
-        auto res = sol.reconstructQueue(people);
-        for(auto&row:res){for(int _i=0;_i<(int)row.size();_i++){if(_i)cout<<" ";cout<<row[_i];}cout<<"\n";}
+        sol.wiggleSort(nums);
+        cout << "[";
+        for (size_t i = 0; i < nums.size(); i++) {
+            if (i) cout << ",";
+            cout << nums[i];
+        }
+        cout << "]\n";
     }
     return 0;
 }

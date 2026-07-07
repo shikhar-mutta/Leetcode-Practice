@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "215.cpp"
+#include "218.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,11 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto nums = _rvi();
-        int k = _ri();
+        auto buildings = _rvvi();
         Solution sol;
-        auto res = sol.findKthLargest(nums, k);
-        cout << res << "\n";
+        auto res = sol.getSkyline(buildings);
+        for(auto&row:res){for(int _i=0;_i<(int)row.size();_i++){if(_i)cout<<" ";cout<<row[_i];}cout<<"\n";}
     }
     return 0;
 }

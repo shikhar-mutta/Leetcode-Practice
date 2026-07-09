@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "791.cpp"
+#include "792.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        string order = _rs();
         string s = _rs();
+        auto words = _rvs();
         Solution sol;
-        auto res = sol.customSortString(order, s);
+        auto res = sol.numMatchingSubseq(s, words);
         cout << res << "\n";
     }
     return 0;

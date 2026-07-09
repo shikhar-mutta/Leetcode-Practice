@@ -1,0 +1,5 @@
+2
+"cba"
+"abcd"
+"bcafg"
+"abcd"

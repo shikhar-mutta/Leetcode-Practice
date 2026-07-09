@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "823.cpp"
+#include "825.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,9 +59,9 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto arr = _rvi();
+        auto ages = _rvi();
         Solution sol;
-        auto res = sol.numFactoredBinaryTrees(arr);
+        auto res = sol.numFriendRequests(ages);
         cout << res << "\n";
     }
     return 0;

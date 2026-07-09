@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "658.cpp"
+#include "692.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,11 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto arr = _rvi();
+        auto words = _rvs();
         int k = _ri();
-        int x = _ri();
         Solution sol;
-        auto res = sol.findClosestElements(arr, k, x);
+        auto res = sol.topKFrequent(words, k);
         for (int _i=0;_i<(int)res.size();_i++){if(_i)cout<<" ";cout<<res[_i];}cout<<"\n";
     }
     return 0;

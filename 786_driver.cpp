@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "767.cpp"
+#include "786.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,11 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        string s = _rs();
+        auto arr = _rvi();
+        int k = _ri();
         Solution sol;
-        auto res = sol.reorganizeString(s);
-        cout << res << "\n";
+        auto res = sol.kthSmallestPrimeFraction(arr, k);
+        for (int _i=0;_i<(int)res.size();_i++){if(_i)cout<<" ";cout<<res[_i];}cout<<"\n";
     }
     return 0;
 }

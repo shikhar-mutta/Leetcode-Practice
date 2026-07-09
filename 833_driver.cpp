@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "825.cpp"
+#include "833.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -31,6 +31,7 @@ vector<string> _rvs() {
     for (char c : body) {
         if (c=='"') { in=!in; continue; }
         if (c==',' && !in) { v.push_back(cur); cur=""; continue; }
+        if (c==' ' && !in) continue;
         cur += c;
     }
     if (!cur.empty()) v.push_back(cur);
@@ -59,9 +60,12 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto ages = _rvi();
+        string s = _rs();
+        auto indices = _rvi();
+        auto sources = _rvs();
+        auto targets = _rvs();
         Solution sol;
-        auto res = sol.numFriendRequests(ages);
+        auto res = sol.findReplaceString(s, indices, sources, targets);
         cout << res << "\n";
     }
     return 0;

@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "692.cpp"
+#include "720.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -60,10 +60,9 @@ int main() {
     cin.ignore();
     while (t--) {
         auto words = _rvs();
-        int k = _ri();
         Solution sol;
-        auto res = sol.topKFrequent(words, k);
-        for (int _i=0;_i<(int)res.size();_i++){if(_i)cout<<" ";cout<<res[_i];}cout<<"\n";
+        auto res = sol.longestWord(words);
+        cout << res << "\n";
     }
     return 0;
 }

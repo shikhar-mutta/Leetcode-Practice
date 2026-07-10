@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "833.cpp"
+#include "853.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -31,7 +31,6 @@ vector<string> _rvs() {
     for (char c : body) {
         if (c=='"') { in=!in; continue; }
         if (c==',' && !in) { v.push_back(cur); cur=""; continue; }
-        if (c==' ' && !in) continue;
         cur += c;
     }
     if (!cur.empty()) v.push_back(cur);
@@ -60,12 +59,11 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        string s = _rs();
-        auto indices = _rvi();
-        auto sources = _rvs();
-        auto targets = _rvs();
+        int target = _ri();
+        auto position = _rvi();
+        auto speed = _rvi();
         Solution sol;
-        auto res = sol.findReplaceString(s, indices, sources, targets);
+        auto res = sol.carFleet(target, position, speed);
         cout << res << "\n";
     }
     return 0;

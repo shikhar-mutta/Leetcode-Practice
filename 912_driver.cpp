@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "910.cpp"
+#include "912.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -60,10 +60,9 @@ int main() {
     cin.ignore();
     while (t--) {
         auto nums = _rvi();
-        int k = _ri();
         Solution sol;
-        auto res = sol.smallestRangeII(nums, k);
-        cout << res << "\n";
+        auto res = sol.sortArray(nums);
+        for (int _i=0;_i<(int)res.size();_i++){if(_i)cout<<" ";cout<<res[_i];}cout<<"\n";
     }
     return 0;
 }

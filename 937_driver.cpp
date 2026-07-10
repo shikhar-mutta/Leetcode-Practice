@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "923.cpp"
+#include "937.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,11 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto arr = _rvi();
-        int target = _ri();
+        auto logs = _rvs();
         Solution sol;
-        auto res = sol.threeSumMulti(arr, target);
-        cout << res << "\n";
+        auto res = sol.reorderLogFiles(logs);
+        for (int _i=0;_i<(int)res.size();_i++){if(_i)cout<<" ";cout<<res[_i];}cout<<"\n";
     }
     return 0;
 }

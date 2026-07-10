@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "870.cpp"
+#include "881.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,11 +59,11 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto nums1 = _rvi();
-        auto nums2 = _rvi();
+        auto people = _rvi();
+        int limit = _ri();
         Solution sol;
-        auto res = sol.advantageCount(nums1, nums2);
-        for (int _i=0;_i<(int)res.size();_i++){if(_i)cout<<" ";cout<<res[_i];}cout<<"\n";
+        auto res = sol.numRescueBoats(people, limit);
+        cout << res << "\n";
     }
     return 0;
 }

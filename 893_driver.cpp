@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "881.cpp"
+#include "893.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,9 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto people = _rvi();
-        int limit = _ri();
+        auto words = _rvs();
         Solution sol;
-        auto res = sol.numRescueBoats(people, limit);
+        auto res = sol.numSpecialEquivGroups(words);
         cout << res << "\n";
     }
     return 0;

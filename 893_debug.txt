@@ -1,0 +1,2 @@
+1
+["abcd","cdab","cbad","xyzz","zzxy","zzyx"]

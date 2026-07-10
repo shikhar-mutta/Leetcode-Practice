@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "853.cpp"
+#include "869.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,12 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        int target = _ri();
-        auto position = _rvi();
-        auto speed = _rvi();
+        int n = _ri();
         Solution sol;
-        auto res = sol.carFleet(target, position, speed);
-        cout << res << "\n";
+        auto res = sol.reorderedPowerOf2(n);
+        cout << (res ? "true" : "false") << "\n";
     }
     return 0;
 }

@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "969.cpp"
+#include "973.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,18 +59,11 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto arr = _rvi();
-        auto orig = arr;                 // special judge: validate flips instead of diffing
+        auto points = _rvvi();
+        int k = _ri();
         Solution sol;
-        auto res = sol.pancakeSort(arr);
-        int n = orig.size();
-        bool ok = (int)res.size() <= 10 * n;
-        for (int k : res) {
-            if (k < 1 || k > n) { ok = false; break; }
-            reverse(orig.begin(), orig.begin() + k);
-        }
-        ok = ok && is_sorted(orig.begin(), orig.end());
-        cout << (ok ? "PASS" : "FAIL") << "\n";
+        auto res = sol.kClosest(points, k);
+        for(auto&row:res){for(int _i=0;_i<(int)row.size();_i++){if(_i)cout<<" ";cout<<row[_i];}cout<<"\n";}
     }
     return 0;
 }

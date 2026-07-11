@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "945.cpp"
+#include "948.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,9 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto nums = _rvi();
+        auto tokens = _rvi();
+        int power = _ri();
         Solution sol;
-        auto res = sol.minIncrementForUnique(nums);
+        auto res = sol.bagOfTokensScore(tokens, power);
         cout << res << "\n";
     }
     return 0;

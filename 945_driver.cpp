@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "939.cpp"
+#include "945.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,9 +59,9 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto points = _rvvi();
+        auto nums = _rvi();
         Solution sol;
-        auto res = sol.minAreaRect(points);
+        auto res = sol.minIncrementForUnique(nums);
         cout << res << "\n";
     }
     return 0;

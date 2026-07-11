@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1054.cpp"
+#include "1090.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,13 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto barcodes = _rvi();
+        auto values = _rvi();
+        auto labels = _rvi();
+        int numWanted = _ri();
+        int useLimit = _ri();
         Solution sol;
-        auto res = sol.rearrangeBarcodes(barcodes);
-        for (int _i=0;_i<(int)res.size();_i++){if(_i)cout<<" ";cout<<res[_i];}cout<<"\n";
+        auto res = sol.largestValsFromLabels(values, labels, numWanted, useLimit);
+        cout << res << "\n";
     }
     return 0;
 }

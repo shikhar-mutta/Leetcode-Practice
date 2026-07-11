@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1090.cpp"
+#include "1094.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,13 +59,11 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto values = _rvi();
-        auto labels = _rvi();
-        int numWanted = _ri();
-        int useLimit = _ri();
+        auto trips = _rvvi();
+        int capacity = _ri();
         Solution sol;
-        auto res = sol.largestValsFromLabels(values, labels, numWanted, useLimit);
-        cout << res << "\n";
+        auto res = sol.carPooling(trips, capacity);
+        cout << (res ? "true" : "false") << "\n";
     }
     return 0;
 }

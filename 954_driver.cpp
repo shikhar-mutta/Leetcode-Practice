@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "948.cpp"
+#include "954.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,11 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto tokens = _rvi();
-        int power = _ri();
+        auto arr = _rvi();
         Solution sol;
-        auto res = sol.bagOfTokensScore(tokens, power);
-        cout << res << "\n";
+        auto res = sol.canReorderDoubled(arr);
+        cout << (res ? "true" : "false") << "\n";
     }
     return 0;
 }

@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "973.cpp"
+#include "1029.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,11 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto points = _rvvi();
-        int k = _ri();
+        auto costs = _rvvi();
         Solution sol;
-        auto res = sol.kClosest(points, k);
-        for(auto&row:res){for(int _i=0;_i<(int)row.size();_i++){if(_i)cout<<" ";cout<<row[_i];}cout<<"\n";}
+        auto res = sol.twoCitySchedCost(costs);
+        cout << res << "\n";
     }
     return 0;
 }

@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1288.cpp"
+#include "1296.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,11 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto intervals = _rvvi();
+        auto nums = _rvi();
+        int k = _ri();
         Solution sol;
-        auto res = sol.removeCoveredIntervals(intervals);
-        cout << res << "\n";
+        auto res = sol.isPossibleDivide(nums, k);
+        cout << (res ? "true" : "false") << "\n";
     }
     return 0;
 }

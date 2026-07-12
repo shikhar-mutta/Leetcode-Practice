@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1296.cpp"
+#include "1300.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,11 +59,11 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto nums = _rvi();
-        int k = _ri();
+        auto arr = _rvi();
+        int target = _ri();
         Solution sol;
-        auto res = sol.isPossibleDivide(nums, k);
-        cout << (res ? "true" : "false") << "\n";
+        auto res = sol.findBestValue(arr, target);
+        cout << res << "\n";
     }
     return 0;
 }

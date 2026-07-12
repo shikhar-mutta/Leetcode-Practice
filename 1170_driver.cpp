@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1169.cpp"
+#include "1170.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,9 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto transactions = _rvs();
+        auto queries = _rvs();
+        auto words = _rvs();
         Solution sol;
-        auto res = sol.invalidTransactions(transactions);
+        auto res = sol.numSmallerByFrequency(queries, words);
         for (int _i=0;_i<(int)res.size();_i++){if(_i)cout<<" ";cout<<res[_i];}cout<<"\n";
     }
     return 0;

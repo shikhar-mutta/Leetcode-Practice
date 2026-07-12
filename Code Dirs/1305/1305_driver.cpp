@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1300.cpp"
+#include "1305.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -54,16 +54,45 @@ vector<vector<int>> _rvvi() {
     return v;
 }
 
+// split a "[1,null,8]" line into raw tokens
+vector<string> _rtok() {
+    string s; getline(cin,s);
+    vector<string> v; stringstream ss(s.substr(1,s.size()-2));
+    string t; while(getline(ss,t,',')) { if(!t.empty()) v.push_back(t); }
+    return v;
+}
+
+// BFS-build a tree from level-order tokens with "null" gaps
+TreeNode* _rtree() {
+    auto tok = _rtok();
+    if (tok.empty() || tok[0]=="null") return nullptr;
+    TreeNode* root = new TreeNode(stoi(tok[0]));
+    queue<TreeNode*> q; q.push(root);
+    size_t i = 1;
+    while (!q.empty() && i < tok.size()) {
+        TreeNode* cur = q.front(); q.pop();
+        if (i < tok.size()) {
+            if (tok[i] != "null") { cur->left = new TreeNode(stoi(tok[i])); q.push(cur->left); }
+            i++;
+        }
+        if (i < tok.size()) {
+            if (tok[i] != "null") { cur->right = new TreeNode(stoi(tok[i])); q.push(cur->right); }
+            i++;
+        }
+    }
+    return root;
+}
+
 int main() {
     int t;
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto arr = _rvi();
-        int target = _ri();
+        TreeNode* root1 = _rtree();
+        TreeNode* root2 = _rtree();
         Solution sol;
-        auto res = sol.findBestValue(arr, target);
-        cout << res << "\n";
+        auto res = sol.getAllElements(root1, root2);
+        for (int _i=0;_i<(int)res.size();_i++){if(_i)cout<<" ";cout<<res[_i];}cout<<"\n";
     }
     return 0;
 }

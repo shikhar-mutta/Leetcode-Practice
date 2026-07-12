@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1268.cpp"
+#include "1288.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,21 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto products = _rvs();
-        string searchWord = _rs();
+        auto intervals = _rvvi();
         Solution sol;
-        auto res = sol.suggestedProducts(products, searchWord);
-        cout << "[";
-        for (int i = 0; i < (int)res.size(); i++) {
-            if (i) cout << ",";
-            cout << "[";
-            for (int j = 0; j < (int)res[i].size(); j++) {
-                if (j) cout << ",";
-                cout << "\"" << res[i][j] << "\"";
-            }
-            cout << "]";
-        }
-        cout << "]\n";
+        auto res = sol.removeCoveredIntervals(intervals);
+        cout << res << "\n";
     }
     return 0;
 }

@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1202.cpp"
+#include "1268.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,11 +59,12 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        string s = _rs();
-        auto pairs = _rvvi();
+        auto products = _rvs();
+        string searchWord = _rs();
         Solution sol;
-        auto res = sol.smallestStringWithSwaps(s, pairs);
-        cout << res << "\n";
+        auto res = sol.suggestedProducts(products, searchWord);
+        // TODO: print result
+cout << "TODO\n";
     }
     return 0;
 }

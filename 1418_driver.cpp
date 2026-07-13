@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1387.cpp"
+#include "1418.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -54,17 +54,39 @@ vector<vector<int>> _rvvi() {
     return v;
 }
 
+vector<vector<string>> _rvvs() {
+    string s; getline(cin,s);
+    vector<vector<string>> v;
+    vector<string> row; string cur;
+    int dep = 0; bool in = false;
+    for (char c : s) {
+        if (c=='"') { in=!in; if(!in){ row.push_back(cur); cur=""; } continue; }
+        if (in) { cur += c; continue; }
+        if (c=='[') dep++;
+        else if (c==']') { dep--; if (dep==1) { v.push_back(row); row.clear(); } }
+    }
+    return v;
+}
+
 int main() {
     int t;
     cin >> t;
     cin.ignore();
     while (t--) {
-        int lo = _ri();
-        int hi = _ri();
-        int k = _ri();
+        auto orders = _rvvs();
         Solution sol;
-        auto res = sol.getKth(lo, hi, k);
-        cout << res << "\n";
+        auto res = sol.displayTable(orders);
+        cout << "[";
+        for (int i=0;i<(int)res.size();i++) {
+            if (i) cout << ",";
+            cout << "[";
+            for (int j=0;j<(int)res[i].size();j++) {
+                if (j) cout << ",";
+                cout << "\"" << res[i][j] << "\"";
+            }
+            cout << "]";
+        }
+        cout << "]\n";
     }
     return 0;
 }

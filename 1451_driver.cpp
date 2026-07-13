@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1433.cpp"
+#include "1451.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,11 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        string s1 = _rs();
-        string s2 = _rs();
+        string text = _rs();
         Solution sol;
-        auto res = sol.checkIfCanBreak(s1, s2);
-        cout << (res ? "true" : "false") << "\n";
+        auto res = sol.arrangeWords(text);
+        cout << res << "\n";
     }
     return 0;
 }

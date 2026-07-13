@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1366.cpp"
+#include "1387.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,9 +59,11 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto votes = _rvs();
+        int lo = _ri();
+        int hi = _ri();
+        int k = _ri();
         Solution sol;
-        auto res = sol.rankTeams(votes);
+        auto res = sol.getKth(lo, hi, k);
         cout << res << "\n";
     }
     return 0;

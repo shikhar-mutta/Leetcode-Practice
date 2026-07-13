@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1311.cpp"
+#include "1329.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -54,31 +54,15 @@ vector<vector<int>> _rvvi() {
     return v;
 }
 
-vector<vector<string>> _rvvs() {
-    string s; getline(cin,s);
-    vector<vector<string>> v;
-    int dep=0; bool in=false; string cur; vector<string> row;
-    for (char c : s) {
-        if (c=='"') { in=!in; if(!in){ row.push_back(cur); cur=""; } continue; }
-        if (in) { cur += c; continue; }
-        if (c=='[') { dep++; if(dep==2) row.clear(); }
-        else if (c==']') { dep--; if(dep==1) v.push_back(row); }
-    }
-    return v;
-}
-
 int main() {
     int t;
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto watchedVideos = _rvvs();
-        auto friends = _rvvi();
-        int id = _ri();
-        int level = _ri();
+        auto mat = _rvvi();
         Solution sol;
-        auto res = sol.watchedVideosByFriends(watchedVideos, friends, id, level);
-        for (int _i=0;_i<(int)res.size();_i++){if(_i)cout<<" ";cout<<res[_i];}cout<<"\n";
+        auto res = sol.diagonalSort(mat);
+        for(auto&row:res){for(int _i=0;_i<(int)row.size();_i++){if(_i)cout<<" ";cout<<row[_i];}cout<<"\n";}
     }
     return 0;
 }

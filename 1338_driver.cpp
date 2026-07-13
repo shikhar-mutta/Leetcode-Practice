@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1333.cpp"
+#include "1338.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,13 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto restaurants = _rvvi();
-        int veganFriendly = _ri();
-        int maxPrice = _ri();
-        int maxDistance = _ri();
+        auto arr = _rvi();
         Solution sol;
-        auto res = sol.filterRestaurants(restaurants, veganFriendly, maxPrice, maxDistance);
-        for (int _i=0;_i<(int)res.size();_i++){if(_i)cout<<" ";cout<<res[_i];}cout<<"\n";
+        auto res = sol.minSetSize(arr);
+        cout << res << "\n";
     }
     return 0;
 }

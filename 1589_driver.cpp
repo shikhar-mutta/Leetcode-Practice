@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1561.cpp"
+#include "1589.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,9 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto piles = _rvi();
+        auto nums = _rvi();
+        auto requests = _rvvi();
         Solution sol;
-        auto res = sol.maxCoins(piles);
+        auto res = sol.maxSumRangeQuery(nums, requests);
         cout << res << "\n";
     }
     return 0;

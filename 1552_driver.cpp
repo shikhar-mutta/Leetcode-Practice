@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1509.cpp"
+#include "1552.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,9 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto nums = _rvi();
+        auto position = _rvi();
+        int m = _ri();
         Solution sol;
-        auto res = sol.minDifference(nums);
+        auto res = sol.maxDistance(position, m);
         cout << res << "\n";
     }
     return 0;

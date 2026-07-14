@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1451.cpp"
+#include "1465.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,9 +59,12 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        string text = _rs();
+        int h = _ri();
+        int w = _ri();
+        auto horizontalCuts = _rvi();
+        auto verticalCuts = _rvi();
         Solution sol;
-        auto res = sol.arrangeWords(text);
+        auto res = sol.maxArea(h, w, horizontalCuts, verticalCuts);
         cout << res << "\n";
     }
     return 0;

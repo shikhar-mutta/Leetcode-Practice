@@ -1,4 +1,0 @@
-3
-"Leetcode is cool"
-"Keep calm and code on"
-"To be or not to be"

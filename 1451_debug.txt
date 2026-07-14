@@ -1,2 +1,0 @@
-1
-"Leetcode is cool"

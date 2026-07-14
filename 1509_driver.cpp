@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1508.cpp"
+#include "1509.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -60,11 +60,8 @@ int main() {
     cin.ignore();
     while (t--) {
         auto nums = _rvi();
-        int n = _ri();
-        int left = _ri();
-        int right = _ri();
         Solution sol;
-        auto res = sol.rangeSum(nums, n, left, right);
+        auto res = sol.minDifference(nums);
         cout << res << "\n";
     }
     return 0;

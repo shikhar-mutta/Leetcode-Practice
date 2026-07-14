@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1604.cpp"
+#include "1626.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,11 +59,11 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto keyName = _rvs();
-        auto keyTime = _rvs();
+        auto scores = _rvi();
+        auto ages = _rvi();
         Solution sol;
-        auto res = sol.alertNames(keyName, keyTime);
-        for (int _i=0;_i<(int)res.size();_i++){if(_i)cout<<" ";cout<<res[_i];}cout<<"\n";
+        auto res = sol.bestTeamScore(scores, ages);
+        cout << res << "\n";
     }
     return 0;
 }

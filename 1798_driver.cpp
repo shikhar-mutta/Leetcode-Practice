@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1738.cpp"
+#include "1798.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,9 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto matrix = _rvvi();
-        int k = _ri();
+        auto coins = _rvi();
         Solution sol;
-        auto res = sol.kthLargestValue(matrix, k);
+        auto res = sol.getMaximumConsecutive(coins);
         cout << res << "\n";
     }
     return 0;

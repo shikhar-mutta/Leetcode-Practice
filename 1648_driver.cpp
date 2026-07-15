@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1647.cpp"
+#include "1648.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,9 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        string s = _rs();
+        auto inventory = _rvi();
+        int orders = _ri();
         Solution sol;
-        auto res = sol.minDeletions(s);
+        auto res = sol.maxProfit(inventory, orders);
         cout << res << "\n";
     }
     return 0;

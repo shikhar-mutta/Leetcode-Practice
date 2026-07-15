@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1626.cpp"
+#include "1630.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,11 +59,17 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto scores = _rvi();
-        auto ages = _rvi();
+        auto nums = _rvi();
+        auto l = _rvi();
+        auto r = _rvi();
         Solution sol;
-        auto res = sol.bestTeamScore(scores, ages);
-        cout << res << "\n";
+        auto res = sol.checkArithmeticSubarrays(nums, l, r);
+        cout << "[";
+        for (size_t i = 0; i < res.size(); i++) {
+            if (i) cout << ",";
+            cout << (res[i] ? "true" : "false");
+        }
+        cout << "]\n";
     }
     return 0;
 }

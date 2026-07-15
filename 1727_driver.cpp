@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1686.cpp"
+#include "1727.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,9 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto aliceValues = _rvi();
-        auto bobValues = _rvi();
+        auto matrix = _rvvi();
         Solution sol;
-        auto res = sol.stoneGameVI(aliceValues, bobValues);
+        auto res = sol.largestSubmatrix(matrix);
         cout << res << "\n";
     }
     return 0;

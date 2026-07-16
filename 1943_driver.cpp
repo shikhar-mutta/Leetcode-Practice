@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1921.cpp"
+#include "1943.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,11 +59,15 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto dist = _rvi();
-        auto speed = _rvi();
+        auto segments = _rvvi();
         Solution sol;
-        auto res = sol.eliminateMaximum(dist, speed);
-        cout << res << "\n";
+        auto res = sol.splitPainting(segments);
+        cout << "[";
+        for (size_t i = 0; i < res.size(); i++) {
+            if (i) cout << ",";
+            cout << "[" << res[i][0] << "," << res[i][1] << "," << res[i][2] << "]";
+        }
+        cout << "]\n";
     }
     return 0;
 }

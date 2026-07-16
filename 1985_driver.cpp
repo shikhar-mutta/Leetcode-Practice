@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1968.cpp"
+#include "1985.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,23 +59,11 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto nums = _rvi();
-        auto orig = nums; // solution may reorder in place
+        auto nums = _rvs();
+        int k = _ri();
         Solution sol;
-        auto res = sol.rearrangeArray(nums);
-        // special judge: any rearrangement where no element equals the
-        // average of its neighbors is accepted -> self-validate
-        bool ok = res.size() == orig.size();
-        if (ok) {
-            auto a = res, b = orig;
-            sort(a.begin(), a.end());
-            sort(b.begin(), b.end());
-            ok = (a == b); // must be a permutation of the input
-        }
-        for (int i = 1; ok && i + 1 < (int)res.size(); i++)
-            if (2LL * res[i] == (long long)res[i - 1] + res[i + 1])
-                ok = false;
-        cout << (ok ? "PASS" : "FAIL") << "\n";
+        auto res = sol.kthLargestNumber(nums, k);
+        cout << res << "\n";
     }
     return 0;
 }

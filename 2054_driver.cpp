@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "2033.cpp"
+#include "2054.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,9 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto grid = _rvvi();
-        int x = _ri();
+        auto events = _rvvi();
         Solution sol;
-        auto res = sol.minOperations(grid, x);
+        auto res = sol.maxTwoEvents(events);
         cout << res << "\n";
     }
     return 0;

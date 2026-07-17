@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "2070.cpp"
+#include "3462.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,11 +59,12 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto items = _rvvi();
-        auto queries = _rvi();
+        auto grid = _rvvi();
+        auto limits = _rvi();
+        int k = _ri();
         Solution sol;
-        auto res = sol.maximumBeauty(items, queries);
-        for (int _i=0;_i<(int)res.size();_i++){if(_i)cout<<" ";cout<<res[_i];}cout<<"\n";
+        auto res = sol.maxSum(grid, limits, k);
+        cout << res << "\n";
     }
     return 0;
 }

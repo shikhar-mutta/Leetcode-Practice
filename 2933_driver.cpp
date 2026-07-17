@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "3265.cpp"
+#include "2933.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -54,15 +54,33 @@ vector<vector<int>> _rvvi() {
     return v;
 }
 
+vector<vector<string>> _rvvs() {
+    string s; getline(cin,s);
+    vector<vector<string>> v;
+    vector<string> row;
+    int dep=0; bool in=false; string cur;
+    for (char c : s) {
+        if (c=='"') {
+            if (in) { row.push_back(cur); cur=""; }
+            in = !in;
+            continue;
+        }
+        if (in) { cur += c; continue; }
+        if (c=='[') { dep++; if (dep==2) row.clear(); }
+        else if (c==']') { if (dep==2) v.push_back(row); dep--; }
+    }
+    return v;
+}
+
 int main() {
     int t;
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto nums = _rvi();
+        auto access_times = _rvvs();
         Solution sol;
-        auto res = sol.countPairs(nums);
-        cout << res << "\n";
+        auto res = sol.findHighAccessEmployees(access_times);
+        for (int _i=0;_i<(int)res.size();_i++){if(_i)cout<<" ";cout<<res[_i];}cout<<"\n";
     }
     return 0;
 }

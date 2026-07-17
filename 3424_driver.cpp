@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "3462.cpp"
+#include "3424.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,11 +59,11 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto grid = _rvvi();
-        auto limits = _rvi();
-        int k = _ri();
+        auto arr = _rvi();
+        auto brr = _rvi();
+        long long k = _rll();
         Solution sol;
-        auto res = sol.maxSum(grid, limits, k);
+        auto res = sol.minCost(arr, brr, k);
         cout << res << "\n";
     }
     return 0;

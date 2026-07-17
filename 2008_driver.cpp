@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "2007.cpp"
+#include "2008.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,11 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto changed = _rvi();
+        int n = _ri();
+        auto rides = _rvvi();
         Solution sol;
-        auto res = sol.findOriginalArray(changed);
-        for (int _i=0;_i<(int)res.size();_i++){if(_i)cout<<" ";cout<<res[_i];}cout<<"\n";
+        auto res = sol.maxTaxiEarnings(n, rides);
+        cout << res << "\n";
     }
     return 0;
 }

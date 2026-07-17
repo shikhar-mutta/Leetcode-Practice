@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "3424.cpp"
+#include "3265.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,11 +59,9 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto arr = _rvi();
-        auto brr = _rvi();
-        long long k = _rll();
+        auto nums = _rvi();
         Solution sol;
-        auto res = sol.minCost(arr, brr, k);
+        auto res = sol.countPairs(nums);
         cout << res << "\n";
     }
     return 0;

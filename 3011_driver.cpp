@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "3016.cpp"
+#include "3011.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        string word = _rs();
+        auto nums = _rvi();
         Solution sol;
-        auto res = sol.minimumPushes(word);
-        cout << res << "\n";
+        auto res = sol.canSortArray(nums);
+        cout << (res ? "true" : "false") << "\n";
     }
     return 0;
 }

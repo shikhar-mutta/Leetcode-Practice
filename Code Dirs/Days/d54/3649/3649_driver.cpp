@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "2607.cpp"
+#include "3649.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,9 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto arr = _rvi();
-        int k = _ri();
+        auto nums = _rvi();
         Solution sol;
-        auto res = sol.makeSubKSumEqual(arr, k);
+        auto res = sol.perfectPairs(nums);
         cout << res << "\n";
     }
     return 0;

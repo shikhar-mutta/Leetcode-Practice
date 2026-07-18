@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "3025.cpp"
+#include "3016.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,9 +59,9 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto points = _rvvi();
+        string word = _rs();
         Solution sol;
-        auto res = sol.numberOfPairs(points);
+        auto res = sol.minimumPushes(word);
         cout << res << "\n";
     }
     return 0;

@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "3075.cpp"
+#include "3039.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,9 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto happiness = _rvi();
-        int k = _ri();
+        string s = _rs();
         Solution sol;
-        auto res = sol.maximumHappinessSum(happiness, k);
+        auto res = sol.lastNonEmptyString(s);
         cout << res << "\n";
     }
     return 0;

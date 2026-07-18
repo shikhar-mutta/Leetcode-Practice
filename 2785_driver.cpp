@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "2971.cpp"
+#include "2785.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,9 +59,9 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto nums = _rvi();
+        string s = _rs();
         Solution sol;
-        auto res = sol.largestPerimeter(nums);
+        auto res = sol.sortVowels(s);
         cout << res << "\n";
     }
     return 0;

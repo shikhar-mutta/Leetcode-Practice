@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "3572.cpp"
+#include "2448.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto x = _rvi();
-        auto y = _rvi();
+        auto nums = _rvi();
+        auto cost = _rvi();
         Solution sol;
-        auto res = sol.maxSumDistinctTriplet(x, y);
+        auto res = sol.minCost(nums, cost);
         cout << res << "\n";
     }
     return 0;

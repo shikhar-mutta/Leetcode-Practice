@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "3081.cpp"
+#include "1697.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,17 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        string s = _rs();
+        int n = _ri();
+        auto edgeList = _rvvi();
+        auto queries = _rvvi();
         Solution sol;
-        auto res = sol.minimizeStringValue(s);
-        cout << res << "\n";
+        auto res = sol.distanceLimitedPathsExist(n, edgeList, queries);
+        cout << "[";
+        for (int i = 0; i < (int)res.size(); i++) {
+            if (i) cout << ",";
+            cout << (res[i] ? "true" : "false");
+        }
+        cout << "]\n";
     }
     return 0;
 }

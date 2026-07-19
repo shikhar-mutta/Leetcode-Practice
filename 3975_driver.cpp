@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1755.cpp"
+#include "3975.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,11 +59,12 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto nums = _rvi();
-        int goal = _ri();
+        auto occupiedIntervals = _rvvi();
+        int freeStart = _ri();
+        int freeEnd = _ri();
         Solution sol;
-        auto res = sol.minAbsDifference(nums, goal);
-        cout << res << "\n";
+        auto res = sol.filterOccupiedIntervals(occupiedIntervals, freeStart, freeEnd);
+        for(auto&row:res){for(int _i=0;_i<(int)row.size();_i++){if(_i)cout<<" ";cout<<row[_i];}cout<<"\n";}
     }
     return 0;
 }

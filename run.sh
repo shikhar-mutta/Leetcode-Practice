@@ -38,7 +38,7 @@ done
 
 # --- Compile ---
 echo "Compiling problem $N..."
-g++ -O2 -o "$BINARY" "$SRC" 2>&1
+g++ -O2 -std=gnu++20 -o "$BINARY" "$SRC" 2>&1
 if [ $? -ne 0 ]; then
     echo "COMPILE ERROR"
     exit 1

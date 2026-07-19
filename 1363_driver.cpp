@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1478.cpp"
+#include "1363.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,9 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto houses = _rvi();
-        int k = _ri();
+        auto digits = _rvi();
         Solution sol;
-        auto res = sol.minDistance(houses, k);
+        auto res = sol.largestMultipleOfThree(digits);
         cout << res << "\n";
     }
     return 0;

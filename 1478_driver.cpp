@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1632.cpp"
+#include "1478.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,11 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto matrix = _rvvi();
+        auto houses = _rvi();
+        int k = _ri();
         Solution sol;
-        auto res = sol.matrixRankTransform(matrix);
-        for(auto&row:res){for(int _i=0;_i<(int)row.size();_i++){if(_i)cout<<" ";cout<<row[_i];}cout<<"\n";}
+        auto res = sol.minDistance(houses, k);
+        cout << res << "\n";
     }
     return 0;
 }

@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "2616.cpp"
+#include "3186.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,9 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto nums = _rvi();
-        int p = _ri();
+        auto power = _rvi();
         Solution sol;
-        auto res = sol.minimizeMax(nums, p);
+        auto res = sol.maximumTotalDamage(power);
         cout << res << "\n";
     }
     return 0;

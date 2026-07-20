@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "2554.cpp"
+#include "2333.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,11 +59,12 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto banned = _rvi();
-        int n = _ri();
-        int maxSum = _ri();
+        auto nums1 = _rvi();
+        auto nums2 = _rvi();
+        int k1 = _ri();
+        int k2 = _ri();
         Solution sol;
-        auto res = sol.maxCount(banned, n, maxSum);
+        auto res = sol.minSumSquareDiff(nums1, nums2, k1, k2);
         cout << res << "\n";
     }
     return 0;

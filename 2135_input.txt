@@ -1,0 +1,5 @@
+2
+["ant","act","tack"]
+["tack","act","acti"]
+["ab","a"]
+["abc","abcd"]

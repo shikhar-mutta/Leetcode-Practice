@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "3132.cpp"
+#include "3752.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,11 +59,11 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto nums1 = _rvi();
-        auto nums2 = _rvi();
+        int n = _ri();
+        long long target = _rll();
         Solution sol;
-        auto res = sol.minimumAddedInteger(nums1, nums2);
-        cout << res << "\n";
+        auto res = sol.lexSmallestNegatedPerm(n, target);
+        for (int _i=0;_i<(int)res.size();_i++){if(_i)cout<<" ";cout<<res[_i];}cout<<"\n";
     }
     return 0;
 }

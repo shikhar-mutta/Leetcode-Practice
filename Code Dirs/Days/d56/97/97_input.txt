@@ -1,0 +1,10 @@
+3
+"aabcc"
+"dbbca"
+"aadbbcbcac"
+"aabcc"
+"dbbca"
+"aadbbbaccc"
+""
+""
+""

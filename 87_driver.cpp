@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "154.cpp"
+#include "87.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,11 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto nums = _rvi();
+        string s1 = _rs();
+        string s2 = _rs();
         Solution sol;
-        auto res = sol.findMin(nums);
-        cout << res << "\n";
+        auto res = sol.isScramble(s1, s2);
+        cout << (res ? "true" : "false") << "\n";
     }
     return 0;
 }

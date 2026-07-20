@@ -1,0 +1,7 @@
+3
+"great"
+"rgeat"
+"abcde"
+"caebd"
+"a"
+"a"

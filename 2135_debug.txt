@@ -1,3 +1,0 @@
-1
-["ant","act","tack"]
-["tack","act","acti"]

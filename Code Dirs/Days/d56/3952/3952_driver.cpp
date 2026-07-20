@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "2135.cpp"
+#include "3952.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto startWords = _rvs();
-        auto targetWords = _rvs();
+        auto nums = _rvi();
+        string s = _rs();
         Solution sol;
-        auto res = sol.wordCount(startWords, targetWords);
+        auto res = sol.maxTotal(nums, s);
         cout << res << "\n";
     }
     return 0;

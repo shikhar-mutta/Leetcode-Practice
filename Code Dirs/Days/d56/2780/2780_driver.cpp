@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "3218.cpp"
+#include "2780.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,12 +59,9 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        int m = _ri();
-        int n = _ri();
-        auto horizontalCut = _rvi();
-        auto verticalCut = _rvi();
+        auto nums = _rvi();
         Solution sol;
-        auto res = sol.minimumCost(m, n, horizontalCut, verticalCut);
+        auto res = sol.minimumIndex(nums);
         cout << res << "\n";
     }
     return 0;

@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "87.cpp"
+#include "211.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -53,17 +53,45 @@ vector<vector<int>> _rvvi() {
     }
     return v;
 }
+vector<vector<string>> _rvvs() {
+    string s; getline(cin,s);
+    vector<vector<string>> v;
+    int dep=0; string cur; bool inStr=false;
+    for (char c : s) {
+        if (c=='"') { inStr=!inStr; continue; }
+        if (inStr) { cur+=c; continue; }
+        if (c=='[') { dep++; continue; }
+        if (c==']') {
+            dep--;
+            if (dep==1) {
+                vector<string> row; stringstream ss(cur);
+                string t; while(getline(ss,t,',')) if(!t.empty()) row.push_back(t);
+                v.push_back(row); cur="";
+            }
+            continue;
+        }
+        if (dep>=2) cur+=c;
+    }
+    return v;
+}
 
 int main() {
     int t;
     cin >> t;
     cin.ignore();
     while (t--) {
-        string s1 = _rs();
-        string s2 = _rs();
-        Solution sol;
-        auto res = sol.isScramble(s1, s2);
-        cout << (res ? "true" : "false") << "\n";
+        auto ops = _rvs();
+        auto args = _rvvs();
+        WordDictionary *obj = nullptr;
+        vector<string> outputs;
+        for (size_t i = 0; i < ops.size(); i++) {
+            if (ops[i] == "WordDictionary") { obj = new WordDictionary(); outputs.push_back("null"); }
+            else if (ops[i] == "addWord") { obj->addWord(args[i][0]); outputs.push_back("null"); }
+            else if (ops[i] == "search") { bool r = obj->search(args[i][0]); outputs.push_back(r ? "true" : "false"); }
+        }
+        cout << "[";
+        for (size_t i = 0; i < outputs.size(); i++) { if (i) cout << ","; cout << outputs[i]; }
+        cout << "]\n";
     }
     return 0;
 }

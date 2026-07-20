@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "3531.cpp"
+#include "3362.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        int n = _ri();
-        auto buildings = _rvvi();
+        auto nums = _rvi();
+        auto queries = _rvvi();
         Solution sol;
-        auto res = sol.countCoveredBuildings(n, buildings);
+        auto res = sol.maxRemoval(nums, queries);
         cout << res << "\n";
     }
     return 0;

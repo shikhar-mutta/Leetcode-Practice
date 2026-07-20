@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "165.cpp"
+#include "223.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,16 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        string version1 = _rs();
-        string version2 = _rs();
+        int ax1 = _ri();
+        int ay1 = _ri();
+        int ax2 = _ri();
+        int ay2 = _ri();
+        int bx1 = _ri();
+        int by1 = _ri();
+        int bx2 = _ri();
+        int by2 = _ri();
         Solution sol;
-        auto res = sol.compareVersion(version1, version2);
+        auto res = sol.computeArea(ax1, ay1, ax2, ay2, bx1, by1, bx2, by2);
         cout << res << "\n";
     }
     return 0;

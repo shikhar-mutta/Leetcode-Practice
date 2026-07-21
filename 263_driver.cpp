@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "264.cpp"
+#include "263.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -61,8 +61,8 @@ int main() {
     while (t--) {
         int n = _ri();
         Solution sol;
-        auto res = sol.nthUglyNumber(n);
-        cout << res << "\n";
+        auto res = sol.isUgly(n);
+        cout << (res ? "true" : "false") << "\n";
     }
     return 0;
 }

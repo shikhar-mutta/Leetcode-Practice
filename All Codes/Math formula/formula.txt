@@ -277,5 +277,27 @@
 
     Code: return __builtin_popcount(n & (n >> 1)) == 1;
 
+----------------------------------------
+
+[16] Digital Root Formula (LC 258 - Add Digits)
+
+    Repeatedly summing a number's digits until one digit remains
+    is equivalent to:  1 + (num - 1) % 9        (num != 0)
+
+    Why: a number and its digit sum always differ by a multiple of 9
+    (since 10 ≡ 1 mod 9, each digit's place value ≡ 1 mod 9).
+    So the digital root = num mod 9, except when that would be 0
+    for a nonzero num (multiples of 9 have root 9, not 0) —
+    the "1 + (num-1) % 9" form shifts the range to fix that edge case.
+
+    Example: num=38 → 3+8=11 → 1+1=2;  formula: 1+(38-1)%9 = 1+37%9 = 1+1 = 2 ✓
+             num=9  → digit sum stays 9;  formula: 1+(9-1)%9 = 1+8%9 = 1+8 = 9 ✓
+
+    Code:
+        int addDigits(int num) {
+            if (num == 0) return 0;
+            return 1 + (num - 1) % 9;
+        }
+
 ========================================
 

@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "377.cpp"
+#include "419.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -36,6 +36,28 @@ vector<string> _rvs() {
     if (!cur.empty()) v.push_back(cur);
     return v;
 }
+vector<vector<char>> _rvvc() {
+    string s; getline(cin,s);
+    vector<vector<char>> v;
+    int dep=0; string cur;
+    for (char c : s) {
+        if (c=='[') { dep++; if(dep>2) cur+=c; }
+        else if (c==']') {
+            dep--;
+            if (dep==1) {
+                vector<char> row;
+                stringstream ss(cur);
+                string t;
+                while (getline(ss,t,',')) {
+                    if (t.size()>=2 && t.front()=='"' && t.back()=='"')
+                        row.push_back(t[1]);
+                }
+                v.push_back(row); cur="";
+            } else if (dep>0) cur+=c;
+        } else if (dep>1) cur+=c;
+    }
+    return v;
+}
 vector<vector<int>> _rvvi() {
     string s; getline(cin,s);
     vector<vector<int>> v;
@@ -59,10 +81,9 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto nums = _rvi();
-        int target = _ri();
+        auto board = _rvvc();
         Solution sol;
-        auto res = sol.combinationSum4(nums, target);
+        auto res = sol.countBattleships(board);
         cout << res << "\n";
     }
     return 0;

@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "352.cpp"
+#include "394.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -36,28 +36,6 @@ vector<string> _rvs() {
     if (!cur.empty()) v.push_back(cur);
     return v;
 }
-vector<string> _rargs() {
-    string s; getline(cin,s);
-    vector<string> groups;
-    int dep=0; string cur;
-    for (char c : s) {
-        if (c=='[') { dep++; if(dep>=3) cur+=c; }
-        else if (c==']') {
-            dep--;
-            if (dep==1) { groups.push_back(cur); cur=""; }
-            else if (dep>=2) cur+=c;
-        } else if (dep>=2) cur+=c;
-    }
-    return groups;
-}
-vector<int> _parseVi(const string& raw) {
-    string body = raw;
-    if (!body.empty() && body.front()=='[' && body.back()==']')
-        body = body.substr(1, body.size()-2);
-    vector<int> v; stringstream ss(body);
-    string t; while(getline(ss,t,',')) if(!t.empty()) v.push_back(stoi(t));
-    return v;
-}
 vector<vector<int>> _rvvi() {
     string s; getline(cin,s);
     vector<vector<int>> v;
@@ -81,36 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto ops = _rvs();
-        auto args = _rargs();
-        SummaryRanges* obj = nullptr;
-        vector<string> outputs;
-        for (int i = 0; i < (int)ops.size(); i++) {
-            if (ops[i] == "SummaryRanges") {
-                obj = new SummaryRanges();
-                outputs.push_back("null");
-            } else if (ops[i] == "addNum") {
-                vector<int> a = _parseVi(args[i]);
-                obj->addNum(a[0]);
-                outputs.push_back("null");
-            } else if (ops[i] == "getIntervals") {
-                auto res = obj->getIntervals();
-                string s = "[";
-                for (size_t k = 0; k < res.size(); k++) {
-                    if (k) s += ", ";
-                    s += "[" + to_string(res[k][0]) + ", " + to_string(res[k][1]) + "]";
-                }
-                s += "]";
-                outputs.push_back(s);
-            }
-        }
-        cout << "[";
-        for (size_t i = 0; i < outputs.size(); i++) {
-            if (i) cout << ", ";
-            cout << outputs[i];
-        }
-        cout << "]\n";
-        delete obj;
+        string s = _rs();
+        Solution sol;
+        auto res = sol.decodeString(s);
+        cout << res << "\n";
     }
     return 0;
 }

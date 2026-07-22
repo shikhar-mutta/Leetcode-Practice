@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "376.cpp"
+#include "449.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -36,6 +36,64 @@ vector<string> _rvs() {
     if (!cur.empty()) v.push_back(cur);
     return v;
 }
+TreeNode* _rtree() {
+    string s; getline(cin,s);
+    string body = s.substr(1, s.size()-2);
+    vector<string> tokens;
+    string cur;
+    for (char c : body) {
+        if (c==',') { tokens.push_back(cur); cur=""; }
+        else cur += c;
+    }
+    if (!cur.empty()) tokens.push_back(cur);
+    if (tokens.empty() || tokens[0]=="null") return nullptr;
+    TreeNode* root = new TreeNode(stoi(tokens[0]));
+    queue<TreeNode*> q;
+    q.push(root);
+    size_t i = 1;
+    while (!q.empty() && i < tokens.size()) {
+        TreeNode* node = q.front(); q.pop();
+        if (i < tokens.size()) {
+            if (tokens[i] != "null") {
+                node->left = new TreeNode(stoi(tokens[i]));
+                q.push(node->left);
+            }
+            i++;
+        }
+        if (i < tokens.size()) {
+            if (tokens[i] != "null") {
+                node->right = new TreeNode(stoi(tokens[i]));
+                q.push(node->right);
+            }
+            i++;
+        }
+    }
+    return root;
+}
+string _serializeTree(TreeNode* root) {
+    if (!root) return "[]";
+    vector<string> tokens;
+    queue<TreeNode*> q;
+    q.push(root);
+    while (!q.empty()) {
+        TreeNode* node = q.front(); q.pop();
+        if (node) {
+            tokens.push_back(to_string(node->val));
+            q.push(node->left);
+            q.push(node->right);
+        } else {
+            tokens.push_back("null");
+        }
+    }
+    while (!tokens.empty() && tokens.back() == "null") tokens.pop_back();
+    string s = "[";
+    for (size_t i = 0; i < tokens.size(); i++) {
+        if (i) s += ",";
+        s += tokens[i];
+    }
+    s += "]";
+    return s;
+}
 vector<vector<int>> _rvvi() {
     string s; getline(cin,s);
     vector<vector<int>> v;
@@ -59,10 +117,11 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto nums = _rvi();
-        Solution sol;
-        auto res = sol.wiggleMaxLength(nums);
-        cout << res << "\n";
+        TreeNode* root = _rtree();
+        Codec sol;
+        string data = sol.serialize(root);
+        TreeNode* root2 = sol.deserialize(data);
+        cout << _serializeTree(root2) << "\n";
     }
     return 0;
 }

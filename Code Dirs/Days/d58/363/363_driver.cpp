@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "336.cpp"
+#include "363.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -27,14 +27,13 @@ vector<string> _rvs() {
     string s; getline(cin,s);
     vector<string> v;
     auto body = s.substr(1, s.size()-2);
-    if (body.empty()) return v;
     bool in = false; string cur;
     for (char c : body) {
         if (c=='"') { in=!in; continue; }
         if (c==',' && !in) { v.push_back(cur); cur=""; continue; }
         cur += c;
     }
-    v.push_back(cur);
+    if (!cur.empty()) v.push_back(cur);
     return v;
 }
 vector<vector<int>> _rvvi() {
@@ -60,11 +59,11 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto words = _rvs();
+        auto matrix = _rvvi();
+        int k = _ri();
         Solution sol;
-        auto res = sol.palindromePairs(words);
-        sort(res.begin(), res.end());
-        for(auto&row:res){for(int _i=0;_i<(int)row.size();_i++){if(_i)cout<<" ";cout<<row[_i];}cout<<"\n";}
+        auto res = sol.maxSumSubmatrix(matrix, k);
+        cout << res << "\n";
     }
     return 0;
 }

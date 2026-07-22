@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "789.cpp"
+#include "855.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,11 +59,25 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto ghosts = _rvvi();
-        auto target = _rvi();
-        Solution sol;
-        auto res = sol.escapeGhosts(ghosts, target);
-        cout << (res ? "true" : "false") << "\n";
+        auto ops = _rvs();
+        auto args = _rvvi();
+        ExamRoom* room = nullptr;
+        vector<string> outputs;
+        for (int i = 0; i < (int)ops.size(); i++) {
+            if (ops[i] == "ExamRoom") {
+                room = new ExamRoom(args[i][0]);
+                outputs.push_back("null");
+            } else if (ops[i] == "seat") {
+                outputs.push_back(to_string(room->seat()));
+            } else if (ops[i] == "leave") {
+                room->leave(args[i][0]);
+                outputs.push_back("null");
+            }
+        }
+        cout << "[";
+        for (int i = 0; i < (int)outputs.size(); i++) { if (i) cout << ", "; cout << outputs[i]; }
+        cout << "]\n";
+        delete room;
     }
     return 0;
 }

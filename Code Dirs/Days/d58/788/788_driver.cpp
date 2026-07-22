@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "712.cpp"
+#include "788.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,9 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        string s1 = _rs();
-        string s2 = _rs();
+        int n = _ri();
         Solution sol;
-        auto res = sol.minimumDeleteSum(s1, s2);
+        auto res = sol.rotatedDigits(n);
         cout << res << "\n";
     }
     return 0;

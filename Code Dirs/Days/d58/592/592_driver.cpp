@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "529.cpp"
+#include "592.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -53,54 +53,16 @@ vector<vector<int>> _rvvi() {
     }
     return v;
 }
-vector<vector<char>> _rvvc() {
-    string s; getline(cin,s);
-    vector<vector<char>> v;
-    int dep=0; string cur; bool inStr=false;
-    for (char c : s) {
-        if (c=='"') { inStr=!inStr; continue; }
-        if (inStr) { cur+=c; continue; }
-        if (c=='[') { dep++; continue; }
-        if (c==']') {
-            dep--;
-            if (dep==1) {
-                vector<char> row; stringstream ss(cur);
-                string t; while(getline(ss,t,',')) if(!t.empty()) row.push_back(t[0]);
-                v.push_back(row); cur="";
-            }
-            continue;
-        }
-        if (dep>=2) cur+=c;
-    }
-    return v;
-}
-string _serializeVVC(vector<vector<char>>& board) {
-    string s = "[";
-    for (size_t i = 0; i < board.size(); i++) {
-        if (i) s += ",";
-        s += "[";
-        for (size_t j = 0; j < board[i].size(); j++) {
-            if (j) s += ",";
-            s += "\"";
-            s += board[i][j];
-            s += "\"";
-        }
-        s += "]";
-    }
-    s += "]";
-    return s;
-}
 
 int main() {
     int t;
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto board = _rvvc();
-        auto click = _rvi();
+        string expression = _rs();
         Solution sol;
-        auto res = sol.updateBoard(board, click);
-        cout << _serializeVVC(res) << "\n";
+        auto res = sol.fractionAddition(expression);
+        cout << res << "\n";
     }
     return 0;
 }

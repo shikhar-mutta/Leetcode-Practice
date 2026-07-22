@@ -1,0 +1,2 @@
+1
+["abcd","dcba","lls","s","sssll"]

@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "316.cpp"
+#include "375.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,9 +59,9 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        string s = _rs();
+        int n = _ri();
         Solution sol;
-        auto res = sol.removeDuplicateLetters(s);
+        auto res = sol.getMoneyAmount(n);
         cout << res << "\n";
     }
     return 0;

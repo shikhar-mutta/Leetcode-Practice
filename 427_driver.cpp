@@ -1,6 +1,22 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "437.cpp"
+
+class Node {
+public:
+    bool val;
+    bool isLeaf;
+    Node* topLeft;
+    Node* topRight;
+    Node* bottomLeft;
+    Node* bottomRight;
+
+    Node() : val(false), isLeaf(false), topLeft(NULL), topRight(NULL), bottomLeft(NULL), bottomRight(NULL) {}
+    Node(bool _val, bool _isLeaf) : val(_val), isLeaf(_isLeaf), topLeft(NULL), topRight(NULL), bottomLeft(NULL), bottomRight(NULL) {}
+    Node(bool _val, bool _isLeaf, Node* _topLeft, Node* _topRight, Node* _bottomLeft, Node* _bottomRight)
+        : val(_val), isLeaf(_isLeaf), topLeft(_topLeft), topRight(_topRight), bottomLeft(_bottomLeft), bottomRight(_bottomRight) {}
+};
+
+#include "427.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -53,36 +69,24 @@ vector<vector<int>> _rvvi() {
     }
     return v;
 }
-vector<string> _rtok() {
-    string s; getline(cin,s);
-    vector<string> v;
-    auto body = s.substr(1, s.size()-2);
-    string cur;
-    for (char c : body) {
-        if (c==',') { v.push_back(cur); cur=""; continue; }
-        cur += c;
-    }
-    if (!cur.empty()) v.push_back(cur);
-    return v;
-}
-TreeNode* _rtree() {
-    auto toks = _rtok();
-    if (toks.empty() || toks[0]=="null") return nullptr;
-    TreeNode* root = new TreeNode(stoi(toks[0]));
-    queue<TreeNode*> q; q.push(root);
-    size_t i = 1;
-    while (i < toks.size() && !q.empty()) {
-        TreeNode* cur = q.front(); q.pop();
-        if (i < toks.size()) {
-            if (toks[i] != "null") { cur->left = new TreeNode(stoi(toks[i])); q.push(cur->left); }
-            i++;
-        }
-        if (i < toks.size()) {
-            if (toks[i] != "null") { cur->right = new TreeNode(stoi(toks[i])); q.push(cur->right); }
-            i++;
+string _serializeQuadTree(Node* root) {
+    if (!root) return "[]";
+    vector<string> arr;
+    queue<Node*> q; q.push(root);
+    while (!q.empty()) {
+        Node* cur = q.front(); q.pop();
+        arr.push_back("[" + to_string(cur->isLeaf ? 1 : 0) + "," + to_string(cur->val ? 1 : 0) + "]");
+        if (!cur->isLeaf) {
+            q.push(cur->topLeft);
+            q.push(cur->topRight);
+            q.push(cur->bottomLeft);
+            q.push(cur->bottomRight);
         }
     }
-    return root;
+    string s = "[";
+    for (size_t i = 0; i < arr.size(); i++) { if (i) s += ","; s += arr[i]; }
+    s += "]";
+    return s;
 }
 
 int main() {
@@ -90,11 +94,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        TreeNode* root = _rtree();
-        int targetSum = _ri();
+        auto grid = _rvvi();
         Solution sol;
-        auto res = sol.pathSum(root, targetSum);
-        cout << res << "\n";
+        auto res = sol.construct(grid);
+        cout << _serializeQuadTree(res) << "\n";
     }
     return 0;
 }

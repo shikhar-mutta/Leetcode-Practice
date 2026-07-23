@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1035.cpp"
+#include "1130.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,9 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto nums1 = _rvi();
-        auto nums2 = _rvi();
+        auto arr = _rvi();
         Solution sol;
-        auto res = sol.maxUncrossedLines(nums1, nums2);
+        auto res = sol.mctFromLeafValues(arr);
         cout << res << "\n";
     }
     return 0;

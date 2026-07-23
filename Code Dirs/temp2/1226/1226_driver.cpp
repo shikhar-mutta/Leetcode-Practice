@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1201.cpp"
+#include "1226.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -60,12 +60,37 @@ int main() {
     cin.ignore();
     while (t--) {
         int n = _ri();
-        int a = _ri();
-        int b = _ri();
-        int c = _ri();
-        Solution sol;
-        auto res = sol.nthUglyNumber(n, a, b, c);
-        cout << res << "\n";
+        DiningPhilosophers dp;
+        mutex logMtx;
+        int counter = 0;
+        vector<array<int,5>> events(n);
+
+        vector<thread> threads;
+        for (int i = 0; i < n; i++) {
+            threads.emplace_back([&, i]() {
+                dp.wantsToEat(i,
+                    [&, i]() { lock_guard<mutex> l(logMtx); events[i][0] = counter++; },
+                    [&, i]() { lock_guard<mutex> l(logMtx); events[i][1] = counter++; },
+                    [&, i]() { lock_guard<mutex> l(logMtx); events[i][2] = counter++; },
+                    [&, i]() { lock_guard<mutex> l(logMtx); events[i][3] = counter++; },
+                    [&, i]() { lock_guard<mutex> l(logMtx); events[i][4] = counter++; });
+            });
+        }
+        for (auto& th : threads) th.join();
+
+        bool ok = true;
+        for (int i = 0; i < n && ok; i++)
+            for (int k = 0; k < 4; k++)
+                if (events[i][k] >= events[i][k + 1]) ok = false;
+
+        for (int i = 0; i < n && ok; i++) {
+            int j = (i + 1) % n;
+            if (j == i) continue;
+            bool overlap = !(events[i][4] < events[j][0] || events[j][4] < events[i][0]);
+            if (overlap) ok = false;
+        }
+
+        cout << (ok ? "PASS" : "FAIL") << "\n";
     }
     return 0;
 }

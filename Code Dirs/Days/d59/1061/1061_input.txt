@@ -1,0 +1,10 @@
+3
+"parker"
+"morris"
+"parser"
+"hello"
+"world"
+"hold"
+"leetcode"
+"programs"
+"sourcecode"

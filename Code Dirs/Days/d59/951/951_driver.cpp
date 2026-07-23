@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "897.cpp"
+#include "951.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -85,34 +85,17 @@ TreeNode* _rtree() {
     }
     return root;
 }
-string _serializeTree(TreeNode* root) {
-    if (!root) return "[]";
-    vector<string> arr;
-    arr.push_back(to_string(root->val));
-    queue<TreeNode*> q; q.push(root);
-    while (!q.empty()) {
-        TreeNode* cur = q.front(); q.pop();
-        if (cur->left) { arr.push_back(to_string(cur->left->val)); q.push(cur->left); }
-        else arr.push_back("null");
-        if (cur->right) { arr.push_back(to_string(cur->right->val)); q.push(cur->right); }
-        else arr.push_back("null");
-    }
-    while (!arr.empty() && arr.back() == "null") arr.pop_back();
-    string s = "[";
-    for (size_t i = 0; i < arr.size(); i++) { if (i) s += ","; s += arr[i]; }
-    s += "]";
-    return s;
-}
 
 int main() {
     int t;
     cin >> t;
     cin.ignore();
     while (t--) {
-        TreeNode* root = _rtree();
+        TreeNode* root1 = _rtree();
+        TreeNode* root2 = _rtree();
         Solution sol;
-        auto res = sol.increasingBST(root);
-        cout << _serializeTree(res) << "\n";
+        auto res = sol.flipEquiv(root1, root2);
+        cout << (res ? "true" : "false") << "\n";
     }
     return 0;
 }

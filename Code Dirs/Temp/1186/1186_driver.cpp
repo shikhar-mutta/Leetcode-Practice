@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1111.cpp"
+#include "1186.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -54,42 +54,15 @@ vector<vector<int>> _rvvi() {
     return v;
 }
 
-bool _validVPSDepth(const string& s, int& maxDepth) {
-    int d = 0, maxd = 0;
-    for (char c : s) {
-        if (c == '(') { d++; maxd = max(maxd, d); }
-        else { d--; if (d < 0) return false; }
-    }
-    maxDepth = maxd;
-    return d == 0;
-}
-
 int main() {
     int t;
     cin >> t;
     cin.ignore();
     while (t--) {
-        string seq = _rs();
+        auto arr = _rvi();
         Solution sol;
-        auto res = sol.maxDepthAfterSplit(seq);
-
-        bool ok = res.size() == seq.size();
-        string A, B;
-        for (size_t i = 0; ok && i < res.size(); i++) {
-            if (res[i] != 0 && res[i] != 1) { ok = false; break; }
-            (res[i] == 0 ? A : B) += seq[i];
-        }
-
-        int depthA = 0, depthB = 0;
-        if (ok) ok = _validVPSDepth(A, depthA) && _validVPSDepth(B, depthB);
-
-        int d = 0, origMaxDepth = 0;
-        for (char c : seq) { if (c == '(') { d++; origMaxDepth = max(origMaxDepth, d); } else d--; }
-        int optimal = (origMaxDepth + 1) / 2;
-
-        if (ok) ok = max(depthA, depthB) == optimal;
-
-        cout << (ok ? "PASS" : "FAIL") << "\n";
+        auto res = sol.maximumSum(arr);
+        cout << res << "\n";
     }
     return 0;
 }

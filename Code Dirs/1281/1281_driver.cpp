@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1208.cpp"
+#include "1281.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,11 +59,9 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        string s = _rs();
-        string t = _rs();
-        int maxCost = _ri();
+        int n = _ri();
         Solution sol;
-        auto res = sol.equalSubstring(s, t, maxCost);
+        auto res = sol.subtractProductAndSum(n);
         cout << res << "\n";
     }
     return 0;

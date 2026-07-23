@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "957.cpp"
+#include "979.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -54,16 +54,47 @@ vector<vector<int>> _rvvi() {
     return v;
 }
 
+vector<string> _rtok() {
+    string s; getline(cin,s);
+    vector<string> v;
+    auto body = s.substr(1, s.size()-2);
+    string cur;
+    for (char c : body) {
+        if (c==',') { v.push_back(cur); cur=""; continue; }
+        cur += c;
+    }
+    if (!cur.empty()) v.push_back(cur);
+    return v;
+}
+TreeNode* _rtree() {
+    auto toks = _rtok();
+    if (toks.empty() || toks[0]=="null") return nullptr;
+    TreeNode* root = new TreeNode(stoi(toks[0]));
+    queue<TreeNode*> q; q.push(root);
+    size_t i = 1;
+    while (i < toks.size() && !q.empty()) {
+        TreeNode* cur = q.front(); q.pop();
+        if (i < toks.size()) {
+            if (toks[i] != "null") { cur->left = new TreeNode(stoi(toks[i])); q.push(cur->left); }
+            i++;
+        }
+        if (i < toks.size()) {
+            if (toks[i] != "null") { cur->right = new TreeNode(stoi(toks[i])); q.push(cur->right); }
+            i++;
+        }
+    }
+    return root;
+}
+
 int main() {
     int t;
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto cells = _rvi();
-        int n = _ri();
+        TreeNode* root = _rtree();
         Solution sol;
-        auto res = sol.prisonAfterNDays(cells, n);
-        for (int _i=0;_i<(int)res.size();_i++){if(_i)cout<<" ";cout<<res[_i];}cout<<"\n";
+        auto res = sol.distributeCoins(root);
+        cout << res << "\n";
     }
     return 0;
 }

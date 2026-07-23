@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "840.cpp"
+#include "886.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,11 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto grid = _rvvi();
+        int n = _ri();
+        auto dislikes = _rvvi();
         Solution sol;
-        auto res = sol.numMagicSquaresInside(grid);
-        cout << res << "\n";
+        auto res = sol.possibleBipartition(n, dislikes);
+        cout << (res ? "true" : "false") << "\n";
     }
     return 0;
 }

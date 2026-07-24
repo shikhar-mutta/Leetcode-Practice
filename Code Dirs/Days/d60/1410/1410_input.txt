@@ -1,0 +1,3 @@
+2
+"&amp; is an HTML entity but &ambassador; is not."
+"and I quote: &quot;...&quot;"

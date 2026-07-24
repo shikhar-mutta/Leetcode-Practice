@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1347.cpp"
+#include "1519.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,11 +59,12 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        string s = _rs();
-        string t = _rs();
+        int n = _ri();
+        auto edges = _rvvi();
+        string labels = _rs();
         Solution sol;
-        auto res = sol.minSteps(s, t);
-        cout << res << "\n";
+        auto res = sol.countSubTrees(n, edges, labels);
+        for (int _i=0;_i<(int)res.size();_i++){if(_i)cout<<" ";cout<<res[_i];}cout<<"\n";
     }
     return 0;
 }

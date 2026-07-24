@@ -1,0 +1,2 @@
+& is an HTML entity but &ambassador; is not.
+and I quote: "..."

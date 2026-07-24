@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1769.cpp"
+#include "1743.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,30 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        string boxes = _rs();
+        auto adjacentPairs = _rvvi();
         Solution sol;
-        auto res = sol.minOperations(boxes);
-        for (int _i=0;_i<(int)res.size();_i++){if(_i)cout<<" ";cout<<res[_i];}cout<<"\n";
+        auto res = sol.restoreArray(adjacentPairs);
+
+        map<pair<int,int>, int> cnt;
+        for (auto &p : adjacentPairs) {
+            int a = min(p[0], p[1]), b = max(p[0], p[1]);
+            cnt[{a,b}]++;
+        }
+
+        bool ok = (res.size() == adjacentPairs.size() + 1);
+        if (ok) {
+            for (size_t i = 0; i + 1 < res.size() && ok; i++) {
+                int a = min(res[i], res[i+1]), b = max(res[i], res[i+1]);
+                auto it = cnt.find({a,b});
+                if (it == cnt.end() || it->second == 0) { ok = false; break; }
+                --it->second;
+            }
+        }
+        if (ok) {
+            for (auto &kv : cnt) if (kv.second != 0) { ok = false; break; }
+        }
+
+        cout << (ok ? "PASS" : "FAIL") << "\n";
     }
     return 0;
 }

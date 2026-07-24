@@ -1,0 +1,10 @@
+3
+"input"
+"ouput"
+9
+"abc"
+"bcd"
+10
+"aab"
+"bbb"
+27

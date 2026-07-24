@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1405.cpp"
+#include "1599.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,11 +59,11 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        int a = _ri();
-        int b = _ri();
-        int c = _ri();
+        auto customers = _rvi();
+        int boardingCost = _ri();
+        int runningCost = _ri();
         Solution sol;
-        auto res = sol.longestDiverseString(a, b, c);
+        auto res = sol.minOperationsMaxProfit(customers, boardingCost, runningCost);
         cout << res << "\n";
     }
     return 0;

@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1620.cpp"
+#include "1823.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,11 +59,11 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto towers = _rvvi();
-        int radius = _ri();
+        int n = _ri();
+        int k = _ri();
         Solution sol;
-        auto res = sol.bestCoordinate(towers, radius);
-        for (int _i=0;_i<(int)res.size();_i++){if(_i)cout<<" ";cout<<res[_i];}cout<<"\n";
+        auto res = sol.findTheWinner(n, k);
+        cout << res << "\n";
     }
     return 0;
 }

@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1523.cpp"
+#include "1702.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,9 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        int low = _ri();
-        int high = _ri();
+        string binary = _rs();
         Solution sol;
-        auto res = sol.countOdds(low, high);
+        auto res = sol.maximumBinaryString(binary);
         cout << res << "\n";
     }
     return 0;

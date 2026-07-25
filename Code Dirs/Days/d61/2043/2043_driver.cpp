@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1870.cpp"
+#include "2043.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -54,16 +54,59 @@ vector<vector<int>> _rvvi() {
     return v;
 }
 
+vector<string> _rargs() {
+    string s; getline(cin,s);
+    vector<string> v;
+    int dep=0; string cur;
+    for (char c : s) {
+        if (c=='[') { dep++; if(dep>=3) cur+=c; }
+        else if (c==']') {
+            if (dep>=3) cur+=c;
+            dep--;
+            if (dep==1) { v.push_back(cur); cur=""; }
+        } else if (dep>=2) cur+=c;
+    }
+    return v;
+}
+vector<long long> _parseLLArr(const string &s) {
+    string body = s;
+    if (!body.empty() && body.front()=='[' && body.back()==']')
+        body = body.substr(1, body.size()-2);
+    vector<long long> v; stringstream ss(body);
+    string t; while(getline(ss,t,',')) if(!t.empty()) v.push_back(stoll(t));
+    return v;
+}
+
 int main() {
     int t;
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto dist = _rvi();
-        double hour = _rd();
-        Solution sol;
-        auto res = sol.minSpeedOnTime(dist, hour);
-        cout << res << "\n";
+        auto ops = _rvs();
+        auto args = _rargs();
+
+        auto balance = _parseLLArr(args[0]);
+        Bank sol(balance);
+
+        vector<string> out = {"null"};
+        for (size_t i = 1; i < ops.size(); i++) {
+            auto a = _parseLLArr(args[i]);
+            bool res;
+            if (ops[i] == "transfer")
+                res = sol.transfer((int)a[0], (int)a[1], a[2]);
+            else if (ops[i] == "deposit")
+                res = sol.deposit((int)a[0], a[1]);
+            else
+                res = sol.withdraw((int)a[0], a[1]);
+            out.push_back(res ? "true" : "false");
+        }
+
+        cout << "[";
+        for (size_t i = 0; i < out.size(); i++) {
+            if (i) cout << ", ";
+            cout << out[i];
+        }
+        cout << "]\n";
     }
     return 0;
 }

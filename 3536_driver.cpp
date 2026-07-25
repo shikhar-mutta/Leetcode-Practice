@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1726.cpp"
+#include "3536.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,9 +59,9 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto nums = _rvi();
+        int n = _ri();
         Solution sol;
-        auto res = sol.tupleSameProduct(nums);
+        auto res = sol.maxProduct(n);
         cout << res << "\n";
     }
     return 0;

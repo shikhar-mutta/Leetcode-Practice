@@ -1,7 +1,0 @@
-3
-"TTFF"
-2
-"TFFT"
-1
-"TTFTTFTT"
-1

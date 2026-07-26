@@ -1,7 +1,0 @@
-2
-"abc"
-"bca"
-"aaa"
-"ab"
-"ba"
-"aba"

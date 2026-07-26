@@ -1,5 +1,0 @@
-2
-"aabaaaacaabc"
-2
-"a"
-1

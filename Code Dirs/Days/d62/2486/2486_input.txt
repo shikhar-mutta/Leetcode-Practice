@@ -1,7 +1,0 @@
-3
-"coaching"
-"coding"
-"abcde"
-"a"
-"z"
-"abcde"

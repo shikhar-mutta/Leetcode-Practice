@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "2530.cpp"
+#include "2641.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -54,16 +54,66 @@ vector<vector<int>> _rvvi() {
     return v;
 }
 
+vector<string> _rtok() {
+    string s; getline(cin,s);
+    vector<string> v;
+    auto body = s.substr(1, s.size()-2);
+    stringstream ss(body);
+    string t;
+    while (getline(ss,t,',')) v.push_back(t);
+    return v;
+}
+
+TreeNode* _rtree() {
+    auto tok = _rtok();
+    if (tok.empty() || tok[0] == "null") return nullptr;
+    TreeNode* root = new TreeNode(stoi(tok[0]));
+    queue<TreeNode*> q;
+    q.push(root);
+    size_t i = 1;
+    while (!q.empty() && i < tok.size()) {
+        TreeNode* node = q.front(); q.pop();
+        if (i < tok.size() && tok[i] != "null") {
+            node->left = new TreeNode(stoi(tok[i]));
+            q.push(node->left);
+        }
+        ++i;
+        if (i < tok.size() && tok[i] != "null") {
+            node->right = new TreeNode(stoi(tok[i]));
+            q.push(node->right);
+        }
+        ++i;
+    }
+    return root;
+}
+
+string _serializeTree(TreeNode* root) {
+    vector<string> out;
+    queue<TreeNode*> q;
+    q.push(root);
+    while (!q.empty()) {
+        TreeNode* node = q.front(); q.pop();
+        if (!node) { out.push_back("null"); continue; }
+        out.push_back(to_string(node->val));
+        q.push(node->left);
+        q.push(node->right);
+    }
+    while (!out.empty() && out.back() == "null") out.pop_back();
+    string res = "[";
+    for (size_t i = 0; i < out.size(); ++i) { if (i) res += ","; res += out[i]; }
+    res += "]";
+    return res;
+}
+
 int main() {
     int t;
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto nums = _rvi();
-        int k = _ri();
+        TreeNode* root = _rtree();
         Solution sol;
-        auto res = sol.maxKelements(nums, k);
-        cout << res << "\n";
+        auto res = sol.replaceValueInTree(root);
+        cout << _serializeTree(res) << "\n";
     }
     return 0;
 }

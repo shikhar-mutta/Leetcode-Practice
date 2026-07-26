@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "2645.cpp"
+#include "2739.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,9 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        string word = _rs();
+        int mainTank = _ri();
+        int additionalTank = _ri();
         Solution sol;
-        auto res = sol.addMinimum(word);
+        auto res = sol.distanceTraveled(mainTank, additionalTank);
         cout << res << "\n";
     }
     return 0;

@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "2762.cpp"
+#include "2845.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -60,8 +60,10 @@ int main() {
     cin.ignore();
     while (t--) {
         auto nums = _rvi();
+        int modulo = _ri();
+        int k = _ri();
         Solution sol;
-        auto res = sol.continuousSubarrays(nums);
+        auto res = sol.countInterestingSubarrays(nums, modulo, k);
         cout << res << "\n";
     }
     return 0;

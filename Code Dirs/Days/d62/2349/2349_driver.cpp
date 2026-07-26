@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "2320.cpp"
+#include "2349.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -54,15 +54,51 @@ vector<vector<int>> _rvvi() {
     return v;
 }
 
+vector<string> _rargsRaw() {
+    string line; getline(cin, line);
+    vector<string> raw;
+    int dep = 0; string cur; bool inStr = false;
+    for (char c : line) {
+        if (!inStr && c == '[') { dep++; if (dep >= 3) cur += c; continue; }
+        if (!inStr && c == ']') { if (dep >= 3) cur += c; dep--; if (dep == 1) { raw.push_back(cur); cur = ""; } continue; }
+        if (c == '"') { inStr = !inStr; if (dep >= 2) cur += c; continue; }
+        if (dep >= 2) cur += c;
+    }
+    return raw;
+}
+
+vector<int> _parseFlatInts(const string& raw) {
+    vector<int> v; stringstream ss(raw);
+    string t; while(getline(ss,t,',')) if(!t.empty()) v.push_back(stoi(t));
+    return v;
+}
+
 int main() {
     int t;
     cin >> t;
     cin.ignore();
     while (t--) {
-        int n = _ri();
-        Solution sol;
-        auto res = sol.countHousePlacements(n);
-        cout << res << "\n";
+        auto ops = _rvs();
+        auto rawArgs = _rargsRaw();
+        NumberContainers* nc = nullptr;
+        vector<string> outputs;
+        for (int i = 0; i < (int)ops.size(); i++) {
+            if (ops[i] == "NumberContainers") {
+                nc = new NumberContainers();
+                outputs.push_back("null");
+            } else if (ops[i] == "change") {
+                auto args = _parseFlatInts(rawArgs[i]);
+                nc->change(args[0], args[1]);
+                outputs.push_back("null");
+            } else if (ops[i] == "find") {
+                int number = stoi(rawArgs[i]);
+                outputs.push_back(to_string(nc->find(number)));
+            }
+        }
+        cout << "[";
+        for (int i = 0; i < (int)outputs.size(); i++) { if (i) cout << ", "; cout << outputs[i]; }
+        cout << "]\n";
+        delete nc;
     }
     return 0;
 }

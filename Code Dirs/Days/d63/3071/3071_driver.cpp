@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "2998.cpp"
+#include "3071.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,9 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        int x = _ri();
-        int y = _ri();
+        auto grid = _rvvi();
         Solution sol;
-        auto res = sol.minimumOperationsToMakeEqual(x, y);
+        auto res = sol.minimumOperationsToWriteY(grid);
         cout << res << "\n";
     }
     return 0;

@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "3546.cpp"
+#include "3593.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,12 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto grid = _rvvi();
+        int n = _ri();
+        auto edges = _rvvi();
+        auto cost = _rvi();
         Solution sol;
-        auto res = sol.canPartitionGrid(grid);
-        cout << (res ? "true" : "false") << "\n";
+        auto res = sol.minIncrease(n, edges, cost);
+        cout << res << "\n";
     }
     return 0;
 }

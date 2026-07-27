@@ -3,42 +3,55 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(n log(maxVal)) SC: O(n)
-// Approach: factor score of an array = gcd(all) * lcm(all). Removing at most
-// one element, try full array + each single-removal (via prefix/suffix
-// gcd & lcm arrays combining the two sides around index i), take max.
-class Solution {
+// TC: O(n log(max(nums))) SC: O(n)
+// Approach: precompute prefix and suffix GCDs and LCMs, then for each
+// index i, compute the GCD of the prefix and suffix GCDs (excluding nums[i]) and the LCM of the prefix and suffix LCMs (excluding nums[i]), and take the maximum product of these two values across all indices.
+class Solution
+{
 public:
-    long long maxScore(vector<int>& nums) {
-        int n = nums.size();
-        vector<long long> pg(n), pl(n), sg(n), sl(n);
-        for (int i = 0; i < n; i++) {
-            if (i == 0) { pg[i] = pl[i] = nums[i]; }
-            else {
-                pg[i] = __gcd(pg[i-1], (long long)nums[i]);
-                pl[i] = pl[i-1] / __gcd(pl[i-1], (long long)nums[i]) * nums[i];
-            }
+    using ll = long long;
+
+    ll gcd(ll a, ll b)
+    {
+        while (b)
+        {
+            ll t = a % b;
+            a = b;
+            b = t;
         }
-        for (int i = n-1; i >= 0; i--) {
-            if (i == n-1) { sg[i] = sl[i] = nums[i]; }
-            else {
-                sg[i] = __gcd(sg[i+1], (long long)nums[i]);
-                sl[i] = sl[i+1] / __gcd(sl[i+1], (long long)nums[i]) * nums[i];
-            }
+        return a;
+    }
+
+    ll lcm(ll a, ll b) { return a / gcd(a, b) * b; }
+
+    long long maxScore(vector<int> &nums)
+    {
+        int n = nums.size();
+
+        vector<ll> preGcd(n + 1, 0), sufGcd(n + 1, 0);
+        vector<ll> preLcm(n + 1, 1), sufLcm(n + 1, 1);
+
+        for (int i = 0; i < n; i++)
+        {
+            preGcd[i + 1] = gcd(preGcd[i], nums[i]);
+            preLcm[i + 1] = lcm(preLcm[i], nums[i]);
         }
 
-        long long ans = pg[n-1] * pl[n-1];
-        for (int i = 0; i < n; i++) {
-            long long g, l;
-            long long left_g = (i > 0) ? pg[i-1] : 0;
-            long long left_l = (i > 0) ? pl[i-1] : 1;
-            long long right_g = (i < n-1) ? sg[i+1] : 0;
-            long long right_l = (i < n-1) ? sl[i+1] : 1;
-            if (left_g == 0 && right_g == 0) continue; // n == 1, only one element, can't remove
-            g = left_g == 0 ? right_g : (right_g == 0 ? left_g : __gcd(left_g, right_g));
-            l = left_l / __gcd(left_l, right_l) * right_l;
+        for (int i = n - 1; i >= 0; i--)
+        {
+            sufGcd[i] = gcd(sufGcd[i + 1], nums[i]);
+            sufLcm[i] = lcm(sufLcm[i + 1], nums[i]);
+        }
+
+        ll ans = preGcd[n] * preLcm[n];
+
+        for (int i = 0; i < n; i++)
+        {
+            ll g = gcd(preGcd[i], sufGcd[i + 1]);
+            ll l = lcm(preLcm[i], sufLcm[i + 1]);
             ans = max(ans, g * l);
         }
+
         return ans;
     }
 };

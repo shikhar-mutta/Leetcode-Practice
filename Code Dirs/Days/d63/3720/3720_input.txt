@@ -1,0 +1,7 @@
+3
+"abc"
+"bba"
+"leet"
+"code"
+"baba"
+"bbaa"

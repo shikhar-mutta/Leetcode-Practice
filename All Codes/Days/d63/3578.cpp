@@ -4,40 +4,64 @@
 using namespace std;
 
 // TC: O(n) SC: O(n)
-// Approach: dp[i] = number of valid partitions of the first i elements,
-// dp[0]=1. dp[i] = sum of dp[j] over all j such that nums[j..i-1] has
-// max-min <= k. The set of valid j for a fixed i is a suffix [lo, i), and
-// lo is monotonically non-decreasing as i grows, so maintain a sliding
-// window with monotonic deques for the window's max/min, shrinking from
-// the left whenever the max-min gap exceeds k, and a running prefix sum
-// of dp values to answer each dp[i] in O(1).
-class Solution {
+// Approach: Use a sliding window to maintain the maximum and minimum values in the current window. Use dynamic programming to count the number of valid partitions. The dp[i] represents the number of valid partitions ending at index i. The cumulative sum c[i] is used to efficiently calculate the number of valid partitions for the current index based on previous indices.
+class Solution
+{
 public:
-    int countPartitions(vector<int>& nums, int k) {
-        const long long MOD = 1e9 + 7;
-        int n = nums.size();
-        vector<long long> dp(n + 1, 0), preSum(n + 2, 0);
+    int countPartitions(vector<int> &a, int k)
+    {
+        int n = a.size();
+        typedef long long LL;
+        const int mod = 1e9 + 7;
+
+        vector<LL> dp(n, 0);
+        vector<LL> c(n, 0);
+        deque<int> m, M;
+        m.push_back(0);
+        M.push_back(0);
+        int j = -1;
         dp[0] = 1;
-        preSum[1] = 1; // preSum[i] = dp[0]+...+dp[i-1]
+        c[0] = 1;
+        LL cum = 1;
+        for (int i = 1; i < n; ++i)
+        {
+            while (!m.empty() && a[m.back()] >= a[i])
+                m.pop_back();
+            while (!M.empty() && a[M.back()] <= a[i])
+                M.pop_back();
 
-        deque<int> maxDq, minDq;
-        int lo = 0;
-        for (int i = 1; i <= n; i++) {
-            int idx = i - 1;
-            while (!maxDq.empty() && nums[maxDq.back()] <= nums[idx]) maxDq.pop_back();
-            maxDq.push_back(idx);
-            while (!minDq.empty() && nums[minDq.back()] >= nums[idx]) minDq.pop_back();
-            minDq.push_back(idx);
+            m.push_back(i);
+            M.push_back(i);
 
-            while (nums[maxDq.front()] - nums[minDq.front()] > k) {
-                if (maxDq.front() == lo) maxDq.pop_front();
-                if (minDq.front() == lo) minDq.pop_front();
-                lo++;
+            while (a[M.front()] - a[m.front()] > k)
+            {
+                if (M.front() < m.front())
+                {
+                    j = M.front();
+                    M.pop_front();
+                }
+                else
+                {
+                    j = m.front();
+                    m.pop_front();
+                }
             }
 
-            dp[i] = (preSum[i] - preSum[lo] + MOD) % MOD;
-            preSum[i + 1] = (preSum[i] + dp[i]) % MOD;
+            LL cc = j >= 1 ? c[j - 1] : 0;
+
+            // printf("%d  M: (%d, %d), m: (%d, %d), cc: %lld, j: %d\n",
+            // i, M.front(), a[M.front()], m.front(), a[m.front()], cc, j);
+
+            dp[i] = ((cum) + mod - cc) % mod;
+            if (j == -1)
+                dp[i] = (dp[i] + 1) % mod;
+
+            // printf("dp: %d %lld\n", i, dp[i]);
+
+            cum = (cum + dp[i]) % mod;
+            c[i] = cum;
         }
-        return (int)dp[n];
+
+        return dp[n - 1];
     }
 };

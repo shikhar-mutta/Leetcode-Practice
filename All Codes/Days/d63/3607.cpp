@@ -3,52 +3,86 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O((c + Q) log^2 c) SC: O(c)
-// Approach: DSU over stations, each component root owns a sorted set of
-// its currently-online station ids (merged small-into-large on union for
-// efficiency). Query type 1 on x: if x is online, answer is x itself;
-// otherwise the smallest id in its component's online set, or -1 if
-// empty. Query type 2 on x: mark offline and erase it from its
-// component's online set.
-class Solution {
-    vector<int> parent, sz;
-    vector<set<int>*> onlineSet;
-    vector<bool> offline_;
-    int find(int x) { return parent[x] == x ? x : parent[x] = find(parent[x]); }
-    void unite(int a, int b) {
-        a = find(a); b = find(b);
-        if (a == b) return;
-        if (sz[a] < sz[b]) swap(a, b);
-        // merge b into a (small-to-large)
-        for (int v : *onlineSet[b]) onlineSet[a]->insert(v);
-        delete onlineSet[b];
-        onlineSet[b] = onlineSet[a];
-        parent[b] = a;
-        sz[a] += sz[b];
-    }
+// TC: O((n + m) * log(n)) SC: O(n + m)
+// Approach: Use Union-Find to manage connected components. For each query, we either mark a component as "off" or find the minimum "on" node in the same component. We process queries in reverse to efficiently update the state of components and maintain the minimum "on" node.
+constexpr int N = 1e5 + 1;
+int root[N], Rank[N];
+class UnionFind
+{
 public:
-    vector<int> processQueries(int c, vector<vector<int>>& connections, vector<vector<int>>& queries) {
-        parent.resize(c + 1);
-        sz.assign(c + 1, 1);
-        onlineSet.resize(c + 1);
-        offline_.assign(c + 1, false);
-        for (int i = 1; i <= c; i++) { parent[i] = i; onlineSet[i] = new set<int>{i}; }
+    UnionFind(int n)
+    {
+        fill(Rank, Rank + (n + 1), 1);
+        iota(root, root + (n + 1), 0);
+    }
 
-        for (auto& e : connections) unite(e[0], e[1]);
+    int Find(int x)
+    { // Path compression
+        return (x == root[x]) ? x : root[x] = Find(root[x]);
+    }
 
-        vector<int> ans;
-        for (auto& q : queries) {
-            int type = q[0], x = q[1];
-            if (type == 2) {
-                if (!offline_[x]) {
-                    offline_[x] = true;
-                    onlineSet[find(x)]->erase(x);
-                }
-            } else {
-                if (!offline_[x]) ans.push_back(x);
-                else {
-                    auto* s = onlineSet[find(x)];
-                    ans.push_back(s->empty() ? -1 : *s->begin());
+    bool Union(int x, int y)
+    { // Union by rank
+        x = Find(x), y = Find(y);
+        if (x == y)
+            return 0;
+        if (Rank[x] > Rank[y])
+            swap(x, y);
+        root[x] = y;
+        if (Rank[x] == Rank[y])
+            Rank[y]++;
+        return 1;
+    }
+};
+
+class Solution
+{
+public:
+    static vector<int> processQueries(int c, vector<vector<int>> &connections, vector<vector<int>> &queries)
+    {
+        UnionFind G(c);
+        for (auto &e : connections)
+            G.Union(e[0], e[1]);
+
+        vector<int> cntOff(c + 1, 0), minOn(c + 1, -1);
+        int sz = 0;
+
+        for (auto &q : queries)
+        {
+            const int t = q[0], x = q[1];
+            if (t == 2)
+                cntOff[x]++;
+            else
+                sz++;
+        }
+
+        vector<int> ans(sz);
+
+        // compute initial minOn per component
+        for (int i = 1; i <= c; i++)
+        {
+            if (cntOff[i] == 0)
+            {
+                int rx = G.Find(i);
+                if (minOn[rx] == -1 || minOn[rx] > i)
+                    minOn[rx] = i;
+            }
+        }
+
+        for (int i = queries.size() - 1, j = sz - 1; i >= 0; i--)
+        {
+            const int t = queries[i][0], x = queries[i][1], rx = G.Find(x);
+            int minS = minOn[rx];
+
+            if (t == 1)
+                ans[j--] = (cntOff[x] == 0 ? x : minS);
+            else
+            {
+                cntOff[x]--;
+                if (cntOff[x] == 0)
+                {
+                    if (minOn[rx] == -1 || minOn[rx] > x)
+                        minOn[rx] = x;
                 }
             }
         }

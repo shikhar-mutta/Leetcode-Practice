@@ -3,37 +3,73 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(n) SC: O(n)
-// Approach: return twice the max area, so area*2 = base*height. For a
-// triangle with a vertical side (parallel to y-axis), group points by x:
-// the base is (maxY-minY) at some x, and the height is the max
-// horizontal distance from that x to any other point's x (global min or
-// max x). Compute this for vertical sides, then swap x/y and repeat for
-// horizontal sides; take the overall best.
-class Solution {
-    long long calc(vector<vector<int>>& coords) {
-        int mn = INT_MAX, mx = 0;
-        unordered_map<int,int> lo, hi;
-        for (auto& p : coords) {
-            int x = p[0], y = p[1];
-            mn = min(mn, x);
-            mx = max(mx, x);
-            if (lo.count(x)) { lo[x] = min(lo[x], y); hi[x] = max(hi[x], y); }
-            else { lo[x] = hi[x] = y; }
-        }
-        long long ans = 0;
-        for (auto& [x, y] : lo) {
-            long long base = hi[x] - y;
-            long long height = max(mx - x, x - mn);
-            ans = max(ans, base * height);
-        }
-        return ans;
-    }
+// TC: O(n^2) SC: O(1)
+//  Approach: Iterate through all pairs of points and calculate the area of the triangle formed by those points and the origin. Keep track of the maximum area found.
+//  The area of a triangle formed by points (x1, y1), (x2, y2), and the origin (0, 0) can be calculated using the formula: area = abs(x1*y2 - x2*y1) / 2. We can iterate through all pairs of points and calculate the area for each pair, keeping track of the maximum area found.
+class Solution
+{
 public:
-    long long maxArea(vector<vector<int>>& coords) {
-        long long ans = calc(coords);
-        for (auto& c : coords) swap(c[0], c[1]);
-        ans = max(ans, calc(coords));
-        return ans > 0 ? ans : -1;
+    long long maxArea(vector<vector<int>> &coords)
+    {
+        sort(coords.begin(), coords.end(),
+             [](const vector<int> &a, const vector<int> &b)
+             {
+                 if (a[0] == b[0])
+                     return a[1] < b[1];
+                 return a[0] < b[0];
+             });
+        int n = coords.size();
+        long long res = 0, w, h;
+        int start = 0;
+        for (int i = 0; i < n - 1; i++)
+        {
+            if (coords[i + 1][0] > coords[start][0])
+            {
+                if (i > start)
+                {
+                    w = coords[i][1] - coords[start][1];
+                    h = max(coords[i][0] - coords[0][0],
+                            coords[n - 1][0] - coords[i][0]);
+                    res = max(res, w * h);
+                }
+                start = i + 1;
+            }
+        }
+        if (start < n - 1)
+        {
+            w = coords[n - 1][1] - coords[start][1];
+            h = coords[n - 1][0] - coords[0][0];
+            res = max(res, w * h);
+        }
+
+        sort(coords.begin(), coords.end(),
+             [](const vector<int> &a, const vector<int> &b)
+             {
+                 if (a[1] == b[1])
+                     return a[0] < b[0];
+                 return a[1] < b[1];
+             });
+        start = 0;
+        for (int i = 0; i < n - 1; i++)
+        {
+            if (coords[i + 1][1] > coords[start][1])
+            {
+                if (i > start)
+                {
+                    w = coords[i][0] - coords[start][0];
+                    h = max(coords[i][1] - coords[0][1],
+                            coords[n - 1][1] - coords[i][1]);
+                    res = max(res, w * h);
+                }
+                start = i + 1;
+            }
+        }
+        if (start < n - 1)
+        {
+            w = coords[n - 1][0] - coords[start][0];
+            h = coords[n - 1][1] - coords[0][1];
+            res = max(res, w * h);
+        }
+        return (res == 0) ? -1 : res;
     }
 };

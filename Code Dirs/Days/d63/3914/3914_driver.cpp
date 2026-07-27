@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "3899.cpp"
+#include "3914.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,16 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto sides = _rvi();
+        auto nums = _rvi();
         Solution sol;
-        auto res = sol.internalAngles(sides);
-        cout << "[";
-        cout << fixed << setprecision(5);
-        for (size_t i = 0; i < res.size(); i++) {
-            if (i) cout << ",";
-            cout << res[i];
-        }
-        cout << "]\n";
+        auto res = sol.minOperations(nums);
+        cout << res << "\n";
     }
     return 0;
 }

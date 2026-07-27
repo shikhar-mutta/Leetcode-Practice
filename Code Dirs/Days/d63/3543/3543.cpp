@@ -3,33 +3,53 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(k * E * t/64) SC: O(n * k * t/64)
-// Approach: dp[v][e] is a bitset of achievable path sums using exactly e
-// edges and ending at v, starting from any node. dp[v][0] = {0} for every
-// v. For each edge count e (1..k), OR in dp[v][e] |= dp[u][e-1] << w for
-// every edge (u,v,w); the bitset's fixed size naturally discards sums
-// that overflow past the range we care about. The answer is the highest
-// set bit below t across all dp[v][k].
-class Solution {
+// TC: O(k * E * t/64) SC: O(n * t/64)
+//  Approach: Use a bitset to represent achievable path sums. For each edge count e (1..k), update the bitset for each node based on its neighbors.
+// The bitset allows us to efficiently track which path sums are achievable without needing to store all possible sums explicitly. After processing all edges for k steps, we check the bitsets for each node to find the maximum achievable sum less than t.
+class Solution
+{
 public:
-    int maxWeight(int n, vector<vector<int>>& edges, int k, int t) {
-        const int CAP = 600;
-        vector<vector<bitset<CAP>>> dp(n, vector<bitset<CAP>>(k + 1));
-        for (int v = 0; v < n; v++) dp[v][0][0] = 1;
+    int maxWeight(int n, std::vector<std::vector<int>> &edges, int k, int t)
+    {
+        std::vector<std::bitset<600>> dp(n);
+        for (int u = 0; u < n; ++u)
+        {
+            dp[u].set(0);
+        }
+        for (int i = 0; i < k; ++i)
+        {
+            std::vector<std::bitset<600>> next_dp(n);
+            bool found = false;
+            for (const auto &edge : edges)
+            {
+                int u = edge[0];
+                int v = edge[1];
+                int w = edge[2];
 
-        for (int e = 1; e <= k; e++) {
-            for (auto& edge : edges) {
-                int u = edge[0], v = edge[1], w = edge[2];
-                dp[v][e] |= (dp[u][e-1] << w);
+                if (dp[u].any())
+                {
+                    next_dp[v] |= (dp[u] << w);
+                    found = true;
+                }
+            }
+            dp = std::move(next_dp);
+            if (!found)
+                break;
+        }
+
+        int max_s = -1;
+        for (int u = 0; u < n; ++u)
+        {
+            for (int s = t - 1; s > max_s; --s)
+            {
+                if (dp[u].test(s))
+                {
+                    max_s = s;
+                    break;
+                }
             }
         }
 
-        int limit = min(t, CAP);
-        for (int bit = limit - 1; bit >= 0; bit--) {
-            for (int v = 0; v < n; v++) {
-                if (dp[v][k][bit]) return bit;
-            }
-        }
-        return -1;
+        return max_s;
     }
 };

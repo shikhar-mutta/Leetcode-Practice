@@ -3,44 +3,66 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(n^6) states * O(n^2) transitions, tiny since n<=6 SC: same
-// Approach: BFS over full array states (n<=6 keeps the state space
-// small). From each state, try every (l,r) subarray removal and every
-// reinsertion position into the remainder, generating all reachable
-// next states; standard shortest-path BFS to the target.
-class Solution {
+// TC: O(n^4) worst case (n^2 days, n^2 scan each) SC: O(n^2)
+//  Approach: greedy day-by-day construction. At each day, among all
+//  remaining (home,away) pairs not yet used, whose home/away teams both
+//  differ from the previous day's two teams (avoiding consecutive-day
+//  repeats), pick the pair maximizing a heuristic score favoring teams
+//  with the most remaining home/away games left (keeps remaining options
+//  balanced so the greedy doesn't paint itself into a corner). If no
+//  valid pair exists at some day, no schedule works (return empty); n<4
+//  is provably infeasible.
+class Solution
+{
 public:
-    int minSplitMerge(vector<int>& nums1, vector<int>& nums2) {
-        int n = nums1.size();
-        if (nums1 == nums2) return 0;
-
-        queue<vector<int>> q;
-        set<vector<int>> visited;
-        q.push(nums1);
-        visited.insert(nums1);
-        int steps = 0;
-
-        while (!q.empty()) {
-            steps++;
-            int sz = q.size();
-            for (int s = 0; s < sz; s++) {
-                vector<int> cur = q.front(); q.pop();
-                for (int l = 0; l < n; l++) {
-                    for (int r = l; r < n; r++) {
-                        vector<int> sub(cur.begin() + l, cur.begin() + r + 1);
-                        vector<int> remain;
-                        for (int i = 0; i < n; i++) if (i < l || i > r) remain.push_back(cur[i]);
-                        for (int pos = 0; pos <= (int)remain.size(); pos++) {
-                            vector<int> nxt(remain.begin(), remain.begin() + pos);
-                            nxt.insert(nxt.end(), sub.begin(), sub.end());
-                            nxt.insert(nxt.end(), remain.begin() + pos, remain.end());
-                            if (nxt == nums2) return steps;
-                            if (!visited.count(nxt)) { visited.insert(nxt); q.push(nxt); }
+    int minSplitMerge(vector<int> &nums1, vector<int> &nums2)
+    {
+        int n = size(nums1);
+        bool vis[1 << 18]{};
+        unordered_map<int, int> id;
+        int root = 0, tgt = 0;
+        for (int x : nums1)
+        {
+            if (!id.contains(x))
+                id[x] = size(id);
+            root = root << 3 | id[x];
+        }
+        for (int x : nums2)
+            tgt = tgt << 3 | id[x];
+        if (root == tgt)
+            return 0;
+        vis[root] = true;
+        queue<int> q{{root}};
+        int ans = 1;
+        for (;;)
+        {
+            int sz = size(q);
+            while (sz--)
+            {
+                int u = q.front();
+                q.pop();
+                for (int l = 0; l < n; ++l)
+                {
+                    for (int r = l + 1; r <= n; ++r)
+                    {
+                        int len = r - l;
+                        int sub = (u & (1 << (3 * r)) - 1) >> (3 * l);
+                        int rem =
+                            u >> (3 * r) << (3 * l) | u & (1 << (3 * l)) - 1;
+                        for (int k = 0; k <= n - len; ++k)
+                        {
+                            int v = rem << 3 * len & -(1 << (3 * (k + len))) |
+                                    rem & (1 << (3 * k)) - 1 | sub;
+                            if (v == tgt)
+                                return ans;
+                            if (!vis[v])
+                                vis[v] = true, q.emplace(v);
+                            sub <<= 3;
                         }
                     }
                 }
             }
+            ++ans;
         }
-        return -1;
     }
 };

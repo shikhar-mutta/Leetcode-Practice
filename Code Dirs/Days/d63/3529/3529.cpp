@@ -3,62 +3,96 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(rows * cols) SC: O(rows * cols)
-// Approach: horizontal substrings wrap row-major (end of a row continues
-// into the next row's start), vertical substrings wrap column-major.
-// Flatten the grid both ways into single strings, run KMP to find every
-// occurrence of pattern in each, mark the covered cells, and count cells
-// marked by both.
-class Solution {
-    vector<int> kmpMatches(const string& text, const string& pat) {
-        int L = pat.size();
-        vector<int> fail(L, 0);
-        for (int i = 1; i < L; i++) {
-            int j = fail[i-1];
-            while (j > 0 && pat[i] != pat[j]) j = fail[j-1];
-            if (pat[i] == pat[j]) j++;
-            fail[i] = j;
-        }
-        vector<int> starts;
-        int j = 0;
-        for (int i = 0; i < (int)text.size(); i++) {
-            while (j > 0 && text[i] != pat[j]) j = fail[j-1];
-            if (text[i] == pat[j]) j++;
-            if (j == L) { starts.push_back(i - L + 1); j = fail[j-1]; }
-        }
-        return starts;
-    }
+// TC: O(m*n) SC: O(m*n)
+//  Approach: We can use the KMP algorithm to find all occurrences of the pattern in each row and column of the grid. We can keep track of the number of occurrences in each row and column using two 2D arrays, dhor and dver. Finally, we can iterate through the grid and count the number of cells that are part of both a horizontal and vertical occurrence of the pattern. We can do this by checking if the value in dhor and dver for each cell is greater than 0. If both values are greater than 0, we increment the count of overlapping cells. The final count will be the answer.
+class Solution
+{
 public:
-    int countCells(vector<vector<char>>& grid, string pattern) {
-        int rows = grid.size(), cols = grid[0].size();
-        int L = pattern.size();
-        vector<vector<bool>> markH(rows, vector<bool>(cols, false));
-        vector<vector<bool>> markV(rows, vector<bool>(cols, false));
-
-        string H;
-        H.reserve(rows * cols);
-        for (int r = 0; r < rows; r++) for (int c = 0; c < cols; c++) H += grid[r][c];
-        for (int start : kmpMatches(H, pattern)) {
-            for (int k = 0; k < L; k++) {
-                int idx = start + k;
-                markH[idx / cols][idx % cols] = true;
+    int countCells(vector<vector<char>> &grid, string pattern)
+    {
+        int m = size(grid), n = size(grid[0]), k = size(pattern);
+        vector<int> lps(k + 1);
+        lps[0] = -1;
+        int pos = 1, cnd = 0;
+        while (pos < k)
+        {
+            if (pattern[pos] == pattern[cnd])
+                lps[pos] = lps[cnd];
+            else
+            {
+                lps[pos] = cnd;
+                while (cnd != -1 && pattern[pos] != pattern[cnd])
+                    cnd = lps[cnd];
+            }
+            ++pos, ++cnd;
+        }
+        lps[pos] = cnd;
+        int i = 0, j = 0, l = 0;
+        vector<vector<int>> dhor(m, vector<int>(n)), dver = dhor;
+        while (i != m - 1 || j != n)
+        {
+            if (j == n)
+                j = 0, ++i;
+            if (grid[i][j] != pattern[l])
+            {
+                if (l == k)
+                {
+                    int z = i * n + j - l, pi = z / n, pj = z % n;
+                    ++dhor[pi][pj], --dhor[i][j];
+                }
+                l = lps[l];
+                if (l == -1)
+                    ++j, ++l;
+            }
+            else
+                ++j, ++l;
+        }
+        if (l == k)
+        {
+            int z = i * n + j - l, pi = z / n, pj = z % n;
+            ++dhor[pi][pj];
+        }
+        i = 0, j = 0, l = 0;
+        while (i != m || j != n - 1)
+        {
+            if (i == m)
+                i = 0, ++j;
+            if (grid[i][j] != pattern[l])
+            {
+                if (l == k)
+                {
+                    int z = j * m + i - l, pi = z % m, pj = z / m;
+                    ++dver[pi][pj], --dver[i][j];
+                }
+                l = lps[l];
+                if (l == -1)
+                    ++i, ++l;
+            }
+            else
+                ++i, ++l;
+        }
+        if (l == k)
+        {
+            int z = j * m + i - l, pi = z % m, pj = z / m;
+            ++dver[pi][pj];
+        }
+        for (int i = 0, sum = 0; i < m; ++i)
+        {
+            for (int j = 0; j < n; ++j)
+            {
+                sum += dhor[i][j], dhor[i][j] = sum;
             }
         }
-
-        string V;
-        V.reserve(rows * cols);
-        for (int c = 0; c < cols; c++) for (int r = 0; r < rows; r++) V += grid[r][c];
-        for (int start : kmpMatches(V, pattern)) {
-            for (int k = 0; k < L; k++) {
-                int idx = start + k;
-                markV[idx % rows][idx / rows] = true;
+        int ans = 0;
+        for (int j = 0, sum = 0; j < n; ++j)
+        {
+            for (int i = 0; i < m; ++i)
+            {
+                sum += dver[i][j];
+                if (sum != 0 && dhor[i][j] != 0)
+                    ++ans;
             }
         }
-
-        int count = 0;
-        for (int r = 0; r < rows; r++)
-            for (int c = 0; c < cols; c++)
-                if (markH[r][c] && markV[r][c]) count++;
-        return count;
+        return ans;
     }
 };

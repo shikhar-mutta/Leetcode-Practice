@@ -4,26 +4,31 @@
 using namespace std;
 
 // TC: O(n * k) SC: O(k)
-// Approach: removing a prefix/suffix leaves a contiguous subarray, so we
-// need counts of (product mod k) over ALL non-empty subarrays. For each
-// ending index j, dpCur[r] = number of subarrays ending at j with product
-// mod k == r, built from dpPrev (subarrays ending at j-1) by extending
-// each with nums[j], plus the length-1 subarray [nums[j]] itself. Sum
-// dpCur into the running answer at each step.
-class Solution {
+//  Approach: iterate through the array and keep track of the count of each remainder when divided by k.
+//  For each number in the array, calculate its remainder when divided by k and update the count of that remainder. Then, for each possible remainder, calculate the new remainder when multiplied by the current number and update the count accordingly. Finally, return the counts of each remainder as a vector.
+class Solution
+{
 public:
-    vector<long long> resultArray(vector<int>& nums, int k) {
-        vector<long long> ans(k, 0), dpPrev(k, 0);
-        for (int num : nums) {
-            vector<long long> dpCur(k, 0);
-            int r = num % k;
-            for (int x = 0; x < k; x++) {
-                if (dpPrev[x] > 0) dpCur[(x * num) % k] += dpPrev[x];
+    vector<long long> resultArray(vector<int> &nums, int k)
+    {
+        vector<long long> res(5, 0);
+        long long prev[5]{};
+
+        for (int num : nums)
+        {
+            long long curr[5]{};
+            int idx1 = num % k;
+            for (int r = 0; r < k; r++)
+            {
+                int idx2 = (idx1 * r) % k;
+                curr[idx2] += prev[r];
+                res[idx2] += prev[r];
             }
-            dpCur[r] += 1;
-            for (int x = 0; x < k; x++) ans[x] += dpCur[x];
-            dpPrev = dpCur;
+            curr[idx1]++;
+            res[idx1]++;
+            swap(prev, curr);
         }
-        return ans;
+        res.resize(k);
+        return res;
     }
 };

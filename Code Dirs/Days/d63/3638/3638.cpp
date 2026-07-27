@@ -10,21 +10,30 @@ using namespace std;
 // possible leaves the most room for further shipments); start a fresh
 // shipment at the next index. If the array ends with a shipment still
 // open, it never became balanced and doesn't count.
-class Solution {
+class Solution
+{
 public:
-    int maxBalancedShipments(vector<int>& weight) {
+    int maxBalancedShipments(vector<int> &weight)
+    {
         int n = weight.size();
         int count = 0;
         int i = 0;
-        while (i < n) {
+        while (i < n)
+        {
             int curMax = weight[i];
             int j = i + 1;
-            while (j < n && weight[j] >= curMax) {
+            while (j < n && weight[j] >= curMax)
+            {
                 curMax = max(curMax, weight[j]);
                 j++;
             }
-            if (j < n) { count++; i = j + 1; }
-            else break;
+            if (j < n)
+            {
+                count++;
+                i = j + 1;
+            }
+            else
+                break;
         }
         return count;
     }

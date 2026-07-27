@@ -4,35 +4,28 @@
 using namespace std;
 
 // TC: O(n) SC: O(n)
-// Approach: every bowl subarray [l,r] has a unique interior argmax j,
-// and one can show l must be exactly j's nearest-greater-to-the-left
-// (PGE) and r exactly its nearest-greater-to-the-right (NGE) — anything
-// else in between j and a farther boundary would itself exceed nums[j],
-// contradicting that j is the argmax, or would violate the endpoint-vs-
-// interior comparison. So each index j with BOTH a PGE and an NGE
-// contributes exactly one bowl subarray; count such j via two monotonic
-// stack passes.
-class Solution {
+// Approach: For each element, check if there is a greater element on the left and right side of it. If yes, then it is a bowl subarray. We can find the next greater element on the right side using a single pass from right to left and storing the maximum value seen so far. For the left side, we can keep track of the maximum value seen so far while iterating from left to right.
+class Solution
+{
 public:
-    long long bowlSubarrays(vector<int>& nums) {
-        int n = nums.size();
-        vector<bool> hasPGE(n, false), hasNGE(n, false);
-
-        vector<int> stk;
-        for (int i = 0; i < n; i++) {
-            while (!stk.empty() && nums[stk.back()] < nums[i]) stk.pop_back();
-            hasPGE[i] = !stk.empty();
-            stk.push_back(i);
+    long long bowlSubarrays(vector<int> &a)
+    {
+        int n = a.size();
+        vector<int> nxt(n, -1);
+        nxt[n - 1] = a[n - 1];
+        for (int i = n - 2; i >= 0; i--)
+        {
+            nxt[i] = max(a[i], nxt[i + 1]);
         }
-        stk.clear();
-        for (int i = n - 1; i >= 0; i--) {
-            while (!stk.empty() && nums[stk.back()] < nums[i]) stk.pop_back();
-            hasNGE[i] = !stk.empty();
-            stk.push_back(i);
+        int c = 0;
+        int lmax = a[0];
+        for (int i = 1; i < n - 1; i++)
+        {
+            // cout<<lmax<<" "<<a[i]<<" "<<nxt[i]<<endl;
+            if (lmax > a[i] and nxt[i] > a[i])
+                c++;
+            lmax = max(lmax, a[i]);
         }
-
-        long long count = 0;
-        for (int i = 0; i < n; i++) if (hasPGE[i] && hasNGE[i]) count++;
-        return count;
+        return c;
     }
 };

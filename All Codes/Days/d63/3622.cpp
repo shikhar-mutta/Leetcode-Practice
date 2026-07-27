@@ -6,11 +6,17 @@ using namespace std;
 // TC: O(log n) SC: O(1)
 // Approach: compute digit sum and digit product, check n is divisible
 // by their sum.
-class Solution {
+class Solution
+{
 public:
-    bool checkDivisibility(int n) {
+    bool checkDivisibility(int n)
+    {
         int sum = 0, prod = 1;
-        for (int x = n; x > 0; x /= 10) { sum += x % 10; prod *= x % 10; }
+        for (int x = n; x > 0; x /= 10)
+        {
+            sum += x % 10;
+            prod *= x % 10;
+        }
         return n % (sum + prod) == 0;
     }
 };

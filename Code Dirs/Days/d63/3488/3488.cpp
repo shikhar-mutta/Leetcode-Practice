@@ -3,33 +3,41 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(n + q) SC: O(n)
-// Approach: group indices by value. For each group, the nearest equal
-// element (circularly) to any index is always one of its two neighbors
-// in the sorted-by-index circular list, so walk each group's consecutive
-// pairs (wrapping) and update both endpoints' best circular distance.
-class Solution {
+// TC: O(n + q) SC: O(max(nums[i]))
+// Approach: For each number x, store the last index where it appeared in the array. Then for each query, check the last index of the queried number and calculate the distance to the current index. If the distance is equal to n (the length of the array), it means that the number does not appear in the array, so return -1. Otherwise, return the minimum distance to the closest equal element.
+constexpr int MM = 1e6 + 1;
+int pos[MM] = {[0 ... MM - 1] = -1};
+class Solution
+{
 public:
-    vector<int> solveQueries(vector<int>& nums, vector<int>& queries) {
-        int n = nums.size();
-        unordered_map<int, vector<int>> groups;
-        for (int i = 0; i < n; i++) groups[nums[i]].push_back(i);
-
-        vector<int> best(n, -1);
-        for (auto& [val, list] : groups) {
-            int s = list.size();
-            if (s < 2) continue;
-            for (int k = 0; k < s; k++) {
-                int a = list[k], b = list[(k + 1) % s];
-                int diff = (b - a + n) % n;
-                int dist = min(diff, n - diff);
-                best[a] = (best[a] == -1) ? dist : min(best[a], dist);
-                best[b] = (best[b] == -1) ? dist : min(best[b], dist);
-            }
+    static vector<int> solveQueries(vector<int> &nums, vector<int> &queries)
+    {
+        const int n = nums.size(), n2 = n * 2;
+        int left[n], right[n];
+        int xMax = 0;
+        for (int i = 0; i < n2; i++)
+        {
+            const int x = nums[i % n];
+            xMax = max(x, xMax);
+            if (i >= n)
+                left[i - n] = pos[x];
+            pos[x] = i - n;
         }
-
-        vector<int> ans;
-        for (int q : queries) ans.push_back(best[q]);
-        return ans;
+        memset(pos, -1, (xMax + 1) * sizeof(int)); // reset for pos[0...xMax]
+        for (int i = n2 - 1; i >= 0; i--)
+        {
+            const int x = nums[i % n];
+            if (i < n)
+                right[i] = pos[x];
+            pos[x] = i;
+        }
+        for (int &q : queries)
+        {
+            int x = q;
+            q = (x - left[x] == n) ? -1 : min(x - left[x], right[x] - x);
+        }
+        // reset for the next testcase
+        memset(pos, -1, (xMax + 1) * sizeof(int));
+        return queries;
     }
 };

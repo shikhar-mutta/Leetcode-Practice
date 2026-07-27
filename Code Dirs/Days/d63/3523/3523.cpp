@@ -3,23 +3,24 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(n) SC: O(n)
-// Approach: process right to left with a stack that stays non-decreasing
-// from top to bottom (i.e. non-decreasing left-to-right once reversed).
-// A new element x (further left) that's bigger than the current top can't
-// coexist with it in a non-decreasing array, so it must absorb (merge
-// into, via the "replace subarray with its max" operation) that smaller
-// kept element — pop while top < x, then push x. Final stack size is the
-// max achievable length.
-class Solution {
+// TC: O(n) SC: O(1)
+//  Approach: iterate through the array and keep track of the maximum element seen so far.
+//  If the current element is greater than or equal to the maximum element seen so far, increment the count and update the maximum element seen so far.
+class Solution
+{
 public:
-    int maximumPossibleSize(vector<int>& nums) {
-        vector<int> stk;
-        for (int i = (int)nums.size() - 1; i >= 0; i--) {
-            int x = nums[i];
-            while (!stk.empty() && stk.back() < x) stk.pop_back();
-            stk.push_back(x);
+    int maximumPossibleSize(vector<int> &nums)
+    {
+        int t = nums[0];
+        int c = 0;
+        for (int i = 0; i < nums.size(); i++)
+        {
+            if (t <= nums[i])
+            {
+                c++;
+                t = nums[i];
+            }
         }
-        return stk.size();
+        return c;
     }
 };

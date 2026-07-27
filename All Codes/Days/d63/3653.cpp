@@ -3,22 +3,119 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(queries * n / step) SC: O(1)
-// Approach: direct simulation. Each query [l, r, step, val] multiplies
-// nums[l], nums[l+step], ... (while <= r) by val mod 1e9+7, in order.
-// After all queries, XOR every element together.
-class Solution {
+// TC: O(queries * sqrt(n) + n * sqrt(n)) SC: O(sqrt(n))
+//  Approach: divide queries into two categories based on step size.
+//  For large steps, simulate directly. For small steps, use event-based processing
+//  with prefix multiplication and modular inverse for range updates.
+//  Use modular exponentiation to compute modular inverses. Finally, compute the XOR of the final array.
+class Solution
+{
+    static const int MOD = 1e9 + 7;
+
+    long long modpow(long long a, long long e)
+    {
+        long long r = 1;
+        while (e)
+        {
+            if (e & 1)
+                r = r * a % MOD;
+            a = a * a % MOD;
+            e >>= 1;
+        }
+        return r;
+    }
+
 public:
-    int xorAfterQueries(vector<int>& nums, vector<vector<int>>& queries) {
-        const long long MOD = 1e9 + 7;
-        for (auto& q : queries) {
-            int l = q[0], r = q[1], step = q[2], val = q[3];
-            for (int i = l; i <= r; i += step) {
-                nums[i] = (int)((long long)nums[i] * val % MOD);
+    int xorAfterQueries(vector<int> &nums, vector<vector<int>> &queries)
+    {
+        int n = nums.size();
+        int B = sqrt(n) + 1;
+
+        // events[k][rem] = list of (position, multiplier)
+        vector<vector<vector<pair<int, int>>>> events(B + 1);
+        for (int k = 1; k <= B; k++)
+        {
+            events[k].resize(k);
+        }
+
+        // Process queries
+        for (auto &q : queries)
+        {
+            int l = q[0], r = q[1], k = q[2], v = q[3];
+
+            if (k > B)
+            {
+                // direct update
+                for (int i = l; i <= r; i += k)
+                {
+                    nums[i] = (long long)nums[i] * v % MOD;
+                }
+            }
+            else
+            {
+                int rem = l % k;
+                int start = (l - rem) / k;
+                int end = (r - rem) / k;
+
+                events[k][rem].push_back({start, v});
+
+                // range end => use modular inverse
+                int maxT = (n - 1 - rem) / k;
+                if (end + 1 <= maxT)
+                {
+                    int inv = modpow(v, MOD - 2);
+                    events[k][rem].push_back({end + 1, inv});
+                }
             }
         }
-        int result = 0;
-        for (int x : nums) result ^= x;
-        return result;
+
+        // Apply small k events
+        for (int k = 1; k <= B; k++)
+        {
+            for (int rem = 0; rem < k; rem++)
+            {
+                auto &ev = events[k][rem];
+                if (ev.empty())
+                    continue;
+
+                // sort events
+                sort(ev.begin(), ev.end());
+
+                // compress same positions
+                vector<pair<int, int>> comp;
+                for (auto &p : ev)
+                {
+                    if (!comp.empty() && comp.back().first == p.first)
+                    {
+                        comp.back().second = (long long)comp.back().second * p.second % MOD;
+                    }
+                    else
+                    {
+                        comp.push_back(p);
+                    }
+                }
+
+                // apply prefix multiplication
+                long long cur = 1;
+                int ptr = 0;
+
+                for (int t = 0, idx = rem; idx < n; t++, idx += k)
+                {
+                    while (ptr < comp.size() && comp[ptr].first == t)
+                    {
+                        cur = cur * comp[ptr].second % MOD;
+                        ptr++;
+                    }
+                    nums[idx] = nums[idx] * cur % MOD;
+                }
+            }
+        }
+
+        // Compute XOR
+        int ans = 0;
+        for (int x : nums)
+            ans ^= x;
+
+        return ans;
     }
 };

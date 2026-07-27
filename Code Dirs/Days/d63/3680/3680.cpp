@@ -3,51 +3,73 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(n^4) worst case (n^2 days, n^2 scan each) SC: O(n^2)
-// Approach: greedy day-by-day construction. At each day, among all
-// remaining (home,away) pairs not yet used, whose home/away teams both
-// differ from the previous day's two teams (avoiding consecutive-day
-// repeats), pick the pair maximizing a heuristic score favoring teams
-// with the most remaining home/away games left (keeps remaining options
-// balanced so the greedy doesn't paint itself into a corner). If no
-// valid pair exists at some day, no schedule works (return empty); n<4
-// is provably infeasible.
-class Solution {
+// TC: O(n^2) SC: O(n^2)
+// Approach: The idea is to generate a schedule for n players such that each player plays against every other player exactly once. We can achieve this by creating pairs of players in a systematic way. For even n, we can pair players in a round-robin fashion, while for odd n, we can use a similar approach but with an additional player who sits out each round. We continue this process until all pairs have been generated.
+// The schedule is generated in such a way that each player plays against every other player exactly once, and the order of matches is determined by the pairing strategy. The algorithm ensures that all possible pairs are covered without repetition, and it handles both even and odd numbers of players appropriately.
+class Solution
+{
+
 public:
-    vector<vector<int>> generateSchedule(int n) {
-        if (n < 4) return {};
-        int total = n * (n - 1);
-        vector<vector<int>> rem(n, vector<int>(n, 0));
-        vector<int> homeRem(n, n - 1), awayRem(n, n - 1), lastSide(n, -1), run(n, 0);
-        for (int u = 0; u < n; u++) for (int v = 0; v < n; v++) if (u != v) rem[u][v] = 1;
+    vector<vector<int>> generateSchedule(int n)
+    {
+        vector<vector<int>> ans;
 
-        int prevA = -1, prevB = -1;
-        vector<int> H, A;
-        H.reserve(total); A.reserve(total);
+        if (n <= 4)
+            return ans;
 
-        auto okTeam = [&](int u, int side) { return !(lastSide[u] == side && run[u] >= 3); };
+        if (n % 2 == 0)
+        {
+            for (int i = 0; i < n; i += 2)
+                ans.push_back({i, i + 1});
+            for (int i = 0; i < n; i += 2)
+                ans.push_back({i + 1, i});
 
-        for (int d = 0; d < total; d++) {
-            int bu = -1, bv = -1, best = -1;
-            for (int u = 0; u < n; u++) {
-                if (u == prevA || u == prevB || homeRem[u] == 0 || !okTeam(u, 0)) continue;
-                for (int v = 0; v < n; v++) {
-                    if (v == u || v == prevA || v == prevB || awayRem[v] == 0 || !okTeam(v, 1)) continue;
-                    if (!rem[u][v]) continue;
-                    int score = (homeRem[u] << 16) ^ awayRem[v];
-                    if (score > best) { best = score; bu = u; bv = v; }
-                }
+            for (int i = 1; i < n; i += 2)
+                ans.push_back({i, (i + 1) % n});
+            for (int i = 1; i < n; i += 2)
+                ans.push_back({(i + 1) % n, i});
+        }
+        else
+        {
+            for (int i = 0; i < 2 * n; i += 2)
+            {
+                ans.push_back({i % n, (i + 1) % n});
             }
-            if (bu == -1) return {};
-            rem[bu][bv] = 0; homeRem[bu]--; awayRem[bv]--;
-            if (lastSide[bu] == 0) run[bu]++; else { lastSide[bu] = 0; run[bu] = 1; }
-            if (lastSide[bv] == 1) run[bv]++; else { lastSide[bv] = 1; run[bv] = 1; }
-            H.push_back(bu); A.push_back(bv);
-            prevA = bu; prevB = bv;
+
+            for (int i = 0; i < 2 * n; i += 2)
+            {
+                ans.push_back({(i + 1) % n, i % n});
+            }
         }
 
-        vector<vector<int>> res;
-        for (size_t i = 0; i < H.size(); i++) res.push_back({H[i], A[i]});
-        return res;
+        for (int gap = 2; gap < (n + 1) / 2; gap++)
+        {
+            int start = ans.back()[0] + 1;
+
+            for (int i = start; i < start + n; i++)
+            {
+                ans.push_back({i % n, (i + gap) % n});
+            }
+
+            start = (ans.back()[1] - 1 + n) % n;
+
+            for (int i = start; i < start + n; i++)
+            {
+                ans.push_back({(i + gap) % n, i % n});
+            }
+        }
+
+        if (n % 2 == 0)
+        {
+            int gap = n / 2;
+            int start = (ans.back()[0] - 1 + n) % n;
+
+            for (int i = start; i < start + n; i++)
+            {
+                ans.push_back({i % n, (i + gap) % n});
+            }
+        }
+
+        return ans;
     }
 };

@@ -3,38 +3,64 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(n * L) SC: O(n)
-// Approach: precompute lcp[i] = LCP length of adjacent words[i],words[i+1].
-// Removing word i deletes the pair-edges (i-1,i) and (i,i+1) and, if both
-// neighbors exist, creates a new edge between words[i-1] and words[i+1].
-// The answer is the max of: the best lcp among all other (unaffected)
-// edges (via prefix/suffix max arrays), and that new edge's LCP if it
-// exists.
-class Solution {
-    int lcpLen(const string& a, const string& b) {
-        int n = min(a.size(), b.size()), i = 0;
-        while (i < n && a[i] == b[i]) i++;
-        return i;
-    }
+// TC: O(n * m) SC: O(n)
+// Approach: For each pair of adjacent strings, find the longest common prefix. Keep track of the maximum length of the longest common prefix found so far and the second maximum length. For each string, check if it is part of the pair that has the maximum length. If it is, use the second maximum length for that string; otherwise, use the maximum length.
+class Solution
+{
 public:
-    vector<int> longestCommonPrefix(vector<string>& words) {
-        int n = words.size();
-        vector<int> lcp(max(0, n - 1));
-        for (int i = 0; i < n - 1; i++) lcp[i] = lcpLen(words[i], words[i+1]);
-
-        int m = lcp.size();
-        vector<int> prefixMax(m, 0), suffixMax(m, 0);
-        for (int i = 0; i < m; i++) prefixMax[i] = max(i > 0 ? prefixMax[i-1] : 0, lcp[i]);
-        for (int i = m - 1; i >= 0; i--) suffixMax[i] = max(i + 1 < m ? suffixMax[i+1] : 0, lcp[i]);
-
-        vector<int> ans(n, 0);
-        for (int i = 0; i < n; i++) {
-            int best = 0;
-            if (i - 2 >= 0) best = max(best, prefixMax[i-2]);
-            if (i + 1 < m) best = max(best, suffixMax[i+1]);
-            if (i - 1 >= 0 && i + 1 < n) best = max(best, lcpLen(words[i-1], words[i+1]));
-            ans[i] = best;
+    int match(string &a, string &b)
+    {
+        int n = min(a.size(), b.size());
+        for (int i = 0; i < n; i++)
+        {
+            if (a[i] != b[i])
+                return i;
         }
+
+        return n;
+    }
+
+    vector<int> longestCommonPrefix(vector<string> &words)
+    {
+        int n = words.size();
+        vector<int> ans(n);
+
+        int firstpos = -1;
+        int fMax = 0;
+        int sMax = 0;
+
+        for (int i = 0; i < n - 1; i++)
+        {
+            int x = match(words[i], words[i + 1]);
+            if (x >= fMax)
+            {
+                firstpos = i;
+                sMax = fMax;
+                fMax = x;
+            }
+            else if (x > sMax)
+                sMax = x;
+        }
+
+        for (int i = 0; i < n; i++)
+        {
+            int len = 0;
+
+            if (i - 1 >= 0 && i + 1 < n)
+            {
+                len = match(words[i - 1], words[i + 1]);
+            }
+
+            if (i == firstpos || i == firstpos + 1)
+            {
+                ans[i] = max(len, sMax);
+            }
+            else
+            {
+                ans[i] = max(len, fMax);
+            }
+        }
+
         return ans;
     }
 };

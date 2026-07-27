@@ -9,14 +9,17 @@ using namespace std;
 // to a" sweeps every letter forward together (once a letter reaches the
 // next one, further ops on that value also carry it along), so the total
 // ops needed is just the max cyclic distance to 'a' among letters present.
-class Solution {
+#pragma GCC optimize('o3')
+
+class Solution
+{
 public:
-    int minOperations(string s) {
-        int best = 0;
-        for (char c : s) {
-            int dist = (26 - (c - 'a')) % 26;
-            best = max(best, dist);
-        }
-        return best;
+    int minOperations(const string &s)
+    {
+        int count = 0;
+        for (const char c : s)
+            count = max(count, (26 - (c - 'a')) % 26);
+
+        return count;
     }
 };

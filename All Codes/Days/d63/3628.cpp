@@ -3,36 +3,54 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(n) SC: O(1)
-// Approach: count existing "LCT" subsequences directly (for each 'C',
-// multiply count of 'L' before it by count of 'T' after it). Inserting
-// one extra letter can only add MORE "LCT"s by inserting at the position
-// giving the best "LC" count (if we insert a T), best "CT" count (insert
-// an L), or best L*R split (insert a C in the middle of the best gap) —
-// take the max of these three and add to the base count.
-class Solution {
-    long long calc(const string& s, char a, char b) {
-        long long cnt = 0, cntA = 0;
-        for (char c : s) {
-            if (c == b) cnt += cntA;
-            if (c == a) cntA++;
-        }
-        return cnt;
-    }
+// TC: O(n) SC: O(n)
+//  Approach: Count the number of L's before C and T's after C. The answer is the maximum of the number of subsequences formed by inserting C, L, or T. We can also keep track of the best number of subsequences formed by the existing C's in the string.
+class Solution
+{
 public:
-    long long numOfSubsequences(string s) {
+    typedef long long ll;
+    long long numOfSubsequences(string s)
+    {
         int n = s.size();
-        int totalT = 0;
-        for (char c : s) if (c == 'T') totalT++;
+        vector<int> prev(n + 1, 0);
+        vector<int> suff(n + 1, 0);
 
-        long long l = 0, r = totalT, ans = 0, mx = 0;
-        for (char c : s) {
-            if (c == 'T') r--;
-            if (c == 'C') ans += l * r;
-            if (c == 'L') l++;
-            mx = max(mx, l * r);
+        for (int i = 0; i < n; i++)
+        {
+            if (s[i] == 'L')
+            {
+                prev[i + 1] = 1;
+            }
+            prev[i + 1] += prev[i];
         }
-        mx = max({mx, calc(s, 'L', 'C'), calc(s, 'C', 'T')});
-        return ans + mx;
+
+        for (int i = n - 1; i >= 0; i--)
+        {
+            if (s[i] == 'T')
+            {
+                suff[i] = 1;
+            }
+            suff[i] += suff[i + 1];
+        }
+        // No of Subsequences already exists?
+        ll insC = 0;
+        ll bestC = 0;
+        ll insL = 0;
+        ll insT = 0;
+        for (int i = 0; i < n; i++)
+        {
+            if (s[i] == 'C')
+            {
+                insC += prev[i] * suff[i + 1];
+                insL += (prev[i] + 1) * suff[i + 1];
+                insT += prev[i] * (suff[i + 1] + 1);
+            }
+            else
+            {
+                bestC = max((1LL) * prev[i] * suff[i], bestC);
+            }
+        }
+        insC += bestC;
+        return max({insC, insL, insT});
     }
 };

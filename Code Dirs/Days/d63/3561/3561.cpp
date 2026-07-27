@@ -8,17 +8,29 @@ using namespace std;
 // adjacent in the alphabet cyclically (difference of 1 or 25, covering
 // the z-a wraparound). Push each char; if it's adjacent to the current
 // stack top, pop instead of pushing.
-class Solution {
+class Solution
+{
 public:
-    string resultingString(string s) {
-        string stk;
-        for (char c : s) {
-            if (!stk.empty()) {
-                int d = abs(stk.back() - c);
-                if (d == 1 || d == 25) { stk.pop_back(); continue; }
+    string resultingString(string s)
+    {
+        string sb;
+
+        for (char ch : s)
+        {
+            if (!sb.empty())
+            {
+                char top = sb.back();
+                int diff = abs(top - ch);
+
+                if (diff == 1 || diff == 25)
+                {
+                    sb.pop_back();
+                    continue;
+                }
             }
-            stk.push_back(c);
+            sb.push_back(ch);
         }
-        return stk;
+
+        return sb;
     }
 };

@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "3223.cpp"
+#include "3270.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,9 +59,11 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        string s = _rs();
+        int num1 = _ri();
+        int num2 = _ri();
+        int num3 = _ri();
         Solution sol;
-        auto res = sol.minimumLength(s);
+        auto res = sol.generateKey(num1, num2, num3);
         cout << res << "\n";
     }
     return 0;

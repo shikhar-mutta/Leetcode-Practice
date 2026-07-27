@@ -1,0 +1,5 @@
+2
+["hello","world","leetcode"]
+["world","hello"]
+["hello","programming","fun"]
+["world","programming","leetcode"]

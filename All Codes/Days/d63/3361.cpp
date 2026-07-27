@@ -3,23 +3,35 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(26 * n) SC: O(1)
-// Approach: for each position, shifting s[i] to t[i] can go all the way
-// forward (accumulating nextCost per step) or all the way backward
-// (accumulating previousCost per step) around the 26-letter ring; take
-// the cheaper direction and sum over all positions.
-class Solution {
+// TC: O(n) SC: O(1)
+// Approach: use prefix sums to quickly calculate the cost of shifting between any two positions.
+// The cost of shifting from character x to character y can be calculated in two ways:
+// 1. Forward shift: sum of nextCost from x to y (wrapping around if necessary).
+// 2. Backward shift: sum of previousCost from y to x (wrapping around if necessary).
+// The minimum of these two costs is added to the total shift distance.
+class Solution
+{
 public:
-    long long shiftDistance(string s, string t, vector<int>& nextCost, vector<int>& previousCost) {
-        long long total = 0;
-        for (int i = 0; i < (int)s.size(); i++) {
-            int c = s[i] - 'a', d = t[i] - 'a';
-            long long fwd = 0;
-            for (int cur = c; cur != d; cur = (cur + 1) % 26) fwd += nextCost[cur];
-            long long bwd = 0;
-            for (int cur = c; cur != d; cur = (cur - 1 + 26) % 26) bwd += previousCost[cur];
-            total += min(fwd, bwd);
+    long long shiftDistance(string s, string t, vector<int> &nextCost,
+                            vector<int> &previousCost)
+    {
+        const int M = 26;
+        vector<long long> preNext(2 * M + 1, 0), prePrev(2 * M + 1, 0);
+        for (int i = 0; i < 2 * M; i++)
+        {
+            preNext[i + 1] = preNext[i] + nextCost[i % M];
+            prePrev[i + 1] = prePrev[i] + previousCost[(i + 1) % M];
         }
-        return total;
+        long long ans = 0;
+        for (int i = 0; i < s.size(); i++)
+        {
+            int x = s[i] - 'a';
+            int y = t[i] - 'a';
+            long long forward = preNext[y + (y < x ? M : 0)] - preNext[x];
+            long long backward = prePrev[x + (x < y ? M : 0)] - prePrev[y];
+            ans += min(forward, backward);
+        }
+
+        return ans;
     }
 };

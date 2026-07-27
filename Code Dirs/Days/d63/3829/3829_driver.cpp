@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "3815.cpp"
+#include "3829.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 vector<string> _rvs() {
@@ -43,24 +43,25 @@ int main() {
         auto args = _rargs();
 
         vector<string> results;
-        AuctionSystem* sys = nullptr;
+        RideSharingSystem* sys = nullptr;
         for (int i = 0; i < (int)ops.size(); i++) {
             const string& op = ops[i];
             auto& a = args[i];
-            if (op == "AuctionSystem") {
-                sys = new AuctionSystem();
+            if (op == "RideSharingSystem") {
+                sys = new RideSharingSystem();
                 results.push_back("null");
-            } else if (op == "addBid") {
-                sys->addBid((int)a[0], (int)a[1], (int)a[2]);
+            } else if (op == "addRider") {
+                sys->addRider((int)a[0]);
                 results.push_back("null");
-            } else if (op == "updateBid") {
-                sys->updateBid((int)a[0], (int)a[1], (int)a[2]);
+            } else if (op == "addDriver") {
+                sys->addDriver((int)a[0]);
                 results.push_back("null");
-            } else if (op == "removeBid") {
-                sys->removeBid((int)a[0], (int)a[1]);
+            } else if (op == "cancelRider") {
+                sys->cancelRider((int)a[0]);
                 results.push_back("null");
-            } else if (op == "getHighestBidder") {
-                results.push_back(to_string(sys->getHighestBidder((int)a[0])));
+            } else if (op == "matchDriverWithRider") {
+                auto res = sys->matchDriverWithRider();
+                results.push_back("[" + to_string(res[0]) + ", " + to_string(res[1]) + "]");
             }
         }
         delete sys;

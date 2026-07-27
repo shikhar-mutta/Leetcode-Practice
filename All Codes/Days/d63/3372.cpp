@@ -3,41 +3,52 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(n1^2 + n2^2) SC: O(n1 + n2)
-// Approach: for node i in tree1, connecting it to some node j in tree2
-// gives count1[i] (nodes within k of i in tree1) + count2[j] (nodes within
-// k-1 of j in tree2, the extra 1 being the bridge edge). The best choice
-// of j doesn't depend on i, so precompute best2 = max over j of count2[j]
-// once, then answer[i] = count1[i] + best2.
-class Solution {
+// TC: O(n1 + n2) SC: O(n1 + n2)
+// Approach: Build adjacency lists for both trees, then use DFS to count the number of nodes within a certain distance from each node in both trees. For each node in the first tree, add the count of nodes within distance k from that node and the maximum count of nodes within distance k-1 from any node in the second tree.
+class Solution
+{
 public:
-    vector<int> maxTargetNodes(vector<vector<int>>& edges1, vector<vector<int>>& edges2, int k) {
-        int n1 = edges1.size() + 1, n2 = edges2.size() + 1;
-        vector<vector<int>> adj1(n1), adj2(n2);
-        for (auto& e : edges1) { adj1[e[0]].push_back(e[1]); adj1[e[1]].push_back(e[0]); }
-        for (auto& e : edges2) { adj2[e[0]].push_back(e[1]); adj2[e[1]].push_back(e[0]); }
+    vector<vector<int>> build(vector<vector<int>> &edges)
+    {
+        int n = edges.size() + 1;
+        vector<vector<int>> g(n);
+        for (auto &e : edges)
+        {
+            g[e[0]].push_back(e[1]);
+            g[e[1]].push_back(e[0]);
+        }
+        return g;
+    }
 
-        auto countWithin = [](vector<vector<int>>& adj, int n, int s, int limit) {
-            if (limit < 0) return 0;
-            vector<int> dist(n, -1);
-            queue<int> q;
-            dist[s] = 0; q.push(s);
-            int cnt = 1;
-            while (!q.empty()) {
-                int u = q.front(); q.pop();
-                for (int v : adj[u]) if (dist[v] == -1) {
-                    dist[v] = dist[u] + 1;
-                    if (dist[v] <= limit) { cnt++; q.push(v); }
-                }
-            }
-            return cnt;
-        };
+    int dfs(vector<vector<int>> &g, int u, int p, int d)
+    {
+        if (d < 0)
+            return 0;
+        int cnt = 1;
+        for (int v : g[u])
+        {
+            if (v != p)
+                cnt += dfs(g, v, u, d - 1);
+        }
+        return cnt;
+    }
 
-        int best2 = 0;
-        for (int j = 0; j < n2; j++) best2 = max(best2, countWithin(adj2, n2, j, k - 1));
+    vector<int> maxTargetNodes(vector<vector<int>> &edges1,
+                               vector<vector<int>> &edges2, int k)
+    {
+        auto g1 = build(edges1);
+        auto g2 = build(edges2);
 
-        vector<int> ans(n1);
-        for (int i = 0; i < n1; i++) ans[i] = countWithin(adj1, n1, i, k) + best2;
+        int n = g1.size(), m = g2.size();
+
+        int best = 0;
+        for (int i = 0; i < m; i++)
+            best = max(best, dfs(g2, i, -1, k - 1));
+
+        vector<int> ans(n);
+        for (int i = 0; i < n; i++)
+            ans[i] = dfs(g1, i, -1, k) + best;
+
         return ans;
     }
 };

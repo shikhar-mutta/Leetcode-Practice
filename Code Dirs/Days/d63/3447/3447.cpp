@@ -3,31 +3,37 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(maxGroup * log(maxGroup)) SC: O(maxGroup)
-// Approach: sieve-style. For each distinct element value (in increasing
-// index order, so earlier indices win ties), mark every multiple of that
-// value up to the max group value with this element's index, but only if
-// not already marked by an earlier (smaller-index) element. Answer for
-// each group is then a direct lookup.
-class Solution {
+// TC: O(n log m) SC: O(m)
+//  Approach: for each element, mark all multiples of it as assignable to that element. Then for each group, return the index of the first element that can be assigned to it.
+//  For example, if elements = [2,3] and groups = [6,9], then 6 can be assigned to 2 (index 0) and 9 can be assigned to 3 (index 1). If a group cannot be assigned to any element, return -1 for that group.
+class Solution
+{
 public:
-    vector<int> assignElements(vector<int>& groups, vector<int>& elements) {
-        int maxG = *max_element(groups.begin(), groups.end());
-        vector<int> best(maxG + 1, -1);
-        unordered_set<int> seen;
+    vector<int> assignElements(vector<int> &groups, vector<int> &elements)
+    {
+        int maxGroup = *max_element(groups.begin(), groups.end());
 
-        for (int idx = 0; idx < (int)elements.size(); idx++) {
-            int v = elements[idx];
-            if (seen.count(v)) continue;
-            seen.insert(v);
-            if (v > maxG) continue;
-            for (int m = v; m <= maxG; m += v) {
-                if (best[m] == -1) best[m] = idx;
+        vector<int> divisors(maxGroup + 1, -1);
+
+        for (int i = 0; i < elements.size(); ++i)
+        {
+            if (elements[i] > maxGroup)
+                continue;
+            if (divisors[elements[i]] != -1)
+                continue;
+
+            for (int d = elements[i]; d <= maxGroup; d += elements[i])
+            {
+                if (divisors[d] == -1)
+                    divisors[d] = i;
             }
         }
 
-        vector<int> ans(groups.size());
-        for (int i = 0; i < (int)groups.size(); i++) ans[i] = best[groups[i]];
-        return ans;
+        vector<int> result(groups.size());
+        for (int i = 0; i < groups.size(); ++i)
+        {
+            result[i] = divisors[groups[i]];
+        }
+        return result;
     }
 };

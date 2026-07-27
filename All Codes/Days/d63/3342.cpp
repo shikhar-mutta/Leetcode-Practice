@@ -3,39 +3,59 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(n*m*log(n*m)) SC: O(n*m)
-// Approach: Dijkstra over state (row, col, parity) since move duration
-// alternates 1,2,1,2... based on how many moves have been made so far.
-// To enter a room you must wait until moveTime[r][c], so arrival =
-// max(currentTime, moveTime[r][c]) + duration. Answer = min over parity
-// of dist at the last cell.
-class Solution {
-public:
-    int minTimeToReach(vector<vector<int>>& moveTime) {
-        int n = moveTime.size(), m = moveTime[0].size();
-        vector<vector<array<long long,2>>> dist(n, vector<array<long long,2>>(m, {LLONG_MAX, LLONG_MAX}));
-        dist[0][0][0] = 0;
-        priority_queue<tuple<long long,int,int,int>, vector<tuple<long long,int,int,int>>, greater<>> pq;
-        pq.push({0, 0, 0, 0});
-        int dr[] = {0, 0, 1, -1}, dc[] = {1, -1, 0, 0};
+// TC: O(nlogn) SC: O(n)
+// Approach: Use Dijkstra's algorithm to find the minimum time to reach the last room. We use a priority queue to explore the rooms with the least time first, and we keep track of the minimum time to reach each room. We also consider the move time for each room and update the minimum time accordingly.
+struct Pair
+{
+    int steps, i, j, move;
+    Pair(int steps, int i, int j, int move) : steps(steps), i(i), j(j), move(move) {}
+    bool operator>(const Pair &other) const
+    {
+        return steps > other.steps;
+    }
+};
 
-        while (!pq.empty()) {
-            auto [time, r, c, p] = pq.top(); pq.pop();
-            if (time > dist[r][c][p]) continue;
-            if (r == n - 1 && c == m - 1) return (int)time;
-            int duration = (p == 0) ? 1 : 2;
-            for (int d = 0; d < 4; d++) {
-                int nr = r + dr[d], nc = c + dc[d];
-                if (nr < 0 || nr >= n || nc < 0 || nc >= m) continue;
-                long long start = max(time, (long long)moveTime[nr][nc]);
-                long long arrival = start + duration;
-                int np = 1 - p;
-                if (arrival < dist[nr][nc][np]) {
-                    dist[nr][nc][np] = arrival;
-                    pq.push({arrival, nr, nc, np});
-                }
-            }
+class Solution
+{
+public:
+    static int minTimeToReach(vector<vector<int>> &moveTime)
+    {
+        int r = moveTime.size(), c = moveTime[0].size();
+        vector<vector<int>> minimumTime(r, vector<int>(c, INT_MAX));
+        priority_queue<Pair, vector<Pair>, greater<Pair>> pq;
+
+        pq.emplace(-1, 0, 0, 1);
+        minimumTime[0][0] = 0;
+
+        while (!pq.empty())
+        {
+            Pair top = pq.top();
+            pq.pop();
+            int i = top.i, j = top.j, move = top.move, nextStep = top.steps;
+
+            if (i + 1 < r)
+                update(i + 1, j, pq, nextStep, moveTime, minimumTime, move);
+            if (i - 1 >= 0)
+                update(i - 1, j, pq, nextStep, moveTime, minimumTime, move);
+            if (j + 1 < c)
+                update(i, j + 1, pq, nextStep, moveTime, minimumTime, move);
+            if (j - 1 >= 0)
+                update(i, j - 1, pq, nextStep, moveTime, minimumTime, move);
+
+            if (minimumTime[r - 1][c - 1] != INT_MAX)
+                return minimumTime[r - 1][c - 1];
         }
-        return (int)min(dist[n-1][m-1][0], dist[n-1][m-1][1]);
+        return -1;
+    }
+
+private:
+    static void update(int i, int j, priority_queue<Pair, vector<Pair>, greater<Pair>> &pq, int nextStep, vector<vector<int>> &moveTime, vector<vector<int>> &minimumTime, int move)
+    {
+        nextStep = move + max(nextStep, moveTime[i][j]);
+        if (minimumTime[i][j] > nextStep)
+        {
+            pq.emplace(nextStep, i, j, move == 1 ? 2 : 1);
+            minimumTime[i][j] = nextStep;
+        }
     }
 };

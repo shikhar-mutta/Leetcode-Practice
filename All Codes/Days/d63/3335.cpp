@@ -3,27 +3,44 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(26*t + n) SC: O(1)
-// Approach: track count of each letter (26 buckets). Each transformation
-// step shifts every letter's count to the next letter, except 'z' which
-// splits its count into both 'a' and 'b'. Simulate t steps, sum counts mod 1e9+7.
-class Solution {
+// TC: O(n) SC: O(1)
+// Approach:
+// 1. Count the frequency of each character in the string and store it in an array of size 26 (for each letter of the alphabet).
+// 2. For each transformation, update the frequency of each character based on the transformation rules.
+// 3. After all transformations, sum the frequencies of all characters to get the total number of characters in the string.
+class Solution
+{
 public:
-    int lengthAfterTransformations(string s, int t) {
-        const int MOD = 1e9 + 7;
-        long long cnt[26] = {0};
-        for (char c : s) cnt[c - 'a']++;
+    int lengthAfterTransformations(string s, int t)
+    {
 
-        for (int step = 0; step < t; step++) {
-            long long next[26] = {0};
-            for (int i = 0; i < 25; i++) next[i + 1] = (next[i + 1] + cnt[i]) % MOD;
-            next[0] = (next[0] + cnt[25]) % MOD;
-            next[1] = (next[1] + cnt[25]) % MOD;
-            memcpy(cnt, next, sizeof(cnt));
+        vector<long long> c(26, 0);
+        long long mod = 1e9 + 7;
+
+        for (auto &i : s)
+            c[i - 'a'] += 1;
+        // for(auto i:c)cout<<i<<" ";
+        // cout<<endl;
+
+        int cur = 0;
+        while (t--)
+        {
+
+            cur = (cur + 25) % 26;
+
+            c[(cur + 1) % 26] = (c[(cur + 1) % 26ll] + c[(cur)]) % mod;
+
+            // for(int i=cur;i<(cur+26);i++)
+            // cout<<c[i%26]<<" ";
+            // cout<<endl;
         }
 
+        // for(auto i:c)cout<<i<<" ";
+
         long long ans = 0;
-        for (int i = 0; i < 26; i++) ans = (ans + cnt[i]) % MOD;
-        return (int)ans;
+
+        for (auto &i : c)
+            ans = (ans + i) % mod;
+        return ans;
     }
 };

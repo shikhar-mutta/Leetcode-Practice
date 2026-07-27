@@ -7,19 +7,29 @@ using namespace std;
 // Approach: difference array counting how many queries cover each index.
 // Each covering query can decrement that index by at most 1, so index i
 // can reach 0 iff its coverage count >= nums[i].
-class Solution {
+class Solution
+{
 public:
-    bool isZeroArray(vector<int>& nums, vector<vector<int>>& queries) {
+    bool isZeroArray(vector<int> &nums, vector<vector<int>> &queries)
+    {
         int n = nums.size();
-        vector<int> diff(n + 1, 0);
-        for (auto& q : queries) {
-            diff[q[0]]++;
-            diff[q[1] + 1]--;
+        vector<int> diff(n, 0);
+        for (int i = 0; i < queries.size(); i++)
+        {
+            int l = queries[i][0];
+            int r = queries[i][1];
+            int d = 1;
+            diff[l] += 1;
+            if (r + 1 < n)
+                diff[r + 1] -= 1;
         }
-        int cover = 0;
-        for (int i = 0; i < n; i++) {
-            cover += diff[i];
-            if (cover < nums[i]) return false;
+        for (int i = 1; i < n; i++)
+            diff[i] = diff[i - 1] + diff[i];
+
+        for (int i = 0; i < n; i++)
+        {
+            if (nums[i] - diff[i] > 0)
+                return false;
         }
         return true;
     }

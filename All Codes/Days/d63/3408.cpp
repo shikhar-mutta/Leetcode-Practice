@@ -4,41 +4,66 @@
 using namespace std;
 
 // TC: O(log n) per op SC: O(n)
-// Approach: keep taskId -> (userId, priority) map plus a sorted set of
-// (priority, taskId) pairs. edit/rmv erase the old (priority, taskId)
-// entry before updating; execTop pops the max (priority, taskId) entry.
-class TaskManager {
-    unordered_map<int, pair<int,int>> taskInfo; // taskId -> (userId, priority)
-    set<pair<int,int>> order; // (priority, taskId)
+//  Approach: keep taskId -> (userId, priority) map plus a sorted set of
+//  (priority, taskId) pairs. edit/rmv erase the old (priority, taskId)
+//  entry before updating; execTop pops the max (priority, taskId) entry.
+//  modified C-array version
+using int2 = pair<int, int>;
+int2 mp[100001]; // taskID->(prioity, userId)
+class TaskManager
+{
+    int maxI = -1;
+    priority_queue<int2> pq; //(priority, taskID)
 public:
-    TaskManager(vector<vector<int>>& tasks) {
-        for (auto& t : tasks) add(t[0], t[1], t[2]);
+    TaskManager(vector<vector<int>> &tasks)
+    {
+        //   fill(mp, mp+100001, make_pair(-1, -1));
+        for (auto &t : tasks)
+        {
+            int u = t[0], i = t[1], p = t[2];
+            maxI = max(maxI, i);
+            mp[i] = {p, u};
+            pq.emplace(p, i);
+        }
+    }
+    ~TaskManager() { memset(mp, -1, 8 * (maxI + 1)); }
+    void add(int userId, int taskId, int priority)
+    {
+        mp[taskId] = {priority, userId};
+        pq.emplace(priority, taskId);
     }
 
-    void add(int userId, int taskId, int priority) {
-        taskInfo[taskId] = {userId, priority};
-        order.insert({priority, taskId});
+    void edit(int taskId, int newPriority)
+    {
+        mp[taskId].first = newPriority;
+        pq.emplace(newPriority, taskId);
     }
 
-    void edit(int taskId, int newPriority) {
-        auto& info = taskInfo[taskId];
-        order.erase({info.second, taskId});
-        info.second = newPriority;
-        order.insert({newPriority, taskId});
-    }
+    void rmv(int taskId) { mp[taskId].first = -1; }
 
-    void rmv(int taskId) {
-        auto info = taskInfo[taskId];
-        order.erase({info.second, taskId});
-        taskInfo.erase(taskId);
-    }
-
-    int execTop() {
-        if (order.empty()) return -1;
-        auto [priority, taskId] = *order.rbegin();
-        int userId = taskInfo[taskId].first;
-        order.erase({priority, taskId});
-        taskInfo.erase(taskId);
-        return userId;
+    int execTop()
+    {
+        while (!pq.empty())
+        {
+            auto [p, i] = pq.top();
+            if (mp[i].first == p)
+            {
+                pq.pop();
+                int u = mp[i].second;
+                mp[i] = {-1, -1}; // Remove task after execution
+                return u;
+            }
+            pq.pop(); // Remove
+        }
+        return -1; // No valid tasks to execute
     }
 };
+
+/**
+ * Your TaskManager object will be instantiated and called as such:
+ * TaskManager* obj = new TaskManager(tasks);
+ * obj->add(userId,taskId,priority);
+ * obj->edit(taskId,newPriority);
+ * obj->rmv(taskId);
+ * int param_4 = obj->execTop();
+ */

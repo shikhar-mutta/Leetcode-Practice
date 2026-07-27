@@ -8,19 +8,26 @@ using namespace std;
 // with length a multiple of k, i and j have the same residue mod k, so
 // its sum is prefix[j] - prefix[i]. Track the minimum prefix seen so far
 // per residue class and maximize prefix[j] - minPrefix[j%k] as j advances.
-class Solution {
+class Solution
+{
 public:
-    long long maxSubarraySum(vector<int>& nums, int k) {
-        int n = nums.size();
-        vector<long long> prefix(n + 1, 0);
-        for (int i = 0; i < n; i++) prefix[i+1] = prefix[i] + nums[i];
-
-        vector<long long> minPre(k, LLONG_MAX);
+    long long maxSubarraySum(vector<int> &nums, int k)
+    {
+        vector<long long> mp(k, LLONG_MAX);
+        long long prefix = 0;
         long long ans = LLONG_MIN;
-        for (int j = 0; j <= n; j++) {
-            int r = j % k;
-            if (j >= k) ans = max(ans, prefix[j] - minPre[r]);
-            minPre[r] = min(minPre[r], prefix[j]);
+        mp[0] = 0;
+        for (int i = 0; i < nums.size(); i++)
+        {
+            prefix += (long long)nums[i];
+
+            long long remainder = (i + 1) % k;
+            if (mp[remainder] != LLONG_MAX)
+            {
+                ans = max(ans, prefix - mp[remainder]);
+            }
+
+            mp[remainder] = min(prefix, mp[remainder]);
         }
         return ans;
     }

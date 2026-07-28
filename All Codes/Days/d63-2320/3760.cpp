@@ -3,17 +3,27 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(n) SC: O(1)
-// Approach: partition s into contiguous parts with pairwise distinct
-// start characters, maximizing part count. Splitting exactly at each
-// character's first occurrence (positions are already increasing) always
-// gives a valid partition with one part per distinct character, and no
-// partition can exceed the number of distinct characters (each part
-// needs a unique start). So the answer is simply the count of distinct
-// characters in s.
-class Solution {
+// TC: O(n)  SC: O(1)
+//  Approach: count the number of distinct characters in the string.
+//  The maximum number of substrings with distinct starting characters is equal to the number of distinct characters in the string.
+//  For each distinct character, we can create a substring starting with that character, ensuring that the starting characters of the substrings are distinct.
+class Solution
+{
 public:
-    int maxDistinct(string s) {
-        return unordered_set<char>(s.begin(), s.end()).size();
+    int maxDistinct(string s)
+    {
+        vector<int> vis(26, 0);
+        int ans = 0;
+
+        for (char c : s)
+        {
+            if (!vis[c - 'a'])
+            {
+                vis[c - 'a'] = 1;
+                ans++;
+            }
+        }
+
+        return ans;
     }
 };

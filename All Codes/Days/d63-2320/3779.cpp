@@ -10,15 +10,20 @@ using namespace std;
 // occurrence inside the suffix would collide with the later one). So
 // find m = max index whose value reoccurs later, set required suffix
 // start s = m+1, and the answer is ceil(s/3) operations.
-class Solution {
+class Solution
+{
 public:
-    int minOperations(vector<int>& nums) {
+    int minOperations(vector<int> &nums)
+    {
         int n = nums.size();
         unordered_map<int, int> lastOcc;
-        for (int i = 0; i < n; i++) lastOcc[nums[i]] = i;
+        for (int i = 0; i < n; i++)
+            lastOcc[nums[i]] = i;
 
         int m = -1;
-        for (int i = 0; i < n; i++) if (lastOcc[nums[i]] != i) m = max(m, i);
+        for (int i = 0; i < n; i++)
+            if (lastOcc[nums[i]] != i)
+                m = max(m, i);
 
         int s = m + 1;
         return (s + 2) / 3;

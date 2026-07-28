@@ -3,28 +3,62 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(sqrt(n) * n) worst-case-ish, in practice fast since sums grow
-// quadratically SC: O(1)
-// Approach: accumulate prefix sums of consecutive primes starting from
-// 2 (2, 2+3, 2+3+5, ...); whenever a prefix sum itself is prime and does
-// not exceed n, it's a candidate answer. Keep the largest such candidate
-// while the running sum stays <= n.
-class Solution {
-    bool isPrime(long long x) {
-        if (x < 2) return false;
-        for (long long p = 2; p * p <= x; p++) if (x % p == 0) return false;
-        return true;
-    }
-public:
-    int largestPrime(int n) {
-        int ans = -1;
-        long long sum = 0;
-        for (long long cand = 2; ; cand++) {
-            if (!isPrime(cand)) continue;
-            if (sum + cand > n) break;
-            sum += cand;
-            if (isPrime(sum)) ans = sum;
+// TC: O(n log log n)  SC: O(n)
+//  Approach: sieve of Eratosthenes to find all primes up to MX, then
+//  compute prefix sums and check which are prime.
+//  Note: MX is set to 500000 because the largest prime sum of consecutive primes that is itself prime is 498091, which is less than 500000.
+class Solution
+{
+    static constexpr int MX = 500000;
+    static vector<bool> isPrime;
+    static vector<int> primes;
+    static vector<int> good;
+    static bool initialized;
+
+    static void init()
+    {
+        if (initialized)
+            return;
+        initialized = true;
+
+        isPrime.assign(MX + 1, true);
+        isPrime[0] = isPrime[1] = false;
+
+        for (int i = 2; i <= MX; ++i)
+        {
+            if (isPrime[i])
+            {
+                primes.push_back(i);
+                if (1LL * i * i <= MX)
+                {
+                    for (int j = i * i; j <= MX; j += i)
+                        isPrime[j] = false;
+                }
+            }
         }
-        return ans;
+
+        good.push_back(0);
+        int sum = 0;
+        for (int p : primes)
+        {
+            sum += p;
+            if (sum > MX)
+                break;
+            if (isPrime[sum])
+                good.push_back(sum);
+        }
+    }
+
+public:
+    int largestPrime(int n)
+    {
+        init();
+        auto it = upper_bound(good.begin(), good.end(), n);
+        return *(--it);
     }
 };
+
+vector<bool> Solution::isPrime;
+vector<int> Solution::primes;
+vector<int> Solution::good;
+bool Solution::initialized = false;

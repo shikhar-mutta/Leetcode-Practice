@@ -11,19 +11,29 @@ using namespace std;
 // its reverse equal to nums[k] (map keyed by reverse(nums[i]) -> most
 // recent index, which minimizes the distance for future matches), then
 // record reverse(nums[k]) -> k for later lookups.
-class Solution {
-    long long reverseNum(long long x) {
+class Solution
+{
+    long long reverseNum(long long x)
+    {
         long long rev = 0;
-        while (x > 0) { rev = rev * 10 + x % 10; x /= 10; }
+        while (x > 0)
+        {
+            rev = rev * 10 + x % 10;
+            x /= 10;
+        }
         return rev;
     }
+
 public:
-    int minMirrorPairDistance(vector<int>& nums) {
+    int minMirrorPairDistance(vector<int> &nums)
+    {
         unordered_map<long long, int> lastIdx;
         int ans = INT_MAX;
-        for (int k = 0; k < (int)nums.size(); k++) {
+        for (int k = 0; k < (int)nums.size(); k++)
+        {
             auto it = lastIdx.find(nums[k]);
-            if (it != lastIdx.end()) ans = min(ans, k - it->second);
+            if (it != lastIdx.end())
+                ans = min(ans, k - it->second);
             lastIdx[reverseNum(nums[k])] = k;
         }
         return ans == INT_MAX ? -1 : ans;

@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "818.cpp"
+#include "879.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,9 +59,12 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        int target = _ri();
+        int n = _ri();
+        int minProfit = _ri();
+        auto group = _rvi();
+        auto profit = _rvi();
         Solution sol;
-        auto res = sol.racecar(target);
+        auto res = sol.profitableSchemes(n, minProfit, group, profit);
         cout << res << "\n";
     }
     return 0;

@@ -9,9 +9,11 @@ using namespace std;
 // keeping just the better of the two endpoints. Verified via brute-force
 // minimax over small cases that no other line of play ever beats this
 // for her, so the answer is simply max(nums[0], nums[n-1]).
-class Solution {
+class Solution
+{
 public:
-    int finalElement(vector<int>& nums) {
+    int finalElement(vector<int> &nums)
+    {
         return max(nums.front(), nums.back());
     }
 };

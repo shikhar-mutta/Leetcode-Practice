@@ -6,14 +6,22 @@ using namespace std;
 // TC: O(sum of digit counts) SC: O(1)
 // Approach: convert each number to a string and count occurrences of
 // the target digit character.
-class Solution {
+class Solution
+{
 public:
-    int countDigitOccurrences(vector<int>& nums, int digit) {
-        char d = '0' + digit;
-        int count = 0;
-        for (int x : nums) {
-            for (char c : to_string(x)) if (c == d) count++;
+    int countDigitOccurrences(vector<int> &nums, int digit)
+    {
+        int ans = 0;
+        for (int n : nums)
+        {
+            while (n > 0)
+            {
+                int k = n % 10;
+                if (k == digit)
+                    ans++;
+                n = n / 10;
+            }
         }
-        return count;
+        return ans;
     }
 };

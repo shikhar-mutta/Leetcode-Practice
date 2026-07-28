@@ -8,16 +8,30 @@ using namespace std;
 // a swap before scoring whenever nums[i] is odd or i is a (0-indexed)
 // multiple-of-6 position (game index 5, 11, ...), then add the points to
 // that player's total.
-class Solution {
+class Solution
+{
 public:
-    int scoreDifference(vector<int>& nums) {
+    int scoreDifference(vector<int> &nums)
+    {
         int p1 = 0, p2 = 0;
-        bool firstActive = true;
-        for (int i = 0; i < (int)nums.size(); i++) {
-            if (nums[i] % 2 != 0) firstActive = !firstActive;
-            if (i % 6 == 5) firstActive = !firstActive;
-            if (firstActive) p1 += nums[i];
-            else p2 += nums[i];
+        bool player1 = true, player2 = false;
+        int n = nums.size();
+        for (int i = 0; i < n; i++)
+        {
+            if (nums[i] % 2)
+            {
+                player1 = !player1;
+                player2 = !player2;
+            }
+            if ((i + 1) % 6 == 0)
+            {
+                player1 = !player1;
+                player2 = !player2;
+            }
+            if (player1)
+                p1 += nums[i];
+            if (player2)
+                p2 += nums[i];
         }
         return p1 - p2;
     }

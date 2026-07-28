@@ -3,38 +3,37 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(1) amortized per op SC: O(n)
-// Approach: FIFO queues for waiting riders and drivers. Cancelled riders
-// are marked in a set rather than removed from the queue (O(1) cancel);
-// matchDriverWithRider pops drivers normally, but skips (discards)
-// riders at the queue front that were cancelled before returning the
-// first live one.
-class RideSharingSystem {
-    queue<int> riders, drivers;
-    unordered_set<int> cancelled;
+// TC: O(1) SC: O(n)
+//  Approach: Maintain vectors for riders and drivers. Match them in order,
+//  skipping cancelled riders.
+//  Note: This implementation is not optimal for large inputs, as it uses linear search to find and remove riders. A more efficient approach would be to use a queue or a set to manage riders and drivers.
+class RideSharingSystem
+{
 public:
+    vector<int> rider;
+    vector<int> driver;
     RideSharingSystem() {}
 
-    void addRider(int riderId) {
-        riders.push(riderId);
+    void addRider(int riderId) { rider.push_back(riderId); }
+
+    void addDriver(int driverId) { driver.push_back(driverId); }
+
+    vector<int> matchDriverWithRider()
+    {
+        if (rider.size() == 0 || driver.size() == 0)
+            return {-1, -1};
+        vector<int> ans = {driver[0], rider[0]};
+        driver.erase(driver.begin());
+        rider.erase(rider.begin());
+        return ans;
     }
 
-    void addDriver(int driverId) {
-        drivers.push(driverId);
-    }
-
-    void cancelRider(int riderId) {
-        cancelled.insert(riderId);
-    }
-
-    vector<int> matchDriverWithRider() {
-        while (!riders.empty() && cancelled.count(riders.front())) {
-            cancelled.erase(riders.front());
-            riders.pop();
+    void cancelRider(int riderId)
+    {
+        auto f = find(rider.begin(), rider.end(), riderId);
+        if (f != rider.end())
+        {
+            rider.erase(f);
         }
-        if (drivers.empty() || riders.empty()) return {-1, -1};
-        int d = drivers.front(); drivers.pop();
-        int r = riders.front(); riders.pop();
-        return {d, r};
     }
 };

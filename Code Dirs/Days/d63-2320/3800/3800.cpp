@@ -13,13 +13,20 @@ using namespace std;
 // same-string swap (cost crossCost+swapCost), or via two flips — take the
 // cheaper per same-type pair. Any final unpaired single mismatch costs
 // one flip.
-class Solution {
+class Solution
+{
 public:
-    long long minimumCost(string s, string t, int flipCost, int swapCost, int crossCost) {
+    long long minimumCost(string s, string t, int flipCost, int swapCost, int crossCost)
+    {
         long long a = 0, b = 0;
-        for (int i = 0; i < (int)s.size(); i++) {
-            if (s[i] == t[i]) continue;
-            if (s[i] == '0') a++; else b++;
+        for (int i = 0; i < (int)s.size(); i++)
+        {
+            if (s[i] == t[i])
+                continue;
+            if (s[i] == '0')
+                a++;
+            else
+                b++;
         }
 
         long long pairs = min(a, b);

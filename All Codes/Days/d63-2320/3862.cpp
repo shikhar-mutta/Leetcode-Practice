@@ -3,33 +3,40 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(n) SC: O(n)
-// Approach: prefix sums give the left sum at each index; a capped
-// suffix product (saturating once it exceeds the max possible left sum,
-// avoiding overflow) gives the right product. Scan left to right for
-// the first index where they match.
-class Solution {
+// TC: O(n) SC: O(1)
+//  Approach: maintain running sums and products while scanning from right to left.
+//  The left sum is the total sum minus the right sum, and the right product is the product of all elements to the right of the current index.
+//  If at any index the left sum equals the right product, return that index. If no such index exists, return -1.
+class Solution
+{
 public:
-    int smallestBalancedIndex(vector<int>& nums) {
-        int n = nums.size();
-        const long long CAP = 200000000000000LL; // > max possible left sum (1e5 * 1e9)
+    int smallestBalancedIndex(vector<int> &nums)
+    {
+        long long leftSum = 0;
+        long long rightProduct = 1;
 
-        vector<long long> leftSum(n + 1, 0);
-        for (int i = 0; i < n; i++) leftSum[i+1] = leftSum[i] + nums[i];
+        long long totalSum = 0;
+        for (int x : nums)
+            totalSum += x;
 
-        vector<long long> rightProd(n + 1);
-        rightProd[n] = 1;
-        for (int i = n - 1; i >= 0; i--) {
-            if (rightProd[i+1] > CAP) rightProd[i] = rightProd[i+1];
-            else {
-                long long p = rightProd[i+1] * nums[i];
-                rightProd[i] = (p > CAP) ? CAP + 1 : p;
-            }
+        for (int i = nums.size() - 1; i >= 0; i--)
+        {
+            totalSum -= nums[i];
+
+            if (totalSum == rightProduct)
+                return i;
+
+            // No future product can match if it already exceeds the left sum.
+            if (rightProduct > totalSum)
+                break;
+
+            // Prevent overflow.
+            if (nums[i] != 0 && rightProduct > LLONG_MAX / nums[i])
+                break;
+
+            rightProduct *= nums[i];
         }
 
-        for (int i = 0; i < n; i++) {
-            if (leftSum[i] == rightProd[i+1]) return i;
-        }
         return -1;
     }
 };

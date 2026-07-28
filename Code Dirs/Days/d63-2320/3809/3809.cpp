@@ -3,26 +3,31 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(n) SC: O(1)
-// Approach: filter towers within radius using squared-distance
-// comparison (avoids floating point), then pick the tower with highest
-// quality, breaking ties by lexicographically smallest (x, y).
-class Solution {
+// TC: O(n)  SC: O(1)
+//  Approach: filter towers within radius using Manhattan distance
+//  comparison, then pick the tower with highest quality, breaking ties
+//  by lexicographically smallest (x, y).
+class Solution
+{
 public:
-    vector<int> bestTower(vector<vector<int>>& towers, vector<int>& center, int radius) {
-        long long r2 = (long long)radius * radius;
-        int bestQ = -1;
-        vector<int> best = {-1, -1};
-        for (auto& tw : towers) {
-            long long dx = tw[0] - center[0], dy = tw[1] - center[1];
-            if (dx * dx + dy * dy > r2) continue;
-            int q = tw[2];
-            vector<int> coord = {tw[0], tw[1]};
-            if (q > bestQ || (q == bestQ && coord < best)) {
-                bestQ = q;
-                best = coord;
+    vector<int> bestTower(const vector<vector<int>> &towers,
+                          const vector<int> &center, int radius)
+    {
+        vector<int> bestTower = {-1, -1, -1};
+
+        for (const vector<int> &tower : towers)
+        {
+            if ((abs(tower[0] - center[0]) + abs(tower[1] - center[1])) <=
+                radius)
+            {
+                if ((tower[2] > bestTower[2]) ||
+                    ((tower[2] == bestTower[2]) && (tower < bestTower)))
+                {
+                    bestTower = tower;
+                }
             }
         }
-        return best;
+
+        return {bestTower[0], bestTower[1]};
     }
 };

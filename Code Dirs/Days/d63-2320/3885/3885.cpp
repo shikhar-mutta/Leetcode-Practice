@@ -4,37 +4,43 @@
 using namespace std;
 
 // TC: O(log n) per op SC: O(n)
-// Approach: keep eventId->priority map plus an ordered set of
-// (priority, eventId) pairs. pollHighest takes the max pair (ties broken
-// by smaller eventId since we negate priority for max-as-min ordering);
-// updatePriority removes the old pair and reinserts with the new value.
-class EventManager {
-    unordered_map<int, int> priority;
-    set<pair<int, int>> byPriority; // (priority, eventId)
+//  Approach: keep eventId->priority map plus an ordered set of
+//  (priority, eventId) pairs. pollHighest takes the max pair (ties broken
+//  by smaller eventId since we negate priority for max-as-min ordering);
+//  updatePriority removes the old pair and reinserts with the new value.
+class EventManager
+{
 public:
-    EventManager(vector<vector<int>>& events) {
-        for (auto& e : events) {
-            priority[e[0]] = e[1];
-            byPriority.insert({e[1], e[0]});
+    priority_queue<pair<int, int>> pq;
+    unordered_map<int, int> eventMap;
+    EventManager(vector<vector<int>> &events)
+    {
+        for (auto &event : events)
+        {
+            pq.emplace(event[1], -event[0]);
+            eventMap[event[0]] = event[1];
         }
     }
 
-    void updatePriority(int eventId, int newPriority) {
-        byPriority.erase({priority[eventId], eventId});
-        priority[eventId] = newPriority;
-        byPriority.insert({newPriority, eventId});
+    void updatePriority(int eventId, int newPriority)
+    {
+        eventMap[eventId] = newPriority;
+        pq.emplace(newPriority, -eventId);
     }
 
-    int pollHighest() {
-        if (byPriority.empty()) return -1;
-        auto it = byPriority.end();
-        --it;
-        int prio = it->first, id = it->second;
-        // among ties for max priority, want smallest eventId
-        auto lo = byPriority.lower_bound({prio, INT_MIN});
-        id = lo->second;
-        priority.erase(id);
-        byPriority.erase(lo);
-        return id;
+    int pollHighest()
+    {
+        while (!pq.empty())
+        {
+            auto [priority, eventId] = pq.top();
+            eventId = -eventId;
+            pq.pop();
+            if (eventMap[eventId] == priority)
+            {
+                eventMap[eventId] = -1;
+                return eventId;
+            }
+        }
+        return -1;
     }
 };

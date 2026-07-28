@@ -3,25 +3,52 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(sum of word lengths) SC: O(sum of word lengths)
-// Approach: two words are Caesar-shift equivalent iff the sequence of
-// consecutive-letter differences (each char minus the word's first char,
-// mod 26) is identical. Build this shift-invariant signature per word,
-// group by signature, and sum C(count,2) per group.
-class Solution {
+// TC: O(n * m) SC: O(n * m)
+// Approach: for each word, compute its "signature" as the vector of differences between each character and the first character (mod 26). Count the frequency of each signature, then for each signature with frequency f, add f * (f - 1) / 2 to the total count of pairs.
+class Solution
+{
 public:
-    long long countPairs(vector<string>& words) {
-        unordered_map<string, long long> groups;
-        for (auto& w : words) {
-            string sig(w.size(), '0');
-            for (int i = 0; i < (int)w.size(); i++) {
-                int d = ((w[i] - w[0]) % 26 + 26) % 26;
-                sig[i] = 'a' + d;
-            }
-            groups[sig]++;
+    long long countPairs(vector<string> &words)
+    {
+
+        long long count = 0, sum;
+        int val;
+        int sizeI = words.size(), sizeJ = words[0].size(), i;
+        if (sizeJ == 1)
+        {
+            count = sizeI;
+            count *= (sizeI - 1);
+            count /= 2;
+            return count;
         }
-        long long ans = 0;
-        for (auto& [k, c] : groups) ans += c * (c - 1) / 2;
-        return ans;
+
+        vector<int> tmp(sizeJ);
+        map<vector<int>, int> freq;
+        char c;
+
+        for (auto it = words.begin(); it < words.end(); it++)
+        {
+            i = 0;
+            c = (*it)[0];
+            for (auto jt = (*it).begin(); jt < (*it).end(); jt++, i++)
+            {
+                val = *jt - c;
+                if (val < 0)
+                    val += 26;
+                tmp[i] = val;
+            }
+            freq[tmp]++;
+        }
+
+        for (auto it = freq.begin(); it != freq.end(); it++)
+        {
+            val = (*it).second;
+            sum = val;
+            sum *= val - 1;
+            sum /= 2;
+            count += sum;
+        }
+
+        return count;
     }
 };

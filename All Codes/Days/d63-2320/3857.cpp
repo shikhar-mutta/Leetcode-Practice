@@ -9,9 +9,11 @@ using namespace std;
 // ones ends up contributing exactly once across the whole process
 // (classic result), giving total cost = C(n,2) = n*(n-1)/2 regardless
 // of strategy.
-class Solution {
+class Solution
+{
 public:
-    int minCost(int n) {
+    int minCost(int n)
+    {
         return n * (n - 1) / 2;
     }
 };

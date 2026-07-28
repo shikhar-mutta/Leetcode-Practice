@@ -7,9 +7,11 @@ using namespace std;
 // Approach: three candidate strategies: buy only singles, buy only
 // "both" bundles up to max(need1,need2), or buy min(need1,need2) bundles
 // plus singles for the remainder. Return the cheapest.
-class Solution {
+class Solution
+{
 public:
-    long long minimumCost(int cost1, int cost2, int costBoth, int need1, int need2) {
+    long long minimumCost(int cost1, int cost2, int costBoth, int need1, int need2)
+    {
         long long a = (long long)need1 * cost1 + (long long)need2 * cost2;
         long long b = (long long)costBoth * max(need1, need2);
         long long mn = min(need1, need2);

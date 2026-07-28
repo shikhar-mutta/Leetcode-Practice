@@ -3,22 +3,26 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(n) SC: O(n)
-// Approach: a position can only ever be touched by an operation whose
-// chosen value x equals its ORIGINAL nums value (since until touched it
-// keeps that value, and any op targeting a different value can't select
-// it). So every distinct original value appearing at a mismatched
-// position needs exactly one dedicated operation, and one operation
-// suffices to fix every (possibly scattered) occurrence of that value
-// at once. The answer is simply the count of distinct nums[i] values
-// among positions where nums[i] != target[i].
-class Solution {
+// TC: O(n)  SC: O(1)
+//  Approach: for each position where nums[i] != target[i], if nums[i] hasn't been
+//  processed yet, increment the operation count and mark it as processed.
+class Solution
+{
 public:
-    int minOperations(vector<int>& nums, vector<int>& target) {
-        unordered_set<int> vals;
-        for (int i = 0; i < (int)nums.size(); i++) {
-            if (nums[i] != target[i]) vals.insert(nums[i]);
+    int minOperations(vector<int> &nums, vector<int> &target)
+    {
+        int n = nums.size();
+        vector<bool> st(100001);
+        int ans = 0;
+
+        for (int i = 0; i < n; i++)
+        {
+            if (nums[i] != target[i] && !(st[nums[i]]))
+            {
+                st[nums[i]] = true;
+                ans++;
+            }
         }
-        return vals.size();
+        return ans;
     }
 };

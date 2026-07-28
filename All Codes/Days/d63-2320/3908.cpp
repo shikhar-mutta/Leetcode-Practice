@@ -6,9 +6,11 @@ using namespace std;
 // TC: O(log n) SC: O(log n)
 // Approach: convert n to string, check it contains digit x and doesn't
 // start with it.
-class Solution {
+class Solution
+{
 public:
-    bool validDigit(int n, int x) {
+    bool validDigit(int n, int x)
+    {
         string s = to_string(n);
         char c = '0' + x;
         bool contains = s.find(c) != string::npos;

@@ -1,0 +1,7 @@
+3
+"abc"
+2
+"aabbc"
+3
+"leetcode"
+8

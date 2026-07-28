@@ -7,11 +7,17 @@ using namespace std;
 // Approach: reverse the digits of n (trailing zeros naturally drop as
 // leading zeros of the reversed value) and return the absolute
 // difference from the original.
-class Solution {
+class Solution
+{
 public:
-    int mirrorDistance(int n) {
+    int mirrorDistance(int n)
+    {
         int x = n, rev = 0;
-        while (x > 0) { rev = rev * 10 + x % 10; x /= 10; }
+        while (x > 0)
+        {
+            rev = rev * 10 + x % 10;
+            x /= 10;
+        }
         return abs(n - rev);
     }
 };

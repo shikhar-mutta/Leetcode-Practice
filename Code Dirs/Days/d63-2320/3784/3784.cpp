@@ -8,12 +8,15 @@ using namespace std;
 // of deletion costs of every other letter. Sum cost per letter (26
 // buckets), then the answer is total sum minus the largest bucket (keep
 // the letter that's cheapest to preserve).
-class Solution {
+class Solution
+{
 public:
-    long long minCost(string s, vector<int>& cost) {
+    long long minCost(string s, vector<int> &cost)
+    {
         long long perChar[26] = {}, total = 0;
-        for (int i = 0; i < (int)s.size(); i++) {
-            perChar[s[i]-'a'] += cost[i];
+        for (int i = 0; i < (int)s.size(); i++)
+        {
+            perChar[s[i] - 'a'] += cost[i];
             total += cost[i];
         }
         long long best = *max_element(perChar, perChar + 26);

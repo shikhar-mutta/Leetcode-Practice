@@ -11,14 +11,25 @@ using namespace std;
 // impossible for the globally smallest odd element, so it only works
 // when there are no odd elements at all. Target odd works as long as
 // every even element (if any) is larger than the smallest odd value.
-class Solution {
+class Solution
+{
 public:
-    bool uniformArray(vector<int>& nums1) {
+    bool uniformArray(vector<int> &nums1)
+    {
         bool hasOdd = false, hasEven = false;
         int minOdd = INT_MAX, minEven = INT_MAX;
-        for (int x : nums1) {
-            if (x % 2 == 0) { hasEven = true; minEven = min(minEven, x); }
-            else { hasOdd = true; minOdd = min(minOdd, x); }
+        for (int x : nums1)
+        {
+            if (x % 2 == 0)
+            {
+                hasEven = true;
+                minEven = min(minEven, x);
+            }
+            else
+            {
+                hasOdd = true;
+                minOdd = min(minOdd, x);
+            }
         }
         bool targetEvenOk = !hasOdd;
         bool targetOddOk = !hasEven || (hasOdd && minOdd < minEven);

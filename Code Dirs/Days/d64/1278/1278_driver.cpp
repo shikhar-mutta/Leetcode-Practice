@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1250.cpp"
+#include "1278.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,11 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto nums = _rvi();
+        string s = _rs();
+        int k = _ri();
         Solution sol;
-        auto res = sol.isGoodArray(nums);
-        cout << (res ? "true" : "false") << "\n";
+        auto res = sol.palindromePartition(s, k);
+        cout << res << "\n";
     }
     return 0;
 }

@@ -3,24 +3,30 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
-// TC: O(n^2) worst case (O(n) map ops per booking, each O(n))  SC: O(n)
-// Approach: sweep-line difference map: +1 at start, -1 at end for each
-// booking. After each insert, scan the map accumulating the running sum
-// to find the new maximum overlap (k-booking count).
-class MyCalendarThree {
-    map<int,int> delta;
+// TC: O(n) per book() call  SC: O(n)
+//  Approach: maintain a map of time points to their event counts. For each booking,
+//  insert start and end points, then update the event counts for all intervals
+//  between them, keeping track of the maximum overlap.
+class MyCalendarThree
+{
 public:
-    MyCalendarThree() {}
+    MyCalendarThree() { events.emplace(0, 0); }
 
-    int book(int startTime, int endTime) {
-        delta[startTime]++;
-        delta[endTime]--;
-        int cur = 0, best = 0;
-        for (auto& [t, d] : delta) {
-            cur += d;
-            best = max(best, cur);
+    int book(int start, int end)
+    {
+        auto sit =
+            events.emplace(start, prev(events.upper_bound(start))->second)
+                .first;
+        auto eit =
+            events.emplace(end, prev(events.upper_bound(end))->second).first;
+        for (; sit != eit; ++sit)
+        {
+            count = max(count, ++(sit->second));
         }
-        return best;
+        return count;
     }
+
+private:
+    map<int, int> events;
+    int count = 0;
 };

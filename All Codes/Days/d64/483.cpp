@@ -3,42 +3,63 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
-// TC: O(log(n)^2)  SC: O(1)
-// Approach: n = 1 + k + k^2 + ... + k^(m-1) for base k with m digits.
-// Try decreasing digit counts m from log2(n) down to 2 (base n-1 with
-// m=2 always works), binary searching k for each m via the geometric
-// series sum; the largest valid m gives the smallest base.
-class Solution {
-    long long geomSum(long long k, int m, long long limit) {
-        // sum = 1 + k + ... + k^(m-1), capped early if it exceeds limit
-        long long sum = 0, term = 1;
-        for (int i = 0; i < m; i++) {
-            sum += term;
-            if (sum > limit) return sum;
-            if (i < m - 1) {
-                if (term > limit / k + 1) return limit + 1;
-                term *= k;
-            }
-        }
-        return sum;
-    }
+// TC: O(log n * log n)  SC: O(1)
+//  Approach: For a number n, we want to find the smallest base k such that n can be expressed as a sum of powers of k, all with coefficient 1. This means we are looking for the largest m such that n = k^0 + k^1 + ... + k^(m-1) = (k^m - 1) / (k - 1). We can iterate over possible values of m from 60 down to 2 (since 2^60 is greater than 10^18, the maximum value of n). For each m, we can use binary search to find the appropriate base k. If we find a valid k, we return it. If no valid k is found for any m, we return n-1, which corresponds to the base n-1 (represented as "11" in that base).
+class Solution
+{
 public:
-    string smallestGoodBase(string ns) {
-        long long n = stoll(ns);
-        int maxM = 0;
-        for (long long v = n; v > 1; v /= 2) maxM++; // upper bound on digit count
+    string smallestGoodBase(string n)
+    {
+        long long num = stoll(n);
 
-        for (int m = maxM; m >= 2; m--) {
-            long long lo = 2, hi = (long long)pow((double)n, 1.0 / (m - 1)) + 2;
-            while (lo < hi) {
+        // m = number of digits (all 1's) in the target base.
+        // Try the largest possible m first, since larger m -> smaller base k.
+        for (int m = 60; m >= 2; m--)
+        {
+            long long k = (long long)pow((double)num, 1.0 / (m - 1));
+            if (k < 2)
+                continue;
+
+            // Adjust k with binary search / linear correction to be safe against floating point error
+            long long lo = 2, hi = k + 1;
+            while (lo <= hi)
+            {
                 long long mid = lo + (hi - lo) / 2;
-                long long s = geomSum(mid, m, n);
-                if (s < n) lo = mid + 1;
-                else hi = mid;
+                // compute sum = mid^0 + mid^1 + ... + mid^(m-1), guard overflow
+                long long sum = 1, cur = 1;
+                bool overflow = false;
+                for (int i = 1; i < m; i++)
+                {
+                    // check overflow before multiplying
+                    if (cur > (num - sum) / mid + 5)
+                    {
+                        overflow = true;
+                        break;
+                    }
+                    cur *= mid;
+                    sum += cur;
+                    if (sum > num)
+                    {
+                        overflow = true;
+                        break;
+                    }
+                }
+                if (overflow || sum > num)
+                {
+                    hi = mid - 1;
+                }
+                else if (sum < num)
+                {
+                    lo = mid + 1;
+                }
+                else
+                {
+                    return to_string(mid);
+                }
             }
-            if (geomSum(lo, m, n) == n) return to_string(lo);
         }
-        return to_string(n - 1);
+
+        // Fallback: base (n-1), represented as "11"
+        return to_string(num - 1);
     }
 };

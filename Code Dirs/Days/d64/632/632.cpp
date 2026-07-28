@@ -3,32 +3,103 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
-// TC: O(n log k)  SC: O(k)
-// Approach: min-heap of (value, listIdx, elemIdx) with one pointer per
-// list, tracking the current max across the heap's top elements.
-// Repeatedly pop the min, update the best range [min,max], then advance
-// that list's pointer and push its next value (stop if a list is
-// exhausted, since the range can no longer include all k lists).
-class Solution {
+// TC: O(n log n)  SC: O(n)
+//  Approach: flatten the structure into a single array of pairs (value, list index),
+//  sort it, and then use a two-pointer sliding window to find the smallest range
+//  that contains at least one element from each of the k lists. The window is expanded
+//  by moving the right pointer and contracted by moving the left pointer while maintaining
+//  a count of how many unique lists are represented in the current window. The smallest
+//  range is updated whenever a valid window is found.
+auto FastIO = []()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    return 0;
+}();
+
+class Solution
+{
+private:
+    struct Element
+    {
+        int val;
+        int listIdx;
+
+        // Custom comparator for fast sorting
+        bool operator<(const Element &other) const
+        {
+            return val < other.val;
+        }
+    };
+
 public:
-    vector<int> smallestRange(vector<vector<int>>& nums) {
+    vector<int> smallestRange(vector<vector<int>> &nums)
+    {
         int k = nums.size();
-        priority_queue<tuple<int,int,int>, vector<tuple<int,int,int>>, greater<>> pq;
-        int curMax = INT_MIN;
-        for (int i = 0; i < k; i++) {
-            pq.push({nums[i][0], i, 0});
-            curMax = max(curMax, nums[i][0]);
+
+        // Calculate total elements to pre-allocate memory
+        int totalElements = 0;
+        for (int i = 0; i < k; ++i)
+        {
+            totalElements += nums[i].size();
         }
-        int bestLo = 0, bestHi = INT_MAX;
-        while (true) {
-            auto [val, li, ei] = pq.top(); pq.pop();
-            if (curMax - val < bestHi - bestLo) { bestLo = val; bestHi = curMax; }
-            if (ei + 1 == (int)nums[li].size()) break;
-            int nextVal = nums[li][ei + 1];
-            curMax = max(curMax, nextVal);
-            pq.push({nextVal, li, ei + 1});
+
+        vector<Element> ordered;
+        ordered.reserve(totalElements); // Prevents dynamic reallocation overhead
+
+        // Flatten the structure
+        for (int i = 0; i < k; ++i)
+        {
+            for (int num : nums[i])
+            {
+                ordered.push_back({num, i});
+            }
         }
-        return {bestLo, bestHi};
+
+        // Highly optimized sort using our compact struct
+        sort(ordered.begin(), ordered.end());
+
+        vector<int> counts(k, 0);
+        int uniqueListsInWindow = 0;
+        int left = 0;
+
+        int start = 0;
+        int end = INT_MAX;
+
+        // Two-pointer sliding window execution
+        for (int right = 0; right < totalElements; ++right)
+        {
+            int rightList = ordered[right].listIdx;
+
+            if (counts[rightList] == 0)
+            {
+                uniqueListsInWindow++;
+            }
+            counts[rightList]++;
+
+            // Contract the window as long as it contains elements from all k lists
+            while (uniqueListsInWindow == k)
+            {
+                int currentMin = ordered[left].val;
+                int currentMax = ordered[right].val;
+
+                // Track the narrowest span
+                if ((long long)currentMax - currentMin < (long long)end - start)
+                {
+                    start = currentMin;
+                    end = currentMax;
+                }
+
+                int leftList = ordered[left].listIdx;
+                counts[leftList]--;
+                if (counts[leftList] == 0)
+                {
+                    uniqueListsInWindow--;
+                }
+                left++;
+            }
+        }
+
+        return {start, end};
     }
 };

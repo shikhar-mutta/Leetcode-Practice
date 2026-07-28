@@ -3,51 +3,54 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
-// TC: O(log n) amortized per op  SC: O(n) tracked ranges
-// Approach: maintain a map<int,int> of disjoint half-open [start,end)
-// covered ranges. addRange merges overlapping/touching neighbors into
-// one span. removeRange trims/splits any overlapping ranges. queryRange
-// checks if a single covering range contains [left,right).
-class RangeModule {
-    map<int,int> ranges; // start -> end
+// TC: O(log n)  SC: O(n)
+// Approach: Use a map to store the ranges. For addRange, merge overlapping ranges. For queryRange, check if the range is covered by any existing range. For removeRange, split and remove overlapping ranges.
+class RangeModule
+{
+    map<int, int> r; // ranges {left->right}
 public:
     RangeModule() {}
 
-    void addRange(int left, int right) {
-        auto it = ranges.lower_bound(left);
-        if (it != ranges.begin()) {
-            auto prev_ = prev(it);
-            if (prev_->second >= left) it = prev_;
+    void addRange(int left, int right)
+    {
+        auto it = r.upper_bound(left);
+        if (it != r.begin() && prev(it)->second >= left)
+            left = prev(it)->first;
+        auto it1 = r.lower_bound(left);
+        for (; it1 != r.end() && (it1->first <= right);)
+        {
+            right = max(right, it1->second);
+            r.erase(it1++);
         }
-        while (it != ranges.end() && it->first <= right) {
-            left = min(left, it->first);
-            right = max(right, it->second);
-            it = ranges.erase(it);
-        }
-        ranges[left] = right;
+        r.insert({left, right});
     }
 
-    bool queryRange(int left, int right) {
-        auto it = ranges.upper_bound(left);
-        if (it == ranges.begin()) return false;
-        it = prev(it);
-        return it->second >= right;
+    bool queryRange(int left, int right)
+    {
+        auto it = r.upper_bound(left);
+        if (it != r.begin())
+        {
+            if (prev(it)->second >= right)
+                return true;
+        }
+        return false;
     }
 
-    void removeRange(int left, int right) {
-        auto it = ranges.lower_bound(left);
-        if (it != ranges.begin()) {
-            auto prev_ = prev(it);
-            if (prev_->second > left) it = prev_;
+    void removeRange(int left, int right)
+    {
+        auto it = r.lower_bound(left);
+        int right1 = right;
+        if (it != r.begin() && prev(it)->second > left)
+        {
+            right1 = max(right1, prev(it)->second);
+            prev(it)->second = left;
         }
-        vector<pair<int,int>> toAdd;
-        while (it != ranges.end() && it->first < right) {
-            int s = it->first, e = it->second;
-            if (s < left) toAdd.push_back({s, left});
-            if (e > right) toAdd.push_back({right, e});
-            it = ranges.erase(it);
+        for (; it != r.end() && (it->first <= right1);)
+        {
+            right1 = max(right1, it->second);
+            r.erase(it++);
         }
-        for (auto& [s, e] : toAdd) ranges[s] = e;
+        if (right1 > right)
+            r.insert({right, right1});
     }
 };

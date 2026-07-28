@@ -10,33 +10,28 @@ using namespace std;
 // streak), 'A' (only if absences==0, resets late streak, absences->1),
 // or 'L' (only if late streak < 2, increments it). Sum all valid end
 // states after n days, all mod 1e9+7.
-class Solution {
+class Solution
+{
 public:
-    int checkRecord(int n) {
-        const long long MOD = 1e9 + 7;
-        // dp[a][l]: a = absences so far (0/1), l = trailing lates (0/1/2)
-        long long dp[2][3] = {};
-        dp[0][0] = 1;
-        for (int day = 0; day < n; day++) {
-            long long ndp[2][3] = {};
-            for (int a = 0; a < 2; a++) {
-                for (int l = 0; l < 3; l++) {
-                    if (dp[a][l] == 0) continue;
-                    long long cur = dp[a][l];
-                    // append P
-                    ndp[a][0] = (ndp[a][0] + cur) % MOD;
-                    // append A
-                    if (a == 0) ndp[1][0] = (ndp[1][0] + cur) % MOD;
-                    // append L
-                    if (l < 2) ndp[a][l + 1] = (ndp[a][l + 1] + cur) % MOD;
+    const long long mod = 1e9 + 7;
+    int checkRecord(int n)
+    {
+        int dp[100001][2][3] = {0};
+        fill(&dp[0][0][0], &dp[0][0][0] + 6, 1);
+        for (int i = 1; i <= n; i++)
+        {
+            for (int j = 0; j <= 1; j++)
+            {
+                for (int k = 0; k <= 2; k++)
+                {
+                    long long ans = dp[i - 1][j][0];
+                    ans += (k < 2 ? dp[i - 1][j][k + 1] : 0);
+                    ans += (j == 0 ? dp[i - 1][j + 1][0] : 0);
+                    dp[i][j][k] = ans % mod;
                 }
             }
-            memcpy(dp, ndp, sizeof(dp));
         }
-        long long ans = 0;
-        for (int a = 0; a < 2; a++)
-            for (int l = 0; l < 3; l++)
-                ans = (ans + dp[a][l]) % MOD;
-        return (int)ans;
+
+        return dp[n][0][0];
     }
 };

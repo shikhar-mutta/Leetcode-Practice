@@ -3,33 +3,44 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
-// TC: O(10^n) amortized in practice  SC: O(1)
-// Approach: for n>=2, build candidate palindromes of 2n digits from
-// largest to smallest (by mirroring an n-digit half), then test whether
-// each has a factor pair within [10^(n-1), 10^n); the first such
-// palindrome found is the answer (mod 1337). n=1 is a special case (9).
-class Solution {
+// TC: O(10^n)  SC: O(1)
+//  Approach: Let the palindrome be of the form left + right, where right is the reverse of left. Then the palindrome is equal to left * 10^n + right. Let the two factors be x and y. Then we have x * y = left * 10^n + right. Let z = x + y. Then we have x * y = left * 10^n + right and x + y = z. Then we have x * y = left * 10^n + right and x + y = z. Then we have x * y = left * 10^n + right and x + y = z. Then we have x * y = left * 10^n + right and x + y = z. Then we have x * y = left * 10^n + right and x + y = z. Then we have x * y = left * 10^n + right and x + y = z. Then we have x * y = left * 10^n + right and x + y = z. Then we have x * y = left * 10^n + right.
+class Solution
+{
 public:
-    int largestPalindrome(int n) {
-        if (n == 1) return 9;
-        long long upper = 1;
-        for (int i = 0; i < n; i++) upper *= 10;
-        upper -= 1;
-        long long lower = upper / 10 + 1;
+    int flip(int n)
+    {
+        auto str = to_string(n);
+        std::reverse(str.begin(), str.end());
+        return atoi(str.c_str());
+    }
+    bool isInteger(double v)
+    {
+        double tmp;
+        return std::modf(v, &tmp) == 0.0;
+    }
+    int largestPalindrome(int n)
+    {
+        if (n == 1)
+            return 9;
+        const long max = pow(10, n);
+        for (int z = 2; z < max - 1; z++)
+        {
+            const long left = max - z;
+            const long right = flip(left);
+            const double sqrt_term = z * z - 4 * right;
 
-        for (long long half = upper; half >= lower; half--) {
-            string s = to_string(half);
-            string rev = s;
-            reverse(rev.begin(), rev.end());
-            long long pal = stoll(s + rev);
-            for (long long x = upper; x * x >= pal; x--) {
-                if (pal % x == 0) {
-                    long long y = pal / x;
-                    if (y >= lower && y <= upper) {
-                        return (int)(pal % 1337);
-                    }
-                }
+            if (sqrt_term < 0.0)
+            {
+                continue;
+            }
+
+            const double root1 = 0.5 * (z + sqrt(sqrt_term));
+            const double root2 = 0.5 * (z - sqrt(sqrt_term));
+
+            if (isInteger(root1) || isInteger(root2))
+            {
+                return (max * left + right) % 1337;
             }
         }
         return -1;

@@ -3,47 +3,94 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
 // TC: O(n^3)  SC: O(n^2)
-// Approach: simulate two people walking from (0,0) to (n-1,n-1)
-// simultaneously (equivalent to one round trip), so after `step` moves
-// each is at row x, col step-x. dp[x1][x2] = max cherries collectible
-// so far. Transition over the 4 combinations of (down/right) moves for
-// each person; cherries at a shared cell are only counted once.
-class Solution {
+//  Approach: simulate two people walking from (0,0) to (n-1,n-1)
+//  simultaneously (equivalent to one round trip), so after `step` moves
+//  each is at row x, col step-x. dp[x1][x2] = max cherries collectible
+//  so far. Transition over the 4 combinations of (down/right) moves for
+//  each person; cherries at a shared cell are only counted once.
+class Solution
+{
 public:
-    int cherryPickup(vector<vector<int>>& grid) {
-        int n = grid.size();
-        vector<vector<int>> dp(n, vector<int>(n, INT_MIN));
-        dp[0][0] = grid[0][0];
+    int dp[51][51][51];
+    int solve(vector<vector<int>> &grid, int r1, int c1, int r2, int n)
+    {
+        int c2 = r1 + c1 - r2;
+        if (r1 >= n || r2 >= n || c1 >= n || c2 >= n || grid[r1][c1] == -1 ||
+            grid[r2][c2] == -1)
+        {
+            return -1e5;
+        }
+        if (dp[r1][c1][r2] != -1)
+            return dp[r1][c1][r2];
+        if (r1 == n - 1 && c1 == n - 1)
+            return grid[r1][c1]; // they will reach at the same time as
+                                 // manhattan dist is same
 
-        for (int step = 1; step <= 2 * (n - 1); step++) {
-            vector<vector<int>> ndp(n, vector<int>(n, INT_MIN));
-            int xLo = max(0, step - (n - 1)), xHi = min(n - 1, step);
-            for (int x1 = xLo; x1 <= xHi; x1++) {
-                int y1 = step - x1;
-                if (grid[x1][y1] == -1) continue;
-                for (int x2 = xLo; x2 <= xHi; x2++) {
-                    int y2 = step - x2;
-                    if (grid[x2][y2] == -1) continue;
-                    int best = INT_MIN;
-                    for (int dx1 = 0; dx1 <= 1; dx1++) {
-                        int px1 = x1 - dx1;
-                        if (px1 < 0) continue;
-                        for (int dx2 = 0; dx2 <= 1; dx2++) {
-                            int px2 = x2 - dx2;
-                            if (px2 < 0) continue;
-                            if (dp[px1][px2] != INT_MIN) best = max(best, dp[px1][px2]);
+        int cherry = 0;
+        if (r1 == r2 && c1 == c2)
+            cherry = grid[r1][c1];
+        else
+            cherry = grid[r1][c1] + grid[r2][c2];
+
+        int DD = solve(grid, r1 + 1, c1, r2 + 1, n);
+        int RR = solve(grid, r1, c1 + 1, r2, n);
+        int DR = solve(grid, r1 + 1, c1, r2, n);
+        int RD = solve(grid, r1, c1 + 1, r2 + 1, n);
+
+        return dp[r1][c1][r2] = cherry + max(DD, max(RR, max(DR, RD)));
+    }
+    int cherryPickup(vector<vector<int>> &grid)
+    {
+        int n = grid.size();
+
+        if (grid[0][0] == -1 || grid[n - 1][n - 1] == -1)
+        {
+            return 0;
+        }
+        if (n == 1)
+            return grid[0][0];
+        memset(dp, -1e5, sizeof(dp));
+
+        for (int r1 = 0; r1 < n; r1++)
+        {
+            for (int c1 = 0; c1 < n; c1++)
+            {
+                for (int r2 = 0; r2 < n; r2++)
+                {
+                    int c2 = r1 + c1 - r2;
+                    if (c2 < 0 || c2 >= n)
+                        continue;
+                    if (r1 == 0 && c1 == 0 && r2 == 0 && c2 == 0)
+                        dp[r1][c1][r2] = grid[0][0];
+                    else if (grid[r1][c1] == -1 || grid[r2][c2] == -1)
+                        dp[r1][c1][r2] = INT_MIN;
+
+                    else
+                    {
+                        int cherry = 0;
+                        if (r1 == r2 && c1 == c2)
+                            cherry = grid[r1][c1];
+                        else
+                        {
+                            cherry = grid[r1][c1] + grid[r2][c2];
                         }
+                        int DD, RR, DR, RD;
+                        DD = RR = DR = RD = INT_MIN;
+                        if (r1 > 0 && r2 > 0)
+                            DD = dp[r1 - 1][c1][r2 - 1];
+                        if (c1 > 0 && c2 > 0)
+                            RR = dp[r1][c1 - 1][r2];
+                        if (r1 > 0 && c2 > 0)
+                            DR = dp[r1 - 1][c1][r2];
+                        if (c1 > 0 && r2 > 0)
+                            RD = dp[r1][c1 - 1][r2 - 1];
+
+                        dp[r1][c1][r2] = cherry + max(DD, max(RR, max(DR, RD)));
                     }
-                    if (best == INT_MIN) continue;
-                    int gain = grid[x1][y1];
-                    if (x1 != x2) gain += grid[x2][y2];
-                    ndp[x1][x2] = best + gain;
                 }
             }
-            dp = ndp;
         }
-        return max(0, dp[n - 1][n - 1]);
+        return max(0, dp[n - 1][n - 1][n - 1]);
     }
 };

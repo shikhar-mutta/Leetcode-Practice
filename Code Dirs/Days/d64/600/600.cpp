@@ -10,21 +10,30 @@ using namespace std;
 // whenever a '1' bit is seen, add fib[bitsRemaining] for choosing 0 at
 // this position (covers all smaller completions), and stop early if two
 // consecutive 1's are seen in n itself (everything from here is valid).
-class Solution {
+class Solution
+{
 public:
-    int findIntegers(int n) {
+    int findIntegers(int n)
+    {
         vector<int> fib(32, 0);
-        fib[0] = 1; fib[1] = 2;
-        for (int i = 2; i < 32; i++) fib[i] = fib[i - 1] + fib[i - 2];
+        fib[0] = 1;
+        fib[1] = 2;
+        for (int i = 2; i < 32; i++)
+            fib[i] = fib[i - 1] + fib[i - 2];
 
         int ans = 0;
         int prevBit = 0;
-        for (int i = 30; i >= 0; i--) {
-            if ((n >> i) & 1) {
+        for (int i = 30; i >= 0; i--)
+        {
+            if ((n >> i) & 1)
+            {
                 ans += fib[i];
-                if (prevBit == 1) return ans; // two consecutive 1's found
+                if (prevBit == 1)
+                    return ans; // two consecutive 1's found
                 prevBit = 1;
-            } else {
+            }
+            else
+            {
                 prevBit = 0;
             }
         }

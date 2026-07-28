@@ -3,31 +3,64 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
-// TC: O(sum(len^2)) build, O(len) per query  SC: O(sum(len^2))
-// Approach: for each word at index idx, generate every (suffix, prefix)
-// pair combined as "suffix#prefix" and map it to idx, overwriting on
-// duplicates so the largest index always wins. f() is then a single
-// hashmap lookup.
-class WordFilter {
-    unordered_map<string,int> combo;
+// TC: O(n * (len(pref) + len(suff)))  SC: O(n * (len(pref) + len(suff)))
+//  Approach: Trie. Store all suffixes of each word in a trie, with the index of the word at the end of each suffix. Then, for a query, traverse the trie with the suffix and then the prefix, returning the index of the word if found. If not found, return -1.
+
+int dp[700009][27], totalUsed = 0;
+class WordFilter
+{
 public:
-    WordFilter(vector<string>& words) {
-        for (int idx = 0; idx < (int)words.size(); idx++) {
-            string& w = words[idx];
-            int n = w.size();
-            for (int i = 0; i <= n; i++) {
-                string suf = w.substr(i);
-                for (int j = 0; j <= n; j++) {
-                    string pre = w.substr(0, j);
-                    combo[suf + "#" + pre] = idx;
+    WordFilter(vector<string> &words)
+    {
+        int n = words.size();
+        memset(dp, 0, sizeof(dp[0]) * totalUsed);
+        totalUsed = 8;
+
+        for (int wi = 0; wi < n; wi++)
+        {
+            string &s = words[wi];
+
+            for (int len = 1; len <= s.size(); len++)
+            {
+                int i = len;
+                for (auto it = end(s) - i; it != end(s); it++)
+                {
+                    int &j = dp[i][*it - 'a'];
+                    if (!j)
+                        j = ++totalUsed;
+                    i = j;
+                }
+
+                for (char ch : s)
+                {
+                    int &j = dp[i][ch - 'a'];
+                    if (!j)
+                        j = ++totalUsed;
+                    i = j;
+                    dp[i][26] = wi;
                 }
             }
         }
     }
 
-    int f(string pref, string suff) {
-        auto it = combo.find(suff + "#" + pref);
-        return it == combo.end() ? -1 : it->second;
+    int f(string pref, string suff)
+    {
+
+        int i = suff.size();
+        for (char ch : suff)
+        {
+            i = dp[i][ch - 'a'];
+            if (!i)
+                return -1;
+        }
+
+        for (char ch : pref)
+        {
+            i = dp[i][ch - 'a'];
+            if (!i)
+                return -1;
+        }
+
+        return dp[i][26];
     }
 };

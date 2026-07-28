@@ -11,40 +11,60 @@ using namespace std;
 // the boundary values 10^(len-1)-1 (all 9's, one digit shorter) and
 // 10^(len-1)+1 (power of 10 plus 1, one digit longer). Pick the closest
 // candidate != n, breaking ties toward the smaller value.
-class Solution {
-    string mirror(string half, int len, bool odd) {
-        string res = half;
-        string tail = half;
-        if (odd) tail.pop_back();
-        reverse(tail.begin(), tail.end());
-        res += tail;
-        return res;
-    }
+class Solution
+{
 public:
-    string nearestPalindromic(string n) {
-        int len = n.size();
-        long long num = stoll(n);
-        set<long long> candidates;
+    long long makepalin(long long x, bool par)
+    {
+        long long ans = x;
+        if (par)
+            x /= 10;
 
-        candidates.insert((long long)pow(10, len - 1) - 1);
-        candidates.insert((long long)pow(10, len) + 1);
-
-        bool odd = (len % 2 == 1);
-        int halfLen = (len + 1) / 2;
-        long long half = stoll(n.substr(0, halfLen));
-
-        for (long long h : {half - 1, half, half + 1}) {
-            if (h < 0) continue;
-            string hs = to_string(h);
-            candidates.insert(stoll(mirror(hs, len, odd)));
+        while (x > 0)
+        {
+            ans = ans * 10 + x % 10;
+            x /= 10;
         }
+        return ans;
+    }
+
+    string nearestPalindromic(string n)
+    {
+        int len = n.size();
+        if (len == 1)
+            return to_string(stoi(n) - 1);
+
+        long long num = stoll(n);
+        int preflen = (len + 1) / 2;
+
+        long long pref = stoll(n.substr(0, preflen));
+
+        vector<long long> cand;
+
+        cand.push_back(makepalin(pref, len % 2));
+        cand.push_back(makepalin(pref - 1, len % 2));
+        cand.push_back(makepalin(pref + 1, len % 2));
+
+        long long big = 1;
+        for (int i = 0; i < len; i++)
+            big *= 10;
+        cand.push_back(big + 1);
+        cand.push_back((big / 10) - 1);
 
         long long best = -1;
-        for (long long c : candidates) {
-            if (c == num) continue;
-            if (best == -1) { best = c; continue; }
-            long long diff1 = llabs(c - num), diff2 = llabs(best - num);
-            if (diff1 < diff2 || (diff1 == diff2 && c < best)) best = c;
+        for (long long i : cand)
+        {
+            if (i == num)
+                continue;
+            if (best == -1)
+            {
+                best = i;
+                continue;
+            }
+            long long d1 = abs(num - i);
+            long long d2 = abs(num - best);
+            if (d1 < d2 || (d1 == d2 && i < best))
+                best = i;
         }
         return to_string(best);
     }

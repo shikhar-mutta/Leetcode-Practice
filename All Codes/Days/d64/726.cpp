@@ -11,35 +11,51 @@ using namespace std;
 // letter starts a new element name (optionally followed by lowercase
 // letters and a trailing count) merged into the current top map. Finally
 // sort element names and build the output string.
-class Solution {
+class Solution
+{
 public:
-    string countOfAtoms(string formula) {
+    string countOfAtoms(string formula)
+    {
         int n = formula.size();
         int i = 0;
-        vector<map<string,long long>> stack_;
+        vector<map<string, long long>> stack_;
         stack_.push_back({});
 
-        auto readNum = [&](int& idx) -> long long {
-            if (idx >= n || !isdigit(formula[idx])) return 1;
+        auto readNum = [&](int &idx) -> long long
+        {
+            if (idx >= n || !isdigit(formula[idx]))
+                return 1;
             long long num = 0;
-            while (idx < n && isdigit(formula[idx])) { num = num * 10 + (formula[idx] - '0'); idx++; }
+            while (idx < n && isdigit(formula[idx]))
+            {
+                num = num * 10 + (formula[idx] - '0');
+                idx++;
+            }
             return num;
         };
 
-        while (i < n) {
+        while (i < n)
+        {
             char c = formula[i];
-            if (c == '(') {
+            if (c == '(')
+            {
                 stack_.push_back({});
                 i++;
-            } else if (c == ')') {
+            }
+            else if (c == ')')
+            {
                 i++;
                 long long mult = readNum(i);
                 auto top = stack_.back();
                 stack_.pop_back();
-                for (auto& [name, cnt] : top) stack_.back()[name] += cnt * mult;
-            } else {
+                for (auto &[name, cnt] : top)
+                    stack_.back()[name] += cnt * mult;
+            }
+            else
+            {
                 int j = i + 1;
-                while (j < n && islower(formula[j])) j++;
+                while (j < n && islower(formula[j]))
+                    j++;
                 string name = formula.substr(i, j - i);
                 i = j;
                 long long cnt = readNum(i);
@@ -48,9 +64,11 @@ public:
         }
 
         string res;
-        for (auto& [name, cnt] : stack_.back()) {
+        for (auto &[name, cnt] : stack_.back())
+        {
             res += name;
-            if (cnt > 1) res += to_string(cnt);
+            if (cnt > 1)
+                res += to_string(cnt);
         }
         return res;
     }

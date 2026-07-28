@@ -3,39 +3,52 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
-// TC: O(n^2 * 4)  SC: O(n^2)
-// Approach: interval DP over the 4-letter alphabet 'a'-'d'. dp[i][j] =
-// count of distinct palindromic subsequences in s[i..j]. For each
-// letter c, find its leftmost occurrence l and rightmost occurrence r
-// within [i,j]: if none, contributes 0; if l==r, contributes 1 ("c");
-// if adjacent, contributes 2 ("c","cc"); otherwise contributes
-// 2 + dp[l+1][r-1] (wrapping every inner palindrome with c on both sides,
-// plus "c" and "cc" themselves), all mod 1e9+7.
-class Solution {
-public:
-    int countPalindromicSubsequences(string s) {
-        const long long MOD = 1e9 + 7;
-        int n = s.size();
-        vector<vector<long long>> dp(n, vector<long long>(n, 0));
-        for (int i = 0; i < n; i++) dp[i][i] = 1;
+// TC: O(n^2)  SC: O(n)
+//  Approach: interval DP. For each pair of indices (i,j), compute the number of distinct palindromic subsequences in s[i..j].
+//  Let dp[i][j] be the number of distinct palindromic subsequences in s[i..j]. If s[i] != s[j], then dp[i][j] = dp[i+1][j] + dp[i][j-1] - dp[i+1][j-1]. If s[i] == s[j], then we need to consider the characters between i and j. Let l be the index of the first occurrence of s[i] in s[i+1..j-1], and r be the index of the last occurrence of s[j] in s[i+1..j-1]. If there are no occurrences, then dp[i][j] = 2 * dp[i+1][j-1] + 2. If there is one occurrence, then dp[i][j] = 2 * dp[i+1][j-1] + 1. If there are more than one occurrences, then dp[i][j] = 2 * dp[i+1][j-1] - dp[l+1][r-1].
+class Solution
+{
+    static constexpr auto M = 1000000007;
 
-        for (int len = 2; len <= n; len++) {
-            for (int i = 0; i + len - 1 < n; i++) {
-                int j = i + len - 1;
-                long long total = 0;
-                for (char c = 'a'; c <= 'd'; c++) {
-                    int l = -1, r = -1;
-                    for (int k = i; k <= j; k++) if (s[k] == c) { l = k; break; }
-                    if (l == -1) continue;
-                    for (int k = j; k >= i; k--) if (s[k] == c) { r = k; break; }
-                    if (l == r) total += 1;
-                    else if (l + 1 == r) total += 2;
-                    else total += (2 + dp[l + 1][r - 1]) % MOD;
+public:
+    int countPalindromicSubsequences(string s)
+    {
+        const int n = s.size();
+        vector<int> dp(n * n, 0);
+        array<int, 4> prev{};
+        array<int, 4> next{};
+        for (int i = 0; i < n; i++)
+        {
+            dp[i * n + i] = 1;
+            next[s[i] - 'a'] = i;
+            for (int j = i - 1; j >= 0; j--)
+            {
+                if (s[i] == s[j])
+                {
+                    dp[i * n + j] = (2 * dp[(i - 1) * n + j + 1]) % M;
+                    int l = next[s[i] - 'a'];
+                    int r = prev[s[i] - 'a'];
+                    if (l > r)
+                        dp[i * n + j] += 2;
+                    else if (l == r)
+                        dp[i * n + j] += 1;
+                    else
+                    {
+                        dp[i * n + j] =
+                            (dp[i * n + j] - dp[(r - 1) * n + l + 1] + M) % M;
+                    }
                 }
-                dp[i][j] = total % MOD;
+                else
+                {
+                    dp[i * n + j] =
+                        (dp[(i - 1) * n + j] + dp[i * n + j + 1]) % M;
+                    dp[i * n + j] =
+                        (dp[i * n + j] - dp[(i - 1) * n + j + 1] + M) % M;
+                }
+                next[s[j] - 'a'] = j;
             }
+            prev[s[i] - 'a'] = i;
         }
-        return (int)dp[0][n - 1];
+        return dp[(n - 1) * n];
     }
 };

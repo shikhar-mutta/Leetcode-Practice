@@ -3,37 +3,56 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
-// TC: O(|key| * |ring|^2)  SC: O(|ring|)
-// Approach: precompute positions of each ring letter. DP over key
-// characters: dp[pos] = min total cost to have spelled the current key
-// prefix with the ring pointer at `pos`. For each key char, transition
-// from every previous candidate position to every position holding the
-// current char, cost = min rotation distance around the ring + 1 (press).
-class Solution {
+// TC: O(n * m)  SC: O(n * m)
+//  Approach: dp[cur][kcur] = min steps to spell key[kcur:] starting
+//  with ring[cur] at 12:00. For each dp[cur][kcur], find the closest index of key[kcur] in ring to the right and left, and recurse.
+//  The answer is dp[0][0] + key.size() (for the button presses).
+//  Note: the ring is circular, so we wrap around when searching for the closest index.
+class Solution
+{
 public:
-    int findRotateSteps(string ring, string key) {
-        int n = ring.size();
-        unordered_map<char, vector<int>> pos;
-        for (int i = 0; i < n; i++) pos[ring[i]].push_back(i);
+    int dp[102][102];
+    int ring(int cur, int kcur, string &s, string &key)
+    {
+        if (kcur == key.size())
+            return 0;
+        if (dp[cur][kcur] != -1)
+            return dp[cur][kcur];
 
-        unordered_map<int, int> dp;
-        dp[0] = 0;
-        for (char c : key) {
-            unordered_map<int, int> ndp;
-            for (int np : pos[c]) {
-                int best = INT_MAX;
-                for (auto& [p, cost] : dp) {
-                    int diff = abs(np - p);
-                    int rot = min(diff, n - diff);
-                    best = min(best, cost + rot + 1);
-                }
-                ndp[np] = best;
+        int rightpath = 0;
+        int leftpath = 0;
+        int idxr = cur, idxl = cur;
+
+        while (1)
+        {
+            if (idxr == s.size())
+                idxr = 0;
+            if (s[idxr] == key[kcur])
+            {
+                rightpath++;
+                break;
             }
-            dp = ndp;
+            idxr++;
+            rightpath++;
         }
-        int ans = INT_MAX;
-        for (auto& [p, cost] : dp) ans = min(ans, cost);
-        return ans;
+        while (1)
+        {
+            if (idxl == -1)
+                idxl = s.size() - 1;
+            if (s[idxl] == key[kcur])
+            {
+                leftpath++;
+                break;
+            }
+            idxl--;
+            leftpath++;
+        }
+        return dp[cur][kcur] = min(rightpath + ring(idxr, kcur + 1, s, key),
+                                   leftpath + ring(idxl, kcur + 1, s, key));
+    }
+    int findRotateSteps(string s, string key)
+    {
+        memset(dp, -1, sizeof dp);
+        return ring(0, 0, s, key);
     }
 };

@@ -1,0 +1,39 @@
+// Link: https://leetcode.com/problems/minimum-cost-to-merge-stones/description/
+
+#include <bits/stdc++.h>
+using namespace std;
+
+// Added
+// TC: O(n^3 / k)  SC: O(n^2)
+// Approach: feasible only if (n-1) % (k-1) == 0. Interval DP: dp[i][j] =
+// min cost to merge stones[i..j] down to the minimum possible number of
+// piles achievable purely via splitting (i.e. NOT necessarily 1 pile).
+// Build it via dp[i][j] = min over split points m (stepping by k-1) of
+// dp[i][m] + dp[m+1][j]. Whenever (j-i) % (k-1) == 0, an extra full
+// merge into a single pile is possible, adding the segment's sum.
+class Solution {
+public:
+    int mergeStones(vector<int>& stones, int k) {
+        int n = stones.size();
+        if (n == 1) return 0;
+        if ((n - 1) % (k - 1) != 0) return -1;
+
+        vector<int> prefix(n + 1, 0);
+        for (int i = 0; i < n; i++) prefix[i + 1] = prefix[i] + stones[i];
+
+        vector<vector<int>> dp(n, vector<int>(n, 0));
+        for (int len = 2; len <= n; len++) {
+            for (int i = 0; i + len - 1 < n; i++) {
+                int j = i + len - 1;
+                dp[i][j] = INT_MAX;
+                for (int m = i; m < j; m += (k - 1)) {
+                    dp[i][j] = min(dp[i][j], dp[i][m] + dp[m + 1][j]);
+                }
+                if ((j - i) % (k - 1) == 0) {
+                    dp[i][j] += prefix[j + 1] - prefix[i];
+                }
+            }
+        }
+        return dp[0][n - 1];
+    }
+};

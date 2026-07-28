@@ -13,45 +13,51 @@ using namespace std;
 // target there; if found, place it and fill the rest ascending (smallest
 // completion). If not found, undo the match at the previous position
 // (restore its char to the pool) and try one position earlier.
-class Solution {
+class Solution
+{
 public:
-    string lexGreaterPermutation(string s, string target) {
-        int n = s.size();
-        vector<int> count(26, 0);
-        for (char c : s) count[c - 'a']++;
+    bool solve(vector<char> &path, vector<int> &cnt, string &target, bool big, string &ans)
+    {
+        int n = target.size();
+        if (!ans.empty())
+            return true;
 
-        int matchLen = 0;
-        while (matchLen < n && count[target[matchLen] - 'a'] > 0) {
-            count[target[matchLen] - 'a']--;
-            matchLen++;
-        }
-
-        int pos;
-        if (matchLen == n) {
-            pos = n - 1;
-            count[target[pos] - 'a']++; // undo last match to test increasing here
-        } else {
-            pos = matchLen;
-        }
-
-        while (pos >= 0) {
-            int chosen = -1;
-            for (int c = target[pos] - 'a' + 1; c < 26; c++) {
-                if (count[c] > 0) { chosen = c; break; }
+        if (n == path.size())
+        {
+            if (big)
+            {
+                ans = string(path.begin(), path.end());
+                return true;
             }
-            if (chosen != -1) {
-                string result = target.substr(0, pos);
-                result += (char)('a' + chosen);
-                count[chosen]--;
-                for (int c = 0; c < 26; c++) {
-                    result.append(count[c], (char)('a' + c));
-                }
-                return result;
-            }
-            if (pos == 0) break;
-            count[target[pos-1] - 'a']++; // undo match at pos-1
-            pos--;
+            return false;
         }
-        return "";
+        int i = path.size();
+        for (int c = 0; c < 26; c++)
+        {
+            if (cnt[c] == 0)
+                continue;
+            if (!big && (c + 'a' < target[i]))
+                continue;
+            path.push_back(c + 'a');
+            cnt[c]--;
+            bool newbig = big || (c + 'a' > target[i]);
+            if (solve(path, cnt, target, newbig, ans))
+                return true;
+            path.pop_back();
+            cnt[c]++;
+        }
+        return false;
+    }
+    string lexGreaterPermutation(string s, string target)
+    {
+        vector<int> cnt(26, 0);
+        for (char ch : s)
+        {
+            cnt[ch - 'a']++;
+        }
+        string ans = "";
+        vector<char> path;
+        solve(path, cnt, target, false, ans);
+        return ans;
     }
 };

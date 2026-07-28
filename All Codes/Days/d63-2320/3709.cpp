@@ -3,28 +3,61 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(1) amortized per record, O(log n) per query SC: O(n)
-// Approach: since record() is always called with strictly increasing
-// time, just append (time, running cumulative sum) pairs to a vector.
-// A range-sum query then becomes two binary searches on time to find
-// the cumulative sum boundaries, subtracted.
-class ExamTracker {
-    vector<int> times;
-    vector<long long> cum;
+// TC: O(1) per record, O(log n) per query SC: O(n)
+//  Approach: since record() is always called with strictly increasing
+//  time, just append (time, running cumulative sum) pairs to a vector.
+//  A range-sum query then becomes two binary searches on time to find
+//  the cumulative sum boundaries, subtracted.
+class ExamTracker
+{
 public:
-    ExamTracker() {}
-
-    void record(int time, int score) {
-        long long prev = cum.empty() ? 0 : cum.back();
-        times.push_back(time);
-        cum.push_back(prev + score);
+    vector<pair<int, int>> exams;
+    vector<long long> prefix, clock;
+    ExamTracker()
+    {
+        prefix.push_back(0);
+        clock.push_back(0);
     }
 
-    long long totalScore(int startTime, int endTime) {
-        int hi = upper_bound(times.begin(), times.end(), endTime) - times.begin();
-        int lo = lower_bound(times.begin(), times.end(), startTime) - times.begin();
-        long long sumUpToEnd = (hi > 0) ? cum[hi - 1] : 0;
-        long long sumBeforeStart = (lo > 0) ? cum[lo - 1] : 0;
-        return sumUpToEnd - sumBeforeStart;
+    void record(int time, int score)
+    {
+        exams.push_back({time, score});
+        clock.push_back(time);
+        if (prefix.empty())
+        {
+            prefix.push_back(score);
+        }
+        else
+        {
+            prefix.push_back(prefix.back() + score);
+        }
+    }
+
+    // long long bs(int tar){
+    //     auto it = lower_bound(clock.begin(), clock.end(), tar);
+    //     if(it==clock.end()){
+    //         return 0;
+    //     }
+    // }
+    long long retrieve(int st, int et)
+    {
+        long long ans = 0;
+
+        auto it = lower_bound(clock.begin(), clock.end(), st - 1);
+        if (*it >= st)
+        {
+            it--;
+        }
+        auto ir = lower_bound(clock.begin(), clock.end(), et);
+        if (*ir > et)
+        {
+            ir--;
+        }
+
+        return prefix[ir - clock.begin()] - prefix[it - clock.begin()];
+    }
+    long long totalScore(int st, int et)
+    {
+        return retrieve(st, et);
     }
 };

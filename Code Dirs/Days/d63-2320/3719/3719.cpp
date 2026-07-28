@@ -7,19 +7,34 @@ using namespace std;
 // Approach: n is small, so for each starting index extend right while
 // tracking sets of distinct even/odd values seen; whenever the two set
 // sizes match, record the length.
-class Solution {
+class Solution
+{
 public:
-    int longestBalanced(vector<int>& nums) {
+    inline static uint32_t seen[100001] = {};
+    inline static uint32_t leet = 0;
+    int longestBalanced(vector<int> &nums)
+    {
+        leet++;
         int n = nums.size();
-        int best = 0;
-        for (int i = 0; i < n; i++) {
-            unordered_set<int> evens, odds;
-            for (int j = i; j < n; j++) {
-                if (nums[j] % 2 == 0) evens.insert(nums[j]);
-                else odds.insert(nums[j]);
-                if (evens.size() == odds.size()) best = max(best, j - i + 1);
+        int res = 0;
+
+        for (int i = 0; i < n && n - i > res; i++)
+        {
+            int A[2] = {0, 0};
+            uint32_t marker = (leet << 16) | (uint32_t)(i + 1);
+            for (int j = i; j < n; j++)
+            {
+                int val = nums[j];
+                if (seen[val] != marker)
+                {
+                    seen[val] = marker;
+                    A[val & 1]++;
+                }
+                if (A[0] == A[1])
+                    res = max(res, j - i + 1);
             }
         }
-        return best;
+
+        return res;
     }
 };

@@ -1,0 +1,3 @@
+2
+["cat","cats","catsdogcats","dog","dogcatsdog","hippopotamuses","rat","ratcatdogcat"]
+["cat","dog","catdog"]

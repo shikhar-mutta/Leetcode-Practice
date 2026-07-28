@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "3986.cpp"
+#include "591.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,11 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        string startTime = _rs();
-        string endTime = _rs();
+        string code = _rs();
         Solution sol;
-        auto res = sol.secondsBetweenTimes(startTime, endTime);
-        cout << res << "\n";
+        auto res = sol.isValid(code);
+        cout << (res ? "true" : "false") << "\n";
     }
     return 0;
 }

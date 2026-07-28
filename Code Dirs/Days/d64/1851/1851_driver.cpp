@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1782.cpp"
+#include "1851.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,11 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        int n = _ri();
-        auto edges = _rvvi();
+        auto intervals = _rvvi();
         auto queries = _rvi();
         Solution sol;
-        auto res = sol.countPairs(n, edges, queries);
+        auto res = sol.minInterval(intervals, queries);
         for (int _i=0;_i<(int)res.size();_i++){if(_i)cout<<" ";cout<<res[_i];}cout<<"\n";
     }
     return 0;

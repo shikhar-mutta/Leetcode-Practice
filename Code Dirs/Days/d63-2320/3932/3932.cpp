@@ -3,31 +3,38 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(log(r)) SC: O(1)
-// Approach: count integers n such that n^k lies within [l, r] — i.e.
-// count perfect k-th powers in the range. Binary search for the largest
-// n with n^k <= r, and the largest n with n^k < l, subtract.
-class Solution {
-    long long countUpTo(long long limit, int k) {
-        // count of n>=1 with n^k <= limit
-        if (limit < 1) return 0;
-        long long lo = 1, hi = limit;
-        while (lo < hi) {
-            long long mid = lo + (hi - lo + 1) / 2;
-            __int128 p = 1;
-            bool overflow = false;
-            for (int i = 0; i < k; i++) {
-                p *= mid;
-                if (p > limit) { overflow = true; break; }
-            }
-            if (!overflow) lo = mid; else hi = mid - 1;
-        }
-        __int128 check = 1;
-        for (int i = 0; i < k; i++) check *= lo;
-        return (check <= limit) ? lo : 0;
-    }
+// TC: O((r^(1/k)) * k) SC: O(1)
+//  Approach: iterate over all x such that x^k is in [l, r], counting those
+//  that are in the range. Stop when x^k exceeds r, and handle the
+//  special case of k=1 separately (all integers in [l, r] are valid).
+class Solution
+{
 public:
-    int countKthRoots(int l, int r, int k) {
-        return (int)(countUpTo(r, k) - countUpTo(l - 1, k));
+    int countKthRoots(int l, int r, int k)
+    {
+        if (k == 1)
+            return r - l + 1;
+        int count = 0;
+        for (long long x = 0;; x++)
+        {
+            long long y = 1;
+            bool overflow = false;
+            for (int i = 0; i < k; i++)
+            {
+                y *= x;
+                if (y > r)
+                {
+                    overflow = true;
+                    break;
+                }
+            }
+            if (overflow)
+                break;
+            if (y >= l && y <= r)
+                count++;
+            if (x == 0 && k > 0)
+                continue; // x=0 gives y=0, still valid to check but loop must advance
+        }
+        return count;
     }
 };

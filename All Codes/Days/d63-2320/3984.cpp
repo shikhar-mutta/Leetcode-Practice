@@ -3,60 +3,72 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(n*sqrt(maxVal) + maxVal + C*n) SC: O(maxVal)
-// Approach: for a fixed k, the optimal score is the max-subarray sum of
-// the signed array (+nums[i] if k|nums[i], else -nums[i]) — classic
-// Kadane, subarray must be non-empty. Only two kinds of k ever matter:
-// any k that divides at least one array element (candidates collected
-// via each element's divisors), or a k that divides none of them (all
-// such k give an identical Kadane result — just the single largest
-// negative-array value — so only the smallest such k needs checking for
-// the tie-break). Try every candidate, keep the best (score, then
-// smallest k), and return score*k mod 1e9+7.
-class Solution {
-    static const long long MOD = 1e9 + 7;
-    long long kadane(vector<int>& nums, int k) {
-        long long best = LLONG_MIN, cur = 0;
-        bool started = false;
-        for (int x : nums) {
-            long long v = (x % k == 0) ? x : -x;
-            if (!started) { cur = v; started = true; }
-            else cur = max(v, cur + v);
-            best = max(best, cur);
-        }
-        return best;
-    }
+// TC: O(n * sqrt(max(nums))) SC: O(sqrt(max(nums)))
+// Approach: For each prime factor p of any number in nums, compute the maximum score achievable by choosing p as the divisor. Keep track of the overall maximum score and the corresponding prime factor. Return the maximum score multiplied by the chosen prime factor, modulo 1e9 + 7.
+class Solution
+{
 public:
-    int divisibleGame(vector<int>& nums) {
-        int maxVal = *max_element(nums.begin(), nums.end());
-        vector<bool> isDivisor(maxVal + 2, false);
-        set<int> candidates;
-        for (int x : nums) {
-            for (int d = 1; (long long)d * d <= x; d++) {
-                if (x % d != 0) continue;
-                int d1 = d, d2 = x / d;
-                if (d1 > 1) { candidates.insert(d1); isDivisor[d1] = true; }
-                if (d2 > 1) { candidates.insert(d2); isDivisor[d2] = true; }
+    int divisibleGame(vector<int> &nums)
+    {
+
+        int n = nums.size();
+        long long mod = 1e9 + 7;
+
+        set<int> s;
+
+        for (auto x : nums)
+        {
+
+            for (int j = 2; j * j <= x; j++)
+            {
+                if (x % j == 0)
+                {
+                    s.insert(j);
+                    while (x % j == 0)
+                        x = x / j;
+                }
+
+                if (x == 1)
+                    break;
+            }
+
+            if (x > 1)
+                s.insert(x);
+        }
+
+        s.insert(2);
+
+        long long tot = INT_MIN;
+
+        long long f = 2;
+
+        for (auto it : s)
+        {
+            long long curr = 0;
+
+            for (int i = 0; i < n; i++)
+            {
+                long long x = nums[i];
+
+                if (x % it)
+                {
+
+                    if (i == 0)
+                        curr = curr - x;
+                    else
+                        curr = max(-x, curr - x);
+                }
+                else
+                    curr = max(x, curr + x);
+
+                if (curr > tot)
+                {
+                    tot = curr;
+                    f = it;
+                }
             }
         }
-        int noDivK = -1;
-        for (int k = 2; k <= maxVal + 1; k++) {
-            if (!isDivisor[k]) { noDivK = k; break; }
-        }
-        if (noDivK != -1) candidates.insert(noDivK);
 
-        long long bestScore = LLONG_MIN;
-        int bestK = -1;
-        for (int k : candidates) {
-            long long score = kadane(nums, k);
-            if (score > bestScore || (score == bestScore && k < bestK)) {
-                bestScore = score;
-                bestK = k;
-            }
-        }
-
-        long long result = ((bestScore % MOD) * (bestK % MOD)) % MOD;
-        result = ((result % MOD) + MOD) % MOD;
-        return (int)result;
+        return (((tot % mod + mod) % mod) * f) % mod;
     }
 };

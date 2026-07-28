@@ -8,12 +8,16 @@ using namespace std;
 // entire top row free and only the last column free below it — this
 // forces every path to travel the full row then drop straight down,
 // giving exactly one valid path.
-class Solution {
+class Solution
+{
 public:
-    vector<string> createGrid(int m, int n) {
+    vector<string> createGrid(int m, int n)
+    {
         vector<string> grid(m, string(n, '#'));
-        for (int j = 0; j < n; j++) grid[0][j] = '.';
-        for (int i = 0; i < m; i++) grid[i][n-1] = '.';
+        for (int j = 0; j < n; j++)
+            grid[0][j] = '.';
+        for (int i = 0; i < m; i++)
+            grid[i][n - 1] = '.';
         return grid;
     }
 };

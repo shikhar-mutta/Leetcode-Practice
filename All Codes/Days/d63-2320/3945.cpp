@@ -5,13 +5,17 @@ using namespace std;
 
 // TC: O(log n) SC: O(1)
 // Approach: count frequency of each digit, sum d*freq(d).
-class Solution {
+class Solution
+{
 public:
-    int digitFrequencyScore(int n) {
+    int digitFrequencyScore(int n)
+    {
         int freq[10] = {};
-        for (char c : to_string(n)) freq[c - '0']++;
+        for (char c : to_string(n))
+            freq[c - '0']++;
         int score = 0;
-        for (int d = 0; d < 10; d++) score += d * freq[d];
+        for (int d = 0; d < 10; d++)
+            score += d * freq[d];
         return score;
     }
 };

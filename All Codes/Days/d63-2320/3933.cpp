@@ -3,34 +3,74 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(n*m*x) worst case, with early exit on violation SC: O(1)
-// Approach: for each non-zero cell (r,c) with value x, scan every cell
-// within x rows and x columns (clipped to the matrix), skipping the 4
-// corner cells at exact distance (x,x), and check none exceeds x —
-// bailing out early on the first violation found.
-class Solution {
+// TC: O(n*m) SC: O(n)
+// Approach:
+//  For each cell, check if it is a local maximum by comparing it with its neighbors within the range defined by its value. Use an auxiliary array to store the maximum values of each row to optimize the checking process.
+class Solution
+{
 public:
-    int countLocalMaximums(vector<vector<int>>& matrix) {
-        int n = matrix.size(), m = matrix[0].size();
-        int count = 0;
-        for (int r = 0; r < n; r++) {
-            for (int c = 0; c < m; c++) {
-                int x = matrix[r][c];
-                if (x == 0) continue;
-                bool isMax = true;
-                for (int dr = -x; dr <= x && isMax; dr++) {
-                    int nr = r + dr;
-                    if (nr < 0 || nr >= n) continue;
-                    for (int dc = -x; dc <= x; dc++) {
-                        if (abs(dr) == x && abs(dc) == x) continue;
-                        int nc = c + dc;
-                        if (nc < 0 || nc >= m) continue;
-                        if (matrix[nr][nc] > x) { isMax = false; break; }
+    int countLocalMaximums(vector<vector<int>> &mat)
+    {
+        int n = mat.size();
+        int m = mat[0].size();
+
+        vector<int> maxrow(n, 0);
+
+        int maxv = 0;
+
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = 0; j < m; j++)
+            {
+                maxrow[i] = max(maxrow[i], mat[i][j]);
+            }
+
+            maxv = max(maxv, maxrow[i]);
+        }
+
+        int result = 0;
+
+        for (int i = 0; i < n; i++)
+        {
+            if (maxrow[i] == 0)
+                continue;
+
+            for (int j = 0; j < m; j++)
+            {
+                int v = mat[i][j];
+                if (v == 0)
+                    continue;
+                if (v == maxv)
+                {
+                    result++;
+                    continue;
+                }
+                bool ok = true;
+                int r1 = max(0, i - v);
+                int r2 = min(n - 1, i + v);
+                for (int r = r1; r <= r2 && ok; r++)
+                {
+                    if (maxrow[r] <= v)
+                        continue;
+                    int margin = (r == i - v || r == i + v);
+
+                    int c1 = max(0, j - v + margin);
+                    int c2 = min(m - 1, j + v - margin);
+                    for (int c = c1; c <= c2; c++)
+                    {
+                        if (mat[r][c] > v)
+                        {
+                            ok = false;
+                            break;
+                        }
                     }
                 }
-                if (isMax) count++;
+                if (ok)
+                {
+                    result++;
+                }
             }
         }
-        return count;
+        return result;
     }
 };

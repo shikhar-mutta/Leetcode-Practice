@@ -4,26 +4,36 @@
 using namespace std;
 
 // TC: O(sum of digit counts) SC: O(1)
-// Approach: for each number, compute (max digit - min digit). Find the
-// maximum such range across all numbers, then sum every number
-// achieving that maximum range.
-class Solution {
+//  Approach: for each number, compute (max digit - min digit). Find the
+//  maximum such range across all numbers, then sum every number
+//  achieving that maximum range.
+class Solution
+{
 public:
-    int maxDigitRange(vector<int>& nums) {
-        vector<int> ranges(nums.size());
-        int best = -1;
-        for (int i = 0; i < (int)nums.size(); i++) {
-            int mn = 9, mx = 0;
-            for (char c : to_string(nums[i])) {
-                int d = c - '0';
-                mn = min(mn, d);
-                mx = max(mx, d);
-            }
-            ranges[i] = mx - mn;
-            best = max(best, ranges[i]);
+    int find(int n)
+    {
+        int maxm = 0, minm = INT_MAX;
+        while (n != 0)
+        {
+            int k = n % 10;
+            maxm = max(maxm, k);
+            minm = min(minm, k);
+            n /= 10;
         }
-        int sum = 0;
-        for (int i = 0; i < (int)nums.size(); i++) if (ranges[i] == best) sum += nums[i];
-        return sum;
+        return maxm - minm;
+    }
+    int maxDigitRange(vector<int> &nums)
+    {
+        int maxRange = -1;
+        int ans = 0;
+
+        for (int x : nums)
+            maxRange = max(maxRange, find(x));
+
+        for (int x : nums)
+            if (find(x) == maxRange)
+                ans += x;
+
+        return ans;
     }
 };

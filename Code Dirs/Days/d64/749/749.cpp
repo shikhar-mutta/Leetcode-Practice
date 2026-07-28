@@ -3,74 +3,173 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
-// TC: O(rounds * m * n)  SC: O(m*n)
-// Approach: each round, find all infected connected components and, for
-// each, its set of adjacent uninfected frontier cells plus the wall
-// count needed to fully enclose it (counting each infected-to-uninfected
-// edge). The component with the largest frontier gets walled off
-// (marked permanently blocked, walls added to answer); every other
-// component spreads by infecting its frontier cells. Stop when no
-// component has any frontier left.
-class Solution {
-public:
-    int containVirus(vector<vector<int>>& isInfected) {
-        int m = isInfected.size(), n = isInfected[0].size();
-        int dx[4] = {0,0,1,-1}, dy[4] = {1,-1,0,0};
-        int totalWalls = 0;
+// TC: O(R * C * (R * C))  SC: O(R * C)
+//  Approach: DFS. For each region, count the number of walls needed to quarantine it and the number of uninfected cells it can infect. Quarantine the region that can infect the most uninfected cells. Then, spread the virus from the other regions. Repeat until no more virus can be spread. Return the total number of walls needed to quarantine all regions.
 
-        while (true) {
-            vector<vector<bool>> visited(m, vector<bool>(n, false));
-            vector<vector<pair<int,int>>> regions;      // infected cells per region
-            vector<set<pair<int,int>>> frontiers;        // uninfected frontier cells per region
-            vector<int> wallsNeeded;
+static int mp[2652], *zp[2652], zc[2652], step, mk;
 
-            for (int i = 0; i < m; i++) {
-                for (int j = 0; j < n; j++) {
-                    if (isInfected[i][j] == 1 && !visited[i][j]) {
-                        vector<pair<int,int>> region;
-                        set<pair<int,int>> frontier;
-                        int walls = 0;
-                        queue<pair<int,int>> q;
-                        q.push({i, j});
-                        visited[i][j] = true;
-                        while (!q.empty()) {
-                            auto [x, y] = q.front(); q.pop();
-                            region.push_back({x, y});
-                            for (int d = 0; d < 4; d++) {
-                                int nx = x + dx[d], ny = y + dy[d];
-                                if (nx < 0 || nx >= m || ny < 0 || ny >= n) continue;
-                                if (isInfected[nx][ny] == 1 && !visited[nx][ny]) {
-                                    visited[nx][ny] = true;
-                                    q.push({nx, ny});
-                                } else if (isInfected[nx][ny] == 0) {
-                                    frontier.insert({nx, ny});
-                                    walls++;
-                                }
-                            }
-                        }
-                        regions.push_back(region);
-                        frontiers.push_back(frontier);
-                        wallsNeeded.push_back(walls);
-                    }
-                }
-            }
+// Force inline + restrict + branch prediction hints
+[[gnu::always_inline]]
+static inline int dfs(int *__restrict__ p)
+{
+    *p = 2;
+    int res = 0;
 
-            if (regions.empty()) break;
-            int best = -1;
-            for (int r = 0; r < (int)regions.size(); r++) {
-                if (best == -1 || frontiers[r].size() > frontiers[best].size()) best = r;
-            }
-            if (frontiers[best].empty()) break;
-
-            totalWalls += wallsNeeded[best];
-            for (auto& [x, y] : regions[best]) isInfected[x][y] = 2;
-
-            for (int r = 0; r < (int)regions.size(); r++) {
-                if (r == best) continue;
-                for (auto& [x, y] : frontiers[r]) isInfected[x][y] = 1;
-            }
+    // Unrolled loop: eliminates initializer_list iterator overhead
+    {
+        int *nb = p - step, v = *nb;
+        if (__builtin_expect(v != mk && v <= 1, 1))
+        {
+            if (v <= 0)
+                *nb = mk, ++res;
+            else
+                res += dfs(nb);
         }
-        return totalWalls;
+    }
+    {
+        int *nb = p - 1, v = *nb;
+        if (__builtin_expect(v != mk && v <= 1, 1))
+        {
+            if (v <= 0)
+                *nb = mk, ++res;
+            else
+                res += dfs(nb);
+        }
+    }
+    {
+        int *nb = p + 1, v = *nb;
+        if (__builtin_expect(v != mk && v <= 1, 1))
+        {
+            if (v <= 0)
+                *nb = mk, ++res;
+            else
+                res += dfs(nb);
+        }
+    }
+    {
+        int *nb = p + step, v = *nb;
+        if (__builtin_expect(v != mk && v <= 1, 1))
+        {
+            if (v <= 0)
+                *nb = mk, ++res;
+            else
+                res += dfs(nb);
+        }
+    }
+    return res;
+}
+
+[[gnu::always_inline]]
+static inline int dfs2(int *__restrict__ p)
+{
+    *p = 1000;
+    int res = 0;
+    {
+        int *nb = p - step, v = *nb;
+        if (v == 2)
+            res += dfs2(nb);
+        else if (__builtin_expect(v <= 0, 1))
+            ++res, *nb = 0;
+    }
+    {
+        int *nb = p - 1, v = *nb;
+        if (v == 2)
+            res += dfs2(nb);
+        else if (__builtin_expect(v <= 0, 1))
+            ++res, *nb = 0;
+    }
+    {
+        int *nb = p + 1, v = *nb;
+        if (v == 2)
+            res += dfs2(nb);
+        else if (__builtin_expect(v <= 0, 1))
+            ++res, *nb = 0;
+    }
+    {
+        int *nb = p + step, v = *nb;
+        if (v == 2)
+            res += dfs2(nb);
+        else if (__builtin_expect(v <= 0, 1))
+            ++res, *nb = 0;
+    }
+    return res;
+}
+
+[[gnu::always_inline]]
+static inline void dfs3(int *__restrict__ p)
+{
+    *p = 1;
+    {
+        int *nb = p - step, v = *nb;
+        if (v == 2)
+            dfs3(nb);
+        else if (__builtin_expect(v <= 0, 1))
+            *nb = 1;
+    }
+    {
+        int *nb = p - 1, v = *nb;
+        if (v == 2)
+            dfs3(nb);
+        else if (__builtin_expect(v <= 0, 1))
+            *nb = 1;
+    }
+    {
+        int *nb = p + 1, v = *nb;
+        if (v == 2)
+            dfs3(nb);
+        else if (__builtin_expect(v <= 0, 1))
+            *nb = 1;
+    }
+    {
+        int *nb = p + step, v = *nb;
+        if (v == 2)
+            dfs3(nb);
+        else if (__builtin_expect(v <= 0, 1))
+            *nb = 1;
+    }
+}
+
+class Solution
+{
+public:
+    int containVirus(vector<vector<int>> &g)
+    {
+        int R = g.size(), C = g[0].size();
+        step = C + 1;
+        mk = 0;
+        int *p = mp + step;
+
+        for (int i = 0; i < step; ++i)
+            mp[i] = 1000;
+        for (int r = 0; r < R; ++r)
+        {
+            for (int c = 0; c < C; ++c)
+                *p++ = g[r][c];
+            *p++ = 1000;
+        }
+        for (int i = 0; i < step; ++i)
+            *p++ = 1000;
+
+        int *lo = mp + step, *hi = lo + step * R, res = 0;
+        while (1)
+        {
+            int nb = 0;
+            for (int *p = lo; p != hi; ++p)
+                if (*p == 1)
+                    zp[nb] = p, --mk, zc[nb++] = dfs(p);
+            if (!nb)
+                break;
+            int best = 0;
+            for (int i = 1; i < nb; ++i)
+                if (zc[i] > zc[best])
+                    best = i;
+            if (!zc[best])
+                break;
+            res += dfs2(zp[best]);
+            for (int *p = lo; p != hi; ++p)
+                if (*p == 2)
+                    dfs3(p);
+        }
+        return res;
     }
 };

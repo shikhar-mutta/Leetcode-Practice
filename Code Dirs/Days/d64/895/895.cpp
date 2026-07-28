@@ -3,31 +3,38 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
-// TC: O(1) amortized per op  SC: O(n)
-// Approach: track freq[val] and, for each frequency level, a stack of
-// values that reached that frequency (group[freq]) in push order, plus
-// the current max frequency. push increments freq and appends to the
-// new frequency's group; pop removes from the top group at maxFreq,
-// decrementing maxFreq if that group becomes empty.
-class FreqStack {
-    unordered_map<int,int> freq;
-    unordered_map<int, vector<int>> group;
-    int maxFreq = 0;
+// TC: O(1)  SC: O(n)
+// Approach: maintain a map from frequency to stack of values with that frequency,
+// and a map from value to its frequency. Push: increment frequency, push onto
+// corresponding stack, update max frequency. Pop: pop from max frequency stack,
+// decrement frequency, if stack is empty decrement max frequency.
+// Note: this is a classic problem that can be solved with a clever use of data structures.
+class FreqStack
+{
+    unordered_map<int, stack<int>> fstack; // key : freq,, val :stack
+    int maxcount = 0;
+    unordered_map<int, int> freq; // key : num, val : freq
 public:
     FreqStack() {}
 
-    void push(int val) {
-        int f = ++freq[val];
-        maxFreq = max(maxFreq, f);
-        group[f].push_back(val);
+    void push(int val)
+    {
+        freq[val]++;
+        maxcount = max(maxcount, freq[val]);
+        fstack[freq[val]].push(val);
     }
 
-    int pop() {
-        int val = group[maxFreq].back();
-        group[maxFreq].pop_back();
-        freq[val]--;
-        if (group[maxFreq].empty()) maxFreq--;
-        return val;
+    int pop()
+    {
+        int temp = fstack[maxcount].top();
+        fstack[maxcount].pop();
+        freq[temp]--;
+
+        if (fstack[maxcount].empty())
+        {
+            maxcount--;
+        }
+
+        return temp;
     }
 };

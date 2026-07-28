@@ -12,12 +12,16 @@ using namespace std;
 // about to move already faces a winning board). Otherwise, the first
 // player wins iff the array has an even length (they can always mirror
 // a strategy that eventually zeroes the board on the opponent's turn).
-class Solution {
+class Solution
+{
 public:
-    bool xorGame(vector<int>& nums) {
+    bool xorGame(vector<int> &nums)
+    {
         int x = 0;
-        for (int v : nums) x ^= v;
-        if (x == 0) return true;
+        for (int v : nums)
+            x ^= v;
+        if (x == 0)
+            return true;
         return nums.size() % 2 == 0;
     }
 };

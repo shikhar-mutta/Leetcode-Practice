@@ -3,39 +3,41 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
 // TC: O(n log n)  SC: O(n)
-// Approach: sort workers by wage/quality ratio ascending. For each
-// worker as the "rate-setting" one (paying everyone at their ratio),
-// maintain a max-heap of qualities among the k cheapest-quality workers
-// seen so far (by ratio order); once k workers are available, the cost
-// at this ratio is ratio * sumOfQualities, track the minimum. Evict the
-// highest-quality worker from the heap when exceeding k to keep the sum minimal.
-class Solution {
+//  Approach: Sort workers by their wage-to-quality ratio. Use a max-heap to maintain the k workers with the smallest quality sum. For each worker, calculate the total cost if they are included in the group of k workers, and update the minimum cost accordingly.
+class Solution
+{
 public:
-    double mincostToHireWorkers(vector<int>& quality, vector<int>& wage, int k) {
-        int n = quality.size();
-        vector<int> idx(n);
-        iota(idx.begin(), idx.end(), 0);
-        sort(idx.begin(), idx.end(), [&](int a, int b) {
-            return (double)wage[a] / quality[a] < (double)wage[b] / quality[b];
-        });
-
+    double mincostToHireWorkers(vector<int> &q, vector<int> &w, int k)
+    {
+        int n = q.size();
+        vector<pair<double, int>> workers(n);
+        for (int i = 0; i < n; i++)
+        {
+            workers[i] = {(double)w[i] / q[i], q[i]};
+        }
+        sort(workers.begin(), workers.end());
         priority_queue<int> maxHeap;
-        long long qualitySum = 0;
-        double best = DBL_MAX;
-        for (int i : idx) {
-            maxHeap.push(quality[i]);
-            qualitySum += quality[i];
-            if ((int)maxHeap.size() > k) {
+        int qualitySum = 0;
+        double minCost = 1e18;
+
+        for (const auto &worker : workers)
+        {
+            double ratio = worker.first;
+            int quality = worker.second;
+
+            qualitySum += quality;
+            maxHeap.push(quality);
+            if (maxHeap.size() > k)
+            {
                 qualitySum -= maxHeap.top();
                 maxHeap.pop();
             }
-            if ((int)maxHeap.size() == k) {
-                double ratio = (double)wage[i] / quality[i];
-                best = min(best, ratio * qualitySum);
+            if (maxHeap.size() == k)
+            {
+                minCost = min(minCost, qualitySum * ratio);
             }
         }
-        return best;
+        return minCost;
     }
 };

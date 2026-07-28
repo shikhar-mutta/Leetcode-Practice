@@ -3,27 +3,31 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
 // TC: O(n)  SC: O(n)
-// Approach: monotonic stack of running-max values. For each element,
-// pop all stack values greater than it (they now belong to the same
-// chunk as this element, since it must merge with them to be sortable),
-// then push back the max of the popped values (or the element itself).
-// The final stack size is the number of chunks.
-class Solution {
+//  Approach: compute prefix maximums. For each position, if the prefix maximum
+//  is less than or equal to the suffix minimum, we can make a chunk here.
+//  Count the number of such positions.
+class Solution
+{
 public:
-    int maxChunksToSorted(vector<int>& arr) {
-        vector<int> stk;
-        for (int x : arr) {
-            if (stk.empty() || x >= stk.back()) {
-                stk.push_back(x);
-            } else {
-                int mx = stk.back();
-                stk.pop_back();
-                while (!stk.empty() && stk.back() > x) stk.pop_back();
-                stk.push_back(mx);
-            }
+    int maxChunksToSorted(vector<int> &arr)
+    {
+        int n = arr.size();
+        vector<int> prefmax;
+        int mx = 0, ans = 0, mn = 2e9;
+        for (int i = 0; i < n; i++)
+        {
+            mx = max(mx, arr[i]);
+            prefmax.push_back(mx);
         }
-        return stk.size();
+        for (int i = n - 1; i >= 0; i--)
+        {
+            if (prefmax[i] <= mn)
+            {
+                ans++;
+            }
+            mn = min(mn, arr[i]);
+        }
+        return ans;
     }
 };

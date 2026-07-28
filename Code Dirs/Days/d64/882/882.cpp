@@ -3,49 +3,90 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
-// TC: O(E log E)  SC: O(E)
-// Approach: Dijkstra on the original n nodes (edge weight = cnt+1, the
-// subdivided length). Every original node reached within maxMoves counts
-// fully. For each edge, count how many of its subdivided intermediate
-// nodes are reachable from each endpoint (min(cnt, leftoverBudget)),
-// capped so the two sides never double-count more than the edge's total
-// subdivided node count.
-class Solution {
-public:
-    int reachableNodes(vector<vector<int>>& edges, int maxMoves, int n) {
-        unordered_map<int, unordered_map<int,int>> adj;
-        for (auto& e : edges) {
-            adj[e[0]][e[1]] = e[2];
-            adj[e[1]][e[0]] = e[2];
-        }
+// TC: O(E log V)  SC: O(V + E)
+//  Approach: Dijkstra's algorithm to find the shortest distance from node 0 to all other nodes. For each edge, we can reach at most min(cnt, maxMoves - dist[u]) new nodes on that edge. If we can reach the other endpoint of the edge, we can also count that node as reachable.
+class Solution
+{
+private:
+    class Edge
+    {
+        friend class Solution;
+        int to, cnt;
+        int next;
 
-        vector<long long> dist(n, LLONG_MAX);
+    public:
+        Edge() {}
+    };
+    vector<Edge> e;
+    int ecnt;
+    vector<int> hd;
+    inline void init(int vnum, int _enum)
+    {
+        e.resize((_enum << 1) + 66);
+        ecnt = 2;
+        hd.resize(vnum, 0);
+    }
+    inline void ae(int u, int v, int cnt)
+    {
+        e[ecnt].to = v, e[ecnt].cnt = cnt;
+        e[ecnt].next = hd[u];
+        hd[u] = ecnt;
+        ecnt++;
+    }
+    inline void bae(int u, int v, int cnt) { ae(u, v, cnt), ae(v, u, cnt); }
+    class PNode
+    {
+    public:
+        int v, p;
+        PNode(int v, int p) : v(v), p(p) {}
+    };
+    class Cmp
+    {
+    public:
+        bool operator()(PNode &a, PNode &b) { return a.p > b.p; }
+    };
+
+public:
+    int reachableNodes(vector<vector<int>> &edges, int maxMoves, int n)
+    {
+        init(n, edges.size());
+        for (vector<int> &edge : edges)
+        {
+            bae(edge[0], edge[1], edge[2]);
+        }
+        priority_queue<PNode, vector<PNode>, Cmp> q;
+        vector<int> dist(n, 0x7fffffff);
+        vector<bool> vis(n, false);
+        int res = 1;
         dist[0] = 0;
-        priority_queue<pair<long long,int>, vector<pair<long long,int>>, greater<>> pq;
-        pq.push({0, 0});
-        while (!pq.empty()) {
-            auto [d, u] = pq.top(); pq.pop();
-            if (d > dist[u]) continue;
-            for (auto& [v, cnt] : adj[u]) {
-                long long nd = d + cnt + 1;
-                if (nd < dist[v]) {
-                    dist[v] = nd;
-                    pq.push({nd, v});
+        vis[0] = true;
+        q.push(PNode(0, 0));
+        while (q.size())
+        {
+            int v = q.top().v;
+            int d = q.top().p;
+            q.pop();
+            if (d != dist[v])
+                continue;
+            if (d > maxMoves)
+                break;
+            for (int i = hd[v]; i; i = e[i].next)
+            {
+                if (d + e[i].cnt + 1 < dist[e[i].to])
+                {
+                    dist[e[i].to] = d + e[i].cnt + 1;
+                    q.push(PNode(e[i].to, dist[e[i].to]));
                 }
+                int add = min(e[i].cnt, maxMoves - d);
+                res += add;
+                if (d + e[i].cnt + 1 <= maxMoves && (!vis[e[i].to]))
+                {
+                    res++;
+                    vis[e[i].to] = true;
+                }
+                e[i ^ 1].cnt -= add;
             }
         }
-
-        int reachedNodes = 0;
-        for (int i = 0; i < n; i++) if (dist[i] <= maxMoves) reachedNodes++;
-
-        int reachedSubNodes = 0;
-        for (auto& e : edges) {
-            int u = e[0], v = e[1], cnt = e[2];
-            long long fromU = (dist[u] <= maxMoves) ? max(0LL, maxMoves - dist[u]) : 0;
-            long long fromV = (dist[v] <= maxMoves) ? max(0LL, maxMoves - dist[v]) : 0;
-            reachedSubNodes += (int)min((long long)cnt, fromU + fromV);
-        }
-        return reachedNodes + reachedSubNodes;
+        return res;
     }
 };

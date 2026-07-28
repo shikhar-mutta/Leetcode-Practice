@@ -10,20 +10,24 @@ using namespace std;
 // include with it) and as the min of 2^(n-1-i) subsequences, so its net
 // contribution to the total width sum is nums[i] * (2^i - 2^(n-1-i)).
 // Precompute powers of 2 mod 1e9+7 and sum contributions.
-class Solution {
+class Solution
+{
 public:
-    int sumSubseqWidths(vector<int>& nums) {
-        const long long MOD = 1e9 + 7;
-        int n = nums.size();
-        sort(nums.begin(), nums.end());
-        vector<long long> pow2(n, 1);
-        for (int i = 1; i < n; i++) pow2[i] = pow2[i - 1] * 2 % MOD;
+    int sumSubseqWidths(vector<int> &nums)
+    {
+        constexpr int kMod = 1e9 + 7;
+        const int n = nums.size();
+        long ans = 0;
+        long exp = 1;
 
-        long long ans = 0;
-        for (int i = 0; i < n; i++) {
-            long long coeff = (pow2[i] - pow2[n - 1 - i] + MOD) % MOD;
-            ans = (ans + (long long)nums[i] % MOD * coeff) % MOD;
+        ranges::sort(nums);
+
+        for (int i = 0; i < n; ++i, exp = exp * 2 % kMod)
+        {
+            ans += (nums[i] - nums[n - 1 - i]) * exp;
+            ans %= kMod;
         }
-        return (int)ans;
+
+        return ans;
     }
 };

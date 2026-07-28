@@ -3,46 +3,89 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
 // TC: O(n)  SC: O(n)
-// Approach: reroot technique. First post-order DFS from node 0 computes
-// subtreeSize[v] and ans[0] = sum of distances from root 0. Then a
-// pre-order DFS reroots: moving the root from parent u to child v
-// changes the answer by +（n - subtreeSize[v]) - subtreeSize[v], since
-// subtreeSize[v] nodes get 1 closer and the rest get 1 farther.
-class Solution {
-    vector<vector<int>> adj;
-    vector<int> subtreeSize, ans;
-    int n;
+//  Approach: Use a flat array representation of the graph. First, compute the
+//  size of each subtree and the sum of distances from the root to all nodes.
+//  Then, reroot the tree at each node, using the previously computed values to
+//  compute the sum of distances for the new root in O(1) time. The sum of distances for a child node can be computed from its parent's sum of distances by adding the number of nodes not in the child's subtree and subtracting the number of nodes in the child's subtree.
 
-    void dfs1(int u, int parent) {
-        subtreeSize[u] = 1;
-        for (int v : adj[u]) {
-            if (v == parent) continue;
-            dfs1(v, u);
-            subtreeSize[u] += subtreeSize[v];
-            ans[u] += ans[v] + subtreeSize[v];
+#pragma GCC optimize("O3,unroll-loops")
+class Solution
+{
+    int edge_cnt = 0;
+
+    void computeSizesAndRoot(int node, int parent, int height,
+                             const vector<int> &head, const vector<int> &to,
+                             const vector<int> &nxt, vector<int> &sub,
+                             int &root_ans)
+    {
+        sub[node] = 1;
+        root_ans += height;
+
+        for (int e = head[node]; e != -1; e = nxt[e])
+        {
+            int cnode = to[e];
+            if (cnode != parent)
+            {
+                computeSizesAndRoot(cnode, node, height + 1, head, to, nxt, sub,
+                                    root_ans);
+                sub[node] += sub[cnode];
+            }
         }
     }
-    void dfs2(int u, int parent) {
-        for (int v : adj[u]) {
-            if (v == parent) continue;
-            ans[v] = ans[u] - subtreeSize[v] + (n - subtreeSize[v]);
-            dfs2(v, u);
+
+    void dfsReRoot(int u, int p, int n, const vector<int> &head,
+                   const vector<int> &to, const vector<int> &nxt,
+                   vector<int> &dp, const vector<int> &sub)
+    {
+        for (int e = head[u]; e != -1; e = nxt[e])
+        {
+            int v = to[e];
+            if (v != p)
+            {
+                dp[v] = dp[u] + n - (2 * sub[v]);
+                dfsReRoot(v, u, n, head, to, nxt, dp, sub);
+            }
         }
     }
+
 public:
-    vector<int> sumOfDistancesInTree(int n, vector<vector<int>>& edges) {
-        this->n = n;
-        adj.assign(n, {});
-        for (auto& e : edges) {
-            adj[e[0]].push_back(e[1]);
-            adj[e[1]].push_back(e[0]);
+    vector<int> sumOfDistancesInTree(int n, vector<vector<int>> &edges)
+    {
+        // Untie I/O operations for LeetCode execution environment
+        ios_base::sync_with_stdio(false);
+        cin.tie(NULL);
+
+        // Flat array graph representation
+        vector<int> head(n, -1);
+        vector<int> to(n * 2);
+        vector<int> nxt(n * 2);
+
+        for (const auto &p : edges)
+        {
+            int u = p[0];
+            int v = p[1];
+
+            // Add edge u -> v
+            to[edge_cnt] = v;
+            nxt[edge_cnt] = head[u];
+            head[u] = edge_cnt++;
+
+            // Add edge v -> u
+            to[edge_cnt] = u;
+            nxt[edge_cnt] = head[v];
+            head[v] = edge_cnt++;
         }
-        subtreeSize.assign(n, 0);
-        ans.assign(n, 0);
-        dfs1(0, -1);
-        dfs2(0, -1);
-        return ans;
+
+        vector<int> sub(n, 0);
+        vector<int> dp(n, 0);
+
+        int root_ans = 0;
+        computeSizesAndRoot(0, -1, 0, head, to, nxt, sub, root_ans);
+        dp[0] = root_ans;
+
+        dfsReRoot(0, -1, n, head, to, nxt, dp, sub);
+
+        return dp;
     }
 };

@@ -3,32 +3,53 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
-// TC: O(n^2 * maxSum / 64)  SC: O(n * maxSum / 64)
-// Approach: a valid split into subset A (size k) and its complement
-// with equal averages requires sum(A) = totalSum * k / n for some
-// 1<=k<=n/2 (by symmetry, checking up to half the array suffices).
-// Use a bitset-per-count subset-sum DP: dp[k] tracks all sums reachable
-// using exactly k elements, built via 0/1 knapsack (iterate k high to
-// low per element). Then test each k for a divisible, reachable target.
-class Solution {
-public:
-    bool splitArraySameAverage(vector<int>& nums) {
-        int n = nums.size();
-        if (n < 2) return false;
-        int total = accumulate(nums.begin(), nums.end(), 0);
-        int maxSum = total; // upper bound for any subset sum
-        vector<bitset<300001>> dp(n / 2 + 1);
-        dp[0][0] = 1;
-        for (int num : nums) {
-            for (int k = min((int)(n / 2), 30); k >= 1; k--) {
-                dp[k] |= dp[k - 1] << num;
+// TC: O(n^2 * maxVal)  SC: O(n * maxVal)
+//  Approach: for each possible subset size k (1 to n/2), check if there exists a
+//  subset of size k with sum = (totalSum * k) / n. Use backtracking to find such
+//  a subset.
+//  Note: The sumPossible function uses recursion to explore all combinations of
+//  elements in the nums array to find a subset of size numReq that sums up to
+//  the specified sum. It checks various conditions to prune the search space and
+//  avoid unnecessary computations.
+class Solution
+{
+    bool sumPossible(vector<int> &nums, int sum, int numReq, int idx = 0)
+    {
+        if (sum == 0 && numReq == 0)
+        {
+            return true;
+        }
+        if (idx >= nums.size() || sum < 0 || numReq <= 0 ||
+            sum - numReq * nums[idx] > 0 || sum - numReq * nums.back() < 0)
+        {
+            return false;
+        }
+        for (int j = idx; j < nums.size(); ++j)
+        {
+            if (sumPossible(nums, sum - nums[j], numReq - 1, j + 1))
+            {
+                return true;
             }
         }
-        for (int k = 1; k <= n / 2; k++) {
-            if ((long long)total * k % n != 0) continue;
-            long long target = (long long)total * k / n;
-            if (target <= maxSum && dp[k][target]) return true;
+        return false;
+    }
+
+public:
+    bool splitArraySameAverage(vector<int> &nums)
+    {
+        int n = nums.size();
+        int sum = accumulate(nums.begin(), nums.end(), 0);
+        sort(nums.rbegin(), nums.rend());
+        for (int split = 1; split * 2 <= n; split++)
+        {
+            if ((sum * split) % n != 0)
+                continue;
+            int reqSum = (sum * split) / n;
+            cout << split << " " << reqSum << endl;
+            if (sumPossible(nums, reqSum, split) == 1)
+            {
+                return true;
+            }
         }
         return false;
     }

@@ -3,24 +3,34 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
-// TC: O(n^2) for k==1, O(n log n) for k>1  SC: O(n)
-// Approach: if k>1, any two characters can be swapped (via move-to-back
-// then move-back-to-front tricks), so the answer is just the sorted
-// string. If k==1, only rotations are reachable, so try every rotation
-// and return the lexicographically smallest.
-class Solution {
+// TC: O(nlogn)  SC: O(n)
+//  Approach: if k==1, we can only rotate the string, so we try all rotations and return the smallest one. If k>1, we can sort the string and return it.
+class Solution
+{
 public:
-    string orderlyQueue(string s, int k) {
-        if (k > 1) {
-            sort(s.begin(), s.end());
-            return s;
+    string brute_force(string s, int k)
+    {
+        int n = s.size();
+        string res = s;
+        for (int i = 0; i < n; i++)
+        {
+            char ch = s[0];
+            s.erase(s.begin());
+            s.push_back(ch);
+            if (s < res)
+            {
+                res = s;
+            }
         }
-        string best = s;
-        for (int i = 1; i < (int)s.size(); i++) {
-            string rotated = s.substr(i) + s.substr(0, i);
-            if (rotated < best) best = rotated;
+        return res;
+    }
+    string orderlyQueue(string s, int k)
+    {
+        if (k == 1)
+        {
+            return brute_force(s, k);
         }
-        return best;
+        sort(s.begin(), s.end());
+        return s;
     }
 };

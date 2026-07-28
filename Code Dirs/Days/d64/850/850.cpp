@@ -3,42 +3,75 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
 // TC: O(n^2)  SC: O(n)
-// Approach: coordinate-compress all x-coordinates. For each consecutive
-// pair of x-columns, find the total covered y-length by merging the
-// y-intervals of all rectangles spanning that x-slice (sort + sweep),
-// then add width * coveredYLength to the total area, all mod 1e9+7.
-class Solution {
+//  Approach: Use a sweep line algorithm to find the total area covered by the rectangles. For each x-coordinate, maintain a list of active y-intervals and calculate the total covered y-length.
+// The total area is then the sum of the covered y-length multiplied by the width of the x-intervals. Use a vector to store events for each rectangle's start and end x-coordinates, and sort them. For each event, update the active y-intervals and calculate the area contribution.
+class Solution
+{
 public:
-    int rectangleArea(vector<vector<int>>& rectangles) {
-        const long long MOD = 1e9 + 7;
-        vector<int> xs;
-        for (auto& r : rectangles) { xs.push_back(r[0]); xs.push_back(r[2]); }
-        sort(xs.begin(), xs.end());
-        xs.erase(unique(xs.begin(), xs.end()), xs.end());
+    int rectangleArea(vector<vector<int>> &rectangles)
+    {
+        int n = rectangles.size();
+        vector<vector<int>> events;
+        for (auto &it : rectangles)
+        {
+            events.push_back({it[0], 1, it[1], it[3]});
+            events.push_back({it[2], -1, it[1], it[3]});
+        }
+        sort(events.begin(), events.end());
+        int prev_x = events[0][0];
+        const int mod = 1e9 + 7;
+        vector<pair<int, int>> active;
+        long long total_area = 0LL;
+        for (int i = 0; i < events.size(); i++)
+        {
+            int curr_x = events[i][0];
+            int mark = events[i][1];
+            int y_start = events[i][2];
+            int y_end = events[i][3];
 
-        long long total = 0;
-        for (int i = 0; i + 1 < (int)xs.size(); i++) {
-            int xl = xs[i], xr = xs[i + 1];
-            vector<pair<int,int>> intervals;
-            for (auto& r : rectangles) {
-                if (r[0] <= xl && r[2] >= xr) intervals.push_back({r[1], r[3]});
+            int width = curr_x - prev_x;
+            long long covered_y = 0;
+            if (width > 0 && active.size() > 0)
+            {
+                sort(active.begin(), active.end());
+                long long ys = active[0].first;
+                long long ye = active[0].second;
+                for (int k = 0; k < active.size(); k++)
+                {
+                    if (active[k].first > ye)
+                    {
+                        covered_y += (ye - ys);
+                        ys = active[k].first;
+                        ye = active[k].second;
+                    }
+                    else
+                    {
+                        ye = max(ye, 1LL * active[k].second);
+                    }
+                }
+                covered_y += (ye - ys);
+                total_area =
+                    (total_area + (1LL * width * covered_y) % mod) % mod;
             }
-            sort(intervals.begin(), intervals.end());
-            long long covered = 0;
-            int curL = INT_MIN, curR = INT_MIN;
-            for (auto& [l, r] : intervals) {
-                if (l > curR) {
-                    covered += curR - curL > 0 ? curR - curL : 0;
-                    curL = l; curR = r;
-                } else {
-                    curR = max(curR, r);
+            if (mark == 1)
+            {
+                active.push_back({y_start, y_end});
+            }
+            else
+            {
+                for (int j = 0; j < active.size(); j++)
+                {
+                    if (active[j].first == y_start &&
+                        active[j].second == y_end)
+                    {
+                        active.erase(active.begin() + j);
+                        break;
+                    }
                 }
             }
-            covered += curR - curL > 0 ? curR - curL : 0;
-            total = (total + (long long)(xr - xl) % MOD * (covered % MOD)) % MOD;
+            prev_x = curr_x;
         }
-        return (int)total;
+        return total_area % mod;
     }
 };

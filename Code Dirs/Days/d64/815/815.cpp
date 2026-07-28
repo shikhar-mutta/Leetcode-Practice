@@ -10,30 +10,46 @@ using namespace std;
 // each BFS level represents one more bus ride; from a route, jump to
 // every unvisited route sharing any stop, until a route containing
 // target is reached.
-class Solution {
+class Solution
+{
 public:
-    int numBusesToDestination(vector<vector<int>>& routes, int source, int target) {
-        if (source == target) return 0;
+    int numBusesToDestination(vector<vector<int>> &routes, int source, int target)
+    {
+        if (source == target)
+            return 0;
         int n = routes.size();
         unordered_map<int, vector<int>> stopToRoutes;
         for (int r = 0; r < n; r++)
-            for (int stop : routes[r]) stopToRoutes[stop].push_back(r);
+            for (int stop : routes[r])
+                stopToRoutes[stop].push_back(r);
 
         vector<bool> visitedRoute(n, false);
         queue<int> q;
-        for (int r : stopToRoutes[source]) {
-            if (!visitedRoute[r]) { visitedRoute[r] = true; q.push(r); }
+        for (int r : stopToRoutes[source])
+        {
+            if (!visitedRoute[r])
+            {
+                visitedRoute[r] = true;
+                q.push(r);
+            }
         }
 
         int buses = 1;
-        while (!q.empty()) {
+        while (!q.empty())
+        {
             int sz = q.size();
-            for (int s = 0; s < sz; s++) {
-                int r = q.front(); q.pop();
-                for (int stop : routes[r]) {
-                    if (stop == target) return buses;
-                    for (int nr : stopToRoutes[stop]) {
-                        if (!visitedRoute[nr]) {
+            for (int s = 0; s < sz; s++)
+            {
+                int r = q.front();
+                q.pop();
+                for (int stop : routes[r])
+                {
+                    if (stop == target)
+                        return buses;
+                    for (int nr : stopToRoutes[stop])
+                    {
+                        if (!visitedRoute[nr])
+                        {
                             visitedRoute[nr] = true;
                             q.push(nr);
                         }

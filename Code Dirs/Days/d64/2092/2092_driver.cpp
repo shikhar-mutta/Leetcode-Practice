@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1948.cpp"
+#include "2092.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -54,49 +54,17 @@ vector<vector<int>> _rvvi() {
     return v;
 }
 
-vector<vector<string>> _rvvs() {
-    string s; getline(cin, s);
-    vector<vector<string>> v;
-    int dep = 0; string cur;
-    for (char c : s) {
-        if (c == '[') { dep++; if (dep > 2) cur += c; }
-        else if (c == ']') {
-            dep--;
-            if (dep == 1) {
-                vector<string> row;
-                bool in = false; string tok;
-                for (char cc : cur) {
-                    if (cc == '"') { in = !in; continue; }
-                    if (cc == ',' && !in) { row.push_back(tok); tok = ""; continue; }
-                    tok += cc;
-                }
-                if (!tok.empty()) row.push_back(tok);
-                v.push_back(row); cur = "";
-            } else if (dep > 0) cur += c;
-        } else if (dep > 1) cur += c;
-    }
-    return v;
-}
-
 int main() {
     int t;
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto paths = _rvvs();
+        int n = _ri();
+        auto meetings = _rvvi();
+        int firstPerson = _ri();
         Solution sol;
-        auto res = sol.deleteDuplicateFolder(paths);
-        cout << "[";
-        for (size_t i = 0; i < res.size(); i++) {
-            cout << "[";
-            for (size_t j = 0; j < res[i].size(); j++) {
-                cout << "\"" << res[i][j] << "\"";
-                if (j + 1 < res[i].size()) cout << ",";
-            }
-            cout << "]";
-            if (i + 1 < res.size()) cout << ",";
-        }
-        cout << "]\n";
+        auto res = sol.findAllPeople(n, meetings, firstPerson);
+        for (int _i=0;_i<(int)res.size();_i++){if(_i)cout<<" ";cout<<res[_i];}cout<<"\n";
     }
     return 0;
 }

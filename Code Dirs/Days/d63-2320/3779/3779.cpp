@@ -1,31 +1,50 @@
-// Link: https://leetcode.com/problems/minimum-number-of-operations-to-have-distinct-elements/description/
+// Link: https://leetcode.com/problems/count-dominant-nodes-in-a-binary-tree/description/
 
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(n) SC: O(n)
-// Approach: each operation strips the first 3 (or fewer) elements. The
-// remaining suffix starting at index s is duplicate-free iff s exceeds
-// every index that is not its value's last occurrence (any earlier
-// occurrence inside the suffix would collide with the later one). So
-// find m = max index whose value reoccurs later, set required suffix
-// start s = m+1, and the answer is ceil(s/3) operations.
+struct TreeNode
+{
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+    TreeNode() : val(0), left(nullptr), right(nullptr) {}
+    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+    TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+};
+
+// TC: O(n)  SC: O(h)
+//  Approach: DFS. For each node, return the count of dominant nodes in its subtree and the maximum value in its subtree. A node is dominant if its value is greater than or equal to the maximum value in its subtree. Recursively compute these values for the left and right subtrees, and then combine them to determine the count of dominant nodes and the maximum value for the current node's subtree. Finally, return the count of dominant nodes for the entire tree.
 class Solution
 {
 public:
-    int minOperations(vector<int> &nums)
+    pair<int, int> foo(TreeNode *root)
     {
-        int n = nums.size();
-        unordered_map<int, int> lastOcc;
-        for (int i = 0; i < n; i++)
-            lastOcc[nums[i]] = i;
+        int count = 0;
+        int maxVal = 0;
 
-        int m = -1;
-        for (int i = 0; i < n; i++)
-            if (lastOcc[nums[i]] != i)
-                m = max(m, i);
+        if (root->left)
+        {
+            pair<int, int> a = foo(root->left);
+            count += a.first;
+            maxVal = max(maxVal, a.second);
+        }
 
-        int s = m + 1;
-        return (s + 2) / 3;
+        if (root->right)
+        {
+            pair<int, int> a = foo(root->right);
+            count += a.first;
+            maxVal = max(maxVal, a.second);
+        }
+
+        if (root->val >= maxVal)
+        {
+            maxVal = root->val;
+            count++;
+        }
+
+        return {count, maxVal};
     }
+
+    int countDominantNodes(TreeNode *root) { return foo(root).first; }
 };

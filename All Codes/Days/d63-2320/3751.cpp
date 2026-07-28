@@ -3,22 +3,30 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O((num2-num1) * log(num2)) SC: O(log(num2))
-// Approach: brute force each number in range, extract its digits, and
-// count interior positions that are strictly greater or strictly less
-// than both neighbors.
-class Solution {
-public:
-    int totalWaviness(int num1, int num2) {
-        int total = 0;
-        for (int x = num1; x <= num2; x++) {
-            string s = to_string(x);
-            int n = s.size();
-            for (int i = 1; i + 1 < n; i++) {
-                int a = s[i-1] - '0', b = s[i] - '0', c = s[i+1] - '0';
-                if ((b > a && b > c) || (b < a && b < c)) total++;
-            }
+// TC: O(log MAX) SC: O(MAX)
+//  Approach: precompute the waviness of each number up to MAX, then use prefix sums to answer queries.
+//  A number is wavy if its middle digit is either greater than both its neighbors or less than both its neighbors.
+class Solution
+{
+private:
+    static constexpr int MAX = 100001;
+    static inline int dp[MAX], pref[MAX];
+
+    static inline bool init = []()
+    {
+        for (int i = 100; i < MAX; i++)
+        {
+            int r = i % 10;
+            int m = (i / 10) % 10;
+            int l = (i / 100) % 10;
+
+            bool isWave = (m > max(l, r)) | (m < min(l, r));
+            dp[i] = dp[i / 10] + isWave;
+            pref[i] = pref[i - 1] + dp[i];
         }
-        return total;
-    }
+        return 0;
+    }();
+
+public:
+    int totalWaviness(int A, int B) { return pref[B] - pref[A - 1]; }
 };

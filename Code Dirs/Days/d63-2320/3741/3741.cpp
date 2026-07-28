@@ -3,24 +3,34 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(n) SC: O(n)
-// Approach: for three indices i<j<k, sum of pairwise distances
-// (j-i)+(k-j)+(k-i) simplifies to 2*(k-i), independent of the middle
-// index. So for each value, only the first and last of a consecutive
-// triple of its occurrences matter; scan each value's occurrence list
-// with a window of 3 and take the minimum span, then double it.
-class Solution {
+// TC: O(n) SC: O(N)
+//  Approach: for three indices i<j<k, sum of pairwise distances
+//  (j-i)+(k-j)+(k-i) simplifies to 2*(k-i), independent of the middle
+//  index. So for each value, only the first and last of a consecutive
+//  triple of its occurrences matter; scan each value's occurrence list
+//  with a window of 3 and take the minimum span, then double it.
+//  We use a static array to store the last two occurrences of each value
+//  and reset it after each test case.
+const int N = 1e5 + 1;
+int pos[N][2] = {[0 ... N - 1][0 ... 1] = -1};
+class Solution
+{
 public:
-    int minimumDistance(vector<int>& nums) {
-        unordered_map<int, vector<int>> pos;
-        for (int i = 0; i < (int)nums.size(); i++) pos[nums[i]].push_back(i);
-
-        int best = INT_MAX;
-        for (auto& [v, idx] : pos) {
-            for (int m = 0; m + 2 < (int)idx.size(); m++) {
-                best = min(best, idx[m+2] - idx[m]);
+    static int minimumDistance(vector<int> &nums)
+    {
+        const int n = nums.size();
+        int ans = INT_MAX, M = 0;
+        for (int k = 0; k < n; k++)
+        {
+            const int x = nums[k];
+            M = max(M, x);
+            if (pos[x][1] != -1)
+            {
+                ans = min(ans, (k - pos[x][1]) << 1);
             }
+            pos[x][1] = exchange(pos[x][0], k);
         }
-        return best == INT_MAX ? -1 : 2 * best;
+        memset(pos, -1, sizeof(int) * 2 * (M + 1));
+        return ans == INT_MAX ? -1 : ans;
     }
 };

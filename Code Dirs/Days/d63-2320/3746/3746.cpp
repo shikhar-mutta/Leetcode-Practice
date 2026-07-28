@@ -8,11 +8,14 @@ using namespace std;
 // off and removed via some sequence of balanced-substring deletions, so
 // the string reduces to only the majority character; the answer is the
 // absolute difference between the 'a' and 'b' counts.
-class Solution {
+class Solution
+{
 public:
-    int minLengthAfterRemovals(string s) {
+    int minLengthAfterRemovals(string s)
+    {
         int a = 0, b = 0;
-        for (char c : s) (c == 'a' ? a : b)++;
+        for (char c : s)
+            (c == 'a' ? a : b)++;
         return abs(a - b);
     }
 };

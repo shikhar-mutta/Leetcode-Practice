@@ -3,23 +3,23 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(n^2) SC: O(1)
-// Approach: brute force over all subarrays, tracking running count of
-// target as the start index is fixed and the end index extends; a
-// subarray is counted when 2*count > length (strict majority).
-class Solution {
+// TC: O(n) SC: O(n)
+//  Approach: use a prefix sum and a hash map to track the difference between the count of target and non-target elements.
+class Solution
+{
 public:
-    int countMajoritySubarrays(vector<int>& nums, int target) {
-        int n = nums.size();
-        int ans = 0;
-        for (int i = 0; i < n; i++) {
-            int cnt = 0;
-            for (int j = i; j < n; j++) {
-                if (nums[j] == target) cnt++;
-                int len = j - i + 1;
-                if (2 * cnt > len) ans++;
-            }
+    int countMajoritySubarrays(vector<int> &nums, int target)
+    {
+        int n = nums.size(), pref = 0, diff = 0, ans = 0, pointer = n;
+        vector<int> freq(n * 2 + 1);
+        freq[pointer] = 1;
+        for (int i = 0; i < n; i++)
+        {
+            pref += (nums[i] == target ? freq[pointer++] : -freq[--pointer]);
+            ans += pref;
+            freq[pointer]++;
         }
+
         return ans;
     }
 };

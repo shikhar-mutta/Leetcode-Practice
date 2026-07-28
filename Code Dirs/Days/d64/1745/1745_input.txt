@@ -1,0 +1,3 @@
+2
+"abcbdd"
+"bcbddxy"

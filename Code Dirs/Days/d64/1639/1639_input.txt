@@ -1,0 +1,5 @@
+2
+["acca","bbbb","caca"]
+"aba"
+["abba","baab"]
+"bab"

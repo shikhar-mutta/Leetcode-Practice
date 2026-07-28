@@ -3,23 +3,61 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O((hi-lo) * sqrt(hi)) SC: O(1)
-// Approach: reverse the digits of n, take the inclusive range between n
-// and its reverse, and sum all primes in that range via trial division.
-class Solution {
-    bool isPrime(int x) {
-        if (x < 2) return false;
-        for (int p = 2; (long long)p * p <= x; p++) if (x % p == 0) return false;
-        return true;
+// TC: O(n log log n) SC: O(n)
+// Approach: precompute the smallest prime factor (spf) for all numbers up to n using a linear sieve. Then, create a prefix sum array of primes. For each query, find the range between n and its reverse, and return the sum of primes in that range using the prefix sum array.
+vector<int> linear_sieve_of_eratosthenes(int n)
+{ // Time: O(n), Space: O(n)
+    vector<int> spf(n + 1, -1);
+    vector<int> primes;
+    for (int i = 2; i <= n; ++i)
+    {
+        if (spf[i] == -1)
+        {
+            spf[i] = i;
+            primes.emplace_back(i);
+        }
+        for (const auto &p : primes)
+        {
+            if (i * p > n || p > spf[i])
+            {
+                break;
+            }
+            spf[i * p] = p;
+        }
     }
-public:
-    int sumOfPrimesInRange(int n) {
-        int x = n, rev = 0;
-        while (x > 0) { rev = rev * 10 + x % 10; x /= 10; }
-        int lo = min(n, rev), hi = max(n, rev);
+    return spf;
+}
 
-        int sum = 0;
-        for (int v = lo; v <= hi; v++) if (isPrime(v)) sum += v;
-        return sum;
+const auto &precompute = [](int n)
+{
+    const auto &spf = linear_sieve_of_eratosthenes(n);
+    vector<int> prefix(size(spf) + 1);
+    for (int i = 0; i + 1 < size(prefix); ++i)
+    {
+        prefix[i + 1] = prefix[i] + (spf[i] == i ? i : 0);
+    }
+    return prefix;
+};
+
+const int MAX_N = 1000;
+const auto &PREFIX = precompute(MAX_N);
+
+class Solution
+{
+public:
+    int sumOfPrimesInRange(int n)
+    {
+        const auto &reverse = [](int n)
+        {
+            int result = 0;
+            for (; n; n /= 10)
+            {
+                result = result * 10 + n % 10;
+            }
+            return result;
+        };
+
+        const auto &[left, right] = minmax(n, reverse(n));
+        return PREFIX[right + 1] - PREFIX[left];
     }
 };

@@ -3,59 +3,83 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
-// TC: O(n * 26^2)  SC: O(n)
-// Approach: represent each word as a 26-bit letter-presence mask; connect
-// (Union-Find) words whose masks are reachable via add-one-bit,
-// delete-one-bit, or delete-one-add-one (replace) since those are exactly
-// the allowed single-letter operations that preserve group membership.
-class Solution {
+//TC: O(n * 26^2)  SC: O(n)
+// Approach: We can use a disjoint set union (DSU) data structure to group the strings based on their character sets. We can represent each string as a bitmask of its characters, where each bit represents whether a character is present in the string or not. We can then iterate through the strings and for each string, we can generate all possible bitmasks by adding, removing, or replacing a character in the string. We can then check if any of these bitmasks have already been seen and if so, we can unite the current string with the string that has the same bitmask. Finally, we can return the number of groups and the size of the largest group.
+template <class T>
+using vec = vector<T>;
+
+struct DSU
+{
+    vec<int> pr, sz;
+    int cmps;
+    DSU(int n) : pr(n), sz(n, 1), cmps{n} { ranges::iota(pr, 0); }
+    inline int find(int x) { return pr[x] == x ? x : pr[x] = find(pr[x]); }
+    void unite(int a, int b)
+    {
+        a = find(a), b = find(b);
+        if (a == b)
+            return;
+        if (sz[a] < sz[b])
+            swap(a, b);
+        pr[b] = a;
+        sz[a] += sz[b];
+        cmps--;
+    }
+};
+
+class Solution
+{
 public:
-    vector<int> groupStrings(vector<string>& words) {
-        int n = words.size();
-        unordered_map<int, int> maskToIdx;
-        vector<int> masks(n);
-        for (int i = 0; i < n; i++) {
-            int m = 0;
-            for (char c : words[i]) m |= (1 << (c - 'a'));
-            masks[i] = m;
-            maskToIdx[m] = i;
-        }
-        vector<int> par(n), sz(n, 1);
-        iota(par.begin(), par.end(), 0);
-        function<int(int)> find = [&](int x) { while (par[x] != x) { par[x] = par[par[x]]; x = par[x]; } return x; };
-        auto unite = [&](int a, int b) {
-            a = find(a); b = find(b);
-            if (a == b) return;
-            if (sz[a] < sz[b]) swap(a, b);
-            par[b] = a; sz[a] += sz[b];
+    vec<int> groupStrings(vec<string> &words)
+    {
+        auto n = words.size();
+        vec<unsigned> masks(n);
+        unordered_map<unsigned, int> mask_pos;
+        mask_pos.reserve(n);
+        mask_pos.max_load_factor(0.7);
+        auto masker = [](string_view s)
+        {
+            unsigned m{};
+            for (char c : s)
+                m |= 1u << (c - 'a');
+            return m;
         };
-        for (int i = 0; i < n; i++) {
-            int m = masks[i];
-            // delete a letter
-            for (int b = 0; b < 26; b++) {
-                if (!(m & (1 << b))) continue;
-                int nm = m & ~(1 << b);
-                if (maskToIdx.count(nm)) unite(i, maskToIdx[nm]);
-                // replace: delete b then add c
-                for (int c = 0; c < 26; c++) {
-                    if (c == b || (m & (1 << c))) continue;
-                    int rm = nm | (1 << c);
-                    if (maskToIdx.count(rm)) unite(i, maskToIdx[rm]);
+        DSU ds(n);
+        for (int i = 0; i < n; i++)
+        {
+            auto m = masker(words[i]);
+            masks[i] = m;
+            auto [it, _] = mask_pos.try_emplace(m, i);
+            ds.unite(it->second, i);
+        }
+        auto e = mask_pos.end();
+        for (int idx = 0; idx < n; idx++)
+        {
+            auto mask = masks[idx];
+            for (int i = 0; i < 26; i++)
+            {
+                if (!(mask & (1u << i)))
+                {
+                    auto m = mask | (1u << i); // add a char
+                    if (auto it = mask_pos.find(m); it != e)
+                        ds.unite(it->second, idx);
+                }
+                else
+                {
+                    auto m = mask & ~(1u << i); // remove a char
+                    if (auto it = mask_pos.find(m); it != e)
+                        ds.unite(it->second, idx);
+                    for (int j = i + 1; j < 26; j++)
+                    {
+                        if (m & (1u << j))
+                            continue;
+                        auto m2 = m | (1u << j); // replace with another
+                        if (auto it = mask_pos.find(m2); it != e)
+                            ds.unite(it->second, idx);
+                    }
                 }
             }
-            // add a letter
-            for (int b = 0; b < 26; b++) {
-                if (m & (1 << b)) continue;
-                int nm = m | (1 << b);
-                if (maskToIdx.count(nm)) unite(i, maskToIdx[nm]);
-            }
         }
-        unordered_map<int, int> groupSize;
-        for (int i = 0; i < n; i++) groupSize[find(i)]++;
-        int numGroups = groupSize.size();
-        int maxSize = 0;
-        for (auto& [k, v] : groupSize) maxSize = max(maxSize, v);
-        return {numGroups, maxSize};
+        return {ds.cmps, *ranges::max_element(ds.sz)};
     }
 };

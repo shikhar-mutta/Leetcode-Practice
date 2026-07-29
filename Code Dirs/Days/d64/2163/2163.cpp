@@ -3,45 +3,51 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
-// TC: O(n log n)  SC: O(n)
-// Approach: n=3m. minPrefix[i] = min possible sum of m smallest elements
-// among nums[0..i] (via max-heap of size m, running sum). maxSuffix[i] =
-// max possible sum of m largest elements among nums[i..n-1] (via min-heap
-// of size m, running sum). Answer = min over split point i in [m-1,2m-1]
-// of minPrefix[i] - maxSuffix[i+1].
-class Solution {
+// TC: O(nlogn)  SC: O(n)
+// Approach: We can use a priority queue to keep track of the largest n elements in the first 2n elements and the smallest n elements in the last 2n elements. We can then calculate the sum of the largest n elements and the sum of the smallest n elements and return the minimum difference between these two sums.
+class Solution
+{
 public:
-    long long minimumDifference(vector<int>& nums) {
-        int n = nums.size();
-        int m = n / 3;
-        vector<long long> minPrefix(n, 0);
-        priority_queue<int> maxHeap;
-        long long sum = 0;
-        for (int i = 0; i < n; i++) {
-            maxHeap.push(nums[i]);
-            sum += nums[i];
-            if ((int)maxHeap.size() > m) {
-                sum -= maxHeap.top();
-                maxHeap.pop();
-            }
-            if ((int)maxHeap.size() == m) minPrefix[i] = sum;
+    static long long minimumDifference(vector<int> &nums)
+    {
+        const int n = nums.size() / 3;
+        vector<long long> diff(n + 1, 0);
+        priority_queue<int> pqL(nums.begin(), nums.begin() + n);
+        priority_queue<int, vector<int>, greater<int>> pqR(nums.begin() + 2 * n,
+                                                           nums.end());
+        long long sum = accumulate(nums.begin(), nums.begin() + n, 0LL);
+        for (int i = n; i <= 2 * n; i++)
+        {
+            diff[i - n] = sum;
+            //    cout<<sum<<",";
+            int x = nums[i];
+            if (x >= pqL.top())
+                continue;
+            sum += x - pqL.top();
+            pqL.pop();
+            pqL.push(x);
         }
-        vector<long long> maxSuffix(n, 0);
-        priority_queue<int, vector<int>, greater<int>> minHeap;
-        sum = 0;
-        for (int i = n - 1; i >= 0; i--) {
-            minHeap.push(nums[i]);
-            sum += nums[i];
-            if ((int)minHeap.size() > m) {
-                sum -= minHeap.top();
-                minHeap.pop();
-            }
-            if ((int)minHeap.size() == m) maxSuffix[i] = sum;
+        //    cout<<endl;
+        sum = accumulate(nums.begin() + 2 * n, nums.end(), 0LL);
+        for (int i = 2 * n - 1; i >= n - 1; i--)
+        {
+            diff[i - n + 1] -= sum;
+            //    cout<<sum<<",";
+            int x = nums[i];
+            if (x <= pqR.top())
+                continue;
+            sum += x - pqR.top();
+            pqR.pop();
+            pqR.push(x);
         }
-        long long ans = LLONG_MAX;
-        for (int i = m - 1; i <= 2 * m - 1; i++)
-            ans = min(ans, minPrefix[i] - maxSuffix[i + 1]);
-        return ans;
+        return *min_element(diff.begin(), diff.end());
     }
 };
+
+auto init = []()
+{
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
+    return 'c';
+}();

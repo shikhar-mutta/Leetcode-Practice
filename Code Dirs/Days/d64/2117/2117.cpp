@@ -3,62 +3,102 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
-// TC: O((right-left) * log(maxVal))  SC: O(1)
-// Approach: strip every factor of 2 and 5 from each number, tracking total
-// counts c2,c5 (trailing zero count = min(c2,c5)); the leftover excess factor
-// (2^(c2-c5) or 5^(c5-c2)) gets multiplied back since it's part of the real
-// digits. Track the last-5-digit suffix mod 1e5 and the leading digits via a
-// running sum of log10 (numerically stable for the prefix). If the final
-// significant-digit count is <=10, compute and print the exact value instead
-// (tracked in parallel via a small-number fast path with continuous
-// decimal-trailing-zero stripping).
-class Solution {
+// TC: O(n), SC: O(1)
+// Approach: The product of a range of numbers can be very large, so we need to find a way to represent it in a more compact form. We can do this by counting the number of trailing zeros in the product, which is determined by the number of factors of 2 and 5 in the range. We can also compute the last five digits of the product by stripping away the factors of 2 and 5 and taking the product modulo 100000. Finally, we can compute the first five digits of the product using logarithms to avoid overflow. The final result is then formatted as "prefix...suffix eC", where C is the number of trailing zeros.
+class Solution
+{
 public:
-    string abbreviateProduct(int left, int right) {
-        long long c2 = 0, c5 = 0;
-        long long suffixCore = 1;
-        long double totalLog = 0;
-        bool small = true;
-        long long exactProduct = 1;
-        long long exactZeros = 0;
+    string abbreviateProduct(int left, int right)
+    {
+        long long cnt2 = 0, cnt5 = 0;
+        long long suffixMod = stripped(left, right, 100000LL, cnt2, cnt5);
+        long long C = min(cnt2, cnt5);
 
-        for (int i = left; i <= right; i++) {
+        long long leftoverBase = (cnt2 > cnt5) ? 2 : 5;
+        long long leftoverExp = llabs(cnt2 - cnt5);
+        suffixMod = (suffixMod * modpow(leftoverBase, leftoverExp, 100000LL)) %
+                    100000LL;
+
+        long double sumLn =
+            lgammal((long double)right + 1.0L) - lgammal((long double)left);
+        long double sumLog = sumLn / logl(10.0L);
+        long long fullDigits = (long long)floorl(sumLog) + 1;
+        long long d = fullDigits - C;
+
+        if (d <= 10)
+        {
+            long long ec2, ec5;
+            long long exactStripped = stripped(left, right, 0LL, ec2, ec5);
+            long long lb = (ec2 > ec5) ? 2 : 5;
+            long long le = llabs(ec2 - ec5);
+            long long exactVal = exactStripped * ipow(lb, le);
+            return to_string(exactVal) + "e" + to_string(C);
+        }
+
+        long double frac = sumLog - floorl(sumLog);
+        long double val = powl(10.0L, frac + 4.0L);
+        long long prefixNum = (long long)(val + 1e-9L);
+        if (prefixNum >= 100000)
+            prefixNum /= 10;
+
+        string sufStr = to_string(suffixMod);
+        while (sufStr.size() < 5)
+            sufStr = "0" + sufStr;
+
+        return to_string(prefixNum) + "..." + sufStr + "e" + to_string(C);
+    }
+
+private:
+    long long stripped(int left, int right, long long mod, long long &cnt2,
+                       long long &cnt5)
+    {
+        cnt2 = cnt5 = 0;
+        long long result = (mod == 0) ? 1 : 1 % mod;
+        for (int i = left; i <= right; ++i)
+        {
             int x = i;
-            while (x % 2 == 0) { x /= 2; c2++; }
-            while (x % 5 == 0) { x /= 5; c5++; }
-            suffixCore = (suffixCore * x) % 100000;
-            totalLog += log10((long double)i);
-            if (small) {
-                exactProduct *= i;
-                while (exactProduct % 10 == 0) { exactProduct /= 10; exactZeros++; }
-                if (exactProduct > 100000000000LL) small = false;
+            while (x % 2 == 0)
+            {
+                x /= 2;
+                ++cnt2;
             }
+            while (x % 5 == 0)
+            {
+                x /= 5;
+                ++cnt5;
+            }
+            if (mod == 0)
+                result *= x;
+            else
+                result = (result * x) % mod;
         }
+        return result;
+    }
 
-        long long zeroCount = min(c2, c5);
-        long long excess2 = c2 - c5, excess5 = c5 - c2;
-        auto modpow = [&](long long base, long long e, long long mod) {
-            long long r = 1; base %= mod;
-            while (e > 0) { if (e & 1) r = r * base % mod; base = base * base % mod; e >>= 1; }
-            return r;
-        };
-        long long suffixFinal = suffixCore;
-        if (excess2 > 0) suffixFinal = suffixFinal * modpow(2, excess2, 100000) % 100000;
-        if (excess5 > 0) suffixFinal = suffixFinal * modpow(5, excess5, 100000) % 100000;
-
-        long long totalDigits = (long long)floor((double)totalLog) + 1;
-        long long significantDigits = totalDigits - zeroCount;
-
-        if (significantDigits <= 10 && small) {
-            return to_string(exactProduct) + "e" + to_string(exactZeros);
-        } else {
-            long double fracPart = totalLog - floorl(totalLog);
-            long double leadVal = powl(10.0L, fracPart + 4.0L);
-            long long prefix5 = (long long)leadVal;
-            char buf[16];
-            snprintf(buf, sizeof(buf), "%05lld", suffixFinal);
-            return to_string(prefix5) + "..." + string(buf) + "e" + to_string(zeroCount);
+    long long modpow(long long base, long long exp, long long mod)
+    {
+        long long result = 1 % mod;
+        base %= mod;
+        while (exp > 0)
+        {
+            if (exp & 1)
+                result = (result * base) % mod;
+            base = (base * base) % mod;
+            exp >>= 1;
         }
+        return result;
+    }
+
+    long long ipow(long long base, long long exp)
+    {
+        long long result = 1;
+        while (exp > 0)
+        {
+            if (exp & 1)
+                result *= base;
+            base *= base;
+            exp >>= 1;
+        }
+        return result;
     }
 };

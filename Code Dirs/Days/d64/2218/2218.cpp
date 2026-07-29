@@ -3,24 +3,29 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
-// TC: O(k * sum(pile sizes))  SC: O(k)
-// Approach: grouped knapsack. dp[j] = max value using j coins taken so
-// far. For each pile, iterate j from k down to 0, and for each prefix take
-// of that pile update dp[j+take] = max(dp[j+take], dp[j] + prefixSum).
-class Solution {
+// TC: O(n * k)  SC: O(k)
+// Approach: We can use dynamic programming to solve this problem. We can create a 1D array dp where dp[i] represents the maximum value of coins that can be obtained by taking i coins from the piles. We can iterate through the piles and for each pile, we can iterate through the coins in the pile and update the dp array. Finally, we return dp[k] which represents the maximum value of coins that can be obtained by taking k coins from the piles.
+class Solution
+{
 public:
-    int maxValueOfCoins(vector<vector<int>>& piles, int k) {
-        vector<int> dp(k + 1, 0);
-        for (auto& pile : piles) {
-            vector<int> prefix(pile.size() + 1, 0);
-            for (int i = 0; i < (int)pile.size(); i++) prefix[i+1] = prefix[i] + pile[i];
-            for (int j = k; j >= 0; j--) {
-                for (int take = 1; take <= (int)pile.size() && take <= j; take++) {
-                    dp[j] = max(dp[j], dp[j - take] + prefix[take]);
+    int maxValueOfCoins(vector<vector<int>> &piles, int k)
+    {
+        static int cur[2001]{}, nxt[2001]{};
+        memset(cur, 0, sizeof(int) * (k + 1));
+        memset(nxt, 0, sizeof(int) * (k + 1));
+        for (const vector<int> &p : piles)
+        {
+            for (int i{0}, sum{0}; i < p.size(); ++i)
+            {
+                sum += p[i];
+                const int cnt{i + 1};
+                for (int i{cnt}; i <= k; ++i)
+                {
+                    nxt[i] = max(nxt[i], cur[i - cnt] + sum);
                 }
             }
+            memcpy(cur, nxt, sizeof(int) * (k + 1));
         }
-        return dp[k];
+        return cur[k];
     }
 };

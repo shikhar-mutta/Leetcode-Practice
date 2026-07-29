@@ -3,33 +3,24 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
 // TC: O(n)  SC: O(1)
-// Approach: H(i) = sum val(s[i+t])*power^t for t in [0,k). Relation:
-// H(i) = val(s[i]) + power*H(i+1) - val(s[i+k])*power^k (mod m). Compute
-// rightmost window directly, then slide left using this recurrence,
-// tracking leftmost matching start index.
-class Solution {
+//  Approach: We can use a rolling hash technique to calculate the hash value of each substring of length k in the string s. We can then compare the hash value of each substring with the given hashValue. If they match, we return the substring. We can use modular arithmetic to avoid overflow and to keep the hash values within a manageable range. We can also precompute the powers of p modulo m to avoid recalculating them for each substring. We can iterate through the string from the end to the beginning to ensure that we find the first substring with the given hash value.
+class Solution
+{
 public:
-    string subStrHash(string s, int power, int modulo, int k, int hashValue) {
-        int n = s.size();
-        long long pk = 1;
-        for (int i = 0; i < k; i++) pk = (pk * power) % modulo;
-        long long h = 0;
-        for (int t = 0; t < k; t++) {
-            long long v = s[n - k + t] - 'a' + 1;
-            long long p = 1;
-            for (int u = 0; u < t; u++) p = (p * power) % modulo;
-            h = (h + v * p) % modulo;
+    string subStrHash(string s, int p, int m, int k, int hashValue)
+    {
+        long long cur = 0, res = 0, pk = 1, n = s.size();
+        for (int i = n - 1; i >= 0; --i)
+        {
+            cur = (cur * p + s[i] - 'a' + 1) % m;
+            if (i + k >= n)
+                pk = pk * p % m;
+            else
+                cur = (cur - (s[i + k] - 'a' + 1) * pk % m + m) % m;
+            if (cur == hashValue)
+                res = i;
         }
-        int ans = -1;
-        if (h == hashValue) ans = n - k;
-        for (int i = n - k - 1; i >= 0; i--) {
-            long long v = s[i] - 'a' + 1;
-            long long top = (s[i + k] - 'a' + 1) % modulo;
-            h = ((v + power * h - top * pk) % modulo + (long long)modulo * modulo) % modulo;
-            if (h == hashValue) ans = i;
-        }
-        return s.substr(ans, k);
+        return s.substr(res, k);
     }
 };

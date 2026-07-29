@@ -3,26 +3,40 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
-// TC: O(n)  SC: O(1)
-// Approach: collect indices of seats. If count odd or zero, return 0. For
-// each pair of seats (2i-1, 2i) (1-indexed within pairs), multiply the
-// number of empty positions between seat[2i-1] and seat[2i]+1 (exclusive)
-// into the answer, mod 1e9+7.
-class Solution {
+// TC: O(n), SC: O(1)
+//  Approach: The problem can be solved by iterating through the corridor string and counting the number of plants. We can then calculate the number of ways to divide the corridor based on the number of plants and the distance between them. If the number of plants is odd or zero, we return 0. Otherwise, we return the product of the distances between the plants modulo 1e9 + 7.
+#define ll long long
+class Solution
+{
 public:
-    int numberOfWays(string corridor) {
-        const long long MOD = 1e9 + 7;
-        vector<int> pos;
-        for (int i = 0; i < (int)corridor.size(); i++)
-            if (corridor[i] == 'S') pos.push_back(i);
-        int m = pos.size();
-        if (m == 0 || m % 2 != 0) return 0;
-        long long ans = 1;
-        for (int i = 2; i < m; i += 2) {
-            long long gap = pos[i] - pos[i - 1];
-            ans = (ans * gap) % MOD;
+    const int mod = 1e9 + 7;
+    int numberOfWays(string corridor)
+    {
+
+        ll count = 0;
+        ll n = corridor.size();
+        ll lastIdx = -1;
+
+        ll ans = 1; // We need to multiply later so 1
+
+        for (ll i = 0; i < n; i++)
+        {
+            if (corridor[i] == 'P')
+            {
+                continue;
+            }
+
+            count++;
+
+            if (count % 2 == 1 && count > 2)
+            {
+                ll bars = i - lastIdx;
+                ans = (ans * bars) % mod;
+            }
+
+            lastIdx = i;
         }
-        return (int)ans;
+
+        return (count == 0 || count % 2 == 1 ? 0 : ans);
     }
 };

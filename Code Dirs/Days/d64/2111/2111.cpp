@@ -3,29 +3,40 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
-// TC: O(n log n)  SC: O(n)
-// Approach: the array splits into k independent subsequences (indices i,
-// i+k, i+2k, ...) each of which must become non-decreasing. Minimum changes
-// per subsequence = length - (longest non-decreasing subsequence), found via
-// patience sorting with upper_bound. Sum across all k subsequences.
-class Solution {
+// TC: O(n log n), SC: O(n)
+//  Approach: For each of the k subsequences, we can find the length of the longest non-decreasing subsequence (LNDS) using a modified version of the patience sorting algorithm. The minimum number of operations required to make the subsequence non-decreasing is equal to the length of the subsequence minus the length of the LNDS. We can then sum up the minimum number of operations required for all k subsequences to get the final answer.
+class Solution
+{
 public:
-    int kIncreasing(vector<int>& arr, int k) {
-        int n = arr.size();
-        int totalChanges = 0;
-        for (int start = 0; start < k; start++) {
-            vector<int> tails;
-            for (int i = start; i < n; i += k) {
-                int x = arr[i];
-                auto it = upper_bound(tails.begin(), tails.end(), x);
-                if (it == tails.end()) tails.push_back(x);
-                else *it = x;
+    int kIncreasing(vector<int> &nums, int k)
+    {
+        int n = nums.size();
+        vector<int> tails;
+        tails.reserve(n);
+        int ans = 0;
+
+        for (int ind = 0; ind < k; ind++)
+        {
+            tails.push_back(nums[ind]);
+
+            int sz = 1;
+
+            for (int i = ind + k; i < n; i += k)
+            {
+                auto it = upper_bound(tails.begin(), tails.end(), nums[i]);
+                if (it == tails.end())
+                {
+                    tails.push_back(nums[i]);
+                }
+                else
+                {
+                    *it = nums[i];
+                }
+                sz++;
             }
-            int len = 0;
-            for (int i = start; i < n; i += k) len++;
-            totalChanges += len - (int)tails.size();
+            ans += (sz - tails.size());
+            tails.clear();
         }
-        return totalChanges;
+        return ans;
     }
 };

@@ -3,25 +3,38 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
-// TC: O(n log(maxProduct))  SC: O(n)
-// Approach: process nums with a stack; push each num, then while top two
-// have gcd>1, merge them into lcm and repeat (since merging can cascade
-// further left). Final stack is the answer.
-class Solution {
+// TC: O(n^2)  SC: O(n)
+//  Approach: We can use a stack to solve this problem. We can iterate through the array and for each number, we can check if it is coprime with the last number in the stack. If it is not coprime, we can replace the last number in the stack with the product of the two numbers divided by their GCD. We can then continue this process until we find a coprime number or the stack is empty. We can then push the current number onto the stack. Finally, we can return the stack as the result.
+class Solution
+{
 public:
-    vector<int> replaceNonCoprimes(vector<int>& nums) {
-        vector<long long> st;
-        for (int num : nums) {
-            long long cur = num;
-            while (!st.empty()) {
-                long long g = gcd(st.back(), cur);
-                if (g == 1) break;
-                cur = st.back() / g * cur;
-                st.pop_back();
+    vector<int> replaceNonCoprimes(vector<int> &nums)
+    {
+        vector<int> ans;
+        for (int &num : nums)
+        {
+            while (!ans.empty())
+            {
+                int last = ans.back();
+                int g = gcd(last, num);
+                if (g > 1)
+                {
+                    num = last / g * num;
+                    ans.pop_back();
+                }
+                else
+                {
+                    break;
+                }
             }
-            st.push_back(cur);
+            ans.push_back(num);
         }
-        return vector<int>(st.begin(), st.end());
+        return ans;
+    }
+    int gcd(int a, int b)
+    {
+        if (b == 0)
+            return a;
+        return gcd(b, a % b);
     }
 };

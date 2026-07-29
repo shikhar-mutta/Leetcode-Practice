@@ -3,43 +3,81 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
 // TC: O((n + q) log n)  SC: O(n)
-// Approach: sort rooms and queries by size descending; process queries in that
-// order, adding rooms with sufficient size into an ordered set of ids as we go,
-// then binary-search the set for the closest id to preferred using neighbors.
-class Solution {
+//  Approach: sort rooms and queries by size descending; process queries in that
+//  order, adding rooms with sufficient size into an ordered set of ids as we go,
+//  then binary-search the set for the closest id to preferred using neighbors.
+class Solution
+{
 public:
-    vector<int> closestRoom(vector<vector<int>>& rooms, vector<vector<int>>& queries) {
-        sort(rooms.begin(), rooms.end(), [](auto& a, auto& b) { return a[1] > b[1]; });
-        int q = queries.size();
-        vector<int> idx(q);
-        iota(idx.begin(), idx.end(), 0);
-        sort(idx.begin(), idx.end(), [&](int a, int b) { return queries[a][1] > queries[b][1]; });
+    vector<int> closestRoom(vector<vector<int>> &rooms, vector<vector<int>> &queries)
+    {
+        const int n = rooms.size(), k = queries.size();
+        vector<tuple<int, int, int>> qt;
+        qt.reserve(k);
+        for (int i = 0; i < k; i++)
+            qt.emplace_back(queries[i][0], queries[i][1], i);
+        sort(rooms.begin(), rooms.end());
+        sort(qt.begin(), qt.end());
 
-        set<int> ids;
-        vector<int> ans(q, -1);
-        int ri = 0;
-        for (int qi : idx) {
-            int preferred = queries[qi][0], minSize = queries[qi][1];
-            while (ri < (int)rooms.size() && rooms[ri][1] >= minSize) {
-                ids.insert(rooms[ri][0]);
-                ri++;
+        vector<int> answer(k, -1), s;
+        for (int q = 0, r = 0, si = -1; q < k; q++)
+        {
+            const auto &[preferred, minSize, i] = qt[q];
+            while (r < n && rooms[r][0] <= preferred)
+            {
+                while (si >= 0 && rooms[s[si]][1] < rooms[r][1])
+                    si--;
+                if (++si == s.size())
+                    s.push_back(r);
+                else
+                    s[si] = r;
+                r++;
             }
-            if (ids.empty()) continue;
-            auto it = ids.lower_bound(preferred);
-            int best = -1, bestDiff = INT_MAX;
-            if (it != ids.end()) {
-                int diff = abs(*it - preferred);
-                if (diff < bestDiff) { bestDiff = diff; best = *it; }
+            if (si == -1 || rooms[s[0]][1] < minSize)
+                continue;
+
+            int a = 0, b = si;
+            while (a < b)
+            {
+                const int c = (a + b + 1) >> 1;
+                if (rooms[s[c]][1] >= minSize)
+                    a = c;
+                else
+                    b = c - 1;
             }
-            if (it != ids.begin()) {
-                auto pit = prev(it);
-                int diff = abs(*pit - preferred);
-                if (diff < bestDiff || (diff == bestDiff && *pit < best)) { bestDiff = diff; best = *pit; }
-            }
-            ans[qi] = best;
+            answer[i] = rooms[s[a]][0];
         }
-        return ans;
+
+        s.clear();
+        for (int q = k - 1, r = n - 1, si = -1; q >= 0; q--)
+        {
+            const auto &[preferred, minSize, i] = qt[q];
+            while (r >= 0 && rooms[r][0] >= preferred)
+            {
+                while (si >= 0 && rooms[s[si]][1] < rooms[r][1])
+                    si--;
+                if (++si == s.size())
+                    s.push_back(r);
+                else
+                    s[si] = r;
+                r--;
+            }
+            if (si == -1 || rooms[s[0]][1] < minSize)
+                continue;
+
+            int a = 0, b = si;
+            while (a < b)
+            {
+                const int c = (a + b + 1) >> 1;
+                if (rooms[s[c]][1] >= minSize)
+                    a = c;
+                else
+                    b = c - 1;
+            }
+            if (answer[i] == -1 || rooms[s[a]][0] - preferred < preferred - answer[i])
+                answer[i] = rooms[s[a]][0];
+        }
+        return answer;
     }
 };

@@ -3,45 +3,60 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
-// TC: O(n * 26)  SC: O(n)
-// Approach: count how many permutations of the multiset are lexicographically
-// smaller than s (its rank), which equals the min adjacent-swap distance to
-// the sorted string. At each position, sum over smaller available characters
-// c: (m-1)! / (product of remaining counts factorial with one c removed),
-// computed via modular inverse factorials, then remove s[i] and continue.
-class Solution {
-    const long long MOD = 1e9 + 7;
-    long long power(long long b, long long e) {
-        long long r = 1; b %= MOD;
-        while (e) { if (e & 1) r = r * b % MOD; b = b * b % MOD; e >>= 1; }
-        return r;
-    }
+// TC: O(n^2)  SC: O(n)
+//  Approach: We can use combinatorics to calculate the number of permutations that are lexicographically smaller than the given string. We can calculate the factorial of the length of the string and divide it by the factorial of the frequency of each character to account for duplicates. We can then iterate through the string and for each character, count how many characters are smaller than it and calculate the number of permutations that can be formed with the remaining characters. We can use modular arithmetic to handle large numbers and return the final answer modulo 10^9 + 7.
+class Solution
+{
 public:
-    int makeStringSorted(string s) {
-        int n = s.size();
-        vector<long long> fact(n + 1), invfact(n + 1);
-        fact[0] = 1;
-        for (int i = 1; i <= n; i++) fact[i] = fact[i-1] * i % MOD;
-        invfact[n] = power(fact[n], MOD - 2);
-        for (int i = n - 1; i >= 0; i--) invfact[i] = invfact[i+1] * (i+1) % MOD;
+    long long MOD = 1e9 + 7;
 
-        vector<long long> cnt(26, 0);
-        for (char c : s) cnt[c - 'a']++;
-        long long invFactProd = 1;
-        for (int c = 0; c < 26; c++) invFactProd = invFactProd * invfact[cnt[c]] % MOD;
-
-        long long ans = 0;
-        for (int i = 0; i < n; i++) {
-            int m = n - i;
-            long long smallerSum = 0;
-            for (int c = 0; c < s[i] - 'a'; c++) smallerSum += cnt[c];
-            long long term = fact[m-1] * invFactProd % MOD * (smallerSum % MOD) % MOD;
-            ans = (ans + term) % MOD;
-            int c = s[i] - 'a';
-            invFactProd = invFactProd * cnt[c] % MOD;
-            cnt[c]--;
+    long long power(long long base, long long exp)
+    {
+        long long res = 1;
+        base %= MOD;
+        while (exp > 0)
+        {
+            if (exp % 2 == 1)
+                res = (res * base) % MOD;
+            base = (base * base) % MOD;
+            exp /= 2;
         }
-        return (int)ans;
+        return res;
+    }
+
+    long long modInverse(long long n) { return power(n, MOD - 2); }
+    int makeStringSorted(string s)
+    {
+        int n = s.size();
+        vector<long long> fact(n + 1, 1);
+        for (int i = 1; i <= n; i++)
+        {
+            fact[i] = (fact[i - 1] * i) % MOD;
+        }
+        vector<int> freq(26, 0);
+        for (int i = 0; i < n; i++)
+        {
+            freq[s[i] - 'a']++;
+        }
+        long long denom = 1;
+        for (int i = 0; i < 26; i++)
+        {
+            denom = (denom * fact[freq[i]]) % MOD;
+        }
+        long long in_den = modInverse(denom);
+        long long ans = 0;
+        for (int i = 0; i < n; i++)
+        {
+            int sum = 0;
+            for (int j = 0; j < s[i] - 'a'; j++)
+                sum += freq[j];
+            long long current =
+                (((sum * fact[n - 1 - i]) % MOD) * in_den) % MOD;
+            ans = (ans + current) % MOD;
+            int char_idx = s[i] - 'a';
+            in_den = (freq[char_idx] * in_den) % MOD;
+            freq[char_idx] -= 1;
+        }
+        return ans;
     }
 };

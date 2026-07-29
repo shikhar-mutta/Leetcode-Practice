@@ -3,68 +3,42 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
-// TC: exponential worst case, bounded by memoized search over remainder-count states (batchSize<=9)
-// SC: memo map size bounded by distinct states
-// Approach: bucket groups by remainder mod batchSize; remainder 0 always forms a
-// happy group. Greedily pair up complementary remainders (r, batchSize-r) first
-// since that's always optimal. For the leftover counts, do a memoized DFS trying
-// each remainder type next, tracking current running remainder to detect fresh starts.
-class Solution {
-    unordered_map<string,int> memo;
-    int batchSize;
-
-    string encode(vector<int>& cnt, int rem) {
-        string s;
-        for (int c : cnt) s += char('0' + c);
-        s += '|';
-        s += to_string(rem);
-        return s;
-    }
-
-    int dfs(vector<int>& cnt, int curRemainder) {
-        bool allZero = true;
-        for (int c : cnt) if (c > 0) { allZero = false; break; }
-        if (allZero) return 0;
-        string key = encode(cnt, curRemainder);
-        auto it = memo.find(key);
-        if (it != memo.end()) return it->second;
-
-        int best = 0;
-        for (int i = 1; i < batchSize; i++) {
-            if (cnt[i] == 0) continue;
-            cnt[i]--;
-            int gain = (curRemainder == 0) ? 1 : 0;
-            int res = gain + dfs(cnt, (curRemainder + i) % batchSize);
-            cnt[i]++;
-            best = max(best, res);
-        }
-        memo[key] = best;
-        return best;
-    }
+// TC: O(2^n * n)  SC: O(2^n * n)
+//  Approach: Use a bitmask to represent the state of the groups. For each state, we can calculate the number of happy groups by checking the remainder of the sum of the group sizes modulo the batch size. We can use memoization to store the results of previously computed states to avoid redundant calculations. The final answer will be the maximum number of happy groups we can achieve by trying all possible combinations of groups.
+class Solution
+{
 public:
-    int maxHappyGroups(int batchSize_, vector<int>& groups) {
-        batchSize = batchSize_;
-        vector<int> cnt(batchSize, 0);
-        int ans = 0;
-        for (int g : groups) {
-            int r = g % batchSize;
-            if (r == 0) ans++;
-            else cnt[r]++;
+    map<vector<int>, int> dp;
+    int dfs(vector<int> &cnt, int left)
+    {
+        auto it = dp.find(cnt);
+        if (it != end(dp))
+            return it->second;
+        int res = 0, bz = cnt.size();
+        for (auto j = 1; j < bz; ++j)
+        {
+            if (--cnt[j] >= 0)
+                res = max(res, (left == 0) + dfs(cnt, (bz + left - j) % bz));
+            ++cnt[j];
         }
-        for (int r = 1; r < batchSize; r++) {
-            int comp = batchSize - r;
-            if (r < comp) {
-                int p = min(cnt[r], cnt[comp]);
-                ans += p;
-                cnt[r] -= p;
-                cnt[comp] -= p;
-            } else if (r == comp) {
-                ans += cnt[r] / 2;
-                cnt[r] %= 2;
+        return dp[cnt] = res;
+    }
+    int maxHappyGroups(int bz, vector<int> &groups)
+    {
+        vector<int> cnt(bz);
+        int res = 0;
+        for (auto group : groups)
+        {
+            if (group % bz == 0)
+                ++res;
+            else if (cnt[bz - group % bz])
+            {
+                --cnt[bz - group % bz];
+                ++res;
             }
+            else
+                ++cnt[group % bz];
         }
-        ans += dfs(cnt, 0);
-        return ans;
+        return dfs(cnt, 0) + res;
     }
 };

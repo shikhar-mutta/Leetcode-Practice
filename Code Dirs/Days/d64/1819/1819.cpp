@@ -3,28 +3,37 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
-// TC: O(maxVal * log(maxVal))  SC: O(maxVal)
-// Approach: for each candidate g from 1..maxVal, walk its multiples present in
-// nums and accumulate their gcd; if that running gcd reaches g, some subsequence
-// of multiples of g has gcd exactly g, so count it.
-class Solution {
+// TC: O(n * log(max(nums)))  SC: O(max(nums))
+//  Approach: For each number i from 1 to max(nums), we check if it can be the GCD of some subsequence of nums. We do this by checking all multiples of i and calculating their GCD. If the GCD equals i, we increment our result counter. We use a bitset to keep track of the numbers present in nums for efficient checking.
+class Solution
+{
 public:
-    int countDifferentSubsequenceGCDs(vector<int>& nums) {
-        int mx = *max_element(nums.begin(), nums.end());
-        vector<bool> present(mx + 1, false);
-        for (int x : nums) present[x] = true;
-        int ans = 0;
-        for (int g = 1; g <= mx; g++) {
-            int cur = 0;
-            for (int m = g; m <= mx; m += g) {
-                if (present[m]) {
-                    cur = cur == 0 ? m : __gcd(cur, m);
-                    if (cur == g) break;
+    int countDifferentSubsequenceGCDs(vector<int> &nums)
+    {
+        bitset<200001> seen;
+        const int n = nums.size();
+        int maxi = 0;
+        for (int i = 0; i < n; ++i)
+        {
+            seen.set(nums[i]);
+            maxi = max(maxi, nums[i]);
+        }
+        int res = 0;
+        for (int i = 1; i <= maxi; ++i)
+        {
+            int gcdVal = 0;
+            for (int j = i; j <= maxi; j += i)
+            {
+                if (!seen.test(j))
+                    continue;
+                gcdVal = __gcd(gcdVal, j);
+                if (gcdVal == i)
+                {
+                    ++res;
+                    break;
                 }
             }
-            if (cur == g) ans++;
         }
-        return ans;
+        return res;
     }
 };

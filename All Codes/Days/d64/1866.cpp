@@ -3,22 +3,49 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
-// TC: O(n*k)  SC: O(n*k)
-// Approach: this is the unsigned Stirling number of the first kind c(n,k):
-// dp[i][j] = dp[i-1][j-1] + (i-1)*dp[i-1][j], since the tallest new stick is
-// either newly visible (j-1 visible before) or hidden behind (i-1) taller ones.
-class Solution {
+// TC: O(n*k)  SC: O(k)
+// Approach: Use dynamic programming to count the number of ways to arrange n sticks such that exactly k sticks are visible. The recurrence relation is based on whether the tallest stick is placed at the end (which increases the visible count) or not (which does not change the visible count). We optimize space by using a 1D array to store only the current state of visible counts.
+int dp[1005];
+class Solution
+{
 public:
-    int rearrangeSticks(int n, int k) {
-        const long long MOD = 1e9 + 7;
-        vector<vector<long long>> dp(n + 1, vector<long long>(k + 1, 0));
-        dp[0][0] = 1;
-        for (int i = 1; i <= n; i++) {
-            for (int j = 1; j <= k; j++) {
-                dp[i][j] = (dp[i-1][j-1] + (long long)(i - 1) * dp[i-1][j]) % MOD;
+    inline static const auto init = []()
+    {
+        std::ios_base::sync_with_stdio(false);
+        std::cin.tie(NULL);
+        return 0;
+    }();
+
+    int rearrangeSticks(int n, int k)
+    {
+        if (k > n || k == 0)
+            return 0;
+
+        const int MOD = 1e9 + 7;
+
+        // Vektor helyett a globális tömböt nullázzuk ki gyorsan k-ig
+        for (int i = 0; i <= k; ++i)
+            dp[i] = 0;
+        dp[1] = 1;
+
+        for (int i = 2; i <= n; ++i)
+        {
+            // std::max és std::min lecserélése gyorsabb inline kifejezésekre
+            int min_j = (1 > k - (n - i)) ? 1 : (k - (n - i));
+            int max_j = (k < i) ? k : i;
+
+            // Belső ciklus kibontás-barát formában
+            for (int j = max_j; j >= min_j; --j)
+            {
+                long long current = 1LL * (i - 1) * dp[j];
+                if (j > 1)
+                {
+                    current += dp[j - 1];
+                }
+                dp[j] = current % MOD;
             }
         }
-        return (int)dp[n][k];
+
+        return dp[k];
     }
 };

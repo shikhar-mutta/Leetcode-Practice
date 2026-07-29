@@ -3,23 +3,25 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
-// TC: O(n)  SC: O(n)
-// Approach: any move reduces to picking prefix sum prefix[i] for i>=1 (taking
-// the first i stones). best[i] = max(prefix[i], best[i+1] - prefix[i]) computed
-// from the back, representing optimal value when choice starts at index i.
-class Solution {
+// TC: O(n)  SC: O(1)
+//  Approach: Use dynamic programming to calculate the maximum score difference for the first player. We first compute the prefix sums of the array to represent the total score if the first player takes all stones up to a certain index. Then, we iterate backwards through the prefix sums, updating the maximum score difference based on whether the first player takes the current prefix sum or not. This allows us to find the optimal strategy for the first player in linear time and constant space.
+auto x = []()
+{
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    return 0;
+}();
+class Solution
+{
 public:
-    int stoneGameVIII(vector<int>& stones) {
-        int n = stones.size();
-        vector<long long> prefix(n, 0);
-        prefix[0] = stones[0];
-        for (int i = 1; i < n; i++) prefix[i] = prefix[i-1] + stones[i];
-
-        long long best = prefix[n-1];
-        for (int i = n - 2; i >= 1; i--) {
-            best = max(best, prefix[i] - best);
-        }
-        return (int)best; // best already folds in the "skip" option each step
+    int stoneGameVIII(vector<int> &A)
+    {
+        int N = A.size();
+        for (int i = 1; i < N; ++i)
+            A[i] += A[i - 1];
+        int dp = A.back();
+        for (int i = N - 2; i > 0; --i)
+            dp = max(dp, A[i] - dp);
+        return dp;
     }
 };

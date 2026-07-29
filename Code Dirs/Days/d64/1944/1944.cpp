@@ -3,28 +3,30 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
-// TC: O(n)  SC: O(n)
-// Approach: monotonic decreasing stack from right to left. Pop everyone
-// shorter than the current person (each popped person is visible), and if
-// the stack isn't empty after popping, the remaining taller person is also
-// visible (blocks further view).
-class Solution {
+// TC: O(n) SC: O(n)
+// Approach: We can use a stack to keep track of the heights of the people in the queue. We can iterate through the heights from right to left and for each height, we can pop the elements from the stack until we find a height that is greater than or equal to the current height. The number of elements popped from the stack will be the number of people that can see the current person. We can then push the current height onto the stack and continue to the next height. Finally, we can return the result for each person in the queue.
+class Solution
+{
 public:
-    vector<int> canSeePersonsCount(vector<int>& heights) {
+    vector<int> canSeePersonsCount(vector<int> &heights)
+    {
         int n = heights.size();
-        vector<int> res(n, 0);
-        vector<int> stk;
-        for (int i = n - 1; i >= 0; i--) {
-            int cnt = 0;
-            while (!stk.empty() && stk.back() < heights[i]) {
-                stk.pop_back();
-                cnt++;
+        stack<int> s;
+        vector<int> ans(n, 0);
+        for (int i = n - 1; i >= 0; i--)
+        {
+            int count = 0;
+
+            while (!s.empty() && heights[i] > s.top())
+            {
+                count++;
+                s.pop();
             }
-            if (!stk.empty()) cnt++;
-            res[i] = cnt;
-            stk.push_back(heights[i]);
+            if (!s.empty())
+                count++;
+            ans[i] = count;
+            s.push(heights[i]);
         }
-        return res;
+        return ans;
     }
 };

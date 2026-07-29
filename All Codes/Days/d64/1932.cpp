@@ -3,72 +3,83 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
-// TC: O(n log n)  SC: O(n)
-// Approach: index roots by value. Recursively, a leaf whose value matches
-// another tree's root gets replaced by that subtree (consuming it). The
-// overall root is whichever tree's root value is never referenced as a leaf
-// elsewhere. After grafting, validate the result is a proper BST (strict
-// in-order increasing) covering every original node exactly once.
-struct TreeNode {
+// TC: O(n) SC: O(n)
+// Approach: We can use a hash map to store the nodes of the trees and their counts. We then find the root of the merged tree by looking for a node that has a count of 1. We then perform a depth-first search (DFS) to validate if the merged tree is a valid binary search tree (BST) and also count the number of merged trees. If the count of merged trees is equal to the total number of trees, we return the root of the merged tree; otherwise, we return nullptr.
+struct TreeNode
+{
     int val;
     TreeNode *left, *right;
     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
 };
 
-class Solution {
+class Solution
+{
 public:
-    TreeNode* canMerge(vector<TreeNode*>& trees) {
-        unordered_map<int, TreeNode*> rootByVal;
-        unordered_map<int, int> leafRefCount;
-        int totalNodes = 0;
-        for (auto* t : trees) rootByVal[t->val] = t;
-        for (auto* t : trees) {
-            function<void(TreeNode*)> countLeaves = [&](TreeNode* node) {
-                if (!node) return;
-                totalNodes++;
-                if (!node->left && !node->right && node != t && rootByVal.count(node->val))
-                    leafRefCount[node->val]++;
-                countLeaves(node->left);
-                countLeaves(node->right);
-            };
-            countLeaves(t);
+    TreeNode *canMerge(vector<TreeNode *> &trees)
+    {
+        ios_base::sync_with_stdio(false);
+        cin.tie(NULL);
+
+        TreeNode *nodeMap[50001] = {nullptr};
+        int count[50001] = {0};
+
+        for (TreeNode *t : trees)
+        {
+            nodeMap[t->val] = t;
+            count[t->val]++;
+            if (t->left)
+                count[t->left->val]++;
+            if (t->right)
+                count[t->right->val]++;
         }
 
-        TreeNode* mergedRoot = nullptr;
-        int rootCandidates = 0;
-        for (auto* t : trees) {
-            if (leafRefCount[t->val] == 0) { mergedRoot = t; rootCandidates++; }
-        }
-        if (rootCandidates != 1) return nullptr;
-
-        unordered_set<int> used;
-        function<TreeNode*(TreeNode*)> graft = [&](TreeNode* node) -> TreeNode* {
-            if (!node) return nullptr;
-            if (!node->left && !node->right && rootByVal.count(node->val) && rootByVal[node->val] != node && !used.count(node->val)) {
-                used.insert(node->val);
-                return graft(rootByVal[node->val]);
+        TreeNode *globalRoot = nullptr;
+        for (TreeNode *t : trees)
+        {
+            if (count[t->val] == 1)
+            {
+                globalRoot = t;
+                break;
             }
-            node->left = graft(node->left);
-            node->right = graft(node->right);
-            return node;
-        };
-        TreeNode* result = graft(mergedRoot);
+        }
 
-        long long prev = LLONG_MIN;
-        int count = 0;
-        bool valid = true;
-        function<void(TreeNode*)> inorder = [&](TreeNode* node) {
-            if (!node || !valid) return;
-            inorder(node->left);
-            if (node->val <= prev) valid = false;
-            prev = node->val;
-            count++;
-            inorder(node->right);
-        };
-        inorder(result);
-        int expectedCount = totalNodes - ((int)trees.size() - 1);
-        if (!valid || count != expectedCount) return nullptr;
-        return result;
+        if (!globalRoot)
+            return nullptr;
+
+        nodeMap[globalRoot->val] = nullptr;
+        int mergedCount = 1;
+
+        if (isValidBST(globalRoot, INT_MIN, INT_MAX, nodeMap, mergedCount) &&
+            mergedCount == trees.size())
+        {
+            return globalRoot;
+        }
+
+        return nullptr;
+    }
+
+private:
+    bool isValidBST(TreeNode *node, int minVal, int maxVal, TreeNode **nodeMap,
+                    int &mergedCount)
+    {
+        if (!node)
+            return true;
+
+        if (nodeMap[node->val])
+        {
+            TreeNode *graftTemplate = nodeMap[node->val];
+            nodeMap[node->val] = nullptr;
+            mergedCount++;
+
+            node->left = graftTemplate->left;
+            node->right = graftTemplate->right;
+        }
+
+        if (node->val <= minVal || node->val >= maxVal)
+            return false;
+
+        return isValidBST(node->left, minVal, node->val, nodeMap,
+                          mergedCount) &&
+               isValidBST(node->right, node->val, maxVal, nodeMap, mergedCount);
     }
 };

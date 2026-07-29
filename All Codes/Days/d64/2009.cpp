@@ -3,24 +3,43 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
-// TC: O(n log n)  SC: O(n)
-// Approach: dedup and sort. For each starting value nums[i], the window of
-// values fitting in [nums[i], nums[i]+n-1] can all stay unchanged (found via
-// binary search); operations needed = n - window size.
-class Solution {
+// TC: O(n * log(n))  SC: O(n)
+//  Approach: Sort the array and remove duplicates. Then use a sliding window to find the maximum number of elements that can be included in a continuous subarray of length n. The answer is n minus the size of this maximum subarray.
+class Solution
+{
 public:
-    int minOperations(vector<int>& nums) {
+    int minOperations(vector<int> &nums)
+    {
         int n = nums.size();
-        sort(nums.begin(), nums.end());
-        nums.erase(unique(nums.begin(), nums.end()), nums.end());
-        int m = nums.size();
-        int best = 0;
-        for (int i = 0; i < m; i++) {
-            int limit = nums[i] + n - 1;
-            int j = upper_bound(nums.begin(), nums.end(), limit) - nums.begin();
-            best = max(best, j - i);
+        static int tmp[100001];
+        int *a = nums.data();
+        // 8-bit radix sort (4 passes, cnt[256] stays in L1 cache)
+        for (int shift = 0; shift < 32; shift += 8)
+        {
+            int cnt[256] = {};
+            for (int i = 0; i < n; i++)
+                cnt[(a[i] >> shift) & 255]++;
+            for (int j = 1; j < 256; j++)
+                cnt[j] += cnt[j - 1];
+            for (int j = n - 1; j >= 0; j--)
+                tmp[--cnt[(a[j] >> shift) & 255]] = a[j];
+            memcpy(a, tmp, n * 4);
         }
-        return n - best;
+        // Deduplicate in-place
+        int m = 1;
+        for (int i = 1; i < n; i++)
+            if (a[i] != a[i - 1])
+                a[m++] = a[i];
+        // Sliding window
+        int ans = n, j = 0, lim = n - 1;
+        for (int i = 0; i < m; i++)
+        {
+            int hi = a[i] + lim;
+            while (j < m && a[j] <= hi)
+                j++;
+            if (n - (j - i) < ans)
+                ans = n - (j - i);
+        }
+        return ans;
     }
 };

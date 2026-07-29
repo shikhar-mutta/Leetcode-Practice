@@ -3,53 +3,76 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
-// TC: O((n+m) log(range))  SC: O(1)
-// Approach: binary search on the answer value x. countLE(x) counts pairs
-// with product <= x, split into cases by sign of nums1's elements using
-// two-pointer / binary-search sweeps against nums2 (sorted). Find smallest x
-// with countLE(x) >= k.
-class Solution {
-    vector<int> a, b;
-    int n, m;
-
-    long long countLE(long long x) {
-        long long cnt = 0;
-        for (int v : a) {
-            if (v == 0) {
-                if (x >= 0) cnt += m;
-            } else if (v > 0) {
-                // v>0: count b[j] with v*b[j] <= x, via binary search (b ascending)
-                int lo2 = 0, hi2 = m;
-                while (lo2 < hi2) {
-                    int mid = (lo2 + hi2) / 2;
-                    if ((long long)v * b[mid] <= x) lo2 = mid + 1;
-                    else hi2 = mid;
-                }
-                cnt += lo2;
-            } else {
-                // v<0: v*b[j]<=x <=> b[j] >= x/v (division flips, careful with floor toward -inf issues; use direct compare)
-                int lo2 = 0, hi2 = m;
-                while (lo2 < hi2) {
-                    int mid = (lo2 + hi2) / 2;
-                    if ((long long)v * b[mid] <= x) hi2 = mid;
-                    else lo2 = mid + 1;
-                }
-                cnt += (m - lo2);
-            }
-        }
-        return cnt;
-    }
+// TC: O((n + m) * log(max(abs(A1[0] * B1[0]), abs(A2.back() * B2.back()))))  SC: O(n + m)
+//   Approach: Separate the two arrays into negative and positive parts. Count the number of negative products and determine if the k-th smallest product is negative or positive. Use binary search to find the k-th smallest product by counting the number of products less than or equal to a given value.
+class Solution
+{
 public:
-    long long kthSmallestProduct(vector<int>& nums1, vector<int>& nums2, long long k) {
-        a = nums1; b = nums2;
-        n = a.size(); m = b.size();
-        long long lo = -10000000000LL, hi = 10000000000LL;
-        while (lo < hi) {
-            long long mid = lo + (hi - lo) / 2;
-            if (countLE(mid) >= k) hi = mid;
-            else lo = mid + 1;
+    long long kthSmallestProduct(vector<int> &nums1, vector<int> &nums2,
+                                 long long k)
+    {
+        vector<int> A1;
+        vector<int> A2;
+        vector<int> B1;
+        vector<int> B2;
+
+        seperate(nums1, A1, A2);
+        seperate(nums2, B1, B2);
+
+        const long negCount = A1.size() * B2.size() + A2.size() * B1.size();
+        int sign = 1;
+
+        if (k > negCount)
+        {
+            k -= negCount; //  Find the (k - negCount)-th positive.
         }
-        return lo;
+        else
+        {
+            k = negCount - k +
+                1; // Find the (negCount - k + 1)-th abs(negative).
+            sign = -1;
+            swap(B1, B2);
+        }
+
+        long l = 0;
+        long r = 1e10;
+
+        while (l < r)
+        {
+            const long m = (l + r) / 2;
+            if (numProductNoGreaterThan(A1, B1, m) +
+                    numProductNoGreaterThan(A2, B2, m) >=
+                k)
+                r = m;
+            else
+                l = m + 1;
+        }
+
+        return sign * l;
+    }
+
+private:
+    void seperate(const vector<int> &arr, vector<int> &A1, vector<int> &A2)
+    {
+        for (const int a : arr)
+            if (a < 0)
+                A1.push_back(-a);
+            else
+                A2.push_back(a);
+        ranges::reverse(A1); // Reverse to sort ascending
+    }
+
+    long numProductNoGreaterThan(const vector<int> &A, const vector<int> &B,
+                                 long m)
+    {
+        long count = 0;
+        int j = B.size() - 1;
+        for (const long a : A)
+        {
+            while (j >= 0 && a * B[j] > m)
+                --j;
+            count += j + 1;
+        }
+        return count;
     }
 };

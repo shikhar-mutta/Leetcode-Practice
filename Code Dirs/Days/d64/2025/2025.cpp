@@ -3,52 +3,110 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
 // TC: O(n)  SC: O(n)
-// Approach: prefix sums. Without any change, count partition points i where
-// prefix[i]*2==total. For each candidate changed index j with delta=k-nums[j],
-// split partitions into those before/at j (need prefix[i]=(total+delta)/2)
-// and those after j (need prefix[i]=(total-delta)/2), using two hashmaps of
-// prefix-value counts that slide as j advances, giving O(n) total.
-class Solution {
+//   Approach: Use prefix sum to calculate the sum of elements in the left and right subarrays for each possible partition point. Store the first and last occurrence of each element in a map.
+class Solution
+{
 public:
-    int waysToPartition(vector<int>& nums, int k) {
-        int n = nums.size();
-        vector<long long> prefix(n + 1, 0);
-        for (int i = 0; i < n; i++) prefix[i+1] = prefix[i] + nums[i];
-        long long total = prefix[n];
+    long long int getSum(vector<int> &nums)
+    {
+        long long int temp = 0;
+        for (auto &i : nums)
+            temp += i;
+        return temp;
+    }
 
-        int baseline = 0;
-        for (int i = 1; i <= n - 1; i++) if (prefix[i] * 2 == total) baseline++;
+    bool check(unordered_map<long long int, pair<int, int>> &mp, long long int val, int pivot, bool flag)
+    {
 
-        unordered_map<long long,int> leftCounts, rightCounts;
-        for (int i = 1; i <= n - 1; i++) rightCounts[prefix[i]]++;
-
-        int best = baseline;
-        for (int j = 0; j < n; j++) {
-            long long delta = (long long)k - nums[j];
-            int cur = 0;
-            long long targetRight2 = total - delta; // i>j branch: prefix[i] = (total-delta)/2
-            if (targetRight2 % 2 == 0) {
-                long long tv = targetRight2 / 2;
-                auto it = rightCounts.find(tv);
-                if (it != rightCounts.end()) cur += it->second;
-            }
-            long long targetLeft2 = total + delta; // i<=j branch: prefix[i] = (total+delta)/2
-            if (targetLeft2 % 2 == 0) {
-                long long tv = targetLeft2 / 2;
-                auto it = leftCounts.find(tv);
-                if (it != leftCounts.end()) cur += it->second;
-            }
-            best = max(best, cur);
-
-            // slide: move prefix[j+1] from rightCounts to leftCounts for next iteration
-            int nextIdx = j + 1;
-            if (nextIdx >= 1 && nextIdx <= n - 1) {
-                rightCounts[prefix[nextIdx]]--;
-                leftCounts[prefix[nextIdx]]++;
-            }
+        // If flag, then we need to change element from right subarray
+        if (flag)
+        {
+            if (mp[val].second >= pivot)
+                return true;
+            return false;
         }
-        return best;
+
+        // Else we need to change element from left subarray
+        else
+        {
+            if (mp[val].first < pivot)
+                return true;
+            return false;
+        }
+    }
+
+    int waysToPartition(vector<int> &nums, int k)
+    {
+        unordered_map<long long int, pair<int, int>> mp;
+        unordered_map<long long int, pair<int, int>> count;
+
+        // mp stores first and last occurence of an element
+        for (int i = 0; i < nums.size(); i++)
+        {
+            if (mp.find(nums[i]) == mp.end())
+            {
+                mp[nums[i]].first = i;
+            }
+            mp[nums[i]].second = i;
+        }
+
+        long long int totSum = getSum(nums);
+        long long int left = nums[0];
+        int ans = 0;
+
+        for (int i = 1; i < nums.size(); i++)
+        {
+            long long int right = totSum - left;
+
+            if (left == right)
+            {
+                ans++;
+            }
+            else
+            {
+                long long int diff = left - right;
+
+                // num is the value of element we need to change with k wo satisfy the condition
+                long long int num = k - diff;
+
+                if (mp.find(num) != mp.end())
+                {
+                    if (check(mp, num, i, 1))
+                    {
+
+                        // count.second means we have got the element in right subarray with which we can replace our k
+                        count[num].second++;
+                    }
+                }
+
+                diff = right - left;
+                num = k - diff;
+
+                if (mp.find(num) != mp.end())
+                {
+                    if (check(mp, num, i, 0))
+                    {
+
+                        // count.first means we got element in left subarray to get replaced
+
+                        count[num].first++;
+                    }
+                }
+            }
+
+            left += nums[i];
+
+            // Suppose there is an element which was on the right side earlier but now as we moving, it came to the left side, so update left usage with it
+            count[nums[i]].first = max(count[nums[i]].first, count[nums[i]].second);
+        }
+
+        int maxi = INT_MIN;
+        for (auto [i, j] : count)
+        {
+            maxi = max(maxi, max(j.first, j.second));
+        }
+
+        return max(maxi, ans);
     }
 };

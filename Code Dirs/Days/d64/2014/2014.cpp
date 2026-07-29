@@ -3,46 +3,88 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
-// TC: small (candidate length bounded by n/k <= 7), exponential in that bound
-// SC: O(candidates)
-// Approach: only characters with frequency >= k can appear in the answer.
-// BFS by length: start from single valid chars, extend each surviving
-// candidate with every valid char, keep those whose string repeated k times
-// is a subsequence of s. The last surviving level gives the (lexicographically
-// largest, via sorted-descending generation) longest answer.
-class Solution {
-    bool isKSub(string& s, string& cand, int k) {
-        int si = 0, matched = 0;
-        int n = s.size(), m = cand.size();
-        for (int i = 0; i < n && matched < k; i++) {
-            if (s[i] == cand[si]) {
-                si++;
-                if (si == m) { si = 0; matched++; }
-            }
-        }
-        return matched >= k;
-    }
+// TC: O(26^m * n)  SC: O(n + m)
+//  Approach: Use DFS to generate all possible subsequences of the string s. For each generated subsequence, check if it can be formed by repeating it k times in s. Keep track of the longest valid subsequence found during the DFS traversal. Use a frequency array to limit the number of times each character can be used in the subsequence based on its frequency in s divided by k.
+class Solution
+{
 public:
-    string longestSubsequenceRepeatedK(string s, int k) {
-        vector<int> freq(26, 0);
-        for (char c : s) freq[c - 'a']++;
-        vector<char> valid;
-        for (int c = 25; c >= 0; c--) if (freq[c] >= k) valid.push_back('a' + c);
+    string s, ans;
+    int k;
+    vector<int> lim;
+    int remain;
 
-        vector<string> cur;
-        for (char c : valid) cur.push_back(string(1, c));
-        string best = "";
-        while (!cur.empty()) {
-            vector<string> next;
-            for (auto& cand : cur) {
-                if (isKSub(s, cand, k)) {
-                    if (cand.size() > best.size()) best = cand;
-                    for (char c : valid) next.push_back(cand + c);
+    bool check(const string &t)
+    {
+        if (t.empty())
+            return true;
+        int j = 0, cnt = 0;
+        for (char ch : s)
+        {
+            if (ch == t[j])
+            {
+                j++;
+                if (j == (int)t.size())
+                {
+                    cnt++;
+                    if (cnt == k)
+                        return true;
+                    j = 0;
                 }
             }
-            cur = next;
         }
-        return best;
+        return false;
+    }
+
+    void dfs(string &cur)
+    {
+        if (!cur.empty() && !check(cur))
+            return;
+
+        if (cur.size() > ans.size() ||
+            (cur.size() == ans.size() && cur > ans))
+        {
+            ans = cur;
+        }
+
+        if ((int)cur.size() + remain <= (int)ans.size())
+            return;
+
+        for (int c = 25; c >= 0; c--)
+        {
+            if (lim[c] == 0)
+                continue;
+
+            lim[c]--;
+            remain--;
+            cur.push_back(char('a' + c));
+
+            dfs(cur);
+
+            cur.pop_back();
+            remain++;
+            lim[c]++;
+        }
+    }
+
+    string longestSubsequenceRepeatedK(string s, int k)
+    {
+        this->s = s;
+        this->k = k;
+
+        vector<int> freq(26, 0);
+        for (char ch : s)
+            freq[ch - 'a']++;
+
+        lim.assign(26, 0);
+        remain = 0;
+        for (int i = 0; i < 26; i++)
+        {
+            lim[i] = freq[i] / k;
+            remain += lim[i];
+        }
+
+        string cur = "";
+        dfs(cur);
+        return ans;
     }
 };

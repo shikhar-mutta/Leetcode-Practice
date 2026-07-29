@@ -3,33 +3,73 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
-// TC: O(rows*cols)  SC: O(rows*cols)
-// Approach: dp[i][j] = max pyramid height with apex at (i,j) growing toward
-// increasing rows (base below), computed as
-// min(dp[i+1][j-1],dp[i+1][j],dp[i+1][j+1])+1 when grid[i][j]==1. Each cell
-// with dp[i][j]=h contributes h-1 valid pyramids (heights 2..h). Repeat with
-// rows reversed for inverted pyramids and sum both totals.
-class Solution {
-    long long countOneDirection(vector<vector<int>>& grid) {
-        int rows = grid.size(), cols = grid[0].size();
-        vector<vector<int>> dp(rows, vector<int>(cols, 0));
-        long long total = 0;
-        for (int i = rows - 1; i >= 0; i--) {
-            for (int j = 0; j < cols; j++) {
-                if (grid[i][j] == 0) { dp[i][j] = 0; continue; }
-                if (i == rows - 1 || j == 0 || j == cols - 1) dp[i][j] = 1;
-                else dp[i][j] = min({dp[i+1][j-1], dp[i+1][j], dp[i+1][j+1]}) + 1;
-                total += dp[i][j] - 1;
+// TC: O(m*n)  SC: O(n)
+//   Approach: For each row, maintain the height of the pyramid that can be formed at each column. Use dynamic programming to update the height based on the previous row's heights and the current row's values. Count the number of pyramids by summing the heights of the pyramids at each column, subtracting 1 to exclude the apex of the pyramid. Repeat the process for the inverted grid to count the inverted pyramids and return the total count.
+int widthFor(int h)
+{
+    // 1 1
+    // 2 3
+    // 3 5
+    // 4 7
+    return h * 2 - 1;
+}
+int heightFor(int w)
+{
+    return (w + 1) / 2;
+}
+int doCount(span<const vector<int>> grid)
+{
+    const int m = grid.size(), n = grid[0].size();
+    vector<int> pH(n), nH(n);
+    for (int j = 0; j < n; ++j)
+        nH[j] = grid[0][j];
+    int total = 0;
+    for (int i = 1; i < m; ++i)
+    {
+        swap(pH, nH);
+        for (int j = 0, len = 0; j < n; ++j)
+        {
+            if (!grid[i][j])
+            {
+                nH[j] = 0;
+                len = 0;
+                continue;
             }
+            nH[j] = 1;
+            ++len;
+            if (j == 0)
+                continue;
+            if (len >= widthFor(pH[j - 1] + 1))
+            {
+                nH[j] = pH[j - 1] + 1;
+            }
+            else
+            {
+                nH[j] = heightFor(len);
+            }
+            // println("h[{}][{}]={}", i, j, nH[j]);
+            total += (nH[j] - 1);
         }
-        return total;
     }
+    return total;
+}
+
+class Solution
+{
 public:
-    int countPyramids(vector<vector<int>>& grid) {
-        long long total = countOneDirection(grid);
-        reverse(grid.begin(), grid.end());
-        total += countOneDirection(grid);
-        return (int)total;
+    int countPyramids(vector<vector<int>> &grid)
+    {
+        const int m = grid.size();
+        if (m < 2)
+            return 0;
+        // 2: 1
+        // 3: 3+1
+        // 4: 5+3+1
+        // 3*1 + 2*3 + 1*5
+        int total = doCount(grid);
+        // println("{} ================================================================================", total);
+        std::ranges::reverse(grid);
+        total += doCount(grid);
+        return total;
     }
 };

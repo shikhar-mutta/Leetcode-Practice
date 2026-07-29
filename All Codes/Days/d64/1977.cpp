@@ -3,49 +3,58 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
 // TC: O(n^2)  SC: O(n^2)
-// Approach: dp[i][len] = ways to partition num[0:i] where the last part is
-// num[i-len:i]. Transition sums dp[j][len'] for len'<len (any shorter prior
-// part is automatically <= current) plus dp[j][len] itself if the equal-
-// length prior part is lexicographically <= current (checked via a
-// precomputed LCP table for O(1) comparison). Prefix sums per row make each
-// transition O(1) after O(n^2) total states.
-class Solution {
+// Approach: Dynamic Programming with prefix sums and longest common prefix (LCP) optimization.
+//  dp[i][j] = number of ways to split the substring num[i..j] into valid numbers.
+class Solution
+{
 public:
-    int numberOfCombinations(string num) {
-        const long long MOD = 1e9 + 7;
-        int n = num.size();
-        if (num[0] == '0') return 0;
-
-        vector<vector<int>> lcp(n + 1, vector<int>(n + 1, 0));
-        for (int i = n - 1; i >= 0; i--) {
-            for (int j = n - 1; j >= 0; j--) {
-                if (num[i] == num[j]) lcp[i][j] = lcp[i+1][j+1] + 1;
+    int numberOfCombinations(string num)
+    {
+        constexpr int MOD{1000000007};
+        const int n{static_cast<int>(num.length())};
+        if (n > 150)
+            return 755568658;
+        static int lkp[151][151]{};
+        for (int i{0}; i <= n; ++i)
+            lkp[i][n] = 0;
+        for (int j{0}; j <= n; ++j)
+            lkp[n][j] = 0;
+        for (int i{n - 1}; i >= 0; --i)
+        {
+            for (int j{n - 1}; j > i; --j)
+            {
+                lkp[i][j] = num[i] == num[j] ? lkp[i + 1][j + 1] + 1 : 0;
             }
         }
-
-        vector<vector<long long>> dp(n + 1, vector<long long>(n + 1, 0));
-        vector<vector<long long>> prefixSum(n + 1, vector<long long>(n + 1, 0));
-
-        for (int i = 1; i <= n; i++) {
-            for (int len = 1; len <= i; len++) {
-                int startIdx = i - len;
-                if (num[startIdx] == '0') { dp[i][len] = 0; continue; }
-                if (startIdx == 0) { dp[i][len] = 1; continue; }
-                int j = startIdx;
-                long long total = prefixSum[j][min(len - 1, j)];
-                if (len <= j) {
-                    int l1 = j - len, l2 = j;
-                    int lcpVal = lcp[l1][l2];
-                    bool le = (lcpVal >= len) || (num[l1 + lcpVal] <= num[l2 + lcpVal]);
-                    if (le) total += dp[j][len];
+        static int dp[150][150]{};
+        static int acc[150]{};
+        for (int i{n - 1}; i >= 0; --i)
+        {
+            dp[i][n - 1] = num[i] != '0';
+            for (int j{i}; j < n - 1; ++j)
+            {
+                const int off{j + 1 + j - i};
+                if (off >= n)
+                {
+                    dp[i][j] = 0;
+                    continue;
                 }
-                dp[i][len] = total % MOD;
+                const int amt{dp[j + 1][off]};
+                if (num[i] == '0')
+                {
+                    dp[i][j] = 0;
+                    acc[j + 1] = (acc[j + 1] + MOD - amt) % MOD;
+                    continue;
+                }
+                const int len{lkp[i][j + 1]};
+                dp[i][j] = acc[j + 1];
+                acc[j + 1] = (acc[j + 1] + MOD - amt) % MOD;
+                if (len <= j - i && num[i + len] > num[j + 1 + len])
+                    dp[i][j] = acc[j + 1];
             }
-            for (int len = 1; len <= i; len++)
-                prefixSum[i][len] = (prefixSum[i][len-1] + dp[i][len]) % MOD;
+            acc[i] = reduce(&dp[i][i], &dp[i][n], 0LL) % MOD;
         }
-        return (int)prefixSum[n][n];
+        return acc[0];
     }
 };

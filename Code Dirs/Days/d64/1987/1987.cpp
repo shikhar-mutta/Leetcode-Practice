@@ -3,28 +3,32 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
 // TC: O(n)  SC: O(1)
-// Approach: track end0/end1 = count of distinct good subsequences (no
-// leading zero) ending in 0/1. A '1' can start a fresh subsequence (+1) or
-// extend any existing one; a '0' can only extend (never starts a valid
-// multi-digit number). Add 1 at the end if the string contains any '0',
-// accounting for the standalone subsequence "0".
-class Solution {
+// Approach: Use dynamic programming to count the number of unique good subsequences. We can keep track of the number of good subsequences that end with '0' and the number of good subsequences that end with '1'. We can also keep track of whether we have seen a '0' in the string. If we have seen a '0', we can add 1 to the count of good subsequences to account for the empty subsequence. Finally, we return the sum of the counts of good subsequences that end with '0' and '1', plus 1 if we have seen a '0'.
+class Solution
+{
 public:
-    int numberOfUniqueGoodSubsequences(string binary) {
-        const long long MOD = 1e9 + 7;
-        long long end0 = 0, end1 = 0;
-        bool hasZero = false;
-        for (char c : binary) {
-            if (c == '1') {
-                end1 = (end0 + end1 + 1) % MOD;
-            } else {
-                hasZero = true;
-                end0 = (end0 + end1) % MOD;
+    int mod = 1e9 + 7;
+    int numberOfUniqueGoodSubsequences(string binary)
+    {
+        bool haszero = false;
+        int end0 = 0;
+        int end1 = 0;
+        for (int i = 0; i < binary.size(); i++)
+        {
+            if (binary[i] == '1')
+            {
+                end1 = (end0 + end1 + 1) % mod;
+            }
+            else
+            {
+                haszero = true;
+                end0 = (end0 + end1) % mod;
             }
         }
-        long long ans = (end0 + end1 + (hasZero ? 1 : 0)) % MOD;
-        return (int)ans;
+        if (haszero)
+            return (end0 + end1 + 1) % mod;
+        else
+            return end0 + end1;
     }
 };

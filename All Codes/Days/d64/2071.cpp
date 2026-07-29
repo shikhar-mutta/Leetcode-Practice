@@ -3,42 +3,62 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
-// TC: O(n log n * log n)  SC: O(n)
-// Approach: binary search on the number of tasks k assignable. Feasibility
-// check: take the k weakest tasks and k strongest workers; greedily match
-// from the strongest task down — if the strongest available worker can do it
-// unaided, use them; otherwise use a pill on the weakest worker who can do it
-// (found via multiset lower_bound), consuming a pill. Feasible iff pills
-// suffice.
-class Solution {
-    bool feasible(vector<int>& tasks, vector<int>& workers, int pills, int strength, int k) {
-        multiset<int> ws(workers.end() - k, workers.end());
-        int pillsLeft = pills;
-        for (int i = k - 1; i >= 0; i--) {
-            int task = tasks[i];
-            auto it = prev(ws.end());
-            if (*it >= task) {
-                ws.erase(it);
-            } else {
-                auto need = ws.lower_bound(task - strength);
-                if (need == ws.end() || pillsLeft == 0) return false;
-                pillsLeft--;
-                ws.erase(need);
+//TC: O(nlogn + mlogm + log(min(n, m)) * min(n, m))  SC: O(min(n, m))
+//Approach: Sort tasks and workers. Use binary search to find the maximum number of tasks that can be assigned. For each mid value, use a deque to keep track of available workers and check if the tasks can be assigned with the given number of pills and strength.
+class Solution
+{
+public:
+    bool canAssign(vector<int> &tasks, vector<int> &workers, int pills,
+                   int strength, int k)
+    {
+        deque<int> dq;
+        int w = workers.size() - 1;
+
+        for (int i = k - 1; i >= 0; i--)
+        {
+            if (!dq.empty() && dq.front() >= tasks[i])
+            {
+                dq.pop_front();
+            }
+            else if (w >= 0 && workers[w] >= tasks[i])
+            {
+                w--;
+            }
+            else
+            {
+                while (w >= 0 && workers[w] + strength >= tasks[i])
+                {
+                    dq.push_back(workers[w--]);
+                }
+                if (dq.empty() || pills == 0)
+                    return false;
+                dq.pop_back();
+                pills--;
             }
         }
         return true;
     }
-public:
-    int maxTaskAssign(vector<int>& tasks, vector<int>& workers, int pills, int strength) {
+    int maxTaskAssign(vector<int> &tasks, vector<int> &workers, int pills,
+                      int strength)
+    {
+        int m = tasks.size(), n = workers.size();
         sort(tasks.begin(), tasks.end());
         sort(workers.begin(), workers.end());
-        int lo = 0, hi = min(tasks.size(), workers.size());
-        while (lo < hi) {
-            int mid = (lo + hi + 1) / 2;
-            if (feasible(tasks, workers, pills, strength, mid)) lo = mid;
-            else hi = mid - 1;
+
+        int l = 0, r = min(m, n), ans = 0;
+
+        while (l < r)
+        {
+            int mid = (l + r + 1) / 2;
+            if (canAssign(tasks, workers, pills, strength, mid))
+            {
+                l = mid;
+            }
+            else
+            {
+                r = mid - 1;
+            }
         }
-        return lo;
+        return l;
     }
 };

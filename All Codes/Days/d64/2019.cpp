@@ -3,61 +3,105 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
-// TC: O(n^4) for the interval DP (n = token count, small)  SC: O(n^2)
-// Approach: tokenize into numbers/operators. Compute the true answer via
-// standard precedence evaluation. Separately, interval DP over all possible
-// bracketings/orderings of operations enumerates every value a student could
-// reach by evaluating naively left-to-right in some split order (capped at
-// 1000). Score 5 for the correct answer, 2 for any other reachable value,
-// else 0.
-class Solution {
+// TC: O(n^3)  SC: O(n^2)
+//  Approach: Use dynamic programming to calculate all possible results of the expression by considering all possible ways to parenthesize the expression. Store the results in a 2D vector of unordered sets. Then, for each answer in the answers vector, check if it matches the correct value or if it is present in the set of possible results. Calculate the score based on the matching criteria.
+#pragma GCC optimize("O3,unroll-loops")
+#pragma GCC target("avx2,bmi,bmi2,lzcnt,popcnt")
+#include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+const int MOD = 1e9 + 7;
+const int INF = 1e9;
+const ll LINF = 1e18;
+class Solution
+{
 public:
-    int scoreOfStudents(string s, vector<int>& answers) {
-        vector<int> nums;
-        vector<char> ops;
-        int i = 0, n = s.size();
-        while (i < n) {
-            int v = 0;
-            while (i < n && isdigit(s[i])) { v = v * 10 + (s[i] - '0'); i++; }
-            nums.push_back(v);
-            if (i < n) { ops.push_back(s[i]); i++; }
+    int scoreOfStudents(string s, vector<int> &answers)
+    {
+        int correct_val = 0;
+        vector<int> st = {};
+        st.push_back(s[0] - '0');
+        for (int i = 1; i < s.length(); i += 2)
+        {
+            char op = s[i];
+            int val = s[i + 1] - '0';
+            if (op == '*')
+            {
+                st.back() *= val;
+            }
+            else
+            {
+                st.push_back(val);
+            }
         }
-        int m = nums.size();
-
-        // true evaluation (precedence)
-        vector<int> stk;
-        stk.push_back(nums[0]);
-        for (int k = 0; k < (int)ops.size(); k++) {
-            if (ops[k] == '*') stk.back() *= nums[k+1];
-            else stk.push_back(nums[k+1]);
+        for (int x : st)
+        {
+            correct_val += x;
         }
-        int correct = 0;
-        for (int v : stk) correct += v;
 
-        vector<vector<set<int>>> dp(m, vector<set<int>>(m));
-        for (int idx = 0; idx < m; idx++) dp[idx][idx].insert(nums[idx]);
-        for (int len = 2; len <= m; len++) {
-            for (int l = 0; l + len - 1 < m; l++) {
-                int r = l + len - 1;
-                for (int k = l; k < r; k++) {
-                    char op = ops[k];
-                    for (int a : dp[l][k]) {
-                        for (int b : dp[k+1][r]) {
-                            int val = (op == '+') ? a + b : a * b;
-                            if (val <= 1000) dp[l][r].insert(val);
+        int m = (s.length() + 1) / 2;
+        vector<int> val(m);
+        vector<char> op(m - 1);
+        for (int i = 0; i < m; ++i)
+        {
+            val[i] = s[2 * i] - '0';
+        }
+        for (int i = 0; i < m - 1; ++i)
+        {
+            op[i] = s[2 * i + 1];
+        }
+
+        vector<vector<unordered_set<int>>> dp(m, vector<unordered_set<int>>(m));
+        for (int i = 0; i < m; ++i)
+        {
+            dp[i][i].insert(val[i]);
+        }
+        for (int len = 2; len <= m; ++len)
+        {
+            for (int i = 0; i <= m - len; ++i)
+            {
+                int j = i + len - 1;
+                for (int k = i; k < j; ++k)
+                {
+                    char o = op[k];
+                    for (int x : dp[i][k])
+                    {
+                        for (int y : dp[k + 1][j])
+                        {
+                            int res_val = (o == '+') ? (x + y) : (x * y);
+                            if (res_val <= 1000)
+                            {
+                                dp[i][j].insert(res_val);
+                            }
                         }
                     }
                 }
             }
         }
 
-        auto& possible = dp[0][m-1];
-        int score = 0;
-        for (int ans : answers) {
-            if (ans == correct) score += 5;
-            else if (possible.count(ans)) score += 2;
+        vector<bool> possible(1005, false);
+        for (int x : dp[0][m - 1])
+        {
+            if (x <= 1000)
+            {
+                possible[x] = true;
+            }
         }
+
+        int score = 0;
+        for (int i = 0; i < answers.size(); i++)
+        {
+            int ans = answers[i];
+            if (ans == correct_val)
+            {
+                score += 5;
+            }
+            else if (possible[ans])
+            {
+                score += 2;
+            }
+        }
+
         return score;
     }
 };

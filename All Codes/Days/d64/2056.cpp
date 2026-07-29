@@ -3,75 +3,52 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
-// TC: exponential in candidates but bounded (n<=4 pieces, board 8x8)
-// SC: O(candidates)
-// Approach: generate every candidate move (direction, distance including 0)
-// for each piece based on its type. Backtrack over one choice per piece,
-// simulating turn-by-turn positions (a piece stops once it reaches its
-// target) and rejecting any combination where two pieces ever occupy the
-// same square at the same timestep.
-class Solution {
-    struct Move { int dr, dc, steps; };
-    int n;
-    vector<vector<int>> startPos;
-    vector<vector<Move>> candidates;
-    int ans = 0;
-
-    bool simulate(vector<Move>& chosen) {
-        int maxT = 0;
-        for (auto& m : chosen) maxT = max(maxT, m.steps);
-        for (int t = 1; t <= maxT; t++) {
-            vector<pair<int,int>> pos;
-            for (int i = 0; i < n; i++) {
-                int s = min(t, chosen[i].steps);
-                int r = startPos[i][0] + chosen[i].dr * s;
-                int c = startPos[i][1] + chosen[i].dc * s;
-                pos.push_back({r, c});
-            }
-            sort(pos.begin(), pos.end());
-            for (int i = 1; i < n; i++) if (pos[i] == pos[i-1]) return false;
-        }
-        return true;
-    }
-
-    void backtrack(int idx, vector<Move>& chosen) {
-        if (idx == n) {
-            if (simulate(chosen)) ans++;
-            return;
-        }
-        for (auto& m : candidates[idx]) {
-            chosen.push_back(m);
-            backtrack(idx + 1, chosen);
-            chosen.pop_back();
-        }
-    }
+// TC: O(8^n)  SC: O(n)
+//   Approach: Use DFS to explore all possible move combinations for the given pieces on the chessboard. For each piece, generate all valid moves based on its type (rook, bishop, queen) and the current state of the board. Keep track of the occupied squares to avoid collisions and ensure that no two pieces occupy the same square. Count all valid combinations of moves for all pieces.
+class Solution
+{
 public:
-    int countCombinations(vector<string>& pieces, vector<vector<int>>& positions) {
-        n = pieces.size();
-        startPos = positions;
-        candidates.assign(n, {});
-        vector<pair<int,int>> rookDirs = {{1,0},{-1,0},{0,1},{0,-1}};
-        vector<pair<int,int>> bishopDirs = {{1,1},{1,-1},{-1,1},{-1,-1}};
-        for (int i = 0; i < n; i++) {
-            candidates[i].push_back({0, 0, 0});
-            vector<pair<int,int>> dirs;
-            if (pieces[i] == "rook") dirs = rookDirs;
-            else if (pieces[i] == "bishop") dirs = bishopDirs;
-            else { dirs = rookDirs; for (auto& d : bishopDirs) dirs.push_back(d); }
-            for (auto& [dr, dc] : dirs) {
-                int r = positions[i][0], c = positions[i][1];
-                int steps = 0;
-                while (true) {
-                    r += dr; c += dc;
-                    if (r < 1 || r > 8 || c < 1 || c > 8) break;
-                    steps++;
-                    candidates[i].push_back({dr, dc, steps});
-                }
-            }
-        }
-        vector<Move> chosen;
-        backtrack(0, chosen);
-        return ans;
+    int countCombinations(vector<string> &pieces, vector<vector<int>> &positions)
+    {
+        const int n{static_cast<int>(pieces.size())};
+        static int lkp[8][8]{};
+        memset(lkp, 0, sizeof(lkp));
+        auto dfs{[&](this auto &&dfs, int idx) -> int
+                 {
+                     if (idx >= n)
+                         return 1;
+                     static const pair<int, int> dir[8]{{-1, 0}, {0, -1}, {1, 0}, {0, 1}, {-1, -1}, {-1, 1}, {1, -1}, {1, 1}};
+                     const string &p{pieces[idx]};
+                     int i{positions[idx][0] - 1}, j{positions[idx][1] - 1};
+                     int ret{0};
+                     if (!lkp[i][j])
+                     {
+                         lkp[i][j] = -1;
+                         ret += dfs(idx + 1);
+                         lkp[i][j] = 0;
+                     }
+                     for (const auto [di, dj] : p.front() == 'r' ? span<const pair<int, int>>{dir, dir + 4} : (p.front() == 'b' ? span<const pair<int, int>>{dir + 4, dir + 8} : span<const pair<int, int>>{dir, dir + 8}))
+                     {
+                         int ni{i + di}, nj{j + dj};
+                         int t{1};
+                         for (; ni >= 0 && nj >= 0 && ni < 8 && nj < 8; ni += di, nj += dj, t <<= 1)
+                         {
+                             if (lkp[ni][nj] & t)
+                                 break;
+                             int inv{t - 1};
+                             if ((lkp[ni][nj] & ~inv) == 0)
+                             {
+                                 lkp[ni][nj] |= ~inv;
+                                 ret += dfs(idx + 1);
+                                 lkp[ni][nj] &= inv;
+                             }
+                             lkp[ni][nj] |= t;
+                         }
+                         for (ni -= di, nj -= dj, t >>= 1; ni != i || nj != j; ni -= di, nj -= dj, t >>= 1)
+                             lkp[ni][nj] ^= t;
+                     }
+                     return ret;
+                 }};
+        return dfs(0);
     }
 };

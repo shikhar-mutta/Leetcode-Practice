@@ -3,30 +3,57 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-class Solution {
-    int best;
+// TC: O(nlogn) SC: O(n)
+//  Approach: Binary Search + Backtracking
+//   We can use binary search to find the minimum time required to finish all jobs. We can use backtracking to check if we can assign the jobs to the workers such that the maximum time taken by any worker is less than or equal to the mid value. If we can assign the jobs, we update the answer and search for a smaller value. Otherwise, we search for a larger value.
+class Solution
+{
 public:
-    int minimumTimeRequired(vector<int>& jobs, int k) {
-        sort(jobs.begin(), jobs.end(), greater<int>());
-        vector<int> load(k, 0);
-        best = accumulate(jobs.begin(), jobs.end(), 0);
-        dfs(jobs, 0, load, 0);
-        return best;
+    bool dfs(int ind, vector<int> &jobs, vector<int> &workers, int mid)
+    {
+        if (ind == jobs.size())
+            return true;
+        for (int i = 0; i < workers.size(); i++)
+        {
+            if (jobs[ind] + workers[i] <= mid)
+            {
+                workers[i] += jobs[ind];
+
+                if (dfs(ind + 1, jobs, workers, mid))
+                    return true;
+                workers[i] -= jobs[ind];
+            }
+            if (workers[i] == 0)
+                break;
+            if (workers[i] + jobs[ind] == mid)
+                break;
+        }
+        return false;
     }
 
-    void dfs(vector<int>& jobs, int idx, vector<int>& load, int curMax) {
-        if (idx == (int)jobs.size()) {
-            best = min(best, curMax);
-            return;
+    bool canassign(int mid, vector<int> &jobs, int k)
+    {
+        vector<int> workers(k, 0);
+        return dfs(0, jobs, workers, mid);
+    }
+    int minimumTimeRequired(vector<int> &jobs, int k)
+    {
+        int low = *max_element(jobs.begin(), jobs.end());
+        int high = accumulate(jobs.begin(), jobs.end(), 0);
+        sort(jobs.rbegin(), jobs.rend());
+        int mid;
+        int ans = -1;
+        while (low <= high)
+        {
+            mid = (low + high) / 2;
+            if (canassign(mid, jobs, k))
+            {
+                ans = mid;
+                high = mid - 1;
+            }
+            else
+                low = mid + 1;
         }
-        if (curMax >= best) return;
-        unordered_set<int> tried;
-        for (int i = 0; i < (int)load.size(); i++) {
-            if (tried.count(load[i])) continue;
-            tried.insert(load[i]);
-            load[i] += jobs[idx];
-            dfs(jobs, idx + 1, load, max(curMax, load[i]));
-            load[i] -= jobs[idx];
-        }
+        return ans;
     }
 };

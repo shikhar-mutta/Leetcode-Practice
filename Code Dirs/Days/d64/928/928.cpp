@@ -3,66 +3,149 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
-// TC: O(n^2 * alpha(n))  SC: O(n)
-// Approach: union-find using only edges between non-initial ("clean")
-// nodes, giving components that would exist if all initial nodes were
-// removed. For each initial node, look at which clean components its
-// (non-initial) neighbors belong to; a component only ever gets
-// infected if exactly one initial node touches it — removing that node
-// saves the whole component. Sum a node's exclusive-component sizes as
-// its "save" value, and pick the node with the largest save (ties
-// broken by smallest index); if no node has any exclusive save, the
-// answer is just the smallest initial index.
-class Solution {
-    vector<int> parent;
-    int find(int x) { return parent[x] == x ? x : parent[x] = find(parent[x]); }
-    void unite(int a, int b) {
-        a = find(a); b = find(b);
-        if (a != b) parent[a] = b;
-    }
+// TC: O(n^2)  SC: O(n)
+// Approach: DSU. Build connected components, count infected nodes in each component. If a component has only one infected node, removing it will save the entire component. Return the node that saves the most nodes (tie-breaker: smallest index).
+class UnionFind
+{
 public:
-    int minMalwareSpread(vector<vector<int>>& graph, vector<int>& initial) {
-        int n = graph.size();
-        unordered_set<int> infected(initial.begin(), initial.end());
-        parent.resize(n);
+    UnionFind(int n)
+    {
+        parent = vector<int>(n);
+        componentSize = vector<int>(n, 1);
+        // Initialize each node as its own parent
         iota(parent.begin(), parent.end(), 0);
+    }
 
-        for (int i = 0; i < n; i++) {
-            if (infected.count(i)) continue;
-            for (int j = i + 1; j < n; j++) {
-                if (infected.count(j)) continue;
-                if (graph[i][j]) unite(i, j);
-            }
+    // Unite two components, return true if they were in different components
+    bool unite(int nodeA, int nodeB)
+    {
+        int rootA = find(nodeA);
+        int rootB = find(nodeB);
+
+        // Already in the same component
+        if (rootA == rootB)
+        {
+            return false;
         }
 
-        vector<int> compSize(n, 0);
-        for (int i = 0; i < n; i++) if (!infected.count(i)) compSize[find(i)]++;
+        // Union by size: attach smaller tree under root of larger tree
+        if (componentSize[rootA] > componentSize[rootB])
+        {
+            parent[rootB] = rootA;
+            componentSize[rootA] += componentSize[rootB];
+        }
+        else
+        {
+            parent[rootA] = rootB;
+            componentSize[rootB] += componentSize[rootA];
+        }
+        return true;
+    }
 
-        unordered_map<int, unordered_set<int>> compTouchers; // root -> set of infected nodes touching it
-        for (int x : initial) {
-            for (int j = 0; j < n; j++) {
-                if (graph[x][j] && !infected.count(j)) {
-                    compTouchers[find(j)].insert(x);
+    // Find root of component with path compression
+    int find(int node)
+    {
+        if (parent[node] != node)
+        {
+            parent[node] = find(parent[node]); // Path compression
+        }
+        return parent[node];
+    }
+
+    // Get size of the component containing the given root
+    int getSize(int root) { return componentSize[root]; }
+
+private:
+    vector<int> parent;        // Parent array for union-find
+    vector<int> componentSize; // Size of each component
+};
+
+class Solution
+{
+public:
+    int minMalwareSpread(vector<vector<int>> &graph, vector<int> &initial)
+    {
+        int n = graph.size();
+
+        // Mark initially infected nodes
+        bool isInfected[n];
+        memset(isInfected, false, sizeof(isInfected));
+        for (int node : initial)
+        {
+            isInfected[node] = true;
+        }
+
+        // Build union-find for non-infected nodes
+        UnionFind uf(n);
+        for (int i = 0; i < n; ++i)
+        {
+            if (!isInfected[i])
+            {
+                for (int j = i + 1; j < n; ++j)
+                {
+                    // Connect non-infected nodes that have an edge
+                    if (graph[i][j] && !isInfected[j])
+                    {
+                        uf.unite(i, j);
+                    }
                 }
             }
         }
 
-        unordered_map<int,long long> save;
-        for (auto& [root, touchers] : compTouchers) {
-            if (touchers.size() == 1) {
-                int x = *touchers.begin();
-                save[x] += compSize[root];
+        // For each infected node, find which non-infected components it
+        // connects to
+        unordered_set<int> connectedComponents[n];
+        // Count how many infected nodes connect to each component
+        int componentInfectionCount[n];
+        memset(componentInfectionCount, 0, sizeof(componentInfectionCount));
+
+        for (int infectedNode : initial)
+        {
+            // Find all non-infected components this infected node connects to
+            for (int j = 0; j < n; ++j)
+            {
+                if (!isInfected[j] && graph[infectedNode][j])
+                {
+                    connectedComponents[infectedNode].insert(uf.find(j));
+                }
+            }
+            // Increment count for each connected component
+            for (int componentRoot : connectedComponents[infectedNode])
+            {
+                ++componentInfectionCount[componentRoot];
             }
         }
 
-        sort(initial.begin(), initial.end());
-        int best = initial[0];
-        long long bestSave = -1;
-        for (int x : initial) {
-            long long s = save.count(x) ? save[x] : 0;
-            if (s > bestSave) { bestSave = s; best = x; }
+        // Find the best node to remove (minimize final infection spread)
+        int bestNodeToRemove = 0;
+        int maxNodesSaved = -1;
+
+        for (int infectedNode : initial)
+        {
+            int nodesSaved = 0;
+
+            // Count nodes that would be saved by removing this infected node
+            for (int componentRoot : connectedComponents[infectedNode])
+            {
+                // Only count components that are connected to exactly one
+                // infected node
+                if (componentInfectionCount[componentRoot] == 1)
+                {
+                    nodesSaved += uf.getSize(componentRoot);
+                }
+            }
+
+            // Update best choice (maximize saved nodes, minimize node index on
+            // tie)
+            if (nodesSaved > maxNodesSaved ||
+                (nodesSaved == maxNodesSaved &&
+                 infectedNode < bestNodeToRemove))
+            {
+                bestNodeToRemove = infectedNode;
+                maxNodesSaved = nodesSaved;
+            }
         }
-        return best;
+
+        return bestNodeToRemove;
     }
 };

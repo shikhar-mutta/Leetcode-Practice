@@ -3,56 +3,58 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
-// TC: O(n log n)  SC: O(n)
-// Approach: precompute, for each index i, oddNext[i] = index of the
-// nearest later element that is the smallest value >= arr[i] (an "odd"
-// jump target), and evenNext[i] = nearest later index with the largest
-// value <= arr[i]. Both computed via sorting indices by value (with
-// index as tiebreaker) and a monotonic stack scan. Then DP from the end:
-// canOdd[i]/canEven[i] track whether starting an odd/even jump from i
-// can reach the last index; answer counts indices where an odd jump
-// (the required first move) succeeds.
-class Solution {
-    vector<int> nextIndexMonotonic(vector<int>& idxSorted, int n) {
-        vector<int> result(n, -1);
-        stack<int> stk; // indices (original) with increasing "processed order" property
-        for (int idx : idxSorted) {
-            while (!stk.empty() && stk.top() < idx) {
-                result[stk.top()] = idx;
-                stk.pop();
-            }
-            stk.push(idx);
-        }
-        return result;
-    }
+// TC: O(n log n) SC: O(n)
+//  Approach: We can use a greedy approach to solve this problem. We can keep track of the next higher and next lower indices for each index in the array. We can use a stack to keep track of the indices in the array and update the next higher and next lower indices accordingly. We can then use dynamic programming to keep track of the odd and even jumps for each index in the array. The final answer will be the number of indices that can reach the end of the array using odd jumps.
+class Solution
+{
 public:
-    int oddEvenJumps(vector<int>& arr) {
+    int oddEvenJumps(vector<int> &arr)
+    {
         int n = arr.size();
-        vector<int> idx(n);
-        iota(idx.begin(), idx.end(), 0);
-
-        vector<int> ascIdx = idx, descIdx = idx;
-        sort(ascIdx.begin(), ascIdx.end(), [&](int a, int b) {
-            if (arr[a] != arr[b]) return arr[a] < arr[b];
-            return a < b;
-        });
-        sort(descIdx.begin(), descIdx.end(), [&](int a, int b) {
-            if (arr[a] != arr[b]) return arr[a] > arr[b];
-            return a < b;
-        });
-
-        vector<int> oddNext = nextIndexMonotonic(ascIdx, n);
-        vector<int> evenNext = nextIndexMonotonic(descIdx, n);
-
-        vector<bool> canOdd(n, false), canEven(n, false);
-        canOdd[n - 1] = canEven[n - 1] = true;
-        int count = 1;
-        for (int i = n - 2; i >= 0; i--) {
-            if (oddNext[i] != -1) canOdd[i] = canEven[oddNext[i]];
-            if (evenNext[i] != -1) canEven[i] = canOdd[evenNext[i]];
-            if (canOdd[i]) count++;
+        vector<int> nextHigher(n, -1), nextLower(n, -1);
+        // Next Higher
+        vector<pair<int, int>> v;
+        for (int i = 0; i < n; i++)
+            v.push_back({arr[i], i});
+        sort(v.begin(), v.end());
+        stack<int> st;
+        for (auto &[val, idx] : v)
+        {
+            while (!st.empty() && idx > st.top())
+            {
+                nextHigher[st.top()] = idx;
+                st.pop();
+            }
+            st.push(idx);
         }
-        return count;
+        // Next Lower
+        v.clear();
+        for (int i = 0; i < n; i++)
+            v.push_back({-arr[i], i});
+        sort(v.begin(), v.end());
+        while (!st.empty())
+            st.pop();
+        for (auto &[val, idx] : v)
+        {
+            while (!st.empty() && idx > st.top())
+            {
+                nextLower[st.top()] = idx;
+                st.pop();
+            }
+            st.push(idx);
+        }
+        vector<bool> odd(n, false), even(n, false);
+        odd[n - 1] = even[n - 1] = true;
+        for (int i = n - 2; i >= 0; i--)
+        {
+            if (nextHigher[i] != -1)
+                odd[i] = even[nextHigher[i]];
+            if (nextLower[i] != -1)
+                even[i] = odd[nextLower[i]];
+        }
+        int ans = 0;
+        for (bool x : odd)
+            ans += x;
+        return ans;
     }
 };

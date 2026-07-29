@@ -3,21 +3,47 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-class Solution {
+// TC: O(nlogn) where n is the size of the input array
+// SC: O(n) where n is the size of the input array
+// Approach: We can use the concept of Longest Increasing Subsequence (LIS) and Longest Decreasing Subsequence (LDS) to solve this problem. We can find the LIS from the left and the LDS from the right for each element in the array. The minimum number of removals required to make the array a mountain array will be equal to the size of the array minus the maximum length of the mountain array that can be formed using the LIS and LDS.
+class Solution
+{
 public:
-    int minimumMountainRemovals(vector<int>& nums) {
+    vector<int> func(vector<int> &nums)
+    {
+        vector<int> lis;
+        vector<int> lisLen(nums.size(), 1);
+        for (int i = 0; i < nums.size(); i++)
+        {
+            if (lis.empty() || nums[i] > lis.back())
+            {
+                lis.push_back(nums[i]);
+            }
+            else
+            {
+                int idx =
+                    lower_bound(lis.begin(), lis.end(), nums[i]) - lis.begin();
+                lis[idx] = nums[i];
+            }
+            lisLen[i] = lis.size();
+        }
+        return lisLen;
+    }
+    int minimumMountainRemovals(vector<int> &nums)
+    {
         int n = nums.size();
-        vector<int> inc(n, 1), dec(n, 1);
+        vector<int> lis = func(nums);
+        reverse(nums.begin(), nums.end());
+        vector<int> lds = func(nums);
+        reverse(lds.begin(), lds.end());
+        int ans = 1e9;
         for (int i = 0; i < n; i++)
-            for (int j = 0; j < i; j++)
-                if (nums[j] < nums[i]) inc[i] = max(inc[i], inc[j] + 1);
-        for (int i = n - 1; i >= 0; i--)
-            for (int j = n - 1; j > i; j--)
-                if (nums[j] < nums[i]) dec[i] = max(dec[i], dec[j] + 1);
-        int best = 0;
-        for (int i = 0; i < n; i++)
-            if (inc[i] > 1 && dec[i] > 1)
-                best = max(best, inc[i] + dec[i] - 1);
-        return n - best;
+        {
+            if (lis[i] > 1 && lds[i] > 1)
+            {
+                ans = min(ans, n - (lis[i] + lds[i] - 1));
+            }
+        }
+        return ans;
     }
 };

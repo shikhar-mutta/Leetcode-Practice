@@ -3,29 +3,67 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
-// TC: O(n^2 * d)  SC: O(n * d)
-// Approach: dp[i][day] = min total difficulty to schedule the first i
-// jobs over `day` days. Transition: for the last day's segment
-// [j+1..i], its cost is the max difficulty in that range; try every
-// split point j, tracking the running max as j decreases from i-1.
-class Solution {
-public:
-    int minDifficulty(vector<int>& jobDifficulty, int d) {
-        int n = jobDifficulty.size();
-        if (n < d) return -1;
+// TC: O(n*d) where n is the number of jobs and d is the number of days
+// SC: O(n*d) where n is the number of jobs and d is the number of days
+// Approach: Dynamic Programming
+// We can use a 2D dp array where dp[i][j] represents the minimum difficulty of scheduling the first i jobs in j days.
+// The base case is dp[0][0] = 0, which means that if there are no jobs and no days, the minimum difficulty is 0.
+// For each job, we can either schedule it on the current day or on a new day. If we schedule it on the current day, the difficulty of that day is the maximum difficulty of all jobs scheduled on that day. If we schedule it on a new day, the difficulty of that day is the difficulty of that job.
+class Solution
+{
+    int dp[301][11];
+    int func(vector<int> &jobDifficulty, int d, int i)
+    {
+        if (i == jobDifficulty.size())
+        {
+            return (d == 0) ? 0 : 1e9;
+        }
+        if (d == 0)
+            return 1e9;
+        if (dp[i][d] != -1)
+            return dp[i][d];
+        int ma = 0;
+        int din = INT_MAX;
+        for (int in = i; in < jobDifficulty.size(); in++)
+        {
+            ma = max(jobDifficulty[in], ma);
+            int co = ma + func(jobDifficulty, d - 1, in + 1);
+            din = min(din, co);
+        }
+        return dp[i][d] = din;
+    }
 
-        vector<vector<int>> dp(n + 1, vector<int>(d + 1, INT_MAX / 2));
-        dp[0][0] = 0;
-        for (int i = 1; i <= n; i++) {
-            for (int day = 1; day <= min(i, d); day++) {
-                int maxDiff = 0;
-                for (int j = i - 1; j >= day - 1; j--) {
-                    maxDiff = max(maxDiff, jobDifficulty[j]);
-                    dp[i][day] = min(dp[i][day], dp[j][day - 1] + maxDiff);
+public:
+    int minDifficulty(vector<int> &jobDifficulty, int d)
+    {
+        int n = jobDifficulty.size();
+        if (d > n)
+            return -1;
+        memset(dp, -1, sizeof(dp));
+        dp[n][0] = 0;
+        for (int i = 1; i <= d; i++)
+        {
+            dp[n][i] = 1e9;
+        }
+        for (int i = 0; i < n; i++)
+        {
+            dp[i][0] = 1e9;
+        }
+        for (int i = n - 1; i >= 0; i--)
+        {
+            for (int di = 1; di <= d; di++)
+            {
+                int ma = 0;
+                int din = INT_MAX;
+                for (int in = i; in < jobDifficulty.size(); in++)
+                {
+                    ma = max(jobDifficulty[in], ma);
+                    int co = ma + dp[in + 1][di - 1];
+                    din = min(din, co);
                 }
+                dp[i][di] = din;
             }
         }
-        return dp[n][d];
+        return dp[0][d];
     }
 };

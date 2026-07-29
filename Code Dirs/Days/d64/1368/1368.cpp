@@ -3,35 +3,70 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
 // TC: O(m*n)  SC: O(m*n)
-// Approach: 0-1 BFS using a deque. Moving in the direction the current
-// cell's arrow already points costs 0 (push front); moving any other
-// direction costs 1 (push back). This guarantees the deque stays sorted
-// by distance, giving Dijkstra-like correctness at O(1) per edge.
-class Solution {
+//  Approach: 0-1 BFS. The cost of moving to a neighbor is either 0 or 1, depending on whether the direction of the current cell matches the direction of the move. We can use a deque to perform a 0-1 BFS, where we push neighbors with cost 0 to the front of the deque and neighbors with cost 1 to the back.
+//  We keep track of the minimum cost to reach each cell, and when we reach the bottom-right cell, we return the minimum cost.
+class Solution
+{
 public:
-    int minCost(vector<vector<int>>& grid) {
-        int m = grid.size(), n = grid[0].size();
-        // direction encoding: 1=right,2=left,3=down,4=up
-        int dx[5] = {0,0,0,1,-1}, dy[5] = {0,1,-1,0,0};
-        vector<vector<int>> dist(m, vector<int>(n, INT_MAX));
-        dist[0][0] = 0;
-        deque<pair<int,int>> dq;
-        dq.push_back({0, 0});
-        while (!dq.empty()) {
-            auto [x, y] = dq.front(); dq.pop_front();
-            for (int d = 1; d <= 4; d++) {
-                int nx = x + dx[d], ny = y + dy[d];
-                if (nx < 0 || nx >= m || ny < 0 || ny >= n) continue;
-                int cost = (grid[x][y] == d) ? 0 : 1;
-                if (dist[x][y] + cost < dist[nx][ny]) {
-                    dist[nx][ny] = dist[x][y] + cost;
-                    if (cost == 0) dq.push_front({nx, ny});
-                    else dq.push_back({nx, ny});
+    int minCost(vector<vector<int>> &grid)
+    {
+        static const int INF = 1000000;
+        const int m = grid.size();
+        const int n = grid[0].size();
+        auto index = [&](int i, int j)
+        { return i * n + j; };
+        auto coordinates = [&](int index)
+        {
+            return array<int, 2>{index / n, index % n};
+        };
+        auto on_grid = [&](int i, int j)
+        {
+            return i >= 0 && i < m && j >= 0 && j < n;
+        };
+        struct offset
+        {
+            int i, j, label;
+        };
+        array<offset, 4> offsets{
+            {{0, 1, 1}, {0, -1, 2}, {1, 0, 3}, {-1, 0, 4}}};
+
+        vector<int> d(m * n, INF);
+        d[0] = 0;
+        vector<int> q0, q1;
+        q0.push_back(0);
+        int curdist = 0;
+        while (true)
+        {
+            while (!(q0.empty()))
+            {
+                int v = q0.back();
+                q0.pop_back();
+
+                if (d[v] < curdist)
+                    continue;
+                auto [i, j] = coordinates(v);
+                if (i == m - 1 && j == n - 1)
+                    return curdist;
+                auto val = grid[i][j];
+                for (auto [off_i, off_j, label] : offsets)
+                {
+                    int ni = i + off_i;
+                    int nj = j + off_j;
+                    if (on_grid(ni, nj))
+                    {
+                        int u = index(ni, nj);
+                        bool w = (label != val);
+                        if (d[v] + w < d[u])
+                        {
+                            d[u] = d[v] + w;
+                            (w ? q1 : q0).push_back(u);
+                        }
+                    }
                 }
             }
+            swap(q0, q1);
+            curdist++;
         }
-        return dist[m - 1][n - 1];
     }
 };

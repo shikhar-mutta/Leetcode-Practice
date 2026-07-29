@@ -3,39 +3,66 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
-// TC: O(n^2)  SC: O(n^2) worst case for the dedup set
-// Approach: precompute a rolling hash of `text` for O(1) substring hash
-// comparison. For every half-length L and start index i, check whether
-// text[i..i+L) equals text[i+L..i+2L) via hash equality (verified with
-// a direct compare to avoid collisions), and if so add that substring
-// to a set to track distinct echo substrings.
-class Solution {
+// TC: O(n^2)  SC: O(n^2)
+// Approach: For each starting index, use KMP to find all echo substrings starting at that index. Use a set to store distinct echo substrings.
+//  An echo substring is a substring that can be written as A + A, where A is a non-empty string. For each starting index, we build the prefix function (KMP) for the substring starting at that index. Whenever we find a prefix that matches a suffix, we check if the total length of the substring is even and if it can be split into two equal halves. If so, we add it to the set of distinct echo substrings.
+class Solution
+{
 public:
-    int distinctEchoSubstrings(string text) {
-        int n = text.size();
-        const unsigned long long BASE = 131, MOD = 1000000000000000003ULL;
-        vector<unsigned long long> h(n + 1, 0), power(n + 1, 1);
-        for (int i = 0; i < n; i++) {
-            h[i + 1] = (__uint128_t(h[i]) * BASE + text[i]) % MOD;
-            power[i + 1] = (__uint128_t(power[i]) * BASE) % MOD;
+    int distinctEchoSubstrings(string text)
+    {
+        unordered_set<string> result;
+        int len = text.size() - 1;
+        int start = 0;
+        while (start < len)
+        {
+            int subLen = KMP(text, start, result);
+            if (subLen != INT_MAX)
+            {
+                len = min(len, subLen);
+            }
+            start++;
         }
-        auto getHash = [&](int l, int r) { // [l, r)
-            unsigned long long sub = (__uint128_t(h[l]) * power[r - l]) % MOD;
-            unsigned long long res = (h[r] + MOD - sub) % MOD;
-            return res;
-        };
+        return result.size();
+    }
 
-        unordered_set<string> found;
-        for (int L = 1; 2 * L <= n; L++) {
-            for (int i = 0; i + 2 * L <= n; i++) {
-                if (getHash(i, i + L) == getHash(i + L, i + 2 * L)) {
-                    if (text.compare(i, L, text, i + L, L) == 0) {
-                        found.insert(text.substr(i, L));
-                    }
+    int KMP(string &text, int start, unordered_set<string> &result)
+    {
+        vector<int> prefix(text.size() - start, -1);
+        int n = prefix.size();
+        int lo = -1;
+        for (int hi = 1; hi < n; ++hi)
+        {
+            while (lo > -1 && text[start + lo + 1] != text[start + hi])
+            {
+                lo = prefix[lo];
+            }
+
+            if (text[start + lo + 1] == text[start + hi])
+            {
+                lo++;
+            }
+            prefix[hi] = lo;
+
+            if (lo + 1)
+            {
+                int totalLen = hi + 1;
+                int subLen = hi - lo;
+                if (totalLen % subLen == 0 && (totalLen / subLen) % 2 == 0)
+                {
+                    result.emplace(text.substr(start, totalLen));
                 }
             }
         }
-        return found.size();
+        if (prefix.back() + 1)
+        {
+            int totalLen = prefix.size();
+            int subLen = prefix.size() - prefix.back() - 1;
+            if (totalLen % subLen == 0)
+            {
+                return subLen;
+            }
+        }
+        return INT_MAX;
     }
 };

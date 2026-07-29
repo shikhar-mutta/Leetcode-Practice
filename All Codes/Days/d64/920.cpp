@@ -10,19 +10,55 @@ using namespace std;
 // choices from dp[i-1][j-1]), or replay an already-used song that isn't
 // among the last k played (j-k choices, valid only if j>k), from
 // dp[i-1][j].
-class Solution {
+class Solution
+{
 public:
-    int numMusicPlaylists(int n, int goal, int k) {
-        const long long MOD = 1e9 + 7;
-        vector<vector<long long>> dp(goal + 1, vector<long long>(n + 1, 0));
-        dp[0][0] = 1;
-        for (int i = 1; i <= goal; i++) {
-            for (int j = 1; j <= n; j++) {
-                long long val = dp[i - 1][j - 1] * (n - (j - 1)) % MOD;
-                if (j > k) val = (val + dp[i - 1][j] * (j - k)) % MOD;
-                dp[i][j] = val;
-            }
+    using ll = long long;
+
+    int mod = 1e9 + 7;
+    int n, goal, k;
+
+    ll dp[101][101];
+
+    ll solve(int cnt_songs, int cnt_unique)
+    {
+
+        if (cnt_songs == goal)
+            return cnt_unique == n;
+
+        if (dp[cnt_songs][cnt_unique] != -1)
+            return dp[cnt_songs][cnt_unique];
+
+        ll res = 0;
+
+        // Play a new unique song.
+        if (cnt_unique < n)
+        {
+            res = (res + 1LL * (n - cnt_unique) *
+                             solve(cnt_songs + 1, cnt_unique + 1)) %
+                  mod;
         }
-        return (int)dp[goal][n];
+
+        // Replay an old song.
+        if (cnt_unique > k)
+        {
+            res = (res +
+                   1LL * (cnt_unique - k) * solve(cnt_songs + 1, cnt_unique)) %
+                  mod;
+        }
+
+        return dp[cnt_songs][cnt_unique] = res;
+    }
+
+    int numMusicPlaylists(int n, int goal, int k)
+    {
+
+        this->n = n;
+        this->goal = goal;
+        this->k = k;
+
+        memset(dp, -1, sizeof(dp));
+
+        return solve(0, 0);
     }
 };

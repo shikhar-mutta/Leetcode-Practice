@@ -3,25 +3,32 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-class Solution {
+// TC: O(40 * 2^n * n)  SC: O(2^n)
+// Approach: dp[mask] = number of ways to assign hats to the people represented by the mask. For each hat, we can either assign it to a person who doesn't have a hat yet (represented by the mask) or not assign it at all. We iterate through all hats and update the dp array accordingly.
+class Solution
+{
 public:
-    int numberWays(vector<vector<int>>& hats) {
-        const int MOD = 1e9 + 7;
-        int n = hats.size();
-        vector<vector<int>> byHat(41);
+    int numberWays(vector<vector<int>> &hats)
+    {
+        int MOD = 1e9 + 7, n = hats.size();
+
+        vector<vector<int>> persons(40);
+        vector<int> masks(1 << n);
+        masks[0] = 1;
+
         for (int i = 0; i < n; i++)
-            for (int h : hats[i]) byHat[h].push_back(i);
-        vector<vector<int>> dp(41, vector<int>(1 << n, 0));
-        dp[0][0] = 1;
-        for (int h = 1; h <= 40; h++) {
-            for (int mask = 0; mask < (1 << n); mask++) {
-                dp[h][mask] = dp[h - 1][mask];
-                for (int p : byHat[h]) {
-                    if (mask & (1 << p))
-                        dp[h][mask] = (dp[h][mask] + dp[h - 1][mask ^ (1 << p)]) % MOD;
-                }
-            }
-        }
-        return dp[40][(1 << n) - 1];
+            for (int &h : hats[i])
+                persons[h - 1].push_back(i);
+
+        for (int i = 0; i < 40; i++)
+            for (int j = (1 << n) - 1; j >= 0; j--)
+                for (int &p : persons[i])
+                    if ((j & (1 << p)) == 0)
+                    {
+                        masks[j | (1 << p)] += masks[j];
+                        masks[j | (1 << p)] %= MOD;
+                    }
+
+        return masks[(1 << n) - 1];
     }
 };

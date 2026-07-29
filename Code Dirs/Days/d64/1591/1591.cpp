@@ -3,49 +3,84 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-class Solution {
+// TC: O(n^2) SC: O(n^2)
+// Approach: We can use a greedy approach to solve this problem. We can keep track of the minimum and maximum row and column indices for each color in the grid. Then, we can iterate through each color and check if we can print it by checking if all the cells in its bounding box are either 0 or the same color. If we can print it, we set all the cells in its bounding box to 0 and mark it as printed. We repeat this process until we cannot print any more colors. If there are still colors left to print, we return false. Otherwise, we return true.
+class Solution
+{
 public:
-    bool isPrintable(vector<vector<int>>& targetGrid) {
-        int rows = targetGrid.size(), cols = targetGrid[0].size();
-        unordered_map<int, array<int,4>> bound; // color -> minR,maxR,minC,maxC
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                int c = targetGrid[i][j];
-                if (!bound.count(c)) bound[c] = {i, i, j, j};
-                else {
-                    bound[c][0] = min(bound[c][0], i);
-                    bound[c][1] = max(bound[c][1], i);
-                    bound[c][2] = min(bound[c][2], j);
-                    bound[c][3] = max(bound[c][3], j);
+    bool check(vector<vector<int>> &grid, int minrow, int maxrow, int mincol,
+               int maxcol, int val)
+    {
+        for (int r = minrow; r <= maxrow; r++)
+        {
+            for (int c = mincol; c <= maxcol; c++)
+            {
+                if (grid[r][c] != 0 && grid[r][c] != val)
+                {
+                    return false;
                 }
             }
-        }
-        vector<int> colors;
-        for (auto& [c, b] : bound) colors.push_back(c);
-        vector<bool> removed(colors.size(), false);
-        unordered_map<int,int> colorIdx;
-        for (int i = 0; i < (int)colors.size(); i++) colorIdx[colors[i]] = i;
-
-        int remaining = colors.size();
-        while (remaining > 0) {
-            bool progress = false;
-            for (int ci = 0; ci < (int)colors.size(); ci++) {
-                if (removed[ci]) continue;
-                int c = colors[ci];
-                auto& b = bound[c];
-                bool ok = true;
-                for (int i = b[0]; i <= b[1] && ok; i++) {
-                    for (int j = b[2]; j <= b[3] && ok; j++) {
-                        int cell = targetGrid[i][j];
-                        if (cell == c) continue;
-                        if (removed[colorIdx[cell]]) continue;
-                        ok = false;
-                    }
-                }
-                if (ok) { removed[ci] = true; remaining--; progress = true; }
-            }
-            if (!progress) return false;
         }
         return true;
+    }
+    bool isPrintable(vector<vector<int>> &grid)
+    {
+        vector<int> marow(61, INT_MIN);
+        vector<int> mirow(61, INT_MAX);
+        vector<int> macol(61, INT_MIN);
+        vector<int> micol(61, INT_MAX);
+        vector<bool> pres(61, 0);
+        int trow = grid.size();
+        int tcol = grid[0].size();
+        for (int r = 0; r < trow; r++)
+        {
+            for (int c = 0; c < tcol; c++)
+            {
+                int num = grid[r][c];
+                mirow[num] = min(r, mirow[num]);
+                marow[num] = max(r, marow[num]);
+                micol[num] = min(c, micol[num]);
+                macol[num] = max(c, macol[num]);
+                pres[num] = 1;
+            }
+        }
+        int n = 60;
+        while (1)
+        {
+            int i;
+            for (i = 1; i <= n; i++)
+            {
+                if (pres[i])
+                {
+                    int minrow = mirow[i];
+                    int maxrow = marow[i];
+                    int mincol = micol[i];
+                    int maxcol = macol[i];
+                    if (check(grid, minrow, maxrow, mincol, maxcol, i))
+                    {
+                        for (int r = minrow; r <= maxrow; r++)
+                        {
+                            for (int c = mincol; c <= maxcol; c++)
+                            {
+                                grid[r][c] = 0;
+                            }
+                        }
+                        pres[i] = 0;
+                        break;
+                    }
+                }
+            }
+            if (i == n + 1)
+            {
+                for (int i = 1; i < 62; i++)
+                {
+                    if (pres[i])
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }
+        }
     }
 };

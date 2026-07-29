@@ -11,43 +11,80 @@ using namespace std;
 // from horizontal, counterclockwise from vertical), each requiring the
 // relevant clearance cells to be empty. Goal: horizontal at the bottom
 // right two cells.
-class Solution {
+class Solution
+{
 public:
-    int minimumMoves(vector<vector<int>>& grid) {
-        int n = grid.size();
-        auto clear = [&](int r, int c) { return r < n && c < n && grid[r][c] == 0; };
+    typedef tuple<int, int, int, int> tpl;
 
-        // state key: r*n*2 + c*2 + orientation(0=horiz,1=vert)
-        vector<vector<vector<bool>>> visited(n, vector<vector<bool>>(n, vector<bool>(2, false)));
-        queue<tuple<int,int,int>> q;
-        q.push({0, 0, 0});
-        visited[0][0][0] = true;
-        int steps = 0;
-        while (!q.empty()) {
-            int sz = q.size();
-            for (int s = 0; s < sz; s++) {
-                auto [r, c, o] = q.front(); q.pop();
-                if (o == 0 && r == n - 1 && c == n - 2) return steps;
+    int minimumMoves(vector<vector<int>> &v)
+    {
 
-                vector<tuple<int,int,int>> next;
-                if (o == 0) { // horizontal: occupies (r,c),(r,c+1)
-                    if (clear(r, c + 2)) next.push_back({r, c + 1, 0});
-                    if (clear(r + 1, c) && clear(r + 1, c + 1)) next.push_back({r + 1, c, 0});
-                    if (clear(r + 1, c) && clear(r + 1, c + 1)) next.push_back({r, c, 1});
-                } else { // vertical: occupies (r,c),(r+1,c)
-                    if (clear(r + 2, c)) next.push_back({r + 1, c, 1});
-                    if (clear(r, c + 1) && clear(r + 1, c + 1)) next.push_back({r, c + 1, 1});
-                    if (clear(r, c + 1) && clear(r + 1, c + 1)) next.push_back({r, c, 0});
+        int n = v.size();
+
+        queue<tpl> q;
+        q.push({0, 1, 0, 0});
+
+        vector<vector<pair<int, int>>> vis(n, vector<pair<int, int>>(n));
+        vis[0][0] = {1, 1};
+        vis[0][1] = {1, 1};
+
+        while (!q.empty())
+        {
+            auto [i, j, vrti, c] = q.front();
+            q.pop();
+
+            if (i == n - 1 && j == n - 1 && !vrti)
+                return c;
+
+            // right
+            if (j + 1 < n)
+            {
+                if (!vrti && !v[i][j + 1] && !vis[i][j + 1].first)
+                {
+                    q.push({i, j + 1, vrti, c + 1});
+                    vis[i][j + 1].first = 1;
                 }
-                for (auto& [nr, nc, no] : next) {
-                    if (nr < n && nc < n && !visited[nr][nc][no]) {
-                        visited[nr][nc][no] = true;
-                        q.push({nr, nc, no});
-                    }
+                else if (vrti && i - 1 >= 0 && !v[i - 1][j + 1] &&
+                         !v[i][j + 1] && !vis[i][j + 1].second)
+                {
+                    q.push({i, j + 1, vrti, c + 1});
+                    vis[i][j + 1].second = 1;
                 }
             }
-            steps++;
+
+            // down,
+            if (i + 1 < n)
+            {
+                if (vrti && !v[i + 1][j] && !vis[i + 1][j].second)
+                {
+                    q.push({i + 1, j, vrti, c + 1});
+                    vis[i + 1][j].second = 1;
+                }
+                else if (!vrti && i + 1 < n && !v[i + 1][j] &&
+                         !v[i + 1][j - 1] && !vis[i + 1][j].first)
+                {
+                    vis[i + 1][j].first = 1;
+                    q.push({i + 1, j, vrti, c + 1});
+                }
+            }
+
+            // rotate v to h
+            if (i - 1 >= 0 && j + 1 < n && vrti && !v[i - 1][j + 1] &&
+                !v[i][j + 1] && !vis[i - 1][j + 1].first)
+            {
+                vis[i - 1][j + 1].first = 1;
+                q.push({i - 1, j + 1, !vrti, c + 1});
+            }
+
+            // rotate h to v
+            if (i + 1 < n && j - 1 >= 0 && !vrti && !v[i + 1][j - 1] &&
+                !v[i + 1][j] && !vis[i + 1][j - 1].second)
+            {
+                vis[i + 1][j - 1].second = 1;
+                q.push({i + 1, j - 1, !vrti, c + 1});
+            }
         }
+
         return -1;
     }
 };

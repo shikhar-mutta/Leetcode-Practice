@@ -3,58 +3,95 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
-// TC: O(n + edges)  SC: O(n + edges)
-// Approach: two-level topological sort. Items with group -1 each get
-// their own fresh unique group id. Topologically sort items by their
-// beforeItems dependencies (Kahn's algorithm); separately topologically
-// sort groups by dependencies derived from cross-group item edges.
-// Bucket the item-topo-order items by group (preserving relative order
-// within each group), then concatenate buckets in group-topo order.
-class Solution {
-    vector<int> topoSort(int n, vector<vector<int>>& adj) {
-        vector<int> indeg(n, 0);
-        for (int u = 0; u < n; u++) for (int v : adj[u]) indeg[v]++;
+// TC: O(n + m)  SC: O(n + m)
+//  Approach: Topological sort on both the group graph and the item graph.
+//  1. Assign unique group ids to items with no group.
+//  2. Build the group graph and item graph, and compute indegrees.
+//  3. Topologically sort the group graph and item graph.
+//  4. If either sort fails (cycle detected), return an empty array.
+//  5. Otherwise, combine the sorted items by group order to produce the final result.
+//  6. Return the final sorted array of items.
+class Solution
+{
+
+    vector<int> topologicalSort(vector<int> &indegree,
+                                vector<vector<int>> &adj)
+    {
+        int n = indegree.size();
+        vector<int> sorted(n, -1);
+        int k = n - 1;
         queue<int> q;
-        for (int i = 0; i < n; i++) if (indeg[i] == 0) q.push(i);
-        vector<int> order;
-        while (!q.empty()) {
-            int u = q.front(); q.pop();
-            order.push_back(u);
-            for (int v : adj[u]) if (--indeg[v] == 0) q.push(v);
+        for (int i = 0; i < indegree.size(); i++)
+        {
+            if (indegree[i] == 0)
+                q.push(i);
         }
-        if ((int)order.size() != n) return {};
-        return order;
+        while (!q.empty())
+        {
+            int node = q.front();
+            q.pop();
+            sorted[k--] = node;
+            for (int nextNode : adj[node])
+            {
+                indegree[nextNode]--;
+                if (indegree[nextNode] == 0)
+                    q.push(nextNode);
+            }
+        }
+        if (k != -1)
+            return {};
+        return sorted;
     }
+
 public:
-    vector<int> sortItems(int n, int m, vector<int>& group, vector<vector<int>>& beforeItems) {
-        int groupCount = m;
-        for (int i = 0; i < n; i++) {
-            if (group[i] == -1) group[i] = groupCount++;
-        }
-
-        vector<vector<int>> itemAdj(n);
-        vector<vector<int>> groupAdj(groupCount);
-
-        for (int i = 0; i < n; i++) {
-            for (int b : beforeItems[i]) {
-                itemAdj[b].push_back(i);
-                if (group[b] != group[i]) {
-                    groupAdj[group[b]].push_back(group[i]);
-                }
+    vector<int> sortItems(int n, int m, vector<int> &group,
+                          vector<vector<int>> &beforeItems)
+    {
+        int id = m;
+        vector<int> nodeIndegree(n, 0);
+        for (int i = 0; i < n; i++)
+        {
+            if (group[i] == -1)
+                group[i] = id++;
+            for (int j = 0; j < beforeItems[i].size(); j++)
+            {
+                nodeIndegree[beforeItems[i][j]]++;
             }
         }
 
-        vector<int> itemOrder = topoSort(n, itemAdj);
-        if (itemOrder.empty() && n > 0) return {};
-        vector<int> groupOrder = topoSort(groupCount, groupAdj);
-        if (groupOrder.empty() && groupCount > 0) return {};
+        vector<vector<int>> groupGraph(id);
+        vector<int> groupIndegree(id, 0);
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = 0; j < beforeItems[i].size(); j++)
+            {
+                if (group[i] == group[beforeItems[i][j]])
+                    continue;
+                groupGraph[group[i]].push_back(group[beforeItems[i][j]]);
+                groupIndegree[group[beforeItems[i][j]]]++;
+            }
+        }
 
-        vector<vector<int>> bucket(groupCount);
-        for (int item : itemOrder) bucket[group[item]].push_back(item);
+        vector<int> sortedNodes = topologicalSort(nodeIndegree, beforeItems);
+        if (sortedNodes.size() != n)
+            return {};
+        vector<int> sortedGroups = topologicalSort(groupIndegree, groupGraph);
+        if (sortedGroups.size() != id)
+            return {};
+
+        vector<vector<int>> sortedNodesByGroup(id);
+        for (int node : sortedNodes)
+        {
+            sortedNodesByGroup[group[node]].push_back(node);
+        }
 
         vector<int> ans;
-        for (int g : groupOrder) for (int item : bucket[g]) ans.push_back(item);
+        for (int group : sortedGroups)
+        {
+            for (int node : sortedNodesByGroup[group])
+                ans.push_back(node);
+        }
+
         return ans;
     }
 };

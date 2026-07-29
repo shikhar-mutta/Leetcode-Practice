@@ -3,43 +3,67 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
 // TC: O(n * m log m)  SC: O(n) states
-// Approach: DP over "last value placed" -> minimum replacements so far,
-// using a map for compactness. For each element of arr1, either keep it
-// (if it exceeds the current last value) or replace it with the
-// smallest value from sorted arr2 that exceeds the last value (costing
-// one more operation). Collapse to the best (min ops) state per last
-// value each step; if no transition survives, it's impossible.
-class Solution {
+//  Approach: DP over "last value placed" -> minimum replacements so far,
+//  using a map for compactness. For each element of arr1, either keep it
+//  (if it exceeds the current last value) or replace it with the
+//  smallest value from sorted arr2 that exceeds the last value (costing
+//  one more operation). Collapse to the best (min ops) state per last
+//  value each step; if no transition survives, it's impossible.
+class Solution
+{
 public:
-    int makeArrayIncreasing(vector<int>& arr1, vector<int>& arr2) {
+    int makeArrayIncreasing(vector<int> &arr1, vector<int> &arr2)
+    {
+        int n = arr1.size();
+        vector<int> dp(n, -1);
         sort(arr2.begin(), arr2.end());
-        arr2.erase(unique(arr2.begin(), arr2.end()), arr2.end());
-
-        map<long long, int> dp;
-        dp[LLONG_MIN] = 0;
-
-        for (int num : arr1) {
-            map<long long, int> ndp;
-            for (auto& [last, ops] : dp) {
-                if (num > last) {
-                    auto it = ndp.find(num);
-                    if (it == ndp.end() || ops < it->second) ndp[num] = ops;
+        auto result = unique(arr2.begin(), arr2.end());
+        arr2.erase(result, arr2.end());
+        int ans = f1(arr1, arr2, 0, n, dp);
+        return ans == INT_MAX ? -1 : ans;
+    }
+    int f1(vector<int> &arr1, vector<int> &arr2, int i, int n,
+           vector<int> &dp)
+    {
+        if (i == n)
+        {
+            return 0;
+        }
+        if (dp[i] != -1)
+        {
+            return dp[i];
+        }
+        int ans = INT_MAX;
+        int pre = i == 0 ? INT_MIN : arr1[i - 1];
+        auto find = upper_bound(arr2.begin(), arr2.end(), pre);
+        for (int j = i, k = 0; j <= n; j++, k++)
+        {
+            if (j == n)
+            {
+                ans = min(ans, k);
+            }
+            else
+            {
+                if (pre < arr1[j])
+                {
+                    int next = f1(arr1, arr2, j + 1, n, dp);
+                    if (next != INT_MAX)
+                    {
+                        ans = min(ans, k + next);
+                    }
                 }
-                auto ub = upper_bound(arr2.begin(), arr2.end(), last);
-                if (ub != arr2.end()) {
-                    long long val = *ub;
-                    auto it = ndp.find(val);
-                    if (it == ndp.end() || ops + 1 < it->second) ndp[val] = ops + 1;
+                if (find != arr2.end())
+                {
+                    pre = *find;
+                    find++;
+                }
+                else
+                {
+                    break;
                 }
             }
-            if (ndp.empty()) return -1;
-            dp = ndp;
         }
-
-        int best = INT_MAX;
-        for (auto& [last, ops] : dp) best = min(best, ops);
-        return best;
+        return dp[i] = ans;
     }
 };

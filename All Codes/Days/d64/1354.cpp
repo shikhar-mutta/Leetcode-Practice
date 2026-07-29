@@ -12,21 +12,28 @@ using namespace std;
 // once for efficiency, since the same index could have been repeatedly
 // re-maximized). Continue until the max is 1; impossible if rest==0 or
 // M<=rest (no valid reduction exists).
-class Solution {
+class Solution
+{
 public:
-    bool isPossible(vector<int>& target) {
+    bool isPossible(vector<int> &target)
+    {
         int n = target.size();
-        if (n == 1) return target[0] == 1;
+        if (n == 1)
+            return target[0] == 1;
 
         priority_queue<long long> pq(target.begin(), target.end());
         long long sum = accumulate(target.begin(), target.end(), 0LL);
 
-        while (pq.top() > 1) {
-            long long M = pq.top(); pq.pop();
+        while (pq.top() > 1)
+        {
+            long long M = pq.top();
+            pq.pop();
             long long rest = sum - M;
-            if (rest == 0 || M <= rest) return false;
+            if (rest == 0 || M <= rest)
+                return false;
             long long newM = M % rest;
-            if (newM == 0) newM = rest;
+            if (newM == 0)
+                newM = rest;
             sum = rest + newM;
             pq.push(newM);
         }

@@ -3,33 +3,40 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
-// TC: O(n log n)  SC: O(n)
-// Approach: sort engineers by efficiency descending; the current
-// engineer's efficiency becomes the team's minimum efficiency (since
-// all prior picks have >= efficiency). Maintain a min-heap of chosen
-// speeds capped at size k, evicting the smallest speed when exceeding
-// k, and track the running speed sum to compute performance =
-// speedSum * currentEfficiency at each step.
-class Solution {
+// TC: O(nlogn)  SC: O(n)
+//  Approach: Sort the engineers by efficiency in descending order. Then, iterate through the sorted list and maintain a min-heap of the k highest speeds seen so far. For each engineer, calculate the performance of the team consisting of that engineer and the k-1 engineers with the highest speeds seen so far. Keep track of the maximum performance seen during the iteration and return it at the end.
+class Solution
+{
 public:
-    int maxPerformance(int n, vector<int>& speed, vector<int>& efficiency, int k) {
+    int maxPerformance(int n, vector<int> &speed, vector<int> &efficiency,
+                       int k)
+    {
         const long long MOD = 1e9 + 7;
-        vector<int> idx(n);
-        iota(idx.begin(), idx.end(), 0);
-        sort(idx.begin(), idx.end(), [&](int a, int b) { return efficiency[a] > efficiency[b]; });
-
+        vector<pair<int, int>> team;
+        for (int i = 0; i < n; i++)
+        {
+            team.push_back({efficiency[i], speed[i]});
+        }
+        sort(team.begin(), team.end(),
+             [](const pair<int, int> &a, const pair<int, int> &b)
+             {
+                 return a.first > b.first;
+             });
         priority_queue<int, vector<int>, greater<int>> minHeap;
-        long long speedSum = 0, best = 0;
-        for (int i : idx) {
-            minHeap.push(speed[i]);
-            speedSum += speed[i];
-            if ((int)minHeap.size() > k) {
-                speedSum -= minHeap.top();
+        long long totalSpeed = 0;
+        long long maxPerformance = 0;
+        for (auto [eff, spd] : team)
+        {
+            totalSpeed += spd;
+            minHeap.push(spd);
+            if (minHeap.size() > k)
+            {
+                totalSpeed -= minHeap.top();
                 minHeap.pop();
             }
-            best = max(best, speedSum * efficiency[i]);
+            long long performance = totalSpeed * eff;
+            maxPerformance = max(maxPerformance, totalSpeed * eff);
         }
-        return (int)(best % MOD);
+        return maxPerformance % MOD;
     }
 };

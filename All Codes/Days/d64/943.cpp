@@ -3,72 +3,102 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
-// TC: O(n^2 * 2^n)  SC: O(n * 2^n)
-// Approach: precompute overlap[i][j] = longest suffix of words[i] that
-// is a prefix of words[j]. Bitmask DP: dp[mask][i] = max total overlap
-// achievable by an ordering of the words in mask ending with word i.
-// Transition by appending an unused word j: dp[mask|1<<j][j] =
-// max(dp[mask][i] + overlap[i][j]). Reconstruct the best-ending word
-// order via parent pointers, then concatenate with overlaps trimmed.
-class Solution {
+// TC: O(n^2 * 2^n)  SC: O(n^2 * 2^n)
+//  Approach: DP + bitmasking. Let dp[mask][i] = the length of the shortest superstring that contains all strings in mask and ends with A[i]. Then, we can transition from dp[mask][i] to dp[mask | (1 << j)][j] for all j not in mask, and the cost of adding A[j] after A[i] is the length of A[j] minus the overlap between A[i] and A[j]. We can precompute the overlap between all pairs of strings in A. Finally, we can reconstruct the shortest superstring by backtracking from the last string in the optimal solution.
+const inline auto speedup = []()
+{
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    return 0;
+}();
+
+class Solution
+{
 public:
-    string shortestSuperstring(vector<string>& words) {
-        int n = words.size();
-        vector<vector<int>> overlap(n, vector<int>(n, 0));
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                if (i == j) continue;
-                int maxLen = min(words[i].size(), words[j].size());
-                for (int len = maxLen; len > 0; len--) {
-                    if (words[i].substr(words[i].size() - len) == words[j].substr(0, len)) {
-                        overlap[i][j] = len;
-                        break;
+    string shortestSuperstring(vector<string> &A)
+    {
+        int dp[4096][12] = {0};
+        int failure[12][20] = {0};
+        int cost[12][12] = {0};
+        int trace_table[4096][12] = {0};
+        const int sz = A.size();
+        const int dp_sz = 1 << sz;
+
+        for (int i = 0; i < sz; i++)
+        {
+            const int str_sz = A[i].size();
+
+            failure[i][0] = -1;
+
+            for (int j = 1, k = -1; j < str_sz; j++)
+            {
+                while (k >= 0 && A[i][k + 1] != A[i][j])
+                    k = failure[i][k];
+
+                if (A[i][k + 1] == A[i][j])
+                    k++;
+
+                failure[i][j] = k;
+            }
+        }
+        for (int i = 0; i < sz; i++)
+        {
+            const int i_sz = A[i].size();
+
+            for (int j = 0; j < sz; j++)
+            {
+                if (i != j)
+                {
+                    const int j_sz = A[j].size();
+                    int h = -1;
+
+                    for (int k = 0; k < j_sz; k++)
+                    {
+                        while (h >= 0 && A[i][h + 1] != A[j][k])
+                            h = failure[i][h];
+
+                        if (A[i][h + 1] == A[j][k])
+                            h++;
+                    }
+                    cost[j][i] = i_sz - h - 1;
+                }
+            }
+        }
+        for (int i = 0; i < sz; i++)
+            dp[1 << i][i] = A[i].size();
+
+        for (int state = 1; state < dp_sz; state++)
+        {
+            for (int t1 = state, b1 = t1 & (-t1); t1;
+                 t1 ^= b1, b1 = t1 & (-t1))
+            {
+                const int state1 = state ^ b1;
+                const int i = __builtin_ctz(b1);
+                const int i_sz = A[i].size();
+
+                for (int t2 = state1, b2 = t2 & (-t2); t2;
+                     t2 ^= b2, b2 = t2 & (-t2))
+                {
+                    const int j = __builtin_ctz(b2);
+                    const int tmp = dp[state1][j] + cost[j][i];
+
+                    if (!dp[state][i] || tmp < dp[state][i])
+                    {
+                        dp[state][i] = tmp;
+                        trace_table[state][i] = j;
                     }
                 }
             }
         }
+        const auto &last = dp[dp_sz - 1];
+        string res;
+        int i = std::distance(last, std::min_element(last, last + sz));
 
-        int full = 1 << n;
-        vector<vector<int>> dp(full, vector<int>(n, -1));
-        vector<vector<int>> parent(full, vector<int>(n, -1));
-        for (int i = 0; i < n; i++) dp[1 << i][i] = 0;
+        for (int state = dp_sz - 1, j = trace_table[state][i];
+             state & (state - 1);
+             state ^= (1 << i), i = j, j = trace_table[state][i])
+            res = A[i].substr(A[i].size() - cost[j][i]) + res;
 
-        for (int mask = 1; mask < full; mask++) {
-            for (int i = 0; i < n; i++) {
-                if (!(mask & (1 << i)) || dp[mask][i] < 0) continue;
-                for (int j = 0; j < n; j++) {
-                    if (mask & (1 << j)) continue;
-                    int nmask = mask | (1 << j);
-                    int val = dp[mask][i] + overlap[i][j];
-                    if (val > dp[nmask][j]) {
-                        dp[nmask][j] = val;
-                        parent[nmask][j] = i;
-                    }
-                }
-            }
-        }
-
-        int bestEnd = 0, bestVal = -1;
-        for (int i = 0; i < n; i++) {
-            if (dp[full - 1][i] > bestVal) { bestVal = dp[full - 1][i]; bestEnd = i; }
-        }
-
-        vector<int> order;
-        int mask = full - 1, cur = bestEnd;
-        while (cur != -1) {
-            order.push_back(cur);
-            int p = parent[mask][cur];
-            mask ^= (1 << cur);
-            cur = p;
-        }
-        reverse(order.begin(), order.end());
-
-        string result = words[order[0]];
-        for (int k = 1; k < n; k++) {
-            int prev = order[k - 1], cur2 = order[k];
-            result += words[cur2].substr(overlap[prev][cur2]);
-        }
-        return result;
+        return A[i] + res;
     }
 };

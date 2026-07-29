@@ -3,41 +3,42 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
-// TC: O(log(target)^2)  SC: O(log(target))
-// Approach: memoized recursion returning the operator cost to build and
-// attach a term equal to `t` (including one leading +/- to attach it to
-// whatever precedes it — corrected for the true first term via a final
-// -1). If x>t, use repeated x/x units (cost 2 each) added or subtracted
-// from x. Otherwise find the largest power p=x^k <= t: if exact, cost
-// is k (k-1 multiplications + 1 leading op); otherwise recurse on the
-// remainder t-p (attach cost k) or overshoot p*x-t (attach cost k+1),
-// taking the cheaper.
-class Solution {
-    unordered_map<long long,long long> memo;
-    int x;
-    long long dfs(long long t) {
-        if (memo.count(t)) return memo[t];
-        long long res;
-        if (x > t) {
-            res = min(2 * t, 2 * (x - t) + 1);
-        } else {
-            long long k = 0, p = 1;
-            while (p * x <= t) { p *= x; k++; }
-            if (p == t) {
-                res = k;
-            } else {
-                res = dfs(t - p) + k;
-                if (p * x - t < t) res = min(res, dfs(p * x - t) + k + 1);
-            }
-        }
-        memo[t] = res;
-        return res;
-    }
+// TC: O(log(target)) SC: O(1)
+//  Approach: We can use a greedy approach to solve this problem. We can keep track of the positive and negative costs of expressing the target number using the given base x. We can iterate through each digit of the target number in base x and update the positive and negative costs accordingly. The final answer will be the minimum of the positive and negative costs minus 1 (to account for the initial multiplication by x).
+class Solution
+{
 public:
-    int leastOpsExpressTarget(int x, int target) {
-        this->x = x;
-        memo.clear();
-        return (int)(dfs(target) - 1);
+    using ll = long long;
+    int leastOpsExpressTarget(int x, int target)
+    {
+        if (x == 1)
+            return target - 1;
+        ll positive = 0;
+        ll negative = 0;
+        int power = 0;
+        while (target > 0)
+        {
+            int digit = target % x;
+            target /= x;
+
+            if (power == 0)
+            {
+                positive = 2LL * digit;
+                negative = 2LL * (x - digit);
+            }
+            else
+            {
+                ll nextPositive = min(positive + 1LL * digit * power,
+                                      negative + 1LL * (digit + 1) * power);
+
+                ll nextNegative = min(positive + 1LL * (x - digit) * power,
+                                      negative + 1LL * (x - digit - 1) * power);
+
+                positive = nextPositive;
+                negative = nextNegative;
+            }
+            ++power;
+        }
+        return min(positive, negative + power) - 1;
     }
 };

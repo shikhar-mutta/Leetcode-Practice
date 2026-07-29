@@ -3,24 +3,45 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-class TreeAncestor {
-    vector<vector<int>> up; // up[j][i] = 2^j-th ancestor of i
-    int LOG;
+// TC: O(logN) SC: O(NlogN)
+// Approach: We can use binary lifting technique to solve this problem. We can create a table where table[i][j] represents the 2^i-th ancestor of node j. We can fill this table using dynamic programming. Finally, we can use this table to find the k-th ancestor of a node in O(logN) time.
+class TreeAncestor
+{
 public:
-    TreeAncestor(int n, vector<int>& parent) {
-        LOG = 1;
-        while ((1 << LOG) < n) LOG++;
-        LOG++;
-        up.assign(LOG, vector<int>(n, -1));
-        up[0] = parent;
-        for (int j = 1; j < LOG; j++)
-            for (int i = 0; i < n; i++)
-                up[j][i] = (up[j-1][i] == -1) ? -1 : up[j-1][up[j-1][i]];
+    vector<int> parent;
+    int n;
+    vector<vector<int>> table;
+    TreeAncestor(int n, vector<int> &parent)
+    {
+        this->n = n;
+        this->parent = parent;
+        binaryLiftingTable();
     }
-
-    int getKthAncestor(int node, int k) {
-        for (int j = 0; j < LOG && node != -1; j++) {
-            if (k & (1 << j)) node = up[j][node];
+    void binaryLiftingTable()
+    {
+        int maxlog = log2(n) + 1;
+        table.assign(maxlog, vector<int>(n, -1));
+        for (int i = 0; i < n; i++)
+            table[0][i] = parent[i];
+        for (int j = 1; j < maxlog; j++)
+        {
+            for (int i = 0; i < n; i++)
+            {
+                if (table[j - 1][i] != -1)
+                    table[j][i] = table[j - 1][table[j - 1][i]];
+            }
+        }
+    }
+    int getKthAncestor(int node, int k)
+    {
+        int dist = k;
+        int maxlog = log2(n) + 1;
+        for (int i = maxlog - 1; i >= 0; i--)
+        {
+            if (dist & (1 << i))
+                node = table[i][node];
+            if (node == -1)
+                return -1;
         }
         return node;
     }

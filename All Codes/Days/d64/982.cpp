@@ -3,30 +3,24 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
-// TC: O(n^2 + n*maxBits)  SC: O(maxVal)
-// Approach: first compute freq[v] = number of (i,j) pairs with
-// nums[i]&nums[j]==v (O(n^2)). Then for each such pair-AND value v and
-// each element z in nums, the triple is valid iff v & z == 0, i.e. z is
-// a "submask" of the complement of v. Rather than checking directly,
-// count via: for each pair-AND value v (with its frequency), for each k
-// in nums, add freq[v] to the answer if (v & k) == 0.
-class Solution {
+// TC: O(n^2 log n) SC: O(n)
+// Approach: We can use a bit manipulation approach to solve this problem. We can iterate through all the possible pairs of elements in the array and calculate their bitwise AND. We can then check if the result is equal to zero. If it is, we can increment the count of valid triplets. We can also use a hash map to store the frequency of each element in the array to avoid counting duplicate triplets.
+class Solution
+{
 public:
-    int countTriplets(vector<int>& nums) {
-        int maxVal = 1 << 16;
-        vector<int> pairAndCount(maxVal, 0);
-        for (int a : nums)
-            for (int b : nums)
-                pairAndCount[a & b]++;
-
-        long long ans = 0;
-        for (int v = 0; v < maxVal; v++) {
-            if (pairAndCount[v] == 0) continue;
-            for (int k : nums) {
-                if ((v & k) == 0) ans += pairAndCount[v];
-            }
-        }
-        return (int)ans;
+    int countTriplets(vector<int> &a)
+    {
+        int n = a.size(), ans = 0, c[1 << 16];
+        memset(c, 0, sizeof(c));
+        for (int i = 0; i < n; i++)
+            for (int j = a[i]; j > 0; j = (j - 1) & a[i])
+                c[j]++;
+        for (int i = 1; i < (1 << 16); i++)
+            if (__builtin_popcount(i) & 1)
+                ans += c[i] * c[i] * c[i];
+            else
+                ans -= c[i] * c[i] * c[i];
+        ans = n * n * n - ans;
+        return ans;
     }
 };

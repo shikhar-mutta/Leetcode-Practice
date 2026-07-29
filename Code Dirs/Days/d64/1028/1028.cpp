@@ -3,7 +3,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-struct TreeNode {
+struct TreeNode
+{
     int val;
     TreeNode *left;
     TreeNode *right;
@@ -21,25 +22,37 @@ struct TreeNode {
 // its right child (since preorder always visits left subtree fully
 // before right, a depth <= current stack size means we've returned to
 // attach a right child).
-class Solution {
+class Solution
+{
 public:
-    TreeNode* recoverFromPreorder(string traversal) {
-        vector<TreeNode*> stack_;
+    TreeNode *recoverFromPreorder(string traversal)
+    {
+        vector<TreeNode *> stack_;
         int n = traversal.size();
         int i = 0;
-        while (i < n) {
+        while (i < n)
+        {
             int depth = 0;
-            while (traversal[i] == '-') { depth++; i++; }
+            while (traversal[i] == '-')
+            {
+                depth++;
+                i++;
+            }
             int j = i;
-            while (j < n && isdigit(traversal[j])) j++;
+            while (j < n && isdigit(traversal[j]))
+                j++;
             int val = stoi(traversal.substr(i, j - i));
             i = j;
 
-            TreeNode* node = new TreeNode(val);
-            while ((int)stack_.size() > depth) stack_.pop_back();
-            if (!stack_.empty()) {
-                if (!stack_.back()->left) stack_.back()->left = node;
-                else stack_.back()->right = node;
+            TreeNode *node = new TreeNode(val);
+            while ((int)stack_.size() > depth)
+                stack_.pop_back();
+            if (!stack_.empty())
+            {
+                if (!stack_.back()->left)
+                    stack_.back()->left = node;
+                else
+                    stack_.back()->right = node;
             }
             stack_.push_back(node);
         }

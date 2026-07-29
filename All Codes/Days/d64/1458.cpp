@@ -3,21 +3,36 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-class Solution {
+// TC: O(m*n) SC: O(n)
+// Approach: Use dynamic programming to find the maximum dot product of two subsequences. We can use a 1D dp array where dp[j] represents the maximum dot product of the first i elements of nums1 and the first j elements of nums2. We iterate through each element of nums1 and nums2 and update the dp array accordingly. Finally, we return dp[n] which represents the maximum dot product of the two subsequences.
+class Solution
+{
 public:
-    int maxDotProduct(vector<int>& nums1, vector<int>& nums2) {
-        int n = nums1.size(), m = nums2.size();
-        vector<vector<long long>> dp(n + 1, vector<long long>(m + 1, LLONG_MIN / 2));
-        for (int i = 1; i <= n; i++) {
-            for (int j = 1; j <= m; j++) {
-                long long prod = (long long)nums1[i-1] * nums2[j-1];
-                long long best = prod;
-                best = max(best, prod + max(0LL, dp[i-1][j-1]));
-                best = max(best, dp[i-1][j]);
-                best = max(best, dp[i][j-1]);
-                dp[i][j] = best;
+    int maxDotProduct(vector<int> &nums1, vector<int> &nums2)
+    {
+        int m = nums1.size();
+        int n = nums2.size();
+
+        if (m < n)
+        {
+            return maxDotProduct(nums2, nums1);
+        }
+
+        vector<long> dp(n + 1, INT_MIN);
+
+        for (int i = 0; i < m; i++)
+        {
+            long prev = 0;
+            for (int j = 0; j < n; j++)
+            {
+                long tmp = dp[j + 1];
+                dp[j + 1] =
+                    max(prev + (long)nums1[i] * nums2[j],
+                        max((long)nums1[i] * nums2[j], max(dp[j], dp[j + 1])));
+                prev = tmp;
             }
         }
-        return (int)dp[n][m];
+
+        return (int)dp[n];
     }
 };

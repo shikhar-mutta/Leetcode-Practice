@@ -3,81 +3,80 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
-// TC: O(10! ) worst case, heavily pruned by column-wise carry checks  SC: O(letters)
-// Approach: column-by-column DFS (from least significant digit),
-// assigning digits only to the letters that appear in the current
-// column and aren't yet assigned. Once a column's letters are all
-// assigned, verify sum(word digits) + carryIn ≡ result digit (mod 10)
-// and propagate the new carry to the next column. Leading letters of
-// multi-character words/result can't be assigned 0.
-class Solution {
-    vector<string>* words;
-    string* result;
-    int maxLen;
-    int assigned[26];
-    bool usedDigit[10];
-    bool isLeading[26];
-
-    bool assignLetters(vector<char>& letters, int pos, int col, int carry) {
-        if (pos == (int)letters.size()) return solveColumn(col + 1, computeCarry(col, carry));
-        char c = letters[pos];
-        if (assigned[c - 'A'] != -1) return assignLetters(letters, pos + 1, col, carry);
-        for (int d = 0; d <= 9; d++) {
-            if (usedDigit[d]) continue;
-            if (d == 0 && isLeading[c - 'A']) continue;
-            assigned[c - 'A'] = d;
-            usedDigit[d] = true;
-            if (assignLetters(letters, pos + 1, col, carry)) return true;
-            usedDigit[d] = false;
-            assigned[c - 'A'] = -1;
-        }
-        return false;
-    }
-
-    int computeCarry(int col, int carryIn) {
-        int total = carryIn;
-        for (auto& w : *words) {
-            int idx = (int)w.size() - 1 - col;
-            if (idx >= 0) total += assigned[w[idx] - 'A'];
-        }
-        int idx = (int)result->size() - 1 - col;
-        int resDigit = (idx >= 0) ? assigned[(*result)[idx] - 'A'] : 0;
-        if ((total - resDigit) % 10 != 0) return -1; // sentinel for failure
-        return (total - resDigit) / 10;
-    }
-
-    bool solveColumn(int col, int carry) {
-        if (carry == -1) return false; // propagated failure sentinel
-        if (col == maxLen) return carry == 0;
-
-        vector<char> colLetters;
-        auto addIfNew = [&](char c) {
-            if (find(colLetters.begin(), colLetters.end(), c) == colLetters.end()) colLetters.push_back(c);
-        };
-        for (auto& w : *words) {
-            int idx = (int)w.size() - 1 - col;
-            if (idx >= 0) addIfNew(w[idx]);
-        }
-        int idx = (int)result->size() - 1 - col;
-        if (idx >= 0) addIfNew((*result)[idx]);
-
-        return assignLetters(colLetters, 0, col, carry);
-    }
+// TC: O(10!)  SC: O(n) where n is the number of unique letters
+// Approach: Backtracking with pruning. Compute the coefficient of each letter in the equation, and track which letters cannot be assigned 0 (leading letters). Sort letters by absolute coefficient value to try larger coefficients first. Use backtracking to assign digits to letters, pruning branches where the partial sum cannot reach 0 given remaining letters.
+class Solution
+{
 public:
-    bool isSolvable(vector<string>& words, string result) {
-        this->words = &words;
-        this->result = &result;
-        fill(begin(assigned), end(assigned), -1);
-        fill(begin(usedDigit), end(usedDigit), false);
-        fill(begin(isLeading), end(isLeading), false);
+    bool isSolvable(vector<string> &words, string result)
+    {
+        unordered_map<char, long long> coeffMap;
+        unordered_set<char> leadingZeroForbidden;
 
-        maxLen = result.size();
-        for (auto& w : words) maxLen = max(maxLen, (int)w.size());
+        auto addWord = [&](const string &w, int sign)
+        {
+            long long pow10 = 1;
+            for (int i = w.size() - 1; i >= 0; i--)
+            {
+                coeffMap[w[i]] += sign * pow10;
+                pow10 *= 10;
+            }
+            if (w.size() > 1)
+                leadingZeroForbidden.insert(w[0]);
+            else if (w.size() == 1)
+            { /* single-char words may be zero */
+            }
+        };
+        for (auto &w : words)
+            addWord(w, 1);
+        addWord(result, -1);
 
-        for (auto& w : words) if (w.size() > 1) isLeading[w[0] - 'A'] = true;
-        if (result.size() > 1) isLeading[result[0] - 'A'] = true;
+        vector<char> letters;
+        for (auto &[c, v] : coeffMap)
+            letters.push_back(c);
+        sort(letters.begin(), letters.end(), [&](char a, char b)
+             { return abs(coeffMap[a]) > abs(coeffMap[b]); });
 
-        return solveColumn(0, 0);
+        int m = letters.size();
+        vector<long long> coeff(m);
+        vector<bool> forbidZero(m);
+        for (int i = 0; i < m; i++)
+        {
+            coeff[i] = coeffMap[letters[i]];
+            forbidZero[i] = leadingZeroForbidden.count(letters[i]) > 0;
+        }
+        if (m > 10)
+            return false;
+
+        vector<long long> suffixMaxAbs(m + 1, 0);
+        for (int i = m - 1; i >= 0; i--)
+            suffixMaxAbs[i] = suffixMaxAbs[i + 1] + abs(coeff[i]) * 9;
+
+        vector<int> usedDigit(10, -1); // digit -> letter index used, -1 if free
+        function<bool(int, long long)> backtrack =
+            [&](int idx, long long partialSum) -> bool
+        {
+            if (idx == m)
+                return partialSum == 0;
+            if (llabs(partialSum) > suffixMaxAbs[idx])
+                return false;
+            for (int d = 0; d <= 9; d++)
+            {
+                if (usedDigit[d] != -1)
+                    continue;
+                if (d == 0 && forbidZero[idx])
+                    continue;
+                usedDigit[d] = idx;
+                if (backtrack(idx + 1, partialSum + coeff[idx] * d))
+                {
+                    usedDigit[d] = -1;
+                    return true;
+                }
+                usedDigit[d] = -1;
+            }
+            return false;
+        };
+
+        return backtrack(0, 0);
     }
 };

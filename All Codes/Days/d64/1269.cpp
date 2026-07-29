@@ -3,29 +3,31 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
-// TC: O(steps^2)  SC: O(steps)
-// Approach: DP over position, but since only steps/2 positions are ever
-// reachable and useful (going further just wastes moves needed to
-// return), cap the array width at min(arrLen, steps/2 + 1). Standard
-// transition: dp[pos] = dp[pos-1] + dp[pos] + dp[pos+1] each step.
-class Solution {
+// TC: O(steps * min(steps, arrLen))  SC: O(min(steps, arrLen))
+// Approach: DP. Let dp[i][j] = number of ways to reach position j after i steps. Then dp[i][j] = dp[i-1][j] + dp[i-1][j-1] + dp[i-1][j+1]. We can optimize the space complexity by only keeping track of the previous row of the DP table.
+// Note that we only need to consider positions up to min(steps, arrLen) since we cannot move beyond that in the given number of steps.
+class Solution
+{
 public:
-    int numWays(int steps, int arrLen) {
-        const long long MOD = 1e9 + 7;
-        int maxPos = min(arrLen, steps / 2 + 1);
-        vector<long long> dp(maxPos, 0);
-        dp[0] = 1;
-        for (int s = 0; s < steps; s++) {
-            vector<long long> ndp(maxPos, 0);
-            for (int p = 0; p < maxPos; p++) {
-                long long v = dp[p];
-                if (p > 0) v = (v + dp[p - 1]) % MOD;
-                if (p + 1 < maxPos) v = (v + dp[p + 1]) % MOD;
-                ndp[p] = v;
+    int numWays(int steps, int arrLen)
+    {
+        vector<int> dp = {1};
+        int MOD = 1000000007;
+        for (int i = 0; i <= steps; i++)
+        {
+            long prv = 0, cur = dp[0], nxt = 0;
+            int n = dp.size();
+            for (int j = 0; j < n; j++)
+            {
+                nxt = (j >= n - 2) ? 0 : dp[j + 1];
+                long a = (prv + cur + nxt) % MOD;
+                dp[j] = a;
+                prv = cur;
+                cur = nxt;
             }
-            dp = ndp;
+            if (i + 1 <= arrLen)
+                dp.push_back(prv);
         }
-        return (int)dp[0];
+        return dp[0];
     }
 };

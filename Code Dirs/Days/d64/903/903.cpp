@@ -3,42 +3,25 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
 // TC: O(n^2)  SC: O(n)
-// Approach: dp[j] after processing i characters = number of valid
-// permutations of the first i+1 relative ranks whose last element is
-// the (j+1)-th smallest among those i+1 values. Transition: for 'I' the
-// next element must be larger, so new_dp[j] = sum of old dp[k] for
-// k < j; for 'D' it must be smaller, so new_dp[j] = sum of old dp[k]
-// for k >= j. Computed via prefix sums, all mod 1e9+7.
-class Solution {
+//  Approach: dp[i][j] = number of valid permutations of first i+1 elements where last element is j-th smallest.
+//  If S[i] == 'I', then dp[i+1][j] = sum(dp[i][k]) for k < j, else dp[i+1][j] = sum(dp[i][k]) for k > j. Use prefix sums to compute these sums efficiently.
+class Solution
+{
 public:
-    int numPermsDISequence(string s) {
-        const long long MOD = 1e9 + 7;
-        int n = s.size();
-        vector<long long> dp(1, 1); // i=0: only 1 element, dp[0]=1
-
-        for (int i = 0; i < n; i++) {
-            int newSize = dp.size() + 1;
-            vector<long long> ndp(newSize, 0);
-            vector<long long> prefix(dp.size() + 1, 0);
-            for (int k = 0; k < (int)dp.size(); k++) prefix[k + 1] = (prefix[k] + dp[k]) % MOD;
-
-            for (int j = 0; j < newSize; j++) {
-                if (s[i] == 'I') {
-                    // sum of dp[k] for k < j, k in [0, dp.size()-1]
-                    int hi = min(j, (int)dp.size());
-                    ndp[j] = prefix[hi];
-                } else {
-                    // sum of dp[k] for k >= j, k in [0, dp.size()-1]
-                    int lo = min(j, (int)dp.size());
-                    ndp[j] = (prefix[dp.size()] - prefix[lo] + MOD) % MOD;
-                }
-            }
-            dp = ndp;
-        }
-        long long ans = 0;
-        for (long long v : dp) ans = (ans + v) % MOD;
-        return (int)ans;
+    int numPermsDISequence(string S)
+    {
+        int n = S.length(), mod = 1e9 + 7;
+        vector<vector<int>> dp(n + 1, vector<int>(n + 1));
+        for (int j = 0; j <= n; j++)
+            dp[0][j] = 1;
+        for (int i = 0; i < n; i++)
+            if (S[i] == 'I')
+                for (int j = 0, cur = 0; j < n - i; j++)
+                    dp[i + 1][j] = cur = (cur + dp[i][j]) % mod;
+            else
+                for (int j = n - i - 1, cur = 0; j >= 0; j--)
+                    dp[i + 1][j] = cur = (cur + dp[i][j + 1]) % mod;
+        return dp[n][0];
     }
 };

@@ -3,28 +3,62 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-class Solution {
+// TC: O(n * m * log(max_sum - min_sum))  SC: O(1)
+// Approach: Use binary search to find the kth smallest sum. The minimum possible sum is the sum of the first elements of each row, and the maximum possible sum is the sum of the last elements of each row. For each mid value, count how many sums are less than or equal to mid using a recursive function. If the count is greater than or equal to k, search in the left half; otherwise, search in the right half.
+class Solution
+{
 public:
-    int kthSmallest(vector<vector<int>>& mat, int k) {
-        vector<int> cur = mat[0];
-        int n = mat.size(), m = mat[0].size();
-        for (int r = 1; r < n; r++) {
-            vector<int> nxt;
-            priority_queue<pair<int,int>, vector<pair<int,int>>, greater<>> pq;
-            for (int i = 0; i < (int)cur.size() && i < k; i++)
-                pq.push({cur[i] + mat[r][0], i * m + 0});
-            vector<char> visited(cur.size() * m, 0);
-            while (!pq.empty() && (int)nxt.size() < k) {
-                auto [sum, code] = pq.top(); pq.pop();
-                int i = code / m, j = code % m;
-                nxt.push_back(sum);
-                if (j + 1 < m && !visited[i * m + j + 1]) {
-                    visited[i * m + j + 1] = 1;
-                    pq.push({cur[i] + mat[r][j + 1], i * m + j + 1});
-                }
-            }
-            cur = nxt;
+    int c(vector<vector<int>> &mat, int v, int low, int mid, int k)
+    {
+        if (low > mid)
+        {
+            return 0;
         }
-        return cur[k - 1];
+        if (v == mat.size())
+            return 1;
+
+        int ans = 0;
+
+        for (int i = 0; i < mat[0].size(); i++)
+        {
+            int ns = low - mat[v][0] + mat[v][i];
+            if (ns > mid)
+                break;
+
+            ans += c(mat, v + 1, ns, mid, k);
+            if (ans >= k)
+                return k;
+        }
+
+        return ans;
+    }
+    int kthSmallest(vector<vector<int>> &mat, int k)
+    {
+        int n = mat.size();
+        int m = mat[0].size();
+        int l = 0, h = 0;
+
+        for (int i = 0; i < n; i++)
+        {
+            l += mat[i][0];
+            h += mat[i][m - 1];
+        }
+        int b = l;
+
+        while (l < h)
+        {
+
+            int m = (h - l) / 2 + l;
+
+            if (c(mat, 0, b, m, k) >= k)
+            {
+                h = m;
+            }
+            else
+            {
+                l = m + 1;
+            }
+        }
+        return l;
     }
 };

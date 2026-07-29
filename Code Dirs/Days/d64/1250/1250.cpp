@@ -3,16 +3,22 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
 // TC: O(n log(maxVal))  SC: O(1)
-// Approach: by Bezout's identity, some integer linear combination of
-// the numbers equals 1 iff gcd(nums) == 1. So just fold gcd across the
-// array and check if it reaches 1.
-class Solution {
+//  Approach: by Bezout's identity, some integer linear combination of
+//  the numbers equals 1 iff gcd(nums) == 1. So just fold gcd across the
+//  array and check if it reaches 1.
+class Solution
+{
 public:
-    bool isGoodArray(vector<int>& nums) {
-        int g = nums[0];
-        for (int x : nums) g = gcd(g, x);
-        return g == 1;
+    bool isGoodArray(vector<int> &nums)
+    {
+        int gcd = nums[0];
+        for (auto &n : nums)
+        {
+            gcd = __gcd(n, gcd);
+            if (gcd == 1)
+                return true;
+        }
+        return false;
     }
 };

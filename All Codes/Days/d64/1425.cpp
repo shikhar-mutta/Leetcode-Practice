@@ -3,28 +3,69 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
-// TC: O(n)  SC: O(n)
-// Approach: dp[i] = max subsequence sum ending exactly at i, where the
-// previous chosen element (if any) is within k positions back.
-// dp[i] = nums[i] + max(0, best dp value among the last k indices).
-// Maintain that "best in window" via a monotonic decreasing deque of
-// indices (by dp value), giving O(1) amortized max-query per step.
-class Solution {
+// TC: O(n * k)  SC: O(n)
+//  Approach: Keep track of the last index used in the current subsequence and the current sum. If the current index is within k of the last index, add the current value to the sum. If the current index is more than k away from the last index, find the best value within the last k indices to add to the sum. If the current sum becomes negative, reset the last index and current sum to the current index and value. Keep track of the maximum sum found so far.
+class Solution
+{
 public:
-    int constrainedSubsetSum(vector<int>& nums, int k) {
-        int n = nums.size();
-        vector<int> dp(n);
-        deque<int> dq; // indices, dp values decreasing
-        int ans = INT_MIN;
-        for (int i = 0; i < n; i++) {
-            while (!dq.empty() && dq.front() < i - k) dq.pop_front();
-            int best = dq.empty() ? 0 : max(0, dp[dq.front()]);
-            dp[i] = nums[i] + best;
-            ans = max(ans, dp[i]);
-            while (!dq.empty() && dp[dq.back()] <= dp[i]) dq.pop_back();
-            dq.push_back(i);
+    int constrainedSubsetSum(vector<int> &a, int k)
+    {
+        int out = *max_element(a.begin(), a.end());
+        int n = a.size();
+        int last = 0;
+        int curr = 0;
+        vector<int> used(n, -1);
+        for (int i = 0; i < n; i++)
+        {
+            // cout << curr << " " << last << "\n";
+            if (a[i] < 0)
+                continue;
+            if (i - last <= k)
+            {
+                last = i;
+                curr += a[i];
+                out = max(out, curr);
+                continue;
+            }
+            while (i - last > k && curr >= 0)
+            {
+                // cout << "hi";
+                int best = INT_MIN;
+                int idx = -1;
+                for (int j = last + 1; j <= min(i, last + k); j++)
+                {
+                    if (a[j] >= best)
+                    {
+                        idx = j;
+                        best = a[j];
+                    }
+                }
+                used[idx] = last;
+                curr += best;
+                last = idx;
+
+                for (int j = idx - 1; idx - j <= k && j >= 0; j--)
+                {
+                    if (used[j] != -1 && idx - used[j] <= k && a[j] < 0)
+                    {
+                        curr -= a[j];
+                        used[j] = -1;
+                    }
+                }
+                // cout << curr << " " << last << "\n";
+            }
+            if (curr < 0)
+            {
+                last = i;
+                curr = a[i];
+            }
+            else
+            {
+                last = i;
+                curr += a[i];
+            }
+            out = max(out, curr);
         }
-        return ans;
+        return out;
     }
 };

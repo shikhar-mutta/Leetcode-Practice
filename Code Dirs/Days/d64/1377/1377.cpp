@@ -11,29 +11,75 @@ using namespace std;
 // (t==0), the frog must be sitting there for all remaining time —
 // return the probability if it's the target. Otherwise recurse into
 // each unvisited neighbor with probability divided by the branch count.
-class Solution {
-    vector<vector<int>> adj;
-    double dfs(int node, int parent, int t, double prob, int target) {
-        vector<int> children;
-        for (int nb : adj[node]) if (nb != parent) children.push_back(nb);
-
-        if (t == 0 || children.empty()) {
-            return (node == target) ? prob : 0.0;
-        }
-        double share = prob / children.size();
-        for (int c : children) {
-            double res = dfs(c, node, t - 1, share, target);
-            if (res > 0) return res;
-        }
-        return 0.0;
-    }
+class Solution
+{
 public:
-    double frogPosition(int n, vector<vector<int>>& edges, int t, int target) {
-        adj.assign(n + 1, {});
-        for (auto& e : edges) {
-            adj[e[0]].push_back(e[1]);
-            adj[e[1]].push_back(e[0]);
+    double frogPosition(int n, vector<vector<int>> &edges, int t, int target)
+    {
+        if (n == 1)
+        {
+            if (t > 0)
+            {
+                return 1;
+            }
+            return 0;
         }
-        return dfs(1, -1, t, 1.0, target);
+        vector<vector<int>> graph(n + 1);
+        for (vector<int> &edge : edges)
+        {
+            int from = edge[0];
+            int to = edge[1];
+            graph[from].push_back(to);
+            graph[to].push_back(from);
+        }
+
+        vector<int> path;
+        vector<bool> visited(n + 1, false);
+        function<bool(int, int)> dfs = [&](int start, int target)
+        {
+            path.push_back(start);
+            visited[start] = true;
+
+            if (start == target)
+            {
+                return true;
+            }
+
+            for (int next : graph[start])
+            {
+                if (!visited[next] && dfs(next, target))
+                {
+                    return true;
+                }
+            }
+
+            visited[start] = false;
+            path.pop_back();
+            return false;
+        };
+
+        dfs(1, target);
+
+        if (path.size() - 1 > t)
+        {
+            return 0;
+        }
+        if (path.size() - 1 < t)
+        {
+            for (int next : graph[target])
+            {
+                if (!visited[next])
+                {
+                    return 0;
+                }
+            }
+        }
+
+        double p = 1.0 / graph[path[0]].size();
+        for (int i = 1; i < path.size() - 1; i++)
+        {
+            p *= 1.0 / (graph[path[i]].size() - 1);
+        }
+        return p;
     }
 };

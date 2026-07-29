@@ -10,19 +10,32 @@ using namespace std;
 // second-smallest values of the previous row plus which column held the
 // smallest. Each cell then picks: prevSecondMin if it was in the same
 // column as prevMin, else prevMin — both O(1).
-class Solution {
+class Solution
+{
 public:
-    int minFallingPathSum(vector<vector<int>>& grid) {
+    int minFallingPathSum(vector<vector<int>> &grid)
+    {
         int n = grid.size();
         vector<int> prev = grid[0];
-        for (int r = 1; r < n; r++) {
+        for (int r = 1; r < n; r++)
+        {
             int min1 = INT_MAX, min1Idx = -1, min2 = INT_MAX;
-            for (int c = 0; c < n; c++) {
-                if (prev[c] < min1) { min2 = min1; min1 = prev[c]; min1Idx = c; }
-                else if (prev[c] < min2) { min2 = prev[c]; }
+            for (int c = 0; c < n; c++)
+            {
+                if (prev[c] < min1)
+                {
+                    min2 = min1;
+                    min1 = prev[c];
+                    min1Idx = c;
+                }
+                else if (prev[c] < min2)
+                {
+                    min2 = prev[c];
+                }
             }
             vector<int> cur(n);
-            for (int c = 0; c < n; c++) {
+            for (int c = 0; c < n; c++)
+            {
                 cur[c] = grid[r][c] + (c == min1Idx ? min2 : min1);
             }
             prev = cur;

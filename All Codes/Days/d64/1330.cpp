@@ -12,22 +12,28 @@ using namespace std;
 // (a,b) and (c,d) reduces to max(maxX-minY, maxP-minQ) where, per edge,
 // X=sum-|diff|, Y=sum+|diff|, P=diff-|diff|, Q=diff+|diff| — each
 // computable via a single pass.
-class Solution {
+class Solution
+{
 public:
-    int maxValueAfterReverse(vector<int>& nums) {
+    int maxValueAfterReverse(vector<int> &nums)
+    {
         int n = nums.size();
         long long base = 0;
-        for (int i = 0; i < n - 1; i++) base += abs(nums[i] - nums[i + 1]);
+        for (int i = 0; i < n - 1; i++)
+            base += abs(nums[i] - nums[i + 1]);
 
         long long ans = base;
-        for (int i = 0; i < n - 1; i++) {
+        for (int i = 0; i < n - 1; i++)
+        {
             ans = max(ans, base + abs((long long)nums[0] - nums[i + 1]) - abs((long long)nums[i] - nums[i + 1]));
             ans = max(ans, base + abs((long long)nums[n - 1] - nums[i]) - abs((long long)nums[i] - nums[i + 1]));
         }
 
-        if (n >= 3) {
+        if (n >= 3)
+        {
             long long maxX = LLONG_MIN, minY = LLONG_MAX, maxP = LLONG_MIN, minQ = LLONG_MAX;
-            for (int k = 0; k < n - 1; k++) {
+            for (int k = 0; k < n - 1; k++)
+            {
                 long long a = nums[k], b = nums[k + 1];
                 long long E = abs(a - b), S = a + b, D = a - b;
                 maxX = max(maxX, S - E);

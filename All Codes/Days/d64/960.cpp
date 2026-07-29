@@ -3,29 +3,48 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
-// TC: O(n^2 * m)  n=#columns, m=#rows  SC: O(n)
-// Approach: this reduces to finding the longest subsequence of columns
-// such that every row is non-decreasing across the kept columns (an
-// LIS-style DP). dp[j] = length of the best such subsequence ending at
-// column j; dp[j] = max(dp[i]+1) over i<j where column i <= column j in
-// every row. Deletions needed = totalColumns - longest subsequence.
-class Solution {
+// TC: O(n^2) SC: O(n)
+//  Approach: We can use dynamic programming to solve this problem. We can keep track of the longest increasing subsequence (LIS) of the columns that we can keep. We can iterate through each column and check if we can keep it or not. If we can keep it, we can update the LIS accordingly. The answer will be the total number of columns minus the length of the LIS.
+class Solution
+{
 public:
-    int minDeletionSize(vector<string>& strs) {
-        int m = strs.size(), n = strs[0].size();
-        vector<int> dp(n, 1);
-        int best = 1;
-        for (int j = 1; j < n; j++) {
-            for (int i = 0; i < j; i++) {
-                bool valid = true;
-                for (int r = 0; r < m; r++) {
-                    if (strs[r][i] > strs[r][j]) { valid = false; break; }
+    int solve(int lastCol, vector<string> &strs, vector<int> &dp)
+    {
+        if (lastCol >= (strs[0].size() - 1))
+            return 0;
+
+        int nextCol = lastCol + 1;
+        bool flag = true;
+        int ans = 0;
+        if (dp[lastCol] != -1)
+            return dp[lastCol];
+        for (int j = lastCol + 1; j < strs[0].size(); j++)
+        {
+            flag = true;
+            for (int i = 0; i < strs.size(); i++)
+            {
+                if (strs[i][j] < strs[i][lastCol])
+                {
+                    flag = false;
+                    break;
                 }
-                if (valid) dp[j] = max(dp[j], dp[i] + 1);
             }
-            best = max(best, dp[j]);
+            if (flag)
+            {
+                ans = max(ans, 1 + solve(j, strs, dp));
+            }
         }
-        return n - best;
+        // ans=max(ans,solve(lastCol+1,strs,dp));
+        return dp[lastCol] = ans;
+    }
+    int minDeletionSize(vector<string> &strs)
+    {
+        vector<int> dp(strs[0].size(), -1);
+        int lis = 0;
+        int n = strs[0].size();
+        for (int i = 0; i < n; i++)
+            lis = max(lis, 1 + solve(i, strs, dp));
+
+        return n - lis;
     }
 };

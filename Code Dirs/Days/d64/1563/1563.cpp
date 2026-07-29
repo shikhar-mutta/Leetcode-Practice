@@ -3,25 +3,126 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-class Solution {
+// TC: O(n^2) SC: O(n^2)
+// Approach: We can use dynamic programming to solve this problem. We can create a 2D array dp where dp[i][j] represents the maximum score that can be obtained from the subarray stoneValue[i...j]. We can also create a prefix sum array to calculate the sum of elements in the subarray efficiently. For each subarray, we can find the mid index where the sum of elements on the left is equal to or less than the sum of elements on the right. We can then calculate the maximum score by considering both sides of the mid index and updating the dp array accordingly. Finally, we return dp[0][n-1] which represents the maximum score for the entire array.
+class Solution
+{
 public:
-    int stoneGameV(vector<int>& stoneValue) {
-        int n = stoneValue.size();
-        vector<int> pre(n + 1, 0);
-        for (int i = 0; i < n; i++) pre[i+1] = pre[i] + stoneValue[i];
-        auto sum = [&](int l, int r) { return pre[r+1] - pre[l]; };
-        vector<vector<int>> dp(n, vector<int>(n, -1));
-        function<int(int,int)> solve = [&](int l, int r) -> int {
-            if (l == r) return 0;
-            if (dp[l][r] != -1) return dp[l][r];
-            int best = 0;
-            for (int m = l; m < r; m++) {
-                int leftSum = sum(l, m), rightSum = sum(m+1, r);
-                if (leftSum <= rightSum) best = max(best, leftSum + solve(l, m));
-                if (rightSum <= leftSum) best = max(best, rightSum + solve(m+1, r));
+    int stoneGameV(vector<int> &stoneValue)
+    {
+        const int n = stoneValue.size();
+        vector<int> prefix(n + 1);
+        partial_sum(cbegin(stoneValue), cend(stoneValue), begin(prefix) + 1);
+
+        vector<int> mid(n);
+        iota(begin(mid), end(mid), 0);
+
+        vector<vector<int>> dp(n, vector<int>(n));
+        for (int i = 0; i < n; ++i)
+        {
+            dp[i][i] = stoneValue[i];
+        }
+
+        int max_score = 0;
+        for (int l = 2; l <= n; ++l)
+        {
+            for (int i = 0; i <= n - l; ++i)
+            {
+                const int j = i + l - 1;
+                while (prefix[mid[i]] - prefix[i] <
+                       prefix[j + 1] - prefix[mid[i]])
+                {
+                    ++mid[i]; // Time: O(n^2) in total
+                }
+                const int p = mid[i];
+                max_score = 0;
+                if (prefix[p] - prefix[i] == prefix[j + 1] - prefix[p])
+                {
+                    max_score = max(dp[i][p - 1], dp[j][p]);
+                }
+                else
+                {
+                    if (i <= p - 2)
+                    {
+                        max_score = max(max_score, dp[i][p - 2]);
+                    }
+                    if (p <= j)
+                    {
+                        max_score = max(max_score, dp[j][p]);
+                    }
+                }
+                dp[i][j] =
+                    max(dp[i][j - 1], (prefix[j + 1] - prefix[i]) + max_score);
+                dp[j][i] =
+                    max(dp[j][i + 1], (prefix[j + 1] - prefix[i]) + max_score);
             }
-            return dp[l][r] = best;
-        };
-        return solve(0, n - 1);
+        }
+        return max_score;
+    }
+};
+
+// Time:  O(n^2)
+// Space: O(n^2)
+class Solution2
+{
+public:
+    int stoneGameV(vector<int> &stoneValue)
+    {
+        const int n = stoneValue.size();
+        vector<int> prefix(n + 1);
+        partial_sum(cbegin(stoneValue), cend(stoneValue), begin(prefix) + 1);
+
+        vector<vector<int>> mid(n, vector<int>(n));
+        for (int l = 1; l <= n; ++l)
+        {
+            for (int i = 0; i <= n - l; ++i)
+            {
+                const int j = i + l - 1;
+                int p = (l == 1) ? i : mid[i][j - 1];
+                while (prefix[p] - prefix[i] < prefix[j + 1] - prefix[p])
+                {
+                    ++p; // Time: O(n^2) in total
+                }
+                mid[i][j] = p;
+            }
+        }
+
+        vector<vector<int>> rmq(n, vector<int>(n));
+        for (int i = 0; i < n; ++i)
+        {
+            rmq[i][i] = stoneValue[i];
+        }
+
+        vector<vector<int>> dp(n, vector<int>(n));
+        for (int l = 2; l <= n; ++l)
+        {
+            for (int i = 0; i <= n - l; ++i)
+            {
+                const int j = i + l - 1;
+                const int p = mid[i][j];
+                int max_score = 0;
+                if (prefix[p] - prefix[i] == prefix[j + 1] - prefix[p])
+                {
+                    max_score = max(rmq[i][p - 1], rmq[j][p]);
+                }
+                else
+                {
+                    if (i <= p - 2)
+                    {
+                        max_score = max(max_score, rmq[i][p - 2]);
+                    }
+                    if (p <= j)
+                    {
+                        max_score = max(max_score, rmq[j][p]);
+                    }
+                }
+                dp[i][j] = max_score;
+                rmq[i][j] =
+                    max(rmq[i][j - 1], (prefix[j + 1] - prefix[i]) + max_score);
+                rmq[j][i] =
+                    max(rmq[j][i + 1], (prefix[j + 1] - prefix[i]) + max_score);
+            }
+        }
+        return dp[0][n - 1];
     }
 };

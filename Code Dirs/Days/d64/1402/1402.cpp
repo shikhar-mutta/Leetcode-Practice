@@ -11,14 +11,18 @@ using namespace std;
 // dish's multiplier) non-negative, keep it and accumulate into the
 // answer; otherwise stop (a sorted-descending sequence means once
 // adding stops helping, it never helps again).
-class Solution {
+class Solution
+{
 public:
-    int maxSatisfaction(vector<int>& satisfaction) {
+    int maxSatisfaction(vector<int> &satisfaction)
+    {
         sort(satisfaction.rbegin(), satisfaction.rend());
         int total = 0, ans = 0;
-        for (int s : satisfaction) {
+        for (int s : satisfaction)
+        {
             total += s;
-            if (total <= 0) break;
+            if (total <= 0)
+                break;
             ans += total;
         }
         return ans;

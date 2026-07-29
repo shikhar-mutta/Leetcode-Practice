@@ -3,69 +3,120 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
-// TC: O((m*n)^2)  SC: O((m*n)^2)
-// Approach: BFS over states (box position, player position), counting
-// pushes. From each state, try pushing the box in each of 4 directions:
-// this requires the box's destination cell to be free, AND the player
-// must be able to walk (without moving the box) from their current
-// position to the cell opposite the push direction — checked via an
-// inner BFS each time. Each successful push advances the state with
-// player now standing where the box used to be.
-class Solution {
-    int m, n;
-    bool canReach(vector<vector<char>>& grid, pair<int,int> box, pair<int,int> start, pair<int,int> target) {
-        if (start == target) return true;
-        vector<vector<bool>> visited(m, vector<bool>(n, false));
-        queue<pair<int,int>> q;
-        q.push(start);
-        visited[start.first][start.second] = true;
-        int dx[4] = {0,0,1,-1}, dy[4] = {1,-1,0,0};
-        while (!q.empty()) {
-            auto [x, y] = q.front(); q.pop();
-            for (int d = 0; d < 4; d++) {
-                int nx = x + dx[d], ny = y + dy[d];
-                if (nx < 0 || nx >= m || ny < 0 || ny >= n) continue;
-                if (grid[nx][ny] == '#') continue;
-                if (nx == box.first && ny == box.second) continue;
-                if (visited[nx][ny]) continue;
-                if (nx == target.first && ny == target.second) return true;
-                visited[nx][ny] = true;
+// TC: O(m*n*4*4)  SC: O(m*n*4*4)  m = grid.size() n = grid[0].size()
+// Approach: BFS over the state of (boxX, boxY, personX, personY). For each state, try to push the box in all 4 directions. For each direction, check if the person can reach the opposite side of the box to push it. If yes, add the new state to the queue and mark it as visited. Return the number of pushes when the box reaches the target.
+class Solution
+{
+public:
+    bool canReach(vector<vector<char>> &grid, int sx, int sy, int &tx, int &ty,
+                  int &bx, int &by)
+    {
+
+        int m = grid.size(), n = grid[0].size();
+
+        if (sx == tx && sy == ty)
+            return true;
+
+        queue<pair<int, int>> q;
+        bool vis[20][20] = {};
+
+        q.push({sx, sy});
+        vis[sx][sy] = true;
+
+        int dx[4] = {1, -1, 0, 0};
+        int dy[4] = {0, 0, 1, -1};
+
+        while (!q.empty())
+        {
+            auto [x, y] = q.front();
+            q.pop();
+
+            for (int k = 0; k < 4; k++)
+            {
+                int nx = x + dx[k];
+                int ny = y + dy[k];
+
+                if (nx < 0 || ny < 0 || nx >= m || ny >= n)
+                    continue;
+                if (vis[nx][ny])
+                    continue;
+                if (grid[nx][ny] == '#')
+                    continue;
+                if (nx == bx && ny == by)
+                    continue;
+
+                if (nx == tx && ny == ty)
+                    return true;
+
+                vis[nx][ny] = true;
                 q.push({nx, ny});
             }
         }
+
         return false;
     }
-public:
-    int minPushBox(vector<vector<char>>& grid) {
-        m = grid.size(); n = grid[0].size();
-        pair<int,int> box, player, target;
+    int minPushBox(vector<vector<char>> &grid)
+    {
+        int xb, yb, xs, ys;
+        int m = grid.size();
+        int n = grid[0].size();
         for (int i = 0; i < m; i++)
-            for (int j = 0; j < n; j++) {
-                if (grid[i][j] == 'B') box = {i, j};
-                else if (grid[i][j] == 'S') player = {i, j};
-                else if (grid[i][j] == 'T') target = {i, j};
+        {
+            for (int j = 0; j < n; j++)
+            {
+                if (grid[i][j] == 'B')
+                {
+                    xb = i;
+                    yb = j;
+                    grid[i][j] = '.';
+                }
+                if (grid[i][j] == 'S')
+                {
+                    xs = i;
+                    ys = j;
+                    grid[i][j] = '.';
+                }
             }
-
-        int dx[4] = {0,0,1,-1}, dy[4] = {1,-1,0,0};
-        set<tuple<int,int,int,int>> visited;
-        queue<tuple<int,int,int,int,int>> q; // boxR,boxC,playerR,playerC,pushes
-        q.push({box.first, box.second, player.first, player.second, 0});
-        visited.insert({box.first, box.second, player.first, player.second});
-
-        while (!q.empty()) {
-            auto [bx, by, px, py, pushes] = q.front(); q.pop();
-            if (bx == target.first && by == target.second) return pushes;
-            for (int d = 0; d < 4; d++) {
-                int nbx = bx + dx[d], nby = by + dy[d];
-                if (nbx < 0 || nbx >= m || nby < 0 || nby >= n || grid[nbx][nby] == '#') continue;
-                int px_need = bx - dx[d], py_need = by - dy[d]; // player must be opposite side
-                if (px_need < 0 || px_need >= m || py_need < 0 || py_need >= n || grid[px_need][py_need] == '#') continue;
-                if (!canReach(grid, {bx, by}, {px, py}, {px_need, py_need})) continue;
-                auto state = make_tuple(nbx, nby, bx, by);
-                if (visited.count(state)) continue;
-                visited.insert(state);
-                q.push({nbx, nby, bx, by, pushes + 1});
+        }
+        queue<tuple<int, int, int, int>> q;
+        // xbox, ybox, xper, yper
+        int lv = 0;
+        q.push({xb, yb, xs, ys});
+        bool vis[20][20][20][20] = {false};
+        vis[xb][yb][xs][ys] = true;
+        int dx[4] = {0, 1, 0, -1};
+        int dy[4] = {1, 0, -1, 0};
+        while (!q.empty())
+        {
+            int sz = q.size();
+            lv++;
+            while (sz--)
+            {
+                auto [ib, jb, is, js] = q.front();
+                q.pop();
+                for (int k = 0; k < 4; k++)
+                {
+                    xb = ib + dx[k];
+                    yb = jb + dy[k];
+                    xs = ib - dx[k];
+                    ys = jb - dy[k];
+                    if (xb < 0 || yb < 0 || xb >= grid.size() ||
+                        yb >= grid[0].size() || xs < 0 || ys < 0 ||
+                        xs >= grid.size() || ys >= grid[0].size() ||
+                        grid[xb][yb] == '#' || grid[xs][ys] == '#')
+                    {
+                        continue;
+                    }
+                    if (vis[xb][yb][ib][jb])
+                        continue;
+                    if (canReach(grid, is, js, xs, ys, ib, jb))
+                    {
+                        vis[xb][yb][ib][jb] = true;
+                        if (grid[xb][yb] == 'T')
+                            return lv;
+                        q.push({xb, yb, ib, jb});
+                    }
+                }
             }
         }
         return -1;

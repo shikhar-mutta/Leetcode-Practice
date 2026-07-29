@@ -3,46 +3,101 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
-// TC: O(n^2 * alpha(n))  SC: O(n)
-// Approach: union-find the graph into connected components, tracking
-// each component's size. For each initially infected node, count how
-// many initial nodes share its component; if it's the sole infected
-// node in its component, removing it saves that whole component's
-// size. Pick the candidate with the largest such savings (ties broken
-// by smallest node index); if no candidate is alone in its component,
-// removing any one saves nothing, so return the smallest index.
-class Solution {
+// TC: O(n^2)  SC: O(n)
+// Approach: DSU. Build connected components, count infected nodes in each component. If a component has only one infected node, removing it will save the entire component. Return the node that saves the most nodes (tie-breaker: smallest index).
+class DSU
+{
+private:
     vector<int> parent;
-    int find(int x) { return parent[x] == x ? x : parent[x] = find(parent[x]); }
-    void unite(int a, int b) {
-        a = find(a); b = find(b);
-        if (a != b) parent[a] = b;
-    }
+    vector<int> sz;
+
 public:
-    int minMalwareSpread(vector<vector<int>>& graph, vector<int>& initial) {
-        int n = graph.size();
+    DSU(int n)
+    {
         parent.resize(n);
-        iota(parent.begin(), parent.end(), 0);
+        sz.resize(n, 1);
+
         for (int i = 0; i < n; i++)
+            parent[i] = i;
+    }
+
+    int find(int x)
+    {
+        if (parent[x] == x)
+            return x;
+
+        return parent[x] = find(parent[x]);
+    }
+
+    void Union(int a, int b)
+    {
+        int rootA = find(a);
+        int rootB = find(b);
+
+        if (rootA == rootB)
+            return;
+
+        if (sz[rootA] < sz[rootB])
+            swap(rootA, rootB);
+
+        parent[rootB] = rootA;
+        sz[rootA] += sz[rootB];
+    }
+
+    int getSize(int x) { return sz[find(x)]; }
+};
+
+class Solution
+{
+public:
+    int minMalwareSpread(vector<vector<int>> &graph, vector<int> &initial)
+    {
+
+        int n = graph.size();
+
+        DSU dsu(n);
+
+        // Build connected components
+        for (int i = 0; i < n; i++)
+        {
             for (int j = i + 1; j < n; j++)
-                if (graph[i][j]) unite(i, j);
-
-        vector<int> compSize(n, 0);
-        for (int i = 0; i < n; i++) compSize[find(i)]++;
-
-        unordered_map<int,int> infectedCount;
-        for (int x : initial) infectedCount[find(x)]++;
-
-        sort(initial.begin(), initial.end());
-        int best = initial[0], bestSave = -1;
-        for (int x : initial) {
-            int root = find(x);
-            if (infectedCount[root] == 1) {
-                int save = compSize[root];
-                if (save > bestSave) { bestSave = save; best = x; }
+            {
+                if (graph[i][j])
+                    dsu.Union(i, j);
             }
         }
-        return best;
+
+        unordered_map<int, int> infectedCount;
+
+        // Count infected nodes in every component
+        for (int node : initial)
+        {
+            infectedCount[dsu.find(node)]++;
+        }
+
+        sort(initial.begin(), initial.end());
+
+        int ans = initial[0];
+        int bestSaved = -1;
+
+        for (int node : initial)
+        {
+
+            int root = dsu.find(node);
+
+            // Another malware still exists in this component
+            if (infectedCount[root] != 1)
+                continue;
+
+            int saved = dsu.getSize(root);
+
+            if (saved > bestSaved)
+            {
+                bestSaved = saved;
+                ans = node;
+            }
+        }
+
+        return ans;
     }
 };

@@ -3,29 +3,35 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-class Solution {
+// TC: O(nlogn) + O(n) + O(n) + O(n) + O(n) = O(nlogn)
+// SC: O(n) + O(n) + O(n) + O(n) = O(n)
+// Approach: Sliding Window + Prefix Sum + Median
+// We can use a sliding window of size k to find the minimum number of adjacent swaps needed to group k consecutive 1's together.
+int o[100000] = {0};
+long long sum[100001] = {0};
+class Solution
+{
 public:
-    int minMoves(vector<int>& nums, int k) {
-        vector<long long> pos;
-        for (int i = 0; i < (int)nums.size(); i++)
-            if (nums[i] == 1) pos.push_back(i);
-        int m = pos.size();
-        vector<long long> g(m);
-        for (int i = 0; i < m; i++) g[i] = pos[i] - i;
-        vector<long long> prefix(m + 1, 0);
-        for (int i = 0; i < m; i++) prefix[i+1] = prefix[i] + g[i];
-        long long best = LLONG_MAX;
-        for (int i = 0; i + k <= m; i++) {
-            int mid = i + k / 2;
-            long long medVal = g[mid];
-            long long leftCount = mid - i;
-            long long leftSum = prefix[mid] - prefix[i];
-            long long leftCost = medVal * leftCount - leftSum;
-            long long rightCount = (i + k) - mid - 1;
-            long long rightSum = prefix[i+k] - prefix[mid+1];
-            long long rightCost = rightSum - medVal * rightCount;
-            best = min(best, leftCost + rightCost);
+    int minMoves(vector<int> &nums, int k)
+    {
+        if (k == 1)
+            return 0;
+        int n = nums.size(), o_size = 0;
+        for (int i = 0; i < n; ++i)
+            if (nums[i])
+            {
+                o[o_size++] = i;
+                sum[o_size] = sum[o_size - 1] + i;
+            }
+        long long ans = 1e15;
+        for (int r = k - 1, l = 0; r < o_size; ++r, ++l)
+        {
+            int i = (l + r) >> 1;
+            long long nl = i - l + 1, nr = r - i;
+            ans = min(ans, nl * o[i] - (sum[i + 1] - sum[l]) -
+                               nl * (nl - 1) / 2 + sum[r + 1] - sum[i + 1] -
+                               nr * (o[i] + 1) - nr * (nr - 1) / 2);
         }
-        return (int)best;
+        return ans;
     }
 };

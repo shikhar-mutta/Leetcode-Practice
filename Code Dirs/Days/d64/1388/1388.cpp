@@ -3,32 +3,31 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
-// TC: O(n^2)  SC: O(n^2)
-// Approach: taking a slice forces both its neighbors to be skipped, so
-// this is "pick n/3 non-adjacent elements to maximize sum" on a
-// circular array. Handle the circularity by running the linear
-// non-adjacent-selection DP twice — once excluding the last slice, once
-// excluding the first — and taking the better result.
-class Solution {
-    int pickMax(vector<int>& arr, int k) {
-        int m = arr.size();
-        vector<vector<int>> dp(m + 1, vector<int>(k + 1, 0));
-        for (int i = 1; i <= m; i++) {
-            for (int j = 1; j <= k; j++) {
-                int skip = dp[i - 1][j];
-                int take = (i >= 2 ? dp[i - 2][j - 1] : 0) + arr[i - 1];
-                dp[i][j] = max(skip, take);
-            }
-        }
-        return dp[m][k];
-    }
+// TC: O(n^2) SC: O(n)
+// Approach: DP
+// We can solve this problem using dynamic programming. The idea is to use a 2D DP array where dp[i][j] represents the maximum sum of slices we can get by considering the first i slices and selecting j slices. Since we cannot select adjacent slices, we have two cases for each slice: either we include it in our selection or we don't. If we include it, we cannot include the previous slice, so we add the value of the current slice to the maximum sum we can get by considering the first i-2 slices and selecting j-1 slices. If we don't include it, we simply take the maximum sum we can get by considering the first i-1 slices and selecting j slices. Finally, since the pizza is circular, we need to consider two cases: one where we include the first slice and exclude the last slice, and another where we exclude the first slice and include the last slice. We return the maximum of these two cases.
+class Solution
+{
 public:
-    int maxSizeSlices(vector<int>& slices) {
-        int n = slices.size();
-        int k = n / 3;
-        vector<int> a(slices.begin(), slices.end() - 1);
-        vector<int> b(slices.begin() + 1, slices.end());
-        return max(pickMax(a, k), pickMax(b, k));
+    int maxSizeSlices(std::vector<int> &slices)
+    {
+        int m = slices.size();
+        int n = m / 3;
+        auto solveLinear = [&](int start, int end)
+        {
+            std::vector<int> a(n + 1, 0);
+            std::vector<int> b(n + 1, 0);
+            for (int i = start; i <= end; ++i)
+            {
+                int max_slices = std::min(n, (i - start + 2) / 2);
+                for (int j = max_slices; j >= 1; --j)
+                {
+                    b[j] = std::max(a[j], b[j - 1] + slices[i]);
+                }
+                std::swap(a, b);
+            }
+            return a[n];
+        };
+        return std::max(solveLinear(0, m - 2), solveLinear(1, m - 1));
     }
 };

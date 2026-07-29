@@ -3,47 +3,48 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
-// TC: O(sqrt(maxVal))  SC: O(1)
-// Approach: a super-palindrome's square root must itself be a palindrome
-// (since a perfect square that's a palindrome... actually we directly
-// generate candidate roots by building palindromes from half-strings
-// (both odd and even length), since roots only need to go up to
-// sqrt(right) ~ 1e9. Square each candidate root and check if the square
-// is itself a palindrome and within [left, right].
-class Solution {
-    bool isPalindrome(const string& s) {
-        int n = s.size();
-        for (int i = 0; i < n / 2; i++) if (s[i] != s[n - 1 - i]) return false;
-        return true;
-    }
+// TC: O(10^5 * log(10^18))  SC: O(log(10^18))
+// Approach: Generate all palindromes up to sqrt(r) and check if their squares are palindromes and in the range [l, r]. To generate palindromes, we can take a prefix and append its reverse to it. We can also take a prefix, remove the last digit, and append its reverse to it to generate odd-length palindromes.
+// For each palindrome, we check if its square is a palindrome and in the range [l, r].
+// We can check if a number is a palindrome by reversing it and comparing it to the original number.
+typedef long long ll;
+class Solution
+{
 public:
-    int superpalindromesInRange(string left, string right) {
-        long long L = stoll(left), R = stoll(right);
-        long long count = 0;
-
-        for (int half = 1; half <= 100000; half++) {
-            string h = to_string(half);
-            // odd-length palindrome root: h + reverse(h without last char)
-            string revOdd = h;
-            revOdd.pop_back();
-            reverse(revOdd.begin(), revOdd.end());
-            string oddRoot = h + revOdd;
-
-            // even-length palindrome root: h + reverse(h)
-            string revEven = h;
-            reverse(revEven.begin(), revEven.end());
-            string evenRoot = h + revEven;
-
-            for (const string& rootStr : {oddRoot, evenRoot}) {
-                long long root = stoll(rootStr);
-                long long sq = root * root;
-                if (sq > R) continue;
-                if (sq < L) continue;
-                string sqStr = to_string(sq);
-                if (isPalindrome(sqStr)) count++;
-            }
+    bool isPalindrome(ll num)
+    {
+        ll rev = 0, temp = num;
+        while (temp != 0)
+        {
+            rev = rev * 10 + temp % 10;
+            temp /= 10;
         }
-        return (int)count;
+        return rev == num;
+    }
+
+    ll pal(ll prefix, ll suffix)
+    {
+        while (suffix > 0)
+        {
+            prefix = prefix * 10 + suffix % 10;
+            suffix /= 10;
+        }
+        return prefix;
+    }
+    int superpalindromesInRange(string left, string right)
+    {
+        int ans = 0;
+        ll l = stol(left), r = stol(right);
+        ll sqrt_l = sqrt(l), sqrt_r = sqrt(r), num = 0;
+        for (ll i = 1; num <= sqrt_r; i++)
+        {
+            num = pal(i, i);
+            if (num >= sqrt_l && num <= sqrt_r && isPalindrome(num * num))
+                ans++;
+            num = pal(i, i / 10);
+            if (num >= sqrt_l && num <= sqrt_r && isPalindrome(num * num))
+                ans++;
+        }
+        return ans;
     }
 };

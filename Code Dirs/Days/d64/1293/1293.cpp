@@ -3,41 +3,60 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
-// TC: O(m*n*k)  SC: O(m*n*k)
-// Approach: BFS over states (row, col, obstaclesEliminatedSoFar). Moving
-// into an obstacle consumes one elimination (only if remaining allows).
-// If k is already large enough to eliminate every obstacle on any
-// shortest Manhattan path, short-circuit with (m-1)+(n-1).
-class Solution {
+// TC: O(n*m*k)  SC: O(n*m*k)
+// Approach: BFS with 3D visited array to track (x,y,obstaclesRemoved) states. Each state is pushed into the queue with the number of obstacles removed so far. If we reach the destination with obstaclesRemoved <= k, we return the path length.
+class Solution
+{
 public:
-    int shortestPath(vector<vector<int>>& grid, int k) {
-        int m = grid.size(), n = grid[0].size();
-        if (k >= m + n - 2) return m + n - 2;
+    vector<vector<int>> directions{{0, 1}, {1, 0}, {-1, 0}, {0, -1}};
+    int shortestPath(vector<vector<int>> &grid, int k)
+    {
 
-        vector<vector<vector<bool>>> visited(m, vector<vector<bool>>(n, vector<bool>(k + 1, false)));
-        queue<tuple<int,int,int>> q;
-        q.push({0, 0, k});
-        visited[0][0][k] = true;
-        int dx[4] = {0,0,1,-1}, dy[4] = {1,-1,0,0};
-        int steps = 0;
-        while (!q.empty()) {
+        int n = grid.size();
+        int m = grid[0].size();
+
+        if (k >= n + m - 2)
+            return n + m - 2;
+        queue<array<int, 3>> q;
+
+        vector<vector<vector<bool>>> vis(
+            n, vector<vector<bool>>(m, vector<bool>(k + 1, false)));
+
+        int cnt = (grid[0][0] == 1) ? 1 : 0;
+        q.push({0, 0, cnt});
+        vis[0][0][cnt] = true;
+
+        int l = 0;
+        while (!q.empty())
+        {
             int sz = q.size();
-            for (int s = 0; s < sz; s++) {
-                auto [x, y, rem] = q.front(); q.pop();
-                if (x == m - 1 && y == n - 1) return steps;
-                for (int d = 0; d < 4; d++) {
-                    int nx = x + dx[d], ny = y + dy[d];
-                    if (nx < 0 || nx >= m || ny < 0 || ny >= n) continue;
-                    int nrem = rem - grid[nx][ny];
-                    if (nrem < 0) continue;
-                    if (visited[nx][ny][nrem]) continue;
-                    visited[nx][ny][nrem] = true;
-                    q.push({nx, ny, nrem});
+            while (sz--)
+            {
+                auto [x, y, c] = q.front();
+                q.pop();
+
+                if (x == n - 1 && y == m - 1 && c <= k)
+                    return l;
+
+                for (auto &d : directions)
+                {
+                    int i = x + d[0];
+                    int j = y + d[1];
+
+                    if (i >= 0 && j >= 0 && i < n && j < m)
+                    {
+                        int temp = (grid[i][j] == 1) ? 1 : 0;
+                        if (c + temp <= k && !vis[i][j][c + temp])
+                        {
+                            q.push({i, j, c + temp});
+                            vis[i][j][c + temp] = true;
+                        }
+                    }
                 }
             }
-            steps++;
+            l++;
         }
+
         return -1;
     }
 };

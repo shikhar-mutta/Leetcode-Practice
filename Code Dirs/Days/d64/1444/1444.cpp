@@ -3,38 +3,67 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-class Solution {
-    int n, m, K;
-    const int MOD = 1e9 + 7;
-    vector<vector<int>> suf; // suf[r][c] = apples in rows>=r, cols>=c
-    vector<vector<vector<int>>> memo;
-
-    bool hasApple(int r, int c) { return suf[r][c] > 0; }
-
-    int solve(int r, int c, int k) {
-        if (r >= n || c >= m) return 0;
-        if (!hasApple(r, c)) return 0;
-        if (k == 1) return 1;
-        if (memo[k][r][c] != -1) return memo[k][r][c];
-        long long res = 0;
-        for (int i = r + 1; i < n; i++) {
-            if (suf[r][c] - suf[i][c] > 0)
-                res = (res + solve(i, c, k - 1)) % MOD;
-        }
-        for (int j = c + 1; j < m; j++) {
-            if (suf[r][c] - suf[r][j] > 0)
-                res = (res + solve(r, j, k - 1)) % MOD;
-        }
-        return memo[k][r][c] = (int)res;
-    }
+// TC: O(m * n * k * (m + n))  SC: O(m * n * k)
+// Approach: Use dynamic programming to count the number of ways to cut the pizza. We can use a 3D dp array where dp[r][c][k] represents the number of ways to cut the pizza starting from cell (r, c) with k cuts remaining. We can precompute the number of apples in each submatrix using a suffix sum array. For each cell, we can try making horizontal and vertical cuts and recursively count the number of ways to cut the remaining pizza.
+class Solution
+{
 public:
-    int ways(vector<string>& pizza, int k) {
-        n = pizza.size(); m = pizza[0].size(); K = k;
-        suf.assign(n + 1, vector<int>(m + 1, 0));
-        for (int i = n - 1; i >= 0; i--)
-            for (int j = m - 1; j >= 0; j--)
-                suf[i][j] = suf[i+1][j] + suf[i][j+1] - suf[i+1][j+1] + (pizza[i][j] == 'A');
-        memo.assign(k + 1, vector<vector<int>>(n, vector<int>(m, -1)));
-        return solve(0, 0, k);
+    static const int MOD = 1000000007;
+    int m, n;
+    int pre[55][55];
+    int dp[55][55][11];
+
+    int solve(int r, int c, int k)
+    {
+        if (pre[r][c] == 0)
+            return 0;
+        if (k == 0)
+            return 1;
+
+        if (dp[r][c][k] != -1)
+            return dp[r][c][k];
+
+        long long ans = 0;
+
+        // Horizontal cuts
+        for (int nr = r + 1; nr < m; nr++)
+        {
+            if (pre[r][c] - pre[nr][c] > 0)
+            {
+                ans = (ans + solve(nr, c, k - 1)) % MOD;
+            }
+        }
+
+        // Vertical cuts
+        for (int nc = c + 1; nc < n; nc++)
+        {
+            if (pre[r][c] - pre[r][nc] > 0)
+            {
+                ans = (ans + solve(r, nc, k - 1)) % MOD;
+            }
+        }
+
+        return dp[r][c][k] = ans;
+    }
+
+    int ways(vector<string> &pizza, int k)
+    {
+        m = pizza.size();
+        n = pizza[0].size();
+
+        memset(pre, 0, sizeof(pre));
+        memset(dp, -1, sizeof(dp));
+
+        // Suffix sum of apples
+        for (int i = m - 1; i >= 0; i--)
+        {
+            for (int j = n - 1; j >= 0; j--)
+            {
+                pre[i][j] = (pizza[i][j] == 'A') + pre[i + 1][j] +
+                            pre[i][j + 1] - pre[i + 1][j + 1];
+            }
+        }
+
+        return solve(0, 0, k - 1);
     }
 };

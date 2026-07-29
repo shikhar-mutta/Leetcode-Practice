@@ -11,38 +11,49 @@ using namespace std;
 // and OR-result costs, then pick min(natural, 1 + other) since we may flip
 // the operator itself for cost 1. Answer = cost to reach the opposite of the
 // expression's current value.
-class Solution {
+class Solution
+{
     string s;
     int pos;
 
-    pair<int,int> parseOperand() {
-        if (s[pos] == '(') {
+    pair<int, int> parseOperand()
+    {
+        if (s[pos] == '(')
+        {
             pos++; // skip '('
             auto res = parseExpr();
             pos++; // skip ')'
             return res;
-        } else {
+        }
+        else
+        {
             int v = s[pos] - '0';
             pos++;
             return v == 0 ? make_pair(0, 1) : make_pair(1, 0);
         }
     }
 
-    pair<int,int> combine(pair<int,int> a, pair<int,int> b, char op) {
+    pair<int, int> combine(pair<int, int> a, pair<int, int> b, char op)
+    {
         int and0 = min({a.first + b.first, a.first + b.second, a.second + b.first});
         int and1 = a.second + b.second;
         int or0 = a.first + b.first;
         int or1 = min({a.first + b.second, a.second + b.first, a.second + b.second});
-        if (op == '&') {
+        if (op == '&')
+        {
             return {min(and0, 1 + or0), min(and1, 1 + or1)};
-        } else {
+        }
+        else
+        {
             return {min(or0, 1 + and0), min(or1, 1 + and1)};
         }
     }
 
-    pair<int,int> parseExpr() {
+    pair<int, int> parseExpr()
+    {
         auto result = parseOperand();
-        while (pos < (int)s.size() && (s[pos] == '&' || s[pos] == '|')) {
+        while (pos < (int)s.size() && (s[pos] == '&' || s[pos] == '|'))
+        {
             char op = s[pos];
             pos++;
             auto rhs = parseOperand();
@@ -50,8 +61,10 @@ class Solution {
         }
         return result;
     }
+
 public:
-    int minOperationsToFlip(string expression) {
+    int minOperationsToFlip(string expression)
+    {
         s = expression;
         pos = 0;
         auto res = parseExpr();

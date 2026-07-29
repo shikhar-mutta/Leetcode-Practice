@@ -3,54 +3,81 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
 // TC: O(log(n*m)) per operation using ordered sets  SC: O(n*m)
-// Approach: maintain a set of (price,shop) per movie for unrented copies, a
-// global set of (price,shop,movie) for rented copies, and a price map keyed
-// by (shop,movie) for quick lookup during rent/drop.
-class MovieRentingSystem {
-    map<pair<int,int>, int> priceOf; // (shop,movie) -> price
-    unordered_map<int, set<pair<int,int>>> unrented; // movie -> {(price,shop)}
-    set<tuple<int,int,int>> rented; // (price,shop,movie)
+//  Approach: maintain a set of (price,shop) per movie for unrented copies, a
+//  global set of (price,shop,movie) for rented copies, and a price map keyed by (shop,movie) for quick lookup during rent/drop.
+class MovieRentingSystem
+{
+private:
+    // (movie, shop) -> price
+    unordered_map<int, unordered_map<int, int>> price;
+
+    // movie -> available shops sorted by (price, shop)
+    unordered_map<int, set<pair<int, int>>> available;
+
+    // rented sorted by (price, shop, movie)
+    set<tuple<int, int, int>> rented;
+
 public:
-    MovieRentingSystem(int n, vector<vector<int>>& entries) {
-        for (auto& e : entries) {
-            int shop = e[0], movie = e[1], price = e[2];
-            priceOf[{shop, movie}] = price;
-            unrented[movie].insert({price, shop});
+    MovieRentingSystem(int n, vector<vector<int>> &entries)
+    {
+        for (auto &entry : entries)
+        {
+            int shop = entry[0];
+            int movie = entry[1];
+            int p = entry[2];
+
+            price[movie][shop] = p;
+            available[movie].insert({p, shop});
         }
     }
 
-    vector<int> search(int movie) {
-        vector<int> res;
-        if (!unrented.count(movie)) return res;
-        int cnt = 0;
-        for (auto& [price, shop] : unrented[movie]) {
-            res.push_back(shop);
-            if (++cnt == 5) break;
+    vector<int> search(int movie)
+    {
+        vector<int> result;
+
+        if (!available.count(movie))
+        {
+            return result;
         }
-        return res;
-    }
 
-    void rent(int shop, int movie) {
-        int price = priceOf[{shop, movie}];
-        unrented[movie].erase({price, shop});
-        rented.insert({price, shop, movie});
-    }
-
-    void drop(int shop, int movie) {
-        int price = priceOf[{shop, movie}];
-        rented.erase({price, shop, movie});
-        unrented[movie].insert({price, shop});
-    }
-
-    vector<vector<int>> report() {
-        vector<vector<int>> res;
-        int cnt = 0;
-        for (auto& [price, shop, movie] : rented) {
-            res.push_back({shop, movie});
-            if (++cnt == 5) break;
+        for (auto [p, shop] : available[movie])
+        {
+            if (result.size() == 5)
+                break;
+            result.push_back(shop);
         }
-        return res;
+
+        return result;
+    }
+
+    void rent(int shop, int movie)
+    {
+        int p = price[movie][shop];
+
+        available[movie].erase({p, shop});
+        rented.insert({p, shop, movie});
+    }
+
+    void drop(int shop, int movie)
+    {
+        int p = price[movie][shop];
+
+        rented.erase({p, shop, movie});
+        available[movie].insert({p, shop});
+    }
+
+    vector<vector<int>> report()
+    {
+        vector<vector<int>> result;
+
+        for (auto [p, shop, movie] : rented)
+        {
+            if (result.size() == 5)
+                break;
+            result.push_back({shop, movie});
+        }
+
+        return result;
     }
 };

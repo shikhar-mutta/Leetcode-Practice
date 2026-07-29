@@ -3,42 +3,44 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
-// TC: O((n + sum(boxes_i)) log n)  SC: O(n)
-// Approach: sort packages, build prefix sum. For each supplier, sort its box
-// sizes; for each box size find how many not-yet-covered packages fit (binary
-// search) and add box_size * count_of_those_packages - their_sum to wasted
-// space, tracking prefix pointer. Discard suppliers that can't cover the
-// largest package.
-class Solution {
+// TC: O(nlogn + mlogm)  SC: O(n)
+//  Approach: We first calculate the prefix sum of the package sizes to efficiently compute the total size of packages that can fit into a box. We then iterate through each box size, sort the box sizes, and for each box size, we calculate the total wasted space by subtracting the total size of packages that can fit into the box from the total size of the box. We keep track of the minimum wasted space across all box sizes and return it. If no box can fit all packages, we return -1 indicating that it's not possible to package all items.
+class Solution
+{
 public:
-    int minWastedSpace(vector<int>& packages, vector<vector<int>>& boxes) {
-        const long long MOD = 1e9 + 7;
-        sort(packages.begin(), packages.end());
-        int n = packages.size();
-        vector<long long> prefix(n + 1, 0);
-        for (int i = 0; i < n; i++) prefix[i+1] = prefix[i] + packages[i];
-        long long total = prefix[n];
-        int maxPkg = packages[n-1];
+    int minWastedSpace(vector<int> &p, vector<vector<int>> &boxes)
+    {
+        int mx_p = *max_element(p.begin(), p.end());
+        vector<long long> cnt(mx_p + 1);
+        long long psum = 0;
+        int mod = 1e9 + 7;
 
-        long long best = LLONG_MAX;
-        for (auto boxSet : boxes) {
-            sort(boxSet.begin(), boxSet.end());
-            if (boxSet.back() < maxPkg) continue;
-            long long used = 0;
-            int prevIdx = 0;
-            for (int b : boxSet) {
-                int idx = upper_bound(packages.begin(), packages.end(), b) - packages.begin();
-                if (idx > prevIdx) {
-                    long long cnt = idx - prevIdx;
-                    long long sum = prefix[idx] - prefix[prevIdx];
-                    used += (long long)b * cnt - sum;
-                    prevIdx = idx;
-                }
-            }
-            best = min(best, used);
+        for (int &x : p)
+            psum = (psum + x) % mod, cnt[x]++;
+        for (int i = 1; i < cnt.size(); i++)
+        {
+            cnt[i] += cnt[i - 1];
         }
-        if (best == LLONG_MAX) return -1;
-        return (int)(best % MOD);
+
+        unsigned long long ans = LONG_MAX;
+        for (auto &b : boxes)
+        {
+            sort(b.begin(), b.end());
+
+            unsigned long long cost = 0;
+            int prev_x = 0;
+            int used_cnt = 0;
+            for (int &x : b)
+            {
+                long long c = cnt[min(x, mx_p)] - cnt[prev_x];
+                used_cnt += c;
+                cost += c * x;
+                prev_x = min(x, mx_p);
+            }
+            if (used_cnt == p.size())
+                ans = min(ans, cost);
+        }
+
+        return ans == LONG_MAX ? -1 : (ans - psum + mod) % mod;
     }
 };

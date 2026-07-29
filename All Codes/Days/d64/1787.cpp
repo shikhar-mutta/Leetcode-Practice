@@ -3,37 +3,46 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
-// TC: O(n * 1024 + k * 1024)  SC: O(1024)
-// Approach: group indices by i%k. dp[x] = min changes over processed groups
-// so that xor of chosen values equals x. For each group, default option is
-// "change everything" (min(dp) + groupSize), then improve using each distinct
-// value present in the group (keep unchanged elements of that value).
-class Solution {
-public:
-    int minChanges(vector<int>& nums, int k) {
-        int n = nums.size();
-        const int MAXV = 1024;
-        vector<vector<int>> groups(k);
-        for (int i = 0; i < n; i++) groups[i % k].push_back(nums[i]);
+// TC: O(n * log n + k * 1024)  SC: O(1024)
+//  Approach: group indices by i%k. dp[x] = min changes over processed groups
+//  so that xor of chosen values equals x. For each group, default option is
+//  "change everything" (min(dp) + groupSize), then improve using each distinct
+//  value present in the group (keep unchanged elements of that value).
+class Solution
+{
+    constexpr static int NMAX = (1 << 10);
+    constexpr static int LARGE_NUM = (1 << 30);
 
-        vector<int> dp(MAXV, INT_MAX);
-        dp[0] = 0;
-        for (int g = 0; g < k; g++) {
-            unordered_map<int,int> cnt;
-            for (int v : groups[g]) cnt[v]++;
-            int size = groups[g].size();
-            int base = *min_element(dp.begin(), dp.end());
-            vector<int> ndp(MAXV, base == INT_MAX ? INT_MAX : base + size);
-            for (int x = 0; x < MAXV; x++) {
-                if (dp[x] == INT_MAX) continue;
-                for (auto& [v, c] : cnt) {
-                    int nx = x ^ v;
-                    int cost = dp[x] + (size - c);
-                    if (cost < ndp[nx]) ndp[nx] = cost;
+public:
+    int minChanges(vector<int> &nums, int k)
+    {
+        std::vector<std::array<int, NMAX>> storage(k, std::array<int, NMAX>{});
+        const int n = nums.size();
+        for (int i = 0; i < n; i++)
+        {
+            storage[i % k][nums[i]]++;
+        }
+        std::array<int, NMAX> dp{};
+        dp.fill(LARGE_NUM);
+        std::array<int, NMAX> dp2{};
+        dp2.fill(LARGE_NUM);
+        dp2[0] = 0;
+        for (int i = 0; i < k; i++)
+        {
+            int total = n / k + ((i < (n % k)) ? 1 : 0);
+            auto it = *std::ranges::min_element(dp2);
+            dp.fill(total + it);
+            for (int j = 0; j < NMAX; j++)
+            {
+                if (storage[i][j] == 0)
+                    continue;
+                for (int curr = 0; curr < NMAX; curr++)
+                {
+                    dp[j ^ curr] = min(dp[j ^ curr], total - storage[i][j] + dp2[curr]);
                 }
             }
-            dp = ndp;
+            for (int j = 0; j < NMAX; j++)
+                dp2[j] = dp[j];
         }
         return dp[0];
     }

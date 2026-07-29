@@ -3,46 +3,111 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
-// TC: O(3^m * 3^m + n * validColumns^2)  SC: O(3^m)
-// Approach: enumerate all valid columns (base-3 digit strings of length m
-// with no two vertically adjacent equal), precompute compatible column pairs
-// (no row-wise equal between adjacent columns), then DP across n columns.
-class Solution {
+// TC: O(3^m * 3^m * log(n)) SC: O(3^m * 3^m)
+// Approach: We can use matrix exponentiation to solve this problem. We first create a transition matrix that represents the valid colorings of the grid. Each state in the matrix corresponds to a valid coloring of a column, and the entries in the matrix represent the number of ways to transition from one column coloring to another. We then raise this transition matrix to the power of (n-1) using modular exponentiation, and multiply it by the initial state vector to get the total number of valid colorings for the entire grid. Finally, we sum up all the entries in the resulting vector to get the final answer.
+const int mod = 1e9 + 7;
+using matrix = vector<vector<int>>;
+static matrix I;
+
+matrix Id(int sz)
+{
+    matrix I(sz, vector<int>(sz, 0));
+    for (int i = 0; i < sz; i++)
+        I[i][i] = 1;
+    return I;
+}
+
+// modular matrix multiplication
+matrix operator*(const matrix &A, const matrix &B)
+{
+    const int n = A.size(), p = A[0].size(), q = B.size(), m = B[0].size();
+    if (p != q)
+        return {};
+    matrix C(n, vector<int>(m, 0));
+    for (int i = 0; i < n; i++)
+    {
+        for (int k = 0; k < p; k++)
+        {
+            for (int j = 0; j < m; j++)
+            {
+                C[i][j] = (C[i][j] + 1LL * A[i][k] * B[k][j]) % mod;
+            }
+        }
+    }
+    return C;
+}
+
+// MSBF modular Matrix Exponentiation
+matrix modPow(const matrix &M, unsigned n, int sz)
+{
+    if (n == 0)
+        return I;
+    bitset<32> B(n);
+    int bMax = 31 - countl_zero(n);
+    matrix ans = M;
+    for (int i = bMax - 1; i >= 0; i--)
+    {
+        ans = ans * ans;
+        if (B[i])
+            ans = ans * M;
+    }
+    return ans;
+}
+
+// int modular exponentiation
+int modPow(int base, unsigned n)
+{
+    if (n == 0)
+        return 1;
+
+    bitset<32> B(n);
+    int bMax = 31 - countl_zero(n);
+    long long ans = 1;
+    long long b = base % mod;
+
+    for (int i = bMax; i >= 0; i--)
+    {
+        ans = (ans * ans) % mod;
+        if (B[i])
+            ans = (ans * b) % mod;
+    }
+    return ans;
+}
+matrix M3 = {{3, 2}, {2, 2}};
+matrix M4 = {{3, 2, 1, 2}, {2, 2, 1, 2}, {1, 1, 2, 1}, {2, 2, 1, 2}};
+matrix M5 = {{3, 2, 2, 1, 0, 1, 2, 2}, {2, 1, 2, 1, 1, 1, 1, 2}, {2, 2, 2, 1, 0, 1, 2, 2}, {1, 1, 1, 1, 1, 2, 1, 1}, {0, 1, 0, 1, 2, 1, 0, 1}, {1, 1, 1, 2, 1, 1, 1, 1}, {2, 1, 2, 1, 0, 1, 2, 1}, {2, 2, 2, 1, 1, 1, 1, 1}};
+class Solution
+{
 public:
-    int colorTheGrid(int m, int n) {
-        const long long MOD = 1e9 + 7;
-        vector<vector<int>> cols;
-        vector<int> cur(m);
-        function<void(int)> gen = [&](int idx) {
-            if (idx == m) { cols.push_back(cur); return; }
-            for (int c = 0; c < 3; c++) {
-                if (idx > 0 && cur[idx-1] == c) continue;
-                cur[idx] = c;
-                gen(idx + 1);
-            }
-        };
-        gen(0);
-        int k = cols.size();
-        vector<vector<int>> compat(k);
-        for (int i = 0; i < k; i++) {
-            for (int j = 0; j < k; j++) {
-                bool ok = true;
-                for (int r = 0; r < m && ok; r++) if (cols[i][r] == cols[j][r]) ok = false;
-                if (ok) compat[i].push_back(j);
-            }
+    matrix M;
+    int colorTheGrid(int m, int n)
+    {
+
+        switch (m)
+        {
+        case 1:
+            return 3LL * modPow(2, n - 1) % mod;
+        case 2:
+            return 6LL * modPow(3, n - 1) % mod;
+        case 3:
+            M = M3;
+            break;
+        case 4:
+            M = M4;
+            break;
+        case 5:
+            M = M5;
         }
-        vector<long long> dp(k, 1);
-        for (int step = 1; step < n; step++) {
-            vector<long long> ndp(k, 0);
-            for (int i = 0; i < k; i++) {
-                if (dp[i] == 0) continue;
-                for (int j : compat[i]) ndp[j] = (ndp[j] + dp[i]) % MOD;
-            }
-            dp = ndp;
-        }
+        int sz = 1 << (m - 2); // number of patterns
+        I = Id(sz);
+        matrix A = modPow(M, n - 1, sz);
         long long ans = 0;
-        for (long long v : dp) ans = (ans + v) % MOD;
-        return (int)ans;
+        for (int i = 0; i < sz; i++)
+        {
+            long long rowSum = reduce(A[i].begin(), A[i].end(), 0LL) % mod;
+            ans = (ans + (6LL * rowSum) % mod) %
+                  mod; // each Type has 6 combinations
+        }
+        return ans;
     }
 };

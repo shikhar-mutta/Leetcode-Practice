@@ -3,57 +3,96 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
-// TC: O(sum(len) * log(minLen))  SC: O(maxLen)
-// Approach: binary search on answer length L. For each L, compute the set of
-// rolling-hash values of all length-L windows in the first path, then
-// intersect with each subsequent path's window hashes; feasible if the
-// intersection stays non-empty across all paths.
-class Solution {
-    const long long MOD = 2305843009213693951LL; // large prime
-    long long base;
+// TC: O(n * m * log(min(m))) SC: O(n * m)
+// Approach: We can use binary search to find the length of the longest common subpath. For each length, we can use a rolling hash to check if there is a common subpath of that length among all paths. We can use two different bases and moduli to reduce the chance of hash collisions.
+class Solution
+{
+    bool check(int L, const vector<vector<int>> &paths)
+    {
+        if (L == 0)
+            return true;
 
-    unordered_set<long long> hashesOfLength(vector<int>& path, int L, vector<long long>& powBase) {
-        unordered_set<long long> res;
-        int n = path.size();
-        if (L > n) return res;
-        long long h = 0;
-        for (int i = 0; i < L; i++) h = (h * base + path[i]) % MOD;
-        res.insert(h);
-        for (int i = L; i < n; i++) {
-            h = (h - path[i-L] * powBase[L-1] % MOD + MOD) % MOD;
-            h = (h * base + path[i]) % MOD;
-            res.insert(h);
+        long long B1 = 100003, M1 = 1000000007;
+        long long B2 = 100033, M2 = 998244353;
+
+        long long p1 = 1, p2 = 1;
+        for (int i = 0; i < L; ++i)
+        {
+            p1 = (p1 * B1) % M1;
+            p2 = (p2 * B2) % M2;
         }
-        return res;
-    }
-public:
-    int longestCommonSubpath(int n, vector<vector<int>>& paths) {
-        base = 131542391;
-        int minLen = INT_MAX;
-        for (auto& p : paths) minLen = min(minLen, (int)p.size());
-        vector<long long> powBase(minLen + 1);
-        powBase[0] = 1;
-        for (int i = 1; i <= minLen; i++) powBase[i] = powBase[i-1] * base % MOD;
 
-        auto feasible = [&](int L) {
-            if (L == 0) return true;
-            unordered_set<long long> common = hashesOfLength(paths[0], L, powBase);
-            for (size_t i = 1; i < paths.size(); i++) {
-                auto cur = hashesOfLength(paths[i], L, powBase);
-                unordered_set<long long> next;
-                for (long long h : cur) if (common.count(h)) next.insert(h);
-                common = next;
-                if (common.empty()) return false;
+        vector<long long> valid_hashes;
+
+        for (const auto &path : paths)
+        {
+            if ((int)path.size() < L)
+                return false;
+
+            vector<long long> current_hashes;
+            current_hashes.reserve(path.size() - L + 1);
+            long long h1 = 0, h2 = 0;
+
+            for (int i = 0; i < L; ++i)
+            {
+                h1 = (h1 * B1 + path[i]) % M1;
+                h2 = (h2 * B2 + path[i]) % M2;
             }
-            return !common.empty();
-        };
+            current_hashes.push_back((h1 << 32) | h2);
 
-        int lo = 0, hi = minLen, ans = 0;
-        while (lo <= hi) {
-            int mid = (lo + hi) / 2;
-            if (feasible(mid)) { ans = mid; lo = mid + 1; }
-            else hi = mid - 1;
+            for (int i = L; i < (int)path.size(); ++i)
+            {
+                h1 = (h1 * B1 - path[i - L] * p1 % M1 + M1 + path[i]) % M1;
+                h2 = (h2 * B2 - path[i - L] * p2 % M2 + M2 + path[i]) % M2;
+                current_hashes.push_back((h1 << 32) | h2);
+            }
+
+            sort(current_hashes.begin(), current_hashes.end());
+            current_hashes.erase(
+                unique(current_hashes.begin(), current_hashes.end()),
+                current_hashes.end());
+
+            if (valid_hashes.empty())
+            {
+                valid_hashes = move(current_hashes);
+            }
+            else
+            {
+                vector<long long> next_valid;
+                set_intersection(valid_hashes.begin(), valid_hashes.end(),
+                                 current_hashes.begin(), current_hashes.end(),
+                                 back_inserter(next_valid));
+                valid_hashes = move(next_valid);
+                if (valid_hashes.empty())
+                    return false;
+            }
+        }
+        return !valid_hashes.empty();
+    }
+
+public:
+    int longestCommonSubpath(int n, vector<vector<int>> &paths)
+    {
+        int min_len = paths[0].size();
+        for (const auto &p : paths)
+        {
+            min_len = min(min_len, (int)p.size());
+        }
+
+        int left = 0, right = min_len;
+        int ans = 0;
+        while (left <= right)
+        {
+            int mid = left + (right - left) / 2;
+            if (check(mid, paths))
+            {
+                ans = mid;
+                left = mid + 1;
+            }
+            else
+            {
+                right = mid - 1;
+            }
         }
         return ans;
     }

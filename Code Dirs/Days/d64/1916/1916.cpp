@@ -3,48 +3,76 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
-// TC: O(n log n)  SC: O(n)
-// Approach: tree topological-order counting. For each node, DFS children,
-// combine their (size, ways) via multinomial merge: interleaving two ordered
-// sequences of length a,b has C(a+b,b) ways, applied incrementally while
-// accumulating subtree size, multiplied by each child's own internal ways.
-class Solution {
-    const long long MOD = 1e9 + 7;
-    vector<long long> fact, invfact;
-    vector<vector<int>> children;
+// TC: O(n) SC: O(n)
+//  Approach: The problem can be solved using combinatorics and depth-first search (DFS). We can represent the rooms and their connections as a tree structure, where each room is a node and the connections are edges. The number of ways to build the rooms can be calculated by considering the number of ways to arrange the rooms in each subtree, multiplied by the number of ways to arrange the subtrees themselves.
+auto x = []()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+    return 0;
+}();
 
-    long long power(long long b, long long e) {
-        long long r = 1; b %= MOD;
-        while (e) { if (e & 1) r = r * b % MOD; b = b * b % MOD; e >>= 1; }
-        return r;
-    }
-    long long C(int n, int r) {
-        if (r < 0 || r > n) return 0;
-        return fact[n] * invfact[r] % MOD * invfact[n-r] % MOD;
-    }
+class Solution
+{
+    long long MOD = 1e9 + 7;
 
-    pair<long long,long long> dfs(int u) { // returns (subtreeSize, ways)
-        long long total = 0, ways = 1; // total = combined size of children processed so far (excludes root)
-        for (int c : children[u]) {
-            auto [cs, cw] = dfs(c);
-            ways = ways * cw % MOD * C((int)(total + cs), (int)cs) % MOD;
-            total += cs;
+    long long power(long long base, long long exp)
+    {
+        long long res = 1;
+        base %= MOD;
+        while (exp > 0)
+        {
+            if (exp % 2 == 1)
+                res = (res * base) % MOD;
+            base = (base * base) % MOD;
+            exp /= 2;
         }
-        return {total + 1, ways};
+        return res;
     }
-public:
-    int waysToBuildRooms(vector<int>& prevRoom) {
-        int n = prevRoom.size();
-        children.assign(n, {});
-        for (int i = 1; i < n; i++) children[prevRoom[i]].push_back(i);
-        fact.assign(n + 1, 1);
-        for (int i = 1; i <= n; i++) fact[i] = fact[i-1] * i % MOD;
-        invfact.assign(n + 1, 1);
-        invfact[n] = power(fact[n], MOD - 2);
-        for (int i = n - 1; i >= 0; i--) invfact[i] = invfact[i+1] * (i+1) % MOD;
 
-        auto [size, ways] = dfs(0);
-        return (int)ways;
+    long long modInverse(long long n)
+    {
+        return power(n, MOD - 2);
+    }
+
+    int dfs(int node, const vector<vector<int>> &adj, vector<int> &subtree_size)
+    {
+        int size = 1;
+        for (int child : adj[node])
+        {
+            size += dfs(child, adj, subtree_size);
+        }
+        return subtree_size[node] = size;
+    }
+
+public:
+    int waysToBuildRooms(vector<int> &prevRoom)
+    {
+        int n = prevRoom.size();
+        vector<vector<int>> adj(n);
+
+        for (int i = 1; i < n; ++i)
+        {
+            adj[prevRoom[i]].push_back(i);
+        }
+
+        vector<int> subtree_size(n, 0);
+        dfs(0, adj, subtree_size);
+
+        long long numerator = 1;
+        for (int i = 1; i <= n; ++i)
+        {
+            numerator = (numerator * i) % MOD;
+        }
+
+        long long denominator = 1;
+        for (int i = 0; i < n; ++i)
+        {
+            denominator = (denominator * subtree_size[i]) % MOD;
+        }
+
+        long long ans = (numerator * modInverse(denominator)) % MOD;
+
+        return ans;
     }
 };

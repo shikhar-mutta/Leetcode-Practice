@@ -3,54 +3,111 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
-// TC: O(n log n)  SC: O(n)
-// Approach: gardens already >= target are already "full" (never touch).
-// Sort remaining ascending. Try making the top k of them full (largest k
-// suffix, cost = sum(target - flowers[i]) for those), then with leftover
-// budget, binary search the maximum achievable minimum height among the
-// remaining n-k leftmost gardens (to maximize partial * minHeight), using
-// prefix sums for O(1) cost-of-raising-to-h checks.
-class Solution {
+// TC: O(n + target * log(target) + m * log(m)) where m is the number of incomplete gardens
+// SC: O(n + target)
+// Approach: We can use a greedy approach to solve this problem. First, we can count the number of gardens that are already full and the number of incomplete gardens. Then, we can sort the incomplete gardens in ascending order and calculate the prefix sum of their flower counts. Next, we can iterate through the number of gardens that we can make full and calculate the maximum beauty we can achieve by either making all gardens full or making all except one full and one garden at target - 1 for partial beauty. Finally, we return the maximum beauty we can achieve.
+class Solution
+{
 public:
-    long long maximumBeauty(vector<int>& flowers, long long newFlowers, int target, int full, int partial) {
+    long long maximumBeauty(vector<int> &flowers, long long newFlowers,
+                            int target, int full, int partial)
+    {
         int n = flowers.size();
-        long long alreadyFullBonus = 0;
-        vector<int> v;
-        for (int f : flowers) {
-            if (f >= target) alreadyFullBonus += full;
-            else v.push_back(f);
-        }
-        sort(v.begin(), v.end());
-        int m = v.size();
-        vector<long long> prefix(m + 1, 0);
-        for (int i = 0; i < m; i++) prefix[i+1] = prefix[i] + v[i];
-        if (m == 0) return alreadyFullBonus;
-        // suffix cost to make v[k..m-1] all == target
-        vector<long long> suffixCost(m + 1, 0);
-        for (int k = m - 1; k >= 0; k--) suffixCost[k] = suffixCost[k+1] + (target - v[k]);
-        long long best = 0;
-        for (int k = 0; k <= m; k++) {
-            long long cost = suffixCost[k];
-            if (cost > newFlowers) continue;
-            long long remain = newFlowers - cost;
-            long long bonusFull = (long long)(m - k) * full;
-            // among v[0..k-1], maximize min height h using budget remain
-            long long lo = 0, hi = target - 1, bestH = 0;
-            if (k > 0) {
-                while (lo <= hi) {
-                    long long h = (lo + hi) / 2;
-                    // cost to raise all first k to at least h
-                    int idx = upper_bound(v.begin(), v.begin() + k, h) - v.begin();
-                    long long costH = (long long)idx * h - prefix[idx] + 0; // those below h raised to h
-                    // those already >= h among first k cost 0 extra
-                    if (costH <= remain) { bestH = h; lo = h + 1; }
-                    else hi = h - 1;
-                }
+
+        static int cnt[100001];
+        static long long pref[100001];
+
+        memset(cnt, 0, target * sizeof(int));
+
+        int alreadyFull = 0;
+        int m = 0;
+        long long sumIncomplete = 0;
+
+        for (int x : flowers)
+        {
+            if (x >= target)
+            {
+                alreadyFull++;
             }
-            long long total = alreadyFullBonus + bonusFull + (long long)bestH * partial;
-            best = max(best, total);
+            else
+            {
+                cnt[x]++;
+                m++;
+                sumIncomplete += x;
+            }
         }
-        return best;
+
+        if (m == 0)
+        {
+            return 1LL * n * full;
+        }
+
+        long long costAllFull = 1LL * m * target - sumIncomplete;
+
+        if (newFlowers >= costAllFull)
+        {
+            return max(1LL * n * full,
+                       1LL * (n - 1) * full + 1LL * (target - 1) * partial);
+        }
+
+        int idx = 0;
+        pref[0] = 0;
+
+        for (int v = 1; v < target; v++)
+        {
+            int c = cnt[v];
+            while (c-- > 0)
+            {
+                flowers[idx] = v;
+                pref[idx + 1] = pref[idx] + v;
+                idx++;
+            }
+        }
+
+        long long ans = 0;
+        long long costFull = 0;
+
+        int p = m - 1;
+
+        for (int madeFull = 0; madeFull <= m; madeFull++)
+        {
+            long long remain = newFlowers - costFull;
+            if (remain < 0)
+            {
+                break;
+            }
+            int incompleteLeft = m - madeFull;
+            long long current = 1LL * (alreadyFull + madeFull) * full;
+            if (incompleteLeft > 0)
+            {
+                if (p >= incompleteLeft)
+                {
+                    p = incompleteLeft - 1;
+                }
+                while (p > 0 &&
+                       1LL * flowers[p] * (p + 1) - pref[p + 1] > remain)
+                {
+                    p--;
+                }
+                long long used = 1LL * flowers[p] * (p + 1) - pref[p + 1];
+                long long minIncomplete =
+                    flowers[p] + (remain - used) / (p + 1);
+                if (minIncomplete >= target)
+                {
+                    minIncomplete = target - 1;
+                }
+                current += minIncomplete * partial;
+            }
+            if (current > ans)
+            {
+                ans = current;
+            }
+            if (madeFull < m)
+            {
+                costFull += target - flowers[m - 1 - madeFull];
+            }
+        }
+
+        return ans;
     }
 };

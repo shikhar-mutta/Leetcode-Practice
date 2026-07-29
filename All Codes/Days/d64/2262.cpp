@@ -10,12 +10,15 @@ using namespace std;
 // (i - lastSeen[c]) distinct starting positions (since starts beyond
 // lastSeen[c] give a substring containing c for the first time at i).
 // Sum this over all i and all chars implicitly via running total.
-class Solution {
+class Solution
+{
 public:
-    long long appealSum(string s) {
+    long long appealSum(string s)
+    {
         vector<int> last(26, -1);
         long long total = 0, cur = 0;
-        for (int i = 0; i < (int)s.size(); i++) {
+        for (int i = 0; i < (int)s.size(); i++)
+        {
             int c = s[i] - 'a';
             cur += (i - last[c]);
             last[c] = i;

@@ -3,80 +3,142 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
-// TC: O(log n) per gather, O(maxRow) worst case per scatter  SC: O(n)
-// Approach: segment tree over rows storing (max free seats in range, sum
-// free seats in range). gather: descend to find the leftmost row within
-// [0,maxRow] whose free seats >= k (using max), book there. scatter:
-// check sum of free seats in [0,maxRow] >= k, then walk rows left to
-// right filling greedily until k seats are placed.
-class BookMyShow {
-    int n, m;
-    vector<long long> segMax, segSum;
-    vector<long long> seatsUsed;
+// TC: O(log n) per gather/scatter, amortized O(log n) per scatter (each merge removes an interval)  SC: O(n)
+//  Approach: maintain a segment tree of disjoint intervals keyed by right endpoint.
+//  On gather(k, maxRow): repeatedly find overlapping/adjacent intervals, merge them
+//  into [l,r], subtracting their length from the running total, then insert
+//  the merged interval and add its length back.
+template <typename T>
+struct seg_tree
+{
+    int S;
 
-    void build(int node, int l, int r) {
-        if (l == r) { segMax[node] = m; segSum[node] = m; return; }
-        int mid = (l + r) / 2;
-        build(node*2, l, mid);
-        build(node*2+1, mid+1, r);
-        segMax[node] = max(segMax[node*2], segMax[node*2+1]);
-        segSum[node] = segSum[node*2] + segSum[node*2+1];
+    T identity;
+    vector<T> value;
+
+    seg_tree<T>(int _S, T val)
+    {
+        S = _S, identity = T();
+        value.resize(2 * S + 1, val);
+        for (int i = S - 1; i > 0; i--)
+            value[i] = value[2 * i] * value[2 * i + 1];
     }
 
-    void update(int node, int l, int r, int idx, long long val) {
-        if (l == r) { segMax[node] = val; segSum[node] = val; return; }
-        int mid = (l + r) / 2;
-        if (idx <= mid) update(node*2, l, mid, idx, val);
-        else update(node*2+1, mid+1, r, idx, val);
-        segMax[node] = max(segMax[node*2], segMax[node*2+1]);
-        segSum[node] = segSum[node*2] + segSum[node*2+1];
+    void upd(int i, T v)
+    {
+        i += S;
+        value[i] = v;
+        while (i > 1)
+        {
+            i /= 2;
+            value[i] = value[2 * i] * value[2 * i + 1];
+        }
     }
 
-    int queryFirstRow(int node, int l, int r, int maxRow, long long k) {
-        if (l > maxRow || segMax[node] < k) return -1;
-        if (l == r) return l;
-        int mid = (l + r) / 2;
-        int res = queryFirstRow(node*2, l, mid, maxRow, k);
-        if (res != -1) return res;
-        return queryFirstRow(node*2+1, mid+1, r, maxRow, k);
+    T query(int i, int j)
+    {
+        T res_left = identity, res_right = identity;
+        for (i += S, j += S; i <= j; i /= 2, j /= 2)
+        {
+            if ((i & 1) == 1)
+                res_left = res_left * value[i++];
+            if ((j & 1) == 0)
+                res_right = value[j--] * res_right;
+        }
+        return res_left * res_right;
     }
+};
 
-    long long querySum(int node, int l, int r, int ql, int qr) {
-        if (qr < l || r < ql) return 0;
-        if (ql <= l && r <= qr) return segSum[node];
-        int mid = (l + r) / 2;
-        return querySum(node*2, l, mid, ql, qr) + querySum(node*2+1, mid+1, r, ql, qr);
-    }
+struct TM
+{
+    long long M;
+    TM(long long x = 0) : M(x) {}
+    TM operator*(const TM &rhs) const { return max(M, rhs.M); }
+};
+
+struct TS
+{
+    long long S;
+    TS(long long x = 0) : S(x) {}
+    TS operator*(const TS &rhs) const { return S + rhs.S; }
+};
+
+int pot2(int n)
+{
+    while (n & (n - 1))
+        n++;
+    return n;
+}
+
+class BookMyShow
+{
+    seg_tree<TM> SM;
+    seg_tree<TS> SS;
+    int mm;
+    vector<int> sz;
+    int smallest;
 
 public:
-    BookMyShow(int n_, int m_) {
-        n = n_; m = m_;
-        segMax.assign(4*n, 0);
-        segSum.assign(4*n, 0);
-        seatsUsed.assign(n, 0);
-        if (n > 0) build(1, 0, n-1);
+    BookMyShow(int n, int m)
+        : SM(pot2(n), m), SS(pot2(n), m), mm(m), sz(pot2(n), m), smallest(0) {}
+
+    vector<int> gather(int k, int maxRow)
+    {
+
+        // traverse down the tree finding the best option...
+        int node = 1;
+        int m = 0, M = SM.S;
+
+        while (node < SM.S)
+        {
+            int me = (m + M) / 2;
+            bool left = true;
+            node *= 2;
+            if (me <= maxRow)
+            {
+                // can go to both left and right... can we go left?
+                left = SM.value[node].M >= k;
+            }
+            if (left)
+            {
+                M = me;
+            }
+            else
+            {
+                node++;
+                m = me;
+            }
+        }
+        TM val = SM.value[node];
+        if (val.M < k)
+            return {};
+        val = SM.value[node];
+
+        // ok, can do... go ahead:
+        const int which = node - SM.S;
+        sz[which] -= k;
+        SM.upd(which, sz[which]);
+        SS.upd(which, sz[which]);
+        return {which, (int)(mm - val.M)};
     }
 
-    vector<int> gather(int k, int maxRow) {
-        int row = queryFirstRow(1, 0, n-1, maxRow, k);
-        if (row == -1) return {};
-        int seat = (int)seatsUsed[row];
-        seatsUsed[row] += k;
-        update(1, 0, n-1, row, m - seatsUsed[row]);
-        return {row, seat};
-    }
+    bool scatter(int k, int maxRow)
+    {
+        const TS val = SS.query(smallest, maxRow);
+        if (val.S < k)
+            return false;
 
-    bool scatter(int k, int maxRow) {
-        long long avail = querySum(1, 0, n-1, 0, maxRow);
-        if (avail < k) return false;
-        for (int row = 0; row <= maxRow && k > 0; row++) {
-            long long free = m - seatsUsed[row];
-            if (free == 0) continue;
-            long long take = min((long long)k, free);
-            seatsUsed[row] += take;
-            k -= take;
-            update(1, 0, n-1, row, m - seatsUsed[row]);
+        // allocate. Let's do this :)
+        while (k)
+        {
+            int to_remove = min(k, sz[smallest]);
+            k -= to_remove;
+            sz[smallest] -= to_remove;
+            SS.upd(smallest, sz[smallest]);
+            SM.upd(smallest, sz[smallest]);
+
+            if (!sz[smallest])
+                smallest++;
         }
         return true;
     }

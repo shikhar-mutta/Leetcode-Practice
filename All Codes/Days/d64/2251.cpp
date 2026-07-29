@@ -3,25 +3,57 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
-// TC: O((n+m) log n)  SC: O(n)
-// Approach: sort start times and end times separately. For each person's
-// time t, count of blooming flowers = (# starts <= t) - (# ends < t), both
-// found via binary search.
-class Solution {
+// TC: O(nlogn + mlogm) where n is the number of flowers and m is the number of people
+// SC: O(n + m) where n is the number of flowers and m is the number of people
+// Approach: We can use a two-pointer approach to solve this problem. We can first sort the start and end times of the flowers. Then, we can sort the arrival times of the people. We can then use two pointers to iterate through the start and end times of the flowers and the arrival times of the people. For each person, we can count the number of flowers that are in full bloom at their arrival time by checking how many flowers have started blooming and how many have ended blooming. Finally, we return the count of flowers in full bloom for each person.
+class Solution
+{
 public:
-    vector<int> fullBloomFlowers(vector<vector<int>>& flowers, vector<int>& people) {
-        vector<int> starts, ends;
-        for (auto& f : flowers) { starts.push_back(f[0]); ends.push_back(f[1]); }
-        sort(starts.begin(), starts.end());
-        sort(ends.begin(), ends.end());
-        vector<int> ans(people.size());
-        for (int i = 0; i < (int)people.size(); i++) {
-            int t = people[i];
-            int startedCount = upper_bound(starts.begin(), starts.end(), t) - starts.begin();
-            int endedCount = lower_bound(ends.begin(), ends.end(), t) - ends.begin();
-            ans[i] = startedCount - endedCount;
+    vector<int> fullBloomFlowers(vector<vector<int>> &flowers,
+                                 vector<int> &people)
+    {
+        int numFlowers = flowers.size();
+        std::vector<int> startTimes(numFlowers), endTimes(numFlowers);
+        for (int i = 0; i < flowers.size(); i++)
+        {
+            startTimes[i] = flowers[i][0];
+            endTimes[i] = flowers[i][1];
         }
+
+        std::sort(startTimes.begin(), startTimes.end());
+        std::sort(endTimes.begin(), endTimes.end());
+
+        int numPeople = people.size();
+        std::vector<std::pair<int, int>> peoplePairs(numPeople);
+        for (int i = 0; i < people.size(); i++)
+        {
+            peoplePairs[i] = {people[i], i};
+        }
+
+        std::sort(peoplePairs.begin(), peoplePairs.end());
+        std::vector<int> ans(numPeople);
+
+        int curCount = 0;
+        auto startTimesIt = startTimes.begin();
+        auto endTimesIt = endTimes.begin();
+        for (const auto &[arrivalTime, idx] : peoplePairs)
+        {
+            while (startTimesIt != startTimes.end() &&
+                   arrivalTime >= *startTimesIt)
+            {
+                curCount++;
+                startTimesIt++;
+            }
+
+            while (endTimesIt != endTimes.end() && arrivalTime > *endTimesIt)
+            {
+                curCount--;
+                endTimesIt++;
+            }
+
+            ans[idx] = curCount;
+        }
+
         return ans;
     }
 };

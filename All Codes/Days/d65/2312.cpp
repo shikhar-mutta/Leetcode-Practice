@@ -3,22 +3,24 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(M*N*(M+N)), SC: O(M*N)
-// Approach: dp[h][w] = best profit for h x w piece: either sell whole (price if given) or
-// best over all horizontal/vertical cuts summing two sub-pieces.
-class Solution {
+// TC: O(m * n * (m + n)), SC: O(m * n)
+//  Approach: dp[w][h] = max(dp[w][h], dp[a][h] + dp[w - a][h]) for all 1 <= a <= w / 2
+class Solution
+{
 public:
-    long long sellingWood(int m, int n, vector<vector<int>>& prices) {
-        vector<vector<long long>> price(m+1, vector<long long>(n+1, 0));
-        for (auto& p : prices) price[p[0]][p[1]] = p[2];
-
-        vector<vector<long long>> dp(m+1, vector<long long>(n+1, 0));
-        for (int h = 1; h <= m; h++) {
-            for (int w = 1; w <= n; w++) {
-                long long best = price[h][w];
-                for (int i = 1; i < h; i++) best = max(best, dp[i][w] + dp[h-i][w]);
-                for (int j = 1; j < w; j++) best = max(best, dp[h][j] + dp[h][w-j]);
-                dp[h][w] = best;
+    long long sellingWood(int m, int n, vector<vector<int>> &prices)
+    {
+        long long dp[201][201] = {};
+        for (auto &p : prices)
+            dp[p[0]][p[1]] = p[2];
+        for (int w = 1; w <= m; ++w)
+        {
+            for (int h = 1; h <= n; ++h)
+            {
+                for (int a = 1; a <= w / 2; ++a)
+                    dp[w][h] = max(dp[w][h], dp[a][h] + dp[w - a][h]);
+                for (int a = 1; a <= h / 2; ++a)
+                    dp[w][h] = max(dp[w][h], dp[w][a] + dp[w][h - a]);
             }
         }
         return dp[m][n];

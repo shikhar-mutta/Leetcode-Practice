@@ -3,32 +3,38 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
-// TC: O(26^2 * n)  SC: O(1)
-// Approach: for every ordered pair (major, minor) of distinct chars, run a
-// Kadane-like scan treating major as +1, minor as -1, others ignored;
-// track running sum but reset if it goes below 0 UNLESS a minor char has
-// been seen (need at least one minor char in the substring for validity).
-// Track max sum with at least one minor seen.
-class Solution {
+// TC: O(n)  SC: O(1)
+//  Approach: We can use a dynamic programming approach to solve this problem. We can create a 2D array cur where cur[i][j] represents the current count of character i and character j in the substring. We can also create a 2D array mx where mx[i][j] represents the maximum variance of character i and character j in the substring. We can iterate through the string and update the cur and mx arrays based on the current character. Finally, we can return the maximum variance found in the mx array.
+class Solution
+{
 public:
-    int largestVariance(string s) {
-        int ans = 0;
-        for (char maj = 'a'; maj <= 'z'; maj++) {
-            for (char min = 'a'; min <= 'z'; min++) {
-                if (maj == min) continue;
-                if (s.find(maj) == string::npos || s.find(min) == string::npos) continue;
-                int cur = 0;
-                bool hasMinor = false;
-                for (char c : s) {
-                    if (c == maj) cur++;
-                    else if (c == min) { cur--; hasMinor = true; }
-                    else continue;
-                    if (hasMinor) ans = max(ans, cur);
-                    if (cur < 0) { cur = 0; hasMinor = false; }
-                }
+    int largestVariance(string s)
+    {
+        static int cur[26][26]{};
+        memset(cur, 0, sizeof(cur));
+        static int mx[26][26]{};
+        fill(&**mx, &**mx + 26 * 26, INT_MIN);
+        int res{0};
+        for (const char c : s)
+        {
+            const int d{c - 'a'};
+            for (const int i : views::iota(0, 26))
+            {
+                if (i == d)
+                    continue;
+                ++cur[d][i];
+                ++mx[d][i];
+                res = max(res, mx[d][i]);
+            }
+            for (const int i : views::iota(0, 26))
+            {
+                if (i == d)
+                    continue;
+                mx[i][d] = cur[i][d] - 1;
+                cur[i][d] = max(0, cur[i][d] - 1);
+                res = max(res, mx[i][d]);
             }
         }
-        return ans;
+        return res;
     }
 };

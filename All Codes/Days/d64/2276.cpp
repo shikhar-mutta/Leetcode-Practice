@@ -9,17 +9,22 @@ using namespace std;
 // On add(l,r): repeatedly find overlapping/adjacent intervals, merge them
 // into [l,r], subtracting their length from the running total, then insert
 // the merged interval and add its length back.
-class CountIntervals {
-    set<pair<int,int>> intervals; // (right, left)
+class CountIntervals
+{
+    set<pair<int, int>> intervals; // (right, left)
     long long total = 0;
+
 public:
     CountIntervals() {}
 
-    void add(int left, int right) {
+    void add(int left, int right)
+    {
         auto it = intervals.lower_bound({left, INT_MIN});
-        while (it != intervals.end() && it->second <= right + 1) {
+        while (it != intervals.end() && it->second <= right + 1)
+        {
             int r = it->first, l = it->second;
-            if (l > right + 1) break;
+            if (l > right + 1)
+                break;
             left = min(left, l);
             right = max(right, r);
             total -= (r - l + 1);
@@ -29,7 +34,8 @@ public:
         total += (right - left + 1);
     }
 
-    int count() {
+    int count()
+    {
         return (int)total;
     }
 };

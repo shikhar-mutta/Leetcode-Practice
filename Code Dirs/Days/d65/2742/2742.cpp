@@ -3,20 +3,22 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(N^2), SC: O(N)
-// Approach: 0/1 knapsack. dp[j] = min cost using paid painters so far to "cover" at least j
-// walls, where hiring the paid painter for wall i covers 1 (itself) + time[i] (free painter's
-// output during that time). Cap coverage at n since extra coverage is wasted. The free painter
-// covers whatever's left over at zero cost, so the answer is dp[n].
-class Solution {
+// TC: O(n^2) where n is the number of walls, SC: O(n) where n is the number of walls
+//  Approach: We can use a dynamic programming approach to find the minimum cost to paint all the walls. We will define a dp array where dp[i] represents the minimum cost to paint the first i walls. We will iterate through each wall and for each wall, we will iterate through the dp array in reverse order to update the minimum cost for painting the walls. For each wall, we will calculate the new index nj which represents the number of walls that can be painted after painting the current wall, and update the dp[nj] with the minimum cost. Finally, we will return dp[n] which represents the minimum cost to paint all the walls.
+class Solution
+{
 public:
-    int paintWalls(vector<int>& cost, vector<int>& time) {
+    int paintWalls(vector<int> &cost, vector<int> &time)
+    {
         int n = cost.size();
-        vector<int> dp(n+1, INT_MAX);
+        vector<int> dp(n + 1, INT_MAX);
         dp[0] = 0;
-        for (int i = 0; i < n; i++) {
-            for (int j = n; j >= 0; j--) {
-                if (dp[j] == INT_MAX) continue;
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = n; j >= 0; j--)
+            {
+                if (dp[j] == INT_MAX)
+                    continue;
                 int nj = min(n, j + 1 + time[i]);
                 dp[nj] = min(dp[nj], dp[j] + cost[i]);
             }

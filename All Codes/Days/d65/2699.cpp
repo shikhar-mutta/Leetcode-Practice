@@ -3,58 +3,124 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(E^2 log V), SC: O(N+E)
-// Approach: set every -1 edge to weight 1 first; if the shortest path is already > target,
-// impossible (1 is the minimum weight). Otherwise process -1 edges one at a time: run Dijkstra,
-// and if the current shortest distance is still short of target, bump just this edge's weight by
-// the shortfall so the shortest path grows to exactly target, then stop early once achieved.
-class Solution {
+// TC: O(E log V), SC: O(V + E)
+//  Approach: We can use Dijkstra's algorithm to find the shortest path from the source to the destination. We will run Dijkstra's algorithm twice: once from the destination to find the shortest path to the destination using only positive edges, and once from the source to find the shortest path to the destination using both positive and modifiable edges. During the second run, we will dynamically adjust the weights of the modifiable edges to ensure that the total path length equals the target. If we can achieve the target path length, we will return the modified edges; otherwise, we will return an empty array. The key insight is that we can calculate the exact weight needed for a modifiable edge to achieve the target path length based on the current distances from the source and destination.
+class Solution
+{
 public:
-    int n;
-    vector<vector<int>> adjList; // stores edge indices per node
+    vector<vector<int>> modifiedGraphEdges(int n, vector<vector<int>> &edges, int source, int destination, int target)
+    {
+        // A safely large infinity that won't overflow a 64-bit integer
+        const long long INF = 2e15;
 
-    long long dijkstra(vector<vector<int>>& edges, int src, int dst) {
-        vector<vector<pair<int,int>>> adj(n); // (neighbor, weight)
-        for (auto& e : edges) {
-            if (e[2] == -1) continue;
-            adj[e[0]].push_back({e[1], e[2]});
-            adj[e[1]].push_back({e[0], e[2]});
+        // Build the adjacency list once.
+        // We store pairs of {neighbor_node, edge_index} so we can modify the original edges array directly.
+        vector<vector<pair<int, int>>> adj(n);
+        for (int i = 0; i < edges.size(); ++i)
+        {
+            adj[edges[i][0]].push_back({edges[i][1], i});
+            adj[edges[i][1]].push_back({edges[i][0], i});
         }
-        vector<long long> dist(n, LLONG_MAX);
-        dist[src] = 0;
-        priority_queue<pair<long long,int>, vector<pair<long long,int>>, greater<>> pq;
-        pq.push({0, src});
-        while (!pq.empty()) {
-            auto [d, u] = pq.top(); pq.pop();
-            if (d > dist[u]) continue;
-            for (auto& [v, w] : adj[u]) {
-                long long nd = d + w;
-                if (nd < dist[v]) { dist[v] = nd; pq.push({nd, v}); }
+
+        // ---------------------------------------------------------
+        // PASS 1: Dijkstra from Destination (Only Positive Edges)
+        // ---------------------------------------------------------
+        vector<long long> distR(n, INF);
+        priority_queue<pair<long long, int>, vector<pair<long long, int>>, greater<>> pqR;
+
+        distR[destination] = 0;
+        pqR.push({0, destination});
+
+        while (!pqR.empty())
+        {
+            auto [d, u] = pqR.top();
+            pqR.pop();
+
+            if (d > distR[u])
+                continue;
+
+            for (auto &neighbor : adj[u])
+            {
+                int v = neighbor.first;
+                int idx = neighbor.second;
+                long long w = edges[idx][2];
+
+                // Ignore modifiable edges entirely for this pass
+                if (w == -1)
+                    continue;
+
+                if (distR[u] + w < distR[v])
+                {
+                    distR[v] = distR[u] + w;
+                    pqR.push({distR[v], v});
+                }
             }
         }
-        return dist[dst];
-    }
 
-    vector<vector<int>> modifiedGraphEdges(int n_, vector<vector<int>>& edges, int source, int destination, int target) {
-        n = n_;
-        vector<int> wasNegOne;
-        for (int i = 0; i < (int)edges.size(); i++) {
-            if (edges[i][2] == -1) { edges[i][2] = 1; wasNegOne.push_back(i); }
+        // If the positive-only path is already faster than the target, it's impossible.
+        if (distR[source] < target)
+        {
+            return {};
         }
 
-        long long baseDist = dijkstra(edges, source, destination);
-        if (baseDist > target) return {};
+        // ---------------------------------------------------------
+        // PASS 2: Dijkstra from Source (Dynamic Edge Tuning)
+        // ---------------------------------------------------------
+        vector<long long> dist(n, INF);
+        priority_queue<pair<long long, int>, vector<pair<long long, int>>, greater<>> pq;
 
-        for (int idx : wasNegOne) {
-            long long cur = dijkstra(edges, source, destination);
-            if (cur == target) break;
-            if (cur < target) {
-                edges[idx][2] += (int)(target - cur);
+        dist[source] = 0;
+        pq.push({0, source});
+
+        while (!pq.empty())
+        {
+            auto [d, u] = pq.top();
+            pq.pop();
+
+            if (d > dist[u])
+                continue;
+
+            for (auto &neighbor : adj[u])
+            {
+                int v = neighbor.first;
+                int idx = neighbor.second;
+                long long w = edges[idx][2];
+
+                if (w == -1)
+                {
+                    // Mathematically calculate the exact weight needed to hit the target.
+                    // If it's negative or 0, we brake as little as possible by choosing 1.
+                    w = max(1LL, (long long)target - dist[u] - distR[v]);
+
+                    // Modify the edge permanently globally
+                    edges[idx][2] = w;
+                }
+
+                if (dist[u] + w < dist[v])
+                {
+                    dist[v] = dist[u] + w;
+                    pq.push({dist[v], v});
+                }
             }
         }
 
-        long long finalDist = dijkstra(edges, source, destination);
-        if (finalDist != target) return {};
-        return edges;
+        // ---------------------------------------------------------
+        // FINAL CHECK
+        // ---------------------------------------------------------
+        if (dist[destination] == target)
+        {
+            // There might be some -1 edges we never visited.
+            // We must convert them to valid positive values. 2 * 10^9 is safe and pushes them out of the way.
+            for (auto &edge : edges)
+            {
+                if (edge[2] == -1)
+                {
+                    edge[2] = 2e9;
+                }
+            }
+            return edges;
+        }
+
+        return {};
     }
 };

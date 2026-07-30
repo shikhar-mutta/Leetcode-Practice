@@ -3,38 +3,53 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(rows*cols + unique^2), SC: O(rows*cols)
-// Approach: a valid subset of size k needs each column sum <= floor(k/2). It's a known fact that
-// if any valid subset exists, one of size 1 (an all-zero row) or size 2 (two rows whose bitmasks
-// AND to 0) also exists — so checking those two cases suffices. Dedupe row bitmasks (rows*cols
-// bounded by 1e5, so distinct masks stay manageable) and check all pairs for disjointness.
-class Solution {
+// TC: O(m * n + m^2) where m is the number of rows and n is the number of columns, SC: O(m) where m is the number of rows
+//  Approach: We can use a bitmasking approach to find a good subset of the binary matrix. We will iterate through each row of the matrix and create a bitmask for each row, where each bit in the mask represents whether the corresponding column has a 1 or not. We will store the first row index for each unique bitmask in a map. If we encounter a row with a bitmask of all zeros, we can immediately return that row index as a good subset. After processing all rows, we will check all pairs of unique bitmasks to see if any two masks have no overlapping 1s (i.e., their bitwise AND is zero). If we find such a pair, we return the indices of those two rows. If no good subset is found, we return an empty vector.
+class Solution
+{
 public:
-    vector<int> goodSubsetofBinaryMatrix(vector<vector<int>>& grid) {
-        int m = grid.size(), n = grid[0].size();
-        for (int i = 0; i < m; i++) {
-            bool allZero = true;
-            for (int j = 0; j < n; j++) if (grid[i][j]) { allZero = false; break; }
-            if (allZero) return {i};
-        }
+    vector<int> goodSubsetofBinaryMatrix(vector<vector<int>> &grid)
+    {
+        int m = grid.size();
+        int n = grid[0].size();
 
-        unordered_map<int,int> maskFirst;
-        for (int i = 0; i < m; i++) {
+        // Map to store the first row index for each unique bitmask
+        unordered_map<int, int> maskToIndex;
+
+        for (int i = 0; i < m; ++i)
+        {
             int mask = 0;
-            for (int j = 0; j < n; j++) if (grid[i][j]) mask |= (1 << j);
-            if (!maskFirst.count(mask)) maskFirst[mask] = i;
+            for (int j = 0; j < n; ++j)
+            {
+                if (grid[i][j] == 1)
+                {
+                    mask |= (1 << j);
+                }
+            }
+
+            // Check if current row is all zeros
+            if (mask == 0)
+                return {i};
+
+            maskToIndex[mask] = i;
         }
 
-        vector<pair<int,int>> masks(maskFirst.begin(), maskFirst.end());
-        for (size_t a = 0; a < masks.size(); a++) {
-            for (size_t b = a+1; b < masks.size(); b++) {
-                if ((masks[a].first & masks[b].first) == 0) {
-                    int i1 = masks[a].second, i2 = masks[b].second;
-                    if (i1 > i2) swap(i1, i2);
-                    return {i1, i2};
+        // Check all pairs of masks
+        for (auto const &[mask1, i1] : maskToIndex)
+        {
+            for (auto const &[mask2, i2] : maskToIndex)
+            {
+                if ((mask1 & mask2) == 0)
+                {
+                    // Return indices in ascending order
+                    if (i1 < i2)
+                        return {i1, i2};
+                    else
+                        return {i2, i1};
                 }
             }
         }
+
         return {};
     }
 };

@@ -3,52 +3,60 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(len * maxSum), SC: O(len * maxSum)
-// Approach: answer = f(num2) - f(num1 - 1) where f(X) counts integers in [0, X] whose digit sum
-// lies in [min_sum, max_sum], computed via digit DP (memoized on position + running sum for the
-// non-tight branch).
-class Solution {
-public:
-    const long long MOD = 1e9+7;
-    int minSum, maxSum;
-    string num;
-    vector<vector<long long>> memo;
+// TC: O(n * m) where n is the length of num2 and m is the maximum sum, SC: O(n * m) where n is the length of num2 and m is the maximum sum
+//  Approach: We can use a digit dynamic programming approach to count the number of integers between num1 and num2 (inclusive) whose sum of digits is between min_sum and max_sum. We will define a recursive function helper that takes the current index, the current sum of digits, a boolean flag isLimit to indicate whether we are still under the limit of num2, and the minimum and maximum sum constraints. The base case is when we reach the end of the number, where we check if the current sum is within the specified range. We will also use memoization to store intermediate results in a dp array to avoid redundant calculations. Finally, we will call the helper function for both num2 and num1, and adjust the result based on whether num1 itself satisfies the sum constraints.
+class Solution
+{
+    const int MOD = 1e9 + 7;
+    int dp[23][405];
 
-    long long dp(int pos, int sum, bool tight) {
-        if (sum > maxSum) return 0;
-        if (pos == (int)num.size()) return (sum >= minSum) ? 1 : 0;
-        if (!tight && memo[pos][sum] != -1) return memo[pos][sum];
+    int helper(const string &num, int idx, int sum, bool isLimit, int min_sum,
+               int max_sum)
+    {
+        if (sum > max_sum)
+            return 0;
 
-        int limit = tight ? (num[pos] - '0') : 9;
-        long long ways = 0;
-        for (int d = 0; d <= limit; d++) {
-            ways = (ways + dp(pos + 1, sum + d, tight && d == limit)) % MOD;
+        if (idx == num.size())
+            return sum >= min_sum ? 1 : 0;
+
+        int rem = num.size() - idx;
+
+        if (!isLimit && dp[rem][sum] != -1)
+            return dp[rem][sum];
+
+        int cnt = 0;
+        int upper_bound = isLimit ? (num[idx] - '0') : 9;
+
+        for (int i = 0; i <= upper_bound; i++)
+        {
+            bool nextLimit = isLimit && (i == upper_bound);
+            cnt = (cnt +
+                   helper(num, idx + 1, sum + i, nextLimit, min_sum, max_sum)) %
+                  MOD;
         }
-        if (!tight) memo[pos][sum] = ways;
-        return ways;
+
+        if (!isLimit)
+            dp[rem][sum] = cnt;
+
+        return cnt;
     }
 
-    long long f(string X) {
-        num = X;
-        memo.assign(num.size(), vector<long long>(maxSum + 1, -1));
-        return dp(0, 0, true);
-    }
+public:
+    int count(string num1, string num2, int min_sum, int max_sum)
+    {
 
-    string decrement(string s) {
-        int i = s.size() - 1;
-        while (i >= 0 && s[i] == '0') { s[i] = '9'; i--; }
-        if (i < 0) return ""; // s was all zeros -> below 0
-        s[i]--;
-        int start = 0;
-        while (start < (int)s.size() - 1 && s[start] == '0') start++;
-        return s.substr(start);
-    }
+        memset(dp, -1, sizeof(dp));
 
-    int count(string num1, string num2, int min_sum, int max_sum) {
-        minSum = min_sum; maxSum = max_sum;
-        long long high = f(num2);
-        string num1Minus1 = decrement(num1);
-        long long low = num1Minus1.empty() ? 0 : f(num1Minus1);
-        return (int)(((high - low) % MOD + MOD) % MOD);
+        int A = helper(num2, 0, 0, true, min_sum, max_sum);
+        int B = helper(num1, 0, 0, true, min_sum, max_sum);
+
+        int num1Sum = 0;
+        for (char c : num1)
+        {
+            num1Sum += (c - '0');
+        }
+        int one = (min_sum <= num1Sum && num1Sum <= max_sum) ? 1 : 0;
+
+        return (A - B + one + MOD) % MOD;
     }
 };

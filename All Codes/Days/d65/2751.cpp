@@ -3,54 +3,66 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(N log N), SC: O(N)
-// Approach: process robots left to right by position, keeping a stack of surviving
-// right-moving robot indices. A left-moving robot collides with the stack top repeatedly
-// (asteroid-collision style), each collision knocking 1 health off the smaller and destroying
-// ties or the loser; stop when the left-mover dies or wins outright.
-class Solution {
+// TC: O(nlogn) where n is the number of robots, SC: O(n) where n is the number of robots
+//  Approach: We can use a stack to simulate the collisions between robots. We will first sort the robots based on their positions. Then, we will iterate through the sorted robots and for each robot, we will check if it is moving to the right or left. If it is moving to the right, we will push its index onto the stack. If it is moving to the left, we will check if there are any robots in the stack that are moving to the right. If there are, we will simulate the collision between the two robots and update their healths accordingly. If the robot moving to the left has more health than the robot moving to the right, we will pop the robot moving to the right from the stack and decrement its health. If the robot moving to the left has less health than the robot moving to the right, we will decrement its health and continue checking for collisions. If the robot moving to the left has equal health to the robot moving to the right, we will decrement both their healths and pop the robot moving to the right from the stack. Finally, we will return the healths of the robots that survived the collisions.
+class Solution
+{
 public:
-    vector<int> survivedRobotsHealths(vector<int>& positions, vector<int>& healths, string directions) {
+    vector<int> survivedRobotsHealths(vector<int> &positions,
+                                      vector<int> &healths, string directions)
+    {
         int n = positions.size();
-        vector<int> order(n);
-        iota(order.begin(), order.end(), 0);
-        sort(order.begin(), order.end(), [&](int a, int b) { return positions[a] < positions[b]; });
+        vector<pair<int, int>> actual_idx;
 
-        vector<int> health = healths;
-        vector<bool> alive(n, true);
-        vector<int> stk; // indices of alive right-moving robots, in position order
+        for (int i = 0; i < positions.size(); ++i)
+        {
+            actual_idx.push_back({positions[i], i});
+        }
+        sort(actual_idx.begin(), actual_idx.end());
 
-        for (int idx : order) {
-            if (directions[idx] == 'R') {
-                stk.push_back(idx);
-                continue;
-            }
-            // moving left, collide with stack top(s)
-            bool destroyed = false;
-            while (!stk.empty() && !destroyed) {
-                int top = stk.back();
-                if (health[top] < health[idx]) {
-                    alive[top] = false;
-                    stk.pop_back();
-                    health[idx]--;
-                } else if (health[top] > health[idx]) {
-                    health[top]--;
-                    destroyed = true;
-                } else {
-                    alive[top] = false;
-                    stk.pop_back();
-                    destroyed = true;
+        stack<int> st;
+        for (int i = 0; i < actual_idx.size(); ++i)
+        {
+
+            if (directions[actual_idx[i].second] == 'R')
+                st.push(actual_idx[i].second);
+            else
+            {
+                while (!st.empty() && healths[actual_idx[i].second] > 0)
+                {
+
+                    int top_idx = st.top();
+                    st.pop();
+
+                    if (healths[top_idx] > healths[actual_idx[i].second])
+                    {
+                        healths[top_idx]--;
+                        healths[actual_idx[i].second] = 0;
+                        st.push(top_idx);
+                    }
+                    else if (healths[top_idx] <
+                             healths[actual_idx[i].second])
+                    {
+                        healths[top_idx] = 0;
+                        healths[actual_idx[i].second]--;
+                    }
+                    else
+                    {
+                        healths[top_idx] = 0;
+                        healths[actual_idx[i].second] = 0;
+                    }
                 }
-            }
-            if (!destroyed) {
-                // survived all collisions, stays alive moving left forever
-            } else {
-                alive[idx] = false;
             }
         }
 
         vector<int> ans;
-        for (int i = 0; i < n; i++) if (alive[i]) ans.push_back(health[i]);
+
+        for (int i = 0; i < n; ++i)
+        {
+            if (healths[i] > 0)
+                ans.push_back(healths[i]);
+        }
+
         return ans;
     }
 };

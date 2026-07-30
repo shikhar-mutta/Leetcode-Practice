@@ -3,30 +3,36 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(N^2), SC: O(N)
-// Approach: imbalance of a sorted array = (distinctCount-1) - (number of consecutive-integer
-// pairs among its distinct values), since only gaps between DISTINCT values matter (duplicates
-// contribute a diff of 0, never counted). For each left endpoint i, extend j and maintain
-// distinctCount and adjPairs incrementally, updating only on a value's first appearance in [i,j].
-class Solution {
+//TC: O(n) where n is the number of elements in the array, SC: O(n) where n is the number of elements in the array
+//  Approach: We can use a two-pass approach to find the sum of imbalance numbers of all subarrays. In the first pass, we will iterate through the array from right to left and store the right edge of each element in a vector. In the second pass, we will iterate through the array from left to right and calculate the left edge of each element. We will then use the left and right edges to calculate the number of subarrays that contain the current element and add it to the count. Finally, we will return the count minus the total number of subarrays which is N * (N + 1) / 2.
+class Solution
+{
 public:
-    int sumImbalanceNumbers(vector<int>& nums) {
-        int n = nums.size();
-        long long total = 0;
-        for (int i = 0; i < n; i++) {
-            vector<bool> present(n + 2, false);
-            int distinctCount = 0, adjPairs = 0;
-            for (int j = i; j < n; j++) {
-                int v = nums[j];
-                if (!present[v]) {
-                    present[v] = true;
-                    distinctCount++;
-                    if (v >= 1 && present[v-1]) adjPairs++;
-                    if (v + 1 <= n && present[v+1]) adjPairs++;
-                }
-                total += max(0, distinctCount - 1 - adjPairs);
-            }
+    int sumImbalanceNumbers(vector<int> &nums)
+    {
+        const int N = nums.size();
+
+        // last index of each value as we seen during the iteration.
+        vector<int> last_index(N + 2, N);
+        vector<int> right_edge(N);
+        for (int i = N - 1; i >= 0; --i)
+        {
+            int num = nums[i];
+            right_edge[i] = std::min(last_index[num], last_index[num + 1]);
+            last_index[num] = i;
         }
-        return (int)total;
+
+        int count = 0;
+
+        std::fill(last_index.begin(), last_index.end(), -1);
+        for (int i = 0; i < N; ++i)
+        {
+            int num = nums[i];
+            int left_edge = last_index[num + 1];
+            count += (i - left_edge) * (right_edge[i] - i);
+            last_index[num] = i;
+        }
+
+        return count - N * (N + 1) / 2;
     }
 };

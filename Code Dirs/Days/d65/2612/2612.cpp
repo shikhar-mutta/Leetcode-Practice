@@ -3,35 +3,131 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(N log N), SC: O(N)
-// Approach: from position i, reversing any length-k window containing i sends it to positions
-// {2l + k-1-i : l in [max(0,i-k+1), min(i,n-k)]}, an arithmetic sequence with step 2 (fixed
-// parity). BFS using two sets (one per parity) of unvisited positions; for each expansion,
-// binary-search the reachable range and erase all matches in one sweep.
-class Solution {
-public:
-    vector<int> minReverseOperations(int n, int p, vector<int>& banned, int k) {
-        vector<int> dist(n, -1);
-        set<int> avail[2];
-        vector<bool> isBanned(n, false);
-        for (int b : banned) isBanned[b] = true;
-        for (int i = 0; i < n; i++) if (!isBanned[i] && i != p) avail[i % 2].insert(i);
+// TC: O(N), SC: O(N)
+// Approach: We can use BFS to find the minimum number of reverse operations needed to reach each index from the starting index. We can keep track of the indices that are still alive (not banned) and can be reached in the next step. We can use a bitset to efficiently keep track of the alive indices and their parents. We can also use a queue to perform BFS and update the answer for each index. Finally, we can return the answer for each index.
+class Solution
+{
+    struct WordSet
+    {
+        vector<unsigned long long> bits;
+        vector<int> parent;
 
-        dist[p] = 0;
-        queue<int> q; q.push(p);
-        while (!q.empty()) {
-            int i = q.front(); q.pop();
-            int lmin = max(0, i - k + 1), lmax = min(i, n - k);
-            if (lmin > lmax) continue;
-            int low = 2*lmin + k - 1 - i, high = 2*lmax + k - 1 - i;
-            set<int>& s = avail[low % 2 < 0 ? (low % 2 + 2) % 2 : low % 2];
-            auto it = s.lower_bound(low);
-            while (it != s.end() && *it <= high) {
-                dist[*it] = dist[i] + 1;
-                q.push(*it);
-                it = s.erase(it);
+        void init(int length)
+        {
+            int words = (length + 63) >> 6;
+            bits.assign(words, ~0ULL);
+            if (words > 0)
+            {
+                int remaining = length & 63;
+                if (remaining != 0)
+                {
+                    bits.back() = (1ULL << remaining) - 1ULL;
+                }
+            }
+
+            parent.resize(words + 1);
+            iota(parent.begin(), parent.end(), 0);
+        }
+
+        int findWord(int word)
+        {
+            while (parent[word] != word)
+            {
+                parent[word] = parent[parent[word]];
+                word = parent[word];
+            }
+            return word;
+        }
+
+        void clearIndex(int compressed)
+        {
+            int word = compressed >> 6;
+            int bit = compressed & 63;
+            bits[word] &= ~(1ULL << bit);
+            if (bits[word] == 0)
+            {
+                parent[word] = findWord(word + 1);
             }
         }
-        return dist;
+    };
+
+public:
+    vector<int> minReverseOperations(int n, int p, vector<int> &banned, int k)
+    {
+        vector<int> answer(n, -1);
+        for (int x : banned)
+        {
+            answer[x] = -2;
+        }
+        answer[p] = 0;
+
+        array<WordSet, 2> alive;
+        alive[0].init((n + 1) / 2);
+        alive[1].init(n / 2);
+
+        for (int x : banned)
+        {
+            alive[x & 1].clearIndex(x >> 1);
+        }
+        alive[p & 1].clearIndex(p >> 1);
+
+        vector<int> queue(n);
+        int head = 0;
+        int tail = 0;
+        queue[tail++] = p;
+
+        while (head < tail)
+        {
+            int index = queue[head++];
+            int nextDistance = answer[index] + 1;
+
+            int low = max(index - k + 1, k - 1 - index);
+            int high = min(index + k - 1, 2 * n - k - 1 - index);
+            int parity = low & 1;
+            int left = low >> 1;
+            int right = high >> 1;
+            int firstWord = left >> 6;
+            int lastWord = right >> 6;
+
+            WordSet &set = alive[parity];
+            for (int word = set.findWord(firstWord); word <= lastWord;)
+            {
+                int firstBit = (word == firstWord) ? (left & 63) : 0;
+                int lastBit = (word == lastWord) ? (right & 63) : 63;
+
+                unsigned long long mask = set.bits[word] & (~0ULL << firstBit);
+                if (lastBit != 63)
+                {
+                    mask &= (1ULL << (lastBit + 1)) - 1ULL;
+                }
+
+                while (mask != 0)
+                {
+                    int bit = __builtin_ctzll(mask);
+                    int compressed = (word << 6) + bit;
+                    int position = (compressed << 1) | parity;
+
+                    answer[position] = nextDistance;
+                    queue[tail++] = position;
+                    set.bits[word] &= ~(1ULL << bit);
+                    mask &= mask - 1;
+                }
+
+                if (set.bits[word] == 0)
+                {
+                    set.parent[word] = set.findWord(word + 1);
+                }
+                word = set.findWord(word + 1);
+            }
+        }
+
+        for (int &value : answer)
+        {
+            if (value == -2)
+            {
+                value = -1;
+            }
+        }
+        return answer;
     }
 };

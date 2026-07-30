@@ -3,49 +3,68 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(N*Trips + N), SC: O(N)
-// Approach: for each trip, BFS to get the parent pointers from its start node, walk back from
-// end to start marking a visit-count on each path node. Then tree DP (house-robber style): for
-// each node choose halved/not-halved, no two adjacent both halved, minimizing total cost.
-class Solution {
+// TC: O(n + m + n) = O(n + m), SC: O(n + m) for graph, O(n) for cnt, O(n) for price
+// Approach: We can use DFS to find the path from source to destination for each trip and increment the count of each node in the path. Then we can use DP to find the minimum total price by considering two cases for each node: not halving the price or halving the price. We can return the minimum of these two cases for the root node.
+class Solution
+{
 public:
-    vector<vector<int>> adj;
-    vector<int> cnt;
-    vector<int>* price;
+    vector<vector<int>> g;
+    vector<int> cnt, price;
 
-    pair<long long,long long> dfs(int u, int parent) {
-        long long notHalved = (long long)cnt[u] * (*price)[u];
-        long long halved = (long long)cnt[u] * (*price)[u] / 2;
-        for (int v : adj[u]) {
-            if (v == parent) continue;
-            auto [n0, n1] = dfs(v, u);
-            notHalved += min(n0, n1);
-            halved += n0;
+    bool dfsPath(int u, int p, int target)
+    {
+        if (u == target)
+        {
+            cnt[u]++;
+            return true;
         }
-        return {notHalved, halved};
+        for (int v : g[u])
+        {
+            if (v == p)
+                continue;
+            if (dfsPath(v, u, target))
+            {
+                cnt[u]++;
+                return true;
+            }
+        }
+        return false;
     }
 
-    int minimumTotalPrice(int n, vector<vector<int>>& edges, vector<int>& price_, vector<vector<int>>& trips) {
-        adj.assign(n, {});
-        for (auto& e : edges) { adj[e[0]].push_back(e[1]); adj[e[1]].push_back(e[0]); }
-        cnt.assign(n, 0);
-        price = &price_;
+    pair<int, int> dfsDP(int u, int p)
+    {
+        int notHalf = cnt[u] * price[u];
+        int half = cnt[u] * (price[u] / 2);
 
-        for (auto& trip : trips) {
-            int s = trip[0], e = trip[1];
-            vector<int> parent(n, -2);
-            parent[s] = -1;
-            queue<int> q; q.push(s);
-            while (!q.empty()) {
-                int u = q.front(); q.pop();
-                if (u == e) break;
-                for (int v : adj[u]) if (parent[v] == -2) { parent[v] = u; q.push(v); }
-            }
-            int cur = e;
-            while (cur != -1) { cnt[cur]++; cur = parent[cur]; }
+        for (int v : g[u])
+        {
+            if (v == p)
+                continue;
+            auto [a, b] = dfsDP(v, u);
+            notHalf += min(a, b);
+            half += a;
         }
 
-        auto [notHalved, halved] = dfs(0, -1);
-        return (int)min(notHalved, halved);
+        return {notHalf, half};
+    }
+
+    int minimumTotalPrice(int n, vector<vector<int>> &edges, vector<int> &price,
+                          vector<vector<int>> &trips)
+    {
+        this->price = price;
+        g.assign(n, {});
+        cnt.assign(n, 0);
+
+        for (auto &e : edges)
+        {
+            g[e[0]].push_back(e[1]);
+            g[e[1]].push_back(e[0]);
+        }
+
+        for (auto &t : trips)
+            dfsPath(t[0], -1, t[1]);
+
+        auto [a, b] = dfsDP(0, -1);
+        return min(a, b);
     }
 };

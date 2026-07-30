@@ -3,37 +3,54 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(N*(N+E)), SC: O(N+E)
-// Approach: BFS from each node as root, tracking parent edge used to reach each node. Any
-// non-parent edge (u,v) found where both are already visited gives a cycle of length
-// dist[u]+dist[v]+1; take the minimum across all BFS runs.
-class Solution {
+// TC: O(N + E), SC: O(N + E)
+//  Approach: We can use DFS to find the shortest cycle in a graph. We can keep track of the depth of each node and the parent of each node. If we encounter a node that has already been visited and is not the parent of the current node, then we have found a cycle. We can update the answer with the length of the cycle. We can repeat this process for all nodes in the graph. Finally, we can return the length of the shortest cycle found.
+int ans;
+int dep[1000];
+vector<vector<int>> conn;
+class Solution
+{
 public:
-    int findShortestCycle(int n, vector<vector<int>>& edges) {
-        vector<vector<pair<int,int>>> adj(n); // (neighbor, edgeId)
-        for (int i = 0; i < (int)edges.size(); i++) {
-            adj[edges[i][0]].push_back({edges[i][1], i});
-            adj[edges[i][1]].push_back({edges[i][0], i});
-        }
-
-        int ans = INT_MAX;
-        for (int src = 0; src < n; src++) {
-            vector<int> dist(n, -1), parentEdge(n, -1);
-            dist[src] = 0;
-            queue<int> q; q.push(src);
-            while (!q.empty()) {
-                int u = q.front(); q.pop();
-                for (auto& [v, eid] : adj[u]) {
-                    if (eid == parentEdge[u]) continue;
-                    if (dist[v] == -1) {
-                        dist[v] = dist[u] + 1;
-                        parentEdge[v] = eid;
-                        q.push(v);
-                    } else {
-                        ans = min(ans, dist[u] + dist[v] + 1);
-                    }
+    void dfs(int cur, int par, int d)
+    {
+        dep[cur] = d;
+        for (auto sub : conn[cur])
+        {
+            if (sub != par)
+            {
+                if (dep[sub] > d + 1)
+                {
+                    // explore another path and it is possible to find a shorter
+                    // cycle
+                    dfs(sub, cur, d + 1);
+                }
+                else if (dep[sub] < d)
+                {
+                    // cycle detected
+                    ans = min(ans, d - dep[sub] + 1);
                 }
             }
+        }
+    }
+    int findShortestCycle(int n, vector<vector<int>> &edges)
+    {
+        ios::sync_with_stdio(false);
+        cin.tie(nullptr);
+        ans = INT_MAX;
+        conn.clear();
+        conn.resize(n);
+        for (int i = 0; i < n; dep[i++] = INT_MAX)
+        {
+        }
+        for (int i = 0, m = edges.size(); i < m; ++i)
+        {
+            conn[edges[i][0]].push_back(edges[i][1]);
+            conn[edges[i][1]].push_back(edges[i][0]);
+        }
+        for (int i = 0, j; i < n; ++i)
+        {
+            if (dep[i] == INT_MAX) // DFS on each connected sub-graph
+                dfs(i, -1, 0);
         }
         return ans == INT_MAX ? -1 : ans;
     }

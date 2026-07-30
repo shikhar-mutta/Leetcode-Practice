@@ -3,37 +3,64 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(N sqrt(maxVal)), SC: O(N)
-// Approach: for each prime factor across all nums, record its last occurrence index. Scan left
-// to right tracking the max "reach" (furthest last-occurrence among primes seen so far); a valid
-// split exists right after index i iff reach == i (no shared prime factor crosses the boundary).
-class Solution {
+// TC: O(n*log(max(nums[i]))), SC: O(max(nums[i]))
+//  Approach: We can use a sieve to find the smallest prime factor of each number in the array. We can then use a map to keep track of the last index of each prime factor.
+//  We can then iterate through the array and for each number, we can find its prime factors and update the last index of each prime factor. We can then check if the current index is equal to the last index of any prime factor. If it is, we can return the current index as the valid split point. If we reach the end of the array without finding a valid split point, we can return -1.
+static constexpr int LIM = 1e6 + 1;
+static int spf[LIM] = {0};
+class sieve
+{
 public:
-    int findValidSplit(vector<int>& nums) {
-        int n = nums.size();
-        unordered_map<int,int> lastIndex;
-        for (int i = 0; i < n; i++) {
-            int x = nums[i];
-            for (int p = 2; (long long)p * p <= x; p++) {
-                if (x % p == 0) {
-                    while (x % p == 0) x /= p;
-                    lastIndex[p] = i;
+    sieve()
+    {
+        for (int i = 2; i < LIM; ++i)
+        {
+            if (!spf[i])
+            {
+                spf[i] = i;
+                if (1LL * i * i < LIM)
+                {
+                    for (int j = i * i; j < LIM; j += i)
+                    {
+                        if (!spf[j])
+                            spf[j] = i;
+                    }
                 }
             }
-            if (x > 1) lastIndex[x] = i;
         }
-
-        int reach = 0;
-        for (int i = 0; i < n; i++) {
-            int x = nums[i];
-            for (int p = 2; (long long)p * p <= x; p++) {
-                if (x % p == 0) {
-                    while (x % p == 0) x /= p;
-                    reach = max(reach, lastIndex[p]);
-                }
+    }
+} s;
+class Solution
+{
+public:
+    int findValidSplit(vector<int> &nums)
+    {
+        const int n = nums.size();
+        int last[LIM] = {0};
+        for (int i = 0; i < n; ++i)
+        {
+            int num = nums[i];
+            while (num > 1)
+            {
+                int p = spf[num];
+                last[p] = i;
+                while (num % p == 0)
+                    num /= p;
             }
-            if (x > 1) reach = max(reach, lastIndex[x]);
-            if (reach == i && i != n-1) return i;
+        }
+        int end = 0;
+        for (int i = 0; i < n - 1; ++i)
+        {
+            int num = nums[i];
+            while (num > 1)
+            {
+                int p = spf[num];
+                end = max(end, last[p]);
+                while (num % p == 0)
+                    num /= p;
+            }
+            if (i == end)
+                return i;
         }
         return -1;
     }

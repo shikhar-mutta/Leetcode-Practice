@@ -4,27 +4,44 @@
 using namespace std;
 
 // TC: O(N), SC: O(N)
-// Approach: pre[i] = max chars of t greedily matched as a subsequence using s[0:i]; suf[i] = max
-// trailing chars of t matched using s[i:n]. Removing s[l:r) leaves a valid subsequence iff
-// pre[l] + suf[r] >= m; minimize (m - pre[i] - suf[i]) over all split points i.
-class Solution {
+// Approach: We can use a two pointer approach to solve this problem. We can keep track of the suffix of t in s and then use a two pointer approach to find the minimum score of the subsequence. We can also keep track of the prefix of t in s and then use a two pointer approach to find the minimum score of the subsequence. We can also keep track of the prefix and suffix of t in s and then use a two pointer approach to find the minimum score of the subsequence.
+class Solution
+{
 public:
-    int minimumScore(string s, string t) {
-        int n = s.size(), m = t.size();
-        vector<int> pre(n+1, 0), suf(n+1, 0);
-        for (int i = 0; i < n; i++) {
-            pre[i+1] = pre[i];
-            if (pre[i+1] < m && s[i] == t[pre[i+1]]) pre[i+1]++;
-        }
-        int j = m;
-        suf[n] = 0;
-        for (int i = n-1; i >= 0; i--) {
-            suf[i] = suf[i+1];
-            if (j > 0 && s[i] == t[j-1]) { j--; suf[i] = m - j; }
+    int minimumScore(string s, string t)
+    {
+        int ss = s.length(), ts = t.length();
+        int i = ss - 1, j = ts - 1, k = ts - 1; // i for ss, j for t , k for dp
+
+        vector<int> dp(ts, -1);
+        for (; i >= 0; i--)
+        {
+            if (j >= 0 && s[i] == t[j])
+            {
+                dp[k] = i;
+                k--;
+                j--;
+            }
         }
 
-        int ans = m;
-        for (int i = 0; i <= n; i++) ans = min(ans, max(0, m - pre[i] - suf[i]));
-        return ans;
+        int result =
+            k + 1; // since k will be one place behind the actual suffix
+        if (result == 0)
+            return 0;
+        k = result;
+        j = 0;
+        for (int i = 0; i <= ss - 1; i++)
+        {
+            if (j < ts && t[j] == s[i])
+            {
+                while (k < ts && dp[k] <= i)
+                    k++;
+
+                result = min(result, k - j - 1);
+                //(k - 1) - (j + 1) + 1= k - j - 1
+                j++;
+            }
+        }
+        return result;
     }
 };

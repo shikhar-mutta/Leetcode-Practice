@@ -3,38 +3,91 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(N log N), SC: O(N)
-// Approach: for each value, count1-count2 must be even (else impossible). Collect half the
-// excess of each imbalanced value into one list (the fruits that must effectively leave their
-// basket), sort it, and for the smaller half swap; the cost to "move" a fruit of value x is
-// min(x, 2*globalMin) since a real swap can be simulated cheaply by round-tripping the cheapest
-// fruit in the whole collection. Sum costs over the size/2 cheapest excess fruits.
-class Solution {
+// TC: O(NlogN), SC: O(N)
+//  Approach: We can use a greedy approach to solve this problem. We can sort both baskets and then use two pointers to find the minimum cost of rearranging the fruits. We can keep track of the surplus fruits in both baskets and then use the minimum fruit cost to rearrange them. We can also check if the total number of fruits in both baskets is even, if not we can return -1 as it is not possible to rearrange the fruits. We can also check if the total number of fruits in both baskets is even, if not we can return -1 as it is not possible to rearrange the fruits. We can also check if the total number of fruits in both baskets is even, if not we can return -1 as it is not possible to rearrange the fruits.
+class Solution
+{
+    int count(vector<int> &basket, int i)
+    {
+        int cnt = 1;
+        for (int k = i + 1; k < basket.size() && basket[i] == basket[k]; k++)
+            cnt++;
+        return cnt;
+    }
+
 public:
-    long long minCost(vector<int>& basket1, vector<int>& basket2) {
-        unordered_map<int,int> cnt1, cnt2;
-        int globalMin = INT_MAX;
-        for (int x : basket1) { cnt1[x]++; globalMin = min(globalMin, x); }
-        for (int x : basket2) { cnt2[x]++; globalMin = min(globalMin, x); }
-
-        vector<int> excess;
-        unordered_set<int> keys;
-        for (auto& [k,v] : cnt1) keys.insert(k);
-        for (auto& [k,v] : cnt2) keys.insert(k);
-
-        for (int v : keys) {
-            int c1 = cnt1.count(v) ? cnt1[v] : 0;
-            int c2 = cnt2.count(v) ? cnt2[v] : 0;
-            int diff = c1 - c2;
-            if (diff % 2 != 0) return -1;
-            int half = abs(diff) / 2;
-            for (int i = 0; i < half; i++) excess.push_back(v);
+    long long minCost(vector<int> &basket1, vector<int> &basket2)
+    {
+        sort(basket1.begin(), basket1.end());
+        sort(basket2.begin(), basket2.end());
+        vector<pair<int, long>> sur1, sur2;
+        for (int i = 0, j = 0; i < basket1.size() || j < basket2.size();)
+        {
+            if (j == basket2.size() ||
+                i < basket1.size() && basket1[i] < basket2[j])
+            {
+                auto cnt = count(basket1, i);
+                if (cnt % 2 == 1)
+                    return -1;
+                sur1.emplace_back(basket1[i], cnt);
+                i += cnt;
+            }
+            else if (i == basket1.size() ||
+                     j < basket2.size() && basket1[i] > basket2[j])
+            {
+                auto cnt = count(basket2, j);
+                if (cnt % 2 == 1)
+                    return -1;
+                sur2.emplace_back(basket2[j], cnt);
+                j += cnt;
+            }
+            else
+            {
+                auto cnt1 = count(basket1, i);
+                auto cnt2 = count(basket2, j);
+                if ((cnt1 + cnt2) % 2 == 1)
+                    return -1;
+                if (cnt1 < cnt2)
+                    sur2.emplace_back(basket2[j], cnt2 - cnt1);
+                else if (cnt1 > cnt2)
+                    sur1.emplace_back(basket1[i], cnt1 - cnt2);
+                i += cnt1;
+                j += cnt2;
+            }
         }
-
-        sort(excess.begin(), excess.end());
-        long long ans = 0;
-        int half = excess.size() / 2;
-        for (int i = 0; i < half; i++) ans += min(excess[i], 2 * globalMin);
+        int mn = min(basket1[0], basket2[0]);
+        long ans = 0;
+        for (int i = 0, j = 0; i < sur1.size() && j < sur2.size();)
+        {
+            if (sur1[i].first < sur2[j].first)
+            {
+                auto &[f1, cnt1] = sur1[i];
+                auto &[f2, cnt2] = sur2.back();
+                int f = min({f1, f2, mn * 2});
+                long mc = min(cnt1, cnt2);
+                ans += f * mc / 2;
+                cnt1 -= mc;
+                cnt2 -= mc;
+                if (cnt1 == 0)
+                    i++;
+                if (cnt2 == 0)
+                    sur2.pop_back();
+            }
+            else
+            {
+                auto &[f1, cnt1] = sur1.back();
+                auto &[f2, cnt2] = sur2[j];
+                int f = min({f1, f2, mn * 2});
+                long mc = min(cnt1, cnt2);
+                ans += f * mc / 2;
+                cnt1 -= mc;
+                cnt2 -= mc;
+                if (cnt1 == 0)
+                    sur1.pop_back();
+                if (cnt2 == 0)
+                    j++;
+            }
+        }
         return ans;
     }
 };

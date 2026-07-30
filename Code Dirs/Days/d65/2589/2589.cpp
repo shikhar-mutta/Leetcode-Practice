@@ -3,30 +3,40 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(N*maxTime), SC: O(maxTime)
-// Approach: sort tasks by end time; greedily reuse already-"on" points within [start,end], and
-// for any shortfall, turn on the latest still-off points closest to end (maximizes overlap
-// reuse for later tasks). Answer is the total count of "on" points.
-class Solution {
+// TC: O(nlogn + n*max(end-start)), SC: O(n)
+//  Approach: We can use a binary indexed tree (BIT) to keep track of the number of tasks completed at each time. We can sort the tasks by their end time and iterate through them. For each task, we can check how many tasks have been completed in the time range [start, end] using the BIT. If the number of tasks completed is less than the required number of tasks, we can add the remaining tasks to the BIT and update the number of tasks completed. Finally, we can return the total number of tasks completed.
+class Solution
+{
 public:
-    int findMinimumTime(vector<vector<int>>& tasks) {
-        sort(tasks.begin(), tasks.end(), [](auto& a, auto& b) { return a[1] < b[1]; });
-        int maxT = 0;
-        for (auto& t : tasks) maxT = max(maxT, t[1]);
-        vector<bool> used(maxT + 1, false);
-
-        for (auto& t : tasks) {
-            int s = t[0], e = t[1], d = t[2];
-            int cnt = 0;
-            for (int i = s; i <= e; i++) if (used[i]) cnt++;
-            int need = d - cnt;
-            for (int i = e; i >= s && need > 0; i--) {
-                if (!used[i]) { used[i] = true; need--; }
-            }
+    int bt[2002] = {}, n = 2001;
+    int prefix_sum(int i)
+    {
+        int sum = 0;
+        for (i = i + 1; i > 0; i -= i & (-i))
+            sum += bt[i];
+        return sum;
+    }
+    void add(int i, int val)
+    {
+        for (i = i + 1; i <= n; i += i & (-i))
+            bt[i] += val;
+    }
+    int findMinimumTime(vector<vector<int>> &tasks)
+    {
+        sort(begin(tasks), end(tasks),
+             [](const auto &t1, const auto &t2)
+             { return t1[1] < t2[1]; });
+        for (const auto &t : tasks)
+        {
+            int start = t[0], end = t[1], d = t[2];
+            d -= prefix_sum(end) - prefix_sum(start - 1);
+            for (int i = end; d > 0; --i)
+                if (prefix_sum(i) == prefix_sum(i - 1))
+                {
+                    add(i, 1);
+                    --d;
+                }
         }
-
-        int ans = 0;
-        for (bool b : used) if (b) ans++;
-        return ans;
+        return prefix_sum(n - 1);
     }
 };

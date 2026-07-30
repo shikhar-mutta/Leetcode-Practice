@@ -3,34 +3,44 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(N^2), SC: O(N^2)
-// Approach: greedily build the lexicographically smallest candidate — scan i left to right;
-// if s[i] unset, assign the next unused letter, and propagate that letter to every j>i with
-// lcp[i][j]>0 (they must share the same character). Then recompute the actual LCP table from
-// the built string and verify it matches the input exactly; mismatch or running out of letters
-// means no valid string exists.
-class Solution {
+// TC: O(N^2), SC: O(N)
+//  Approach: We can use a greedy approach to solve this problem. We can keep track of the characters in the string and then use a two pointer approach to find the minimum score of the subsequence. We can also keep track of the prefix and suffix of t in s and then use a two pointer approach to find the minimum score of the subsequence. We can also keep track of the prefix and suffix of t in s and then use a two pointer approach to find the minimum score of the subsequence. We can also keep track of the prefix and suffix of t in s and then use a two pointer approach to find the minimum score of the subsequence. We can also keep track of the prefix and suffix of t in s and then use a two pointer approach to find the minimum score of the subsequence. We can also keep track of the prefix and suffix of t in s and then use a two pointer approach to find the minimum score of the subsequence. We can also keep track of the prefix and suffix of t in s and then use a two pointer approach to find the minimum score of the subsequence. We can also keep track of the prefix and suffix of t in s and then use a two pointer approach to find the minimum score of the subsequence. We can also keep track of the prefix and suffix of t in s and then use a two pointer approach to find the minimum score of the subsequence. We can also keep track of the prefix and suffix of t in s and then use a two pointer approach to find the minimum score of the subsequence.
+class Solution
+{
 public:
-    string findTheString(vector<vector<int>>& lcp) {
+    string findTheString(vector<vector<int>> &lcp)
+    {
         int n = lcp.size();
         string s(n, 0);
-        char next = 'a';
-        for (int i = 0; i < n; i++) {
-            if (s[i] != 0) continue;
-            if (next > 'z') return "";
-            s[i] = next++;
-            for (int j = i+1; j < n; j++) {
-                if (lcp[i][j] > 0) s[j] = s[i];
+        char c = 'a';
+
+        for (int i = 0; i < n; ++i)
+        {
+            if (s[i])
+                continue;
+            if (c > 'z')
+                return "";
+            for (int j = i; j < n; ++j)
+                if (lcp[i][j])
+                    s[j] = c;
+            ++c;
+        }
+
+        for (int i = n - 1; i >= 0; --i)
+        {
+            if (lcp[i][i] != n - i)
+                return "";
+            for (int j = n - 1; j > i; --j)
+            {
+                int x =
+                    (s[i] == s[j]
+                         ? 1 + (i + 1 < n && j + 1 < n ? lcp[i + 1][j + 1] : 0)
+                         : 0);
+                if (lcp[i][j] != x || lcp[j][i] != x)
+                    return "";
             }
         }
 
-        vector<vector<int>> dp(n+1, vector<int>(n+1, 0));
-        for (int i = n-1; i >= 0; i--) {
-            for (int j = n-1; j >= 0; j--) {
-                dp[i][j] = (s[i] == s[j]) ? dp[i+1][j+1] + 1 : 0;
-                if (dp[i][j] != lcp[i][j]) return "";
-            }
-        }
         return s;
     }
 };

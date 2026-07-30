@@ -3,39 +3,76 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(R*C log(R*C)), SC: O(R*C)
-// Approach: Dijkstra where the "distance" is earliest arrival time. If a cell needs waiting
-// (grid value > time+1), you can bounce back and forth on the previous edge to burn one extra
-// time unit, so parity determines whether you wait exactly to grid value or grid value+1.
-class Solution {
+// TC: O(n*m*log(n*m)), SC: O(n*m)
+// Approach: Dijkstra's algorithm with a min-heap priority queue. Each cell (i,j) has a time grid[i][j] when it can be visited. We can only move to adjacent cells (up, down, left, right) and we need to find the minimum time to reach the bottom-right cell from the top-left cell. If we cannot reach the destination, return -1.
+using info = pair<int, int>; // (time, i*m+j)
+const static int d[5] = {0, 1, 0, -1, 0};
+class Solution
+{
 public:
-    int minimumTime(vector<vector<int>>& grid) {
-        int R = grid.size(), C = grid[0].size();
-        if (grid[0][1] > 1 && grid[1][0] > 1) return -1;
+    inline static bool isOutside(int i, int j, int n, int m)
+    {
+        return i < 0 || i >= n || j < 0 || j >= m;
+    }
+    inline static int idx(int i, int j, int m) { return i * m + j; }
 
-        vector<vector<int>> dist(R, vector<int>(C, INT_MAX));
-        dist[0][0] = 0;
-        priority_queue<tuple<int,int,int>, vector<tuple<int,int,int>>, greater<>> pq;
-        pq.push({0, 0, 0});
-        int dr[] = {-1,1,0,0}, dc[] = {0,0,-1,1};
+    int minimumTime(vector<vector<int>> &grid)
+    {
+        if (grid[1][0] > 1 && grid[0][1] > 1)
+            return -1; // edge case
 
-        while (!pq.empty()) {
-            auto [d, r, c] = pq.top(); pq.pop();
-            if (d > dist[r][c]) continue;
-            for (int k = 0; k < 4; k++) {
-                int nr = r+dr[k], nc = c+dc[k];
-                if (nr<0||nr>=R||nc<0||nc>=C) continue;
-                int cur = d + 1;
-                if (cur < grid[nr][nc]) {
-                    int diff = grid[nr][nc] - cur;
-                    cur += diff % 2 == 0 ? diff : diff + 1;
-                }
-                if (cur < dist[nr][nc]) {
-                    dist[nr][nc] = cur;
-                    pq.push({cur, nr, nc});
+        const int n = grid.size(), m = grid[0].size(), N = 100000;
+        int time[N];
+        fill(time, time + n * m, INT_MAX);
+        uint64_t pq[N];
+        int back = 0;
+
+        // Start at (0, 0) with time=0
+        pq[back++] = 0;
+        time[0] = 0;
+        while (back > 0)
+        {
+            pop_heap(pq, pq + back, greater<>{});
+            auto tij = pq[--back];
+            int t = tij >> 32, ij = tij & ((1 << 30) - 1), i = ij / m,
+                j = ij - i * m;
+
+            //    cout<<" t="<<int(t)<<" i="<<int(i)<<" j="<<int(j)<<endl;
+            // reach the destination
+            if (i == n - 1 && j == m - 1)
+                return t;
+
+            // Traverse all four directions
+            for (int a = 0; a < 4; a++)
+            {
+                int r = i + d[a], s = j + d[a + 1];
+                if (isOutside(r, s, n, m))
+                    continue;
+
+                // minimum time to reach (r, s)
+                int w = ((grid[r][s] - t) & 1) ? 0 : 1;
+                int nextTime =
+                    max(t + 1, grid[r][s] + w); // backward if neccessary
+
+                // update if this path having quicker time
+                int rs = idx(r, s, m);
+                if (nextTime < time[rs])
+                {
+                    time[rs] = nextTime;
+                    pq[back++] = ((uint64_t)nextTime << 32) + rs;
+                    push_heap(pq, pq + back, greater<>{});
                 }
             }
         }
-        return dist[R-1][C-1];
+
+        return -1; // never reach
     }
 };
+
+auto init = []()
+{
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
+    return 'c';
+}();

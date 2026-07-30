@@ -3,51 +3,106 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(N), SC: O(N)
-// Approach: repeatedly peel leaves with no coin (they're never worth visiting), then peel two
-// more rounds of leaves regardless of coin (since starting/ending adjacent to a coin covers
-// distance-1 neighbors for free). Every remaining edge must be traversed both ways: answer =
-// 2 * remaining edge count.
-class Solution {
+// TC: O(n), SC: O(n)
+//  Approach: We can use a queue to keep track of the leaf nodes that do not have any coins. We can then remove these leaf nodes from the tree and update the degree of their parent nodes. We can repeat this process until there are no more leaf nodes without coins. After that, we can perform two more rounds of removing leaf nodes to account for the fact that we can collect coins from the parent nodes of the leaf nodes. Finally, we can count the number of remaining nodes in the tree, which will be the number of nodes that can be collected.
+class Solution
+{
 public:
-    int collectTheCoins(vector<int>& coins, vector<vector<int>>& edges) {
+    int collectTheCoins(vector<int> &coins, vector<vector<int>> &edges)
+    {
+
         int n = coins.size();
         vector<vector<int>> adj(n);
         vector<int> degree(n, 0);
-        for (auto& e : edges) {
-            adj[e[0]].push_back(e[1]); adj[e[1]].push_back(e[0]);
-            degree[e[0]]++; degree[e[1]]++;
+
+        for (auto &it : edges)
+        {
+            int u = it[0];
+            int v = it[1];
+
+            adj[u].push_back(v);
+            adj[v].push_back(u);
+
+            degree[u]++;
+            degree[v]++;
         }
-        vector<bool> removed(n, false);
 
         queue<int> q;
-        for (int i = 0; i < n; i++) if (degree[i] == 1 && coins[i] == 0) q.push(i);
-        int remaining = n;
-        while (!q.empty()) {
-            int u = q.front(); q.pop();
-            if (removed[u]) continue;
-            removed[u] = true; remaining--;
-            for (int v : adj[u]) {
-                if (removed[v]) continue;
-                degree[v]--;
-                if (degree[v] == 1 && coins[v] == 0) q.push(v);
+        for (int i = 0; i < n; i++)
+        {
+            if (degree[i] == 1 && coins[i] == 0)
+            {
+                q.push(i);
             }
         }
 
-        for (int round = 0; round < 2; round++) {
-            vector<int> leaves;
-            for (int i = 0; i < n; i++) if (!removed[i] && degree[i] == 1) leaves.push_back(i);
-            for (int u : leaves) {
-                if (removed[u]) continue;
-                removed[u] = true; remaining--;
-                for (int v : adj[u]) {
-                    if (removed[v]) continue;
-                    degree[v]--;
+        while (!q.empty())
+        {
+
+            int node = q.front();
+            q.pop();
+
+            if (degree[node] == 0)
+                continue;
+            degree[node]--;
+
+            for (auto &it : adj[node])
+            {
+
+                if (degree[it] == 0)
+                    continue;
+
+                degree[it]--;
+                if (degree[it] == 1 && coins[it] == 0)
+                {
+                    q.push(it);
                 }
             }
         }
 
-        int edgesLeft = max(0, remaining - 1);
-        return edgesLeft * 2;
+        // phase 2;
+        for (int i = 0; i < 2; i++)
+        {
+
+            for (int j = 0; j < n; j++)
+            {
+                if (degree[j] == 1)
+                {
+                    q.push(j);
+                }
+            }
+
+            int m = q.size();
+            for (int sz = 0; sz < m; sz++)
+            {
+
+                int node = q.front();
+                q.pop();
+
+                if (degree[node] == 0)
+                    continue;
+                degree[node]--;
+
+                for (auto &it : adj[node])
+                {
+                    if (degree[it] == 0)
+                        continue;
+
+                    degree[it]--;
+                    if (degree[it] == 1)
+                    {
+                        q.push(it);
+                    }
+                }
+            }
+        }
+
+        int cnt = 0;
+        for (int i = 0; i < n; i++)
+        {
+            cnt += degree[i];
+        }
+
+        return cnt;
     }
 };

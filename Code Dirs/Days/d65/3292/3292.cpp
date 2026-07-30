@@ -3,77 +3,54 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(sum|words| + |target|), SC: O(sum|words|)
-// Approach: build an Aho-Corasick automaton (trie + failure links) from all words. Feeding
-// target through it, the current node's depth at position j gives len[j] = the longest suffix
-// of target[0..j] that is a prefix of some word. That match covers target[j-len[j]+1 .. j], so
-// it lets a valid segment jump from "coverage count j-len[j]" up to "coverage count j+1". Reduce
-// to the classic Jump Game II greedy over these (from, to) jumps to find the minimum segments,
-// or -1 if target can't be fully covered.
-class Solution {
+// TC: O(n * m) where n is the number of words and m is the length of the target string
+// SC: O(n * m) where n is the number of words and m is the length of the target string
+// Approach: We can use the KMP algorithm to find the longest prefix-suffix (LPS) array for each word concatenated with the target string. We can then use a greedy approach to find the minimum number of valid strings needed to form the target string.
+
+class Solution
+{
 public:
-    int minValidStrings(vector<string>& words, string target) {
-        vector<array<int,26>> children;
-        vector<int> fail;
-        children.push_back({}); children[0].fill(-1);
-        fail.push_back(0);
-        vector<int> depth = {0};
+    // 3291. Minimum Number of Valid Strings to Form Target I
+    int minValidStrings(vector<string> &words, string target)
+    {
+        int ans = 0;
+        int unmatchedPrefix = target.length();
+        vector<vector<int>> lpsList;
 
-        for (auto& w : words) {
-            int cur = 0;
-            for (char c : w) {
-                int idx = c - 'a';
-                if (children[cur][idx] == -1) {
-                    children[cur][idx] = children.size();
-                    children.push_back({}); children.back().fill(-1);
-                    depth.push_back(depth[cur] + 1);
-                }
-                cur = children[cur][idx];
-            }
-        }
+        for (const string &word : words)
+            lpsList.push_back(getLPS(word + '#' + target));
 
-        // BFS to build failure links (with goto-function compression)
-        fail.assign(children.size(), 0);
-        queue<int> q;
-        for (int c = 0; c < 26; c++) {
-            if (children[0][c] == -1) { children[0][c] = 0; continue; } // root self-loops on missing chars
-            fail[children[0][c]] = 0;
-            q.push(children[0][c]);
-        }
-        while (!q.empty()) {
-            int u = q.front(); q.pop();
-            for (int c = 0; c < 26; c++) {
-                int v = children[u][c];
-                if (v == -1) {
-                    children[u][c] = children[fail[u]][c]; // already resolved, fail[u] has smaller depth
-                } else {
-                    fail[v] = children[fail[u]][c];
-                    q.push(v);
-                }
-            }
+        while (unmatchedPrefix > 0)
+        {
+            // Greedily choose the word that has the longest suffix match with
+            // the remaining unmatched prefix.
+            int maxMatchSuffix = 0;
+            for (int i = 0; i < words.size(); ++i)
+                maxMatchSuffix =
+                    max(maxMatchSuffix,
+                        lpsList[i][words[i].length() + unmatchedPrefix]);
+            if (maxMatchSuffix == 0)
+                return -1;
+            ++ans;
+            unmatchedPrefix -= maxMatchSuffix;
         }
 
-        int n = target.size();
-        vector<long long> furthest(n+1, 0);
-        int cur = 0;
-        for (int j = 0; j < n; j++) {
-            int idx = target[j] - 'a';
-            cur = children[cur][idx]; // fully compressed, always a valid node
-            int len = depth[cur];
-            int start = j - len + 1; // coverage-count before this segment (= its start index)
-            if (start < 0) start = 0;
-            furthest[start] = max(furthest[start], (long long)(j + 1));
-        }
+        return ans;
+    }
 
-        long long currentEnd = 0, nextEnd = 0;
-        int jumps = 0, i = 0;
-        while (currentEnd < n) {
-            if (i > currentEnd) return -1;
-            while (i <= currentEnd && i <= n) { nextEnd = max(nextEnd, furthest[i]); i++; }
-            if (nextEnd <= currentEnd) return -1;
-            jumps++;
-            currentEnd = nextEnd;
+private:
+    // Returns the lps array, where lps[i] is the length of the longest prefix
+    // of pattern[0..i] which is also a suffix of this substring.
+    vector<int> getLPS(const string &pattern)
+    {
+        vector<int> lps(pattern.length());
+        for (int i = 1, j = 0; i < pattern.length(); ++i)
+        {
+            while (j > 0 && pattern[j] != pattern[i])
+                j = lps[j - 1];
+            if (pattern[i] == pattern[j])
+                lps[i] = ++j;
         }
-        return jumps;
+        return lps;
     }
 };

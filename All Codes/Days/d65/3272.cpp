@@ -3,62 +3,62 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(10^(n/2) * n), SC: O(distinct multisets)
-// Approach: n <= 10, so enumerate every n-digit palindrome by choosing its first half (no
-// leading zero), check divisibility by k, and record its digit-multiset (sorted digit string) in
-// a set to dedupe. For each distinct good multiset, count how many distinct n-digit arrangements
-// (no leading zero) it produces via a multinomial-coefficient formula, and sum.
-class Solution {
-public:
-    long long fact[11];
-
-    long long countArrangements(int cnt[10], int n) {
-        long long total = fact[n];
-        for (int d = 0; d < 10; d++) total /= fact[cnt[d]];
-
-        if (cnt[0] == 0) return total;
-        // subtract arrangements with leading zero
-        cnt[0]--;
-        long long withZeroLead = fact[n-1];
-        for (int d = 0; d < 10; d++) withZeroLead /= fact[cnt[d]];
-        cnt[0]++;
-        return total - withZeroLead;
-    }
-
-    long long countGoodIntegers(int n, int k) {
-        fact[0] = 1;
-        for (int i = 1; i <= 10; i++) fact[i] = fact[i-1] * i;
-
-        int half = (n + 1) / 2;
-        long long lo = 1, hi = 9;
-        for (int i = 1; i < half; i++) { lo *= 10; hi = hi * 10 + 9; }
-
-        set<string> goodMultisets;
-        for (long long h = lo; h <= hi; h++) {
-            string hs = to_string(h);
-            string pal = hs;
-            if (n % 2 == 0) {
-                string rev = hs;
-                reverse(rev.begin(), rev.end());
-                pal += rev;
-            } else {
-                string rev = hs.substr(0, half-1);
-                reverse(rev.begin(), rev.end());
-                pal += rev;
+// TC: O(1). SC: O(1). Precomputation is done in the constructor.
+// Approach: Precompute the number of good integers for all lengths and all k values. Use DFS to generate all possible palindromic numbers and count the valid ones based on the divisibility condition.
+#pragma GCC optimize("O3,unroll-loops")
+#pragma GCC target("avx2,bmi,bmi2,lzcnt,popcnt")
+class Solution
+{
+    inline static long long ans[11][10];
+    inline static const int _precompute = []()
+    {
+        long long fact[11]{1}, pow10[6]{1};
+        int cnt[10]{};
+        for (int i = 1; i <= 10; ++i)
+            fact[i] = fact[i - 1] * i;
+        for (int i = 1; i <= 5; ++i)
+            pow10[i] = pow10[i - 1] * 10;
+        unordered_set<long long> vis;
+        auto dfs = [&fact, &pow10, &cnt, &vis](this auto &self, int n,
+                                               long long l,
+                                               long long r) -> void
+        {
+            if (n)
+            {
+                long long num = l * pow10[n / 2] + r;
+                long long den = 1;
+                long long hash = 0;
+                for (int c : cnt)
+                {
+                    hash = hash * 11 + c;
+                    den *= fact[c];
+                }
+                for (int k = 1; k <= 9; ++k)
+                    if (num % k == 0)
+                    {
+                        long long hash_k = hash * 10 + k;
+                        if (!vis.count(hash_k))
+                        {
+                            vis.insert(hash_k);
+                            ans[n][k] += fact[n - 1] * (n - cnt[0]) / den;
+                        }
+                    }
             }
-            long long val = stoll(pal);
-            if (val % k != 0) continue;
-            string sorted_s = pal;
-            sort(sorted_s.begin(), sorted_s.end());
-            goodMultisets.insert(sorted_s);
-        }
+            if (n % 2 || n == 10)
+                return;
+            for (int i = n ? 0 : 1; i <= 9; ++i)
+            {
+                ++cnt[i];
+                self(n + 1, l * 10 + i, r);
+                ++cnt[i];
+                self(n + 2, l * 10 + i, i * pow10[n / 2] + r);
+                cnt[i] -= 2;
+            }
+        };
+        dfs(0, 0, 0);
+        return 0;
+    }();
 
-        long long ans = 0;
-        for (auto& ms : goodMultisets) {
-            int cnt[10] = {};
-            for (char c : ms) cnt[c-'0']++;
-            ans += countArrangements(cnt, n);
-        }
-        return ans;
-    }
+public:
+    long long countGoodIntegers(int n, int k) { return ans[n][k]; }
 };

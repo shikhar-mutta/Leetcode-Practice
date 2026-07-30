@@ -3,51 +3,84 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(N^3), SC: O(N^2)
-// Approach: precompute cost[i][j] = min edits to make s[i..j] a semi-palindrome, trying every
-// divisor d < length of that segment (splitting into d residue-class subsequences, each of
-// which must itself be a palindrome — count mismatches per subsequence). Then a standard
-// partition DP: dp[i][p] = min cost to split s[0:i] into p semi-palindromes.
-class Solution {
+// TC: O(n^2 * k), SC: O(n * k)
+// Approach: We can use dynamic programming to find the minimum number of changes required to make k semi-palindromes. We define a dp array where dp[i][ct] represents the minimum number of changes required to make ct semi-palindromes from the substring starting at index i. We also define a pal array to store the minimum number of changes required to make the substring from index i to index j a palindrome. We use a recursive function to calculate the minimum changes required for each substring and update the dp array accordingly. Finally, we return the value of dp[0][k] which represents the minimum number of changes required to make k semi-palindromes from the entire string.
+class Solution
+{
 public:
-    int minimumChanges(string s, int k) {
-        int n = s.size();
-        vector<vector<int>> cost(n, vector<int>(n, INT_MAX));
-        for (int i = 0; i < n; i++) {
-            for (int j = i; j < n; j++) {
-                int len = j - i + 1;
-                if (len == 1) { cost[i][j] = 0; continue; }
-                int best = INT_MAX;
-                for (int d = 1; d < len; d++) {
-                    if (len % d != 0) continue;
-                    int groupSize = len / d;
-                    int mismatches = 0;
-                    for (int r = 0; r < d; r++) {
-                        int l = 0, h = groupSize - 1;
-                        while (l < h) {
-                            char cl = s[i + r + l*d], ch = s[i + r + h*d];
-                            if (cl != ch) mismatches++;
-                            l++; h--;
-                        }
+    vector<vector<int>> dp;
+    vector<vector<int>> pal;
+
+    int cst(string &s, int i, int j)
+    {
+        int len = j - i + 1;
+
+        if (len < 2)
+            return 1e9;
+        if (pal[i][j] != -1)
+            return pal[i][j];
+
+        int ans = 1e9;
+        for (int d = 1; d < len; d++)
+        {
+            if (len % d == 0)
+            {
+                int ans2 = 0;
+
+                for (int l = 0; l < d; l++)
+                {
+                    int le = i + l;
+                    int ri = i + len - d + l;
+
+                    while (le < ri)
+                    {
+                        if (s[le] != s[ri])
+                            ans2++;
+
+                        le += d;
+                        ri -= d;
                     }
-                    best = min(best, mismatches);
                 }
-                cost[i][j] = best;
+                ans = min(ans, ans2);
             }
         }
 
-        vector<vector<int>> dp(n+1, vector<int>(k+1, INT_MAX));
-        dp[0][0] = 0;
-        for (int i = 1; i <= n; i++) {
-            for (int p = 1; p <= k; p++) {
-                for (int j = 0; j < i; j++) {
-                    if (dp[j][p-1] == INT_MAX) continue;
-                    int segCost = cost[j][i-1];
-                    if (segCost == INT_MAX) continue;
-                    dp[i][p] = min(dp[i][p], dp[j][p-1] + segCost);
-                }
+        return pal[i][j] = ans;
+    }
+
+    int func(int i, int ct, string &s)
+    {
+        if (ct == 0)
+        {
+            return (i == s.size()) ? 0 : 1e9;
+        }
+
+        if (s.size() - i < ct * 2)
+            return 1e9;
+
+        if (dp[i][ct] != -1)
+            return dp[i][ct];
+
+        int ans = 1e9;
+        for (int j = i + 1; j < s.size() - (ct - 1) * 2; j++)
+        {
+            int ans2 = cst(s, i, j);
+            if (ans2 != 1e9)
+            {
+                ans = min(ans, ans2 + func(j + 1, ct - 1, s));
             }
         }
-        return dp[n][k];
+
+        return dp[i][ct] = ans;
+    }
+
+    int minimumChanges(string s, int k)
+    {
+        int n = s.size();
+
+        dp.assign(n + 1, vector<int>(k + 1, -1));
+        pal.assign(n + 1, vector<int>(n + 1, -1));
+
+        return func(0, k, s);
     }
 };

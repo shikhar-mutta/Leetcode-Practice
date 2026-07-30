@@ -3,24 +3,32 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(N sqrt(N)), SC: O(N)
-// Approach: index i*j^2 for varying j all share the same "squarefree core" (i with all square
-// factors removed). A complete subset corresponds exactly to indices sharing a squarefree core
-// {core*1^2, core*2^2, ...}, so group indices by their squarefree core and sum, taking the max.
-class Solution {
+// TC: O(N*sqrt(N)), SC: O(1)
+// Approach: For each index i, we can add the value of nums[i] to the sum. Then, we can add the values of nums[i * j^2] for all j >= 2, as long as i * j^2 <= n. We can keep track of the maximum sum we have seen so far and return it at the end.
+class Solution
+{
 public:
-    long long maximumSum(vector<int>& nums) {
+    long long maximumSum(vector<int> &nums)
+    {
         int n = nums.size();
-        unordered_map<int, long long> sums;
-        for (int i = 1; i <= n; i++) {
-            int core = i;
-            for (int p = 2; (long long)p * p <= core; p++) {
-                while (core % (p*p) == 0) core /= (p*p);
-            }
-            sums[core] += nums[i-1];
-        }
         long long ans = 0;
-        for (auto& [k, v] : sums) ans = max(ans, v);
+        for (int i = 1; i <= n; i++)
+        {
+            long long value = nums[i - 1];
+            if (value < 0)
+            {
+                continue;
+            }
+            for (int j = 2; true; ++j)
+            {
+                int index = i * j * j;
+                if (index > n)
+                    break;
+                value += nums[index - 1];
+                nums[index - 1] = -1;
+            }
+            ans = max(ans, value);
+        }
         return ans;
     }
 };

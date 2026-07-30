@@ -3,28 +3,33 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(N), SC: O(N)
-// Approach: every occurrence of the same value must stay in the same partition segment, so merge
-// [firstOcc,lastOcc] intervals greedily left to right (like merge-intervals) to find the c
-// maximal forced blocks. Between consecutive blocks there's a free choice to split or not, giving
-// 2^(c-1) good partitions.
-class Solution {
+// TC: O(n), SC: O(n)
+//  Approach: We can use a greedy approach to count the number of good partitions. We first create a map to store the last index of each unique number in the nums array. Then, we iterate through the nums array and keep track of the maximum last index of the current segment. Whenever we reach an index greater than the maximum last index, we can create a new partition and multiply the result by 2 (since we can either include or exclude the current segment). Finally, we return the total count of good partitions modulo 1e9 + 7.
+class Solution
+{
 public:
-    int numberOfGoodPartitions(vector<int>& nums) {
-        const long long MOD = 1e9+7;
+    int mod = 1e9 + 7;
+    int numberOfGoodPartitions(vector<int> &nums)
+    {
         int n = nums.size();
-        unordered_map<int,int> lastOcc;
-        for (int i = 0; i < n; i++) lastOcc[nums[i]] = i;
-
-        int blocks = 0;
-        int reach = -1;
-        for (int i = 0; i < n; i++) {
-            if (i > reach) blocks++;
-            reach = max(reach, lastOcc[nums[i]]);
+        unordered_map<int, int> lastindex;
+        for (int i = 0; i < n; i++)
+        {
+            lastindex[nums[i]] = i;
         }
-
-        long long ans = 1;
-        for (int i = 0; i < blocks - 1; i++) ans = ans * 2 % MOD;
-        return (int)ans;
+        int i = 0;
+        int j = 0;
+        int res = 1;
+        j = max(j, lastindex[nums[0]]);
+        while (i < n)
+        {
+            if (i > j)
+            {
+                res = (res * 2) % mod;
+            }
+            j = max(j, lastindex[nums[i]]);
+            i++;
+        }
+        return res;
     }
 };

@@ -3,47 +3,92 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(N), SC: O(N)
-// Approach: split the healthy children into gaps between consecutive sick positions (plus the
-// two boundary gaps). A boundary gap (open on one side only) has exactly 1 valid internal
-// infection order (must proceed strictly from the sick end). An internal gap of length g (open
-// on both ends) has 2^(g-1) valid internal orders (each interior position becomes reachable from
-// either direction, giving a free binary choice per step but the last step is forced). The
-// global answer interleaves all gaps' events via a multinomial coefficient, times each gap's own
-// internal order count.
-class Solution {
+// TC: O(n + m), SC: O(n + m)
+// Approach: We can use a combinatorial approach to count the number of infection sequences. We first precompute the factorials and their modular inverses up to n using Fermat's Little Theorem. Then, we iterate through the sick array to calculate the lengths of healthy segments between sick individuals. For each segment, we calculate the number of ways to arrange the healthy individuals using the formula for combinations, taking into account that the middle segments can have two arrangements (left or right). Finally, we multiply the results for all segments and return the total count modulo 1e9 + 7.
+const int mod = 1e9 + 7;
+using ll = long long;
+bool ok = false;
+int N = 100005;
+vector<int> f(N);
+
+class Solution
+{
 public:
-    const long long MOD = 1e9+7;
-
-    long long power(long long b, long long e) {
-        long long r = 1; b %= MOD;
-        while (e > 0) { if (e & 1) r = r * b % MOD; b = b * b % MOD; e >>= 1; }
-        return r;
-    }
-
-    int numberOfSequence(int n, vector<int>& sick) {
-        int m = sick.size();
-        vector<long long> fact(n+1), invFact(n+1);
-        fact[0] = 1;
-        for (int i = 1; i <= n; i++) fact[i] = fact[i-1] * i % MOD;
-        invFact[n] = power(fact[n], MOD-2);
-        for (int i = n; i > 0; i--) invFact[i-1] = invFact[i] * i % MOD;
-
-        vector<int> gaps;
-        gaps.push_back(sick[0]); // before first sick
-        for (int i = 1; i < m; i++) gaps.push_back(sick[i] - sick[i-1] - 1);
-        gaps.push_back(n - 1 - sick[m-1]); // after last sick
-
-        long long H = 0;
-        long long ans = 1;
-        for (int i = 0; i < (int)gaps.size(); i++) {
-            int g = gaps[i];
-            H += g;
-            ans = ans * invFact[g] % MOD;
-            bool boundary = (i == 0 || i == (int)gaps.size()-1);
-            if (!boundary && g > 0) ans = ans * power(2, g-1) % MOD;
+    void fun()
+    {
+        if (ok)
+        {
+            return;
         }
-        ans = ans * fact[H] % MOD;
-        return (int)ans;
+        ok = true;
+        f[0] = 1;
+        for (int i = 1; i <= 100000; i++)
+        {
+            // f[i]=(i*f[i-1]*1LL)%mod; RUN TIME ERROR
+            // First, i * f[i-1] is evaluated. can cause RUN TIME ERROR
+            f[i] = (1LL * i * f[i - 1]) % mod;
+        }
+        return;
+    }
+    ll pw(ll a, ll b)
+    {
+        ll res = 1;
+        a = (a % mod);
+        while (b)
+        {
+            if (b & 1)
+            {
+                res = (res * a) % mod;
+            }
+            a = (a * a) % mod;
+            b = b >> 1;
+        }
+        return res % mod;
+    }
+    int numberOfSequence(int n, vector<int> &sick)
+    {
+        fun();
+        int m = sick.size();
+
+        ll s = 0;
+        ll len = 0;
+        ll k = 0; // ONLY MIDDLE SEGMENTS
+        ll den = 1LL;
+
+        len = sick[0] - 0;
+        if (len > 0)
+        {
+            s += len;
+            ll curf = (f[len]) % mod;
+            den = (den * 1LL * curf) % mod;
+        }
+
+        for (int j = 1; j < m; j++)
+        {
+            len = sick[j] - sick[j - 1] - 1;
+            if (len > 0)
+            {
+                s += len;
+                k += (len - 1);
+                ll curf = (f[len]) % mod;
+                den = (den * 1LL * curf) % mod;
+            }
+        }
+
+        len = n - sick[m - 1] - 1;
+        if (len > 0)
+        {
+            s += len;
+            ll curf = (f[len]) % mod;
+            den = (den * 1LL * curf) % mod;
+        }
+
+        ll num = f[s] % mod;
+        ll pd = (pw(2, k)) % mod;
+        ll invd = pw(den, mod - 2) % mod;
+        ll ans = num;
+        ans = (ans * invd) % mod;
+        ans = (ans * pd) % mod;
+        return ans;
     }
 };

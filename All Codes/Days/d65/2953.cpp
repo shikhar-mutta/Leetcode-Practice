@@ -3,49 +3,81 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(26*N), SC: O(N)
-// Approach: split word into maximal runs where adjacent chars differ by <=2 (a valid substring
-// can never cross a bigger jump). Within each run, for every distinct-char-count m (1..26), a
-// complete substring has fixed length m*k; slide a window of that length maintaining frequency
-// counts, tracking how many distinct chars are present and how many have frequency exactly k.
-class Solution {
+// TC: O(n * 26 * k), SC: O(26)
+//  Approach: We can use a sliding window approach to find the count of complete substrings.
+//  A complete substring is defined as a substring where each character appears exactly k times. We can iterate through the string and for each character, we can maintain a frequency array to count the occurrences of each character in the current window. We can also maintain a variable to keep track of the number of characters that have exactly k occurrences. If this variable equals the number of unique characters in the current window, we have found a complete substring. We can then slide the window and update the frequency array and the variable accordingly. Finally, we return the total count of complete substrings found.
+class Solution
+{
 public:
-    int countCompleteSubstrings(string word, int k) {
+    int solve(string &s, int start, int end, int k)
+    {
+        int ans = 0;
+        int m = end - start + 1;
+
+        for (int t = 1; t <= 26; t++)
+        {
+            int len = t * k;
+            if (len > m)
+                break;
+
+            vector<int> freq(26, 0);
+            int exactlyK = 0;
+
+            for (int i = start; i < start + len; i++)
+            {
+                int c = s[i] - 'a';
+                if (freq[c] == k)
+                    exactlyK--;
+                freq[c]++;
+                if (freq[c] == k)
+                    exactlyK++;
+            }
+
+            if (exactlyK == t)
+                ans++;
+
+            for (int r = start + len; r <= end; r++)
+            {
+                int l = r - len;
+
+                int c = s[l] - 'a';
+                if (freq[c] == k)
+                    exactlyK--;
+                freq[c]--;
+                if (freq[c] == k)
+                    exactlyK++;
+
+                c = s[r] - 'a';
+                if (freq[c] == k)
+                    exactlyK--;
+                freq[c]++;
+                if (freq[c] == k)
+                    exactlyK++;
+
+                if (exactlyK == t)
+                    ans++;
+            }
+        }
+
+        return ans;
+    }
+
+    int countCompleteSubstrings(string word, int k)
+    {
         int n = word.size();
-        vector<string> runs;
+        int ans = 0;
         int start = 0;
-        for (int i = 1; i <= n; i++) {
-            if (i == n || abs(word[i] - word[i-1]) > 2) {
-                runs.push_back(word.substr(start, i - start));
+
+        for (int i = 1; i < n; i++)
+        {
+            if (abs(word[i] - word[i - 1]) > 2)
+            {
+                ans += solve(word, start, i - 1, k);
                 start = i;
             }
         }
 
-        long long ans = 0;
-        for (auto& run : runs) {
-            int len = run.size();
-            for (int m = 1; m <= 26; m++) {
-                int L = m * k;
-                if (L > len) break;
-                vector<int> freq(26, 0);
-                int distinct = 0, good = 0;
-                for (int i = 0; i < len; i++) {
-                    int c = run[i] - 'a';
-                    freq[c]++;
-                    if (freq[c] == 1) distinct++;
-                    if (freq[c] == k) good++;
-                    else if (freq[c] == k + 1) good--;
-                    if (i >= L) {
-                        int rc = run[i-L] - 'a';
-                        if (freq[rc] == k) good--;
-                        else if (freq[rc] == k + 1) good++;
-                        freq[rc]--;
-                        if (freq[rc] == 0) distinct--;
-                    }
-                    if (i >= L - 1 && distinct == m && good == m) ans++;
-                }
-            }
-        }
-        return (int)ans;
+        ans += solve(word, start, n - 1, k);
+        return ans;
     }
 };

@@ -3,70 +3,68 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(10 * N * (9N/2)), SC: O(N^2)
-// Approach: E = count of even index slots, O = count of odd index slots (O+E=n). Process digit
-// values 0..9 in order; for digit d with multiplicity cnt[d], decide how many k of its copies go
-// to even slots (rest to odd). The number of ways to place those k copies into the currently
-// remaining even slots (and cnt[d]-k into remaining odd slots) is a product of binomial
-// coefficients, folded directly into the DP transition — dp[cntE][sumE] tracks how many even
-// slots are filled and their digit-sum so far. Answer = dp[E][totalSum/2] (needs totalSum even).
-class Solution {
+// TC: O(10^3 * 40^2), SC: O(10^3 * 40^2)
+// Approach: We can use dynamic programming to count the number of balanced permutations. We can define a 3D DP array dp[i][j][k] where i represents the current digit we are considering, j represents the number of digits we have used so far, and k represents the sum of the digits we have used so far. The base case is dp[0][0][0] = 1, which means that there is one way to form a balanced permutation with no digits used and a sum of 0. For each digit, we can either use it or not use it, and we can update the DP array accordingly. Finally, we can return dp[10][n/2][s/2], where n is the length of the input string and s is the sum of the digits in the input string.
+const int Modulus = 1e9 + 7;
+int C[81][81];
+static int preprocess = []()
+{
+    C[0][0] = 1;
+    for (int i = 1; i <= 80; ++i)
+    {
+        C[i][0] = 1;
+        for (int j = 1; j <= i; ++j)
+            C[i][j] = (C[i - 1][j] + C[i - 1][j - 1]) % Modulus;
+    }
+
+    return 0;
+}();
+
+int dp[11][41][361];
+class Solution
+{
 public:
-    const long long MOD = 1e9+7;
+    int countBalancedPermutations(string num)
+    {
+        int size{(int)num.size()}, sod{};
+        int freq[10]{}, prefix[11]{};
 
-    int countBalancedPermutations(string num) {
-        int n = num.size();
-        int cnt[10] = {};
-        int totalSum = 0;
-        for (char c : num) { cnt[c-'0']++; totalSum += c-'0'; }
-
-        if (totalSum % 2 != 0) return 0;
-        int target = totalSum / 2;
-        int E = (n + 1) / 2, O = n / 2;
-
-        int maxFact = n + 1;
-        vector<long long> fact(maxFact+1), invFact(maxFact+1);
-        fact[0] = 1;
-        for (int i = 1; i <= maxFact; i++) fact[i] = fact[i-1] * i % MOD;
-        auto power = [&](long long b, long long e) {
-            long long r = 1; b %= MOD;
-            while (e > 0) { if (e & 1) r = r * b % MOD; b = b * b % MOD; e >>= 1; }
-            return r;
-        };
-        invFact[maxFact] = power(fact[maxFact], MOD-2);
-        for (int i = maxFact; i > 0; i--) invFact[i-1] = invFact[i] * i % MOD;
-        auto C = [&](int a, int b) -> long long {
-            if (b < 0 || b > a || a < 0) return 0;
-            return fact[a] * invFact[b] % MOD * invFact[a-b] % MOD;
-        };
-
-        // dp[cntE][sumE]
-        vector<vector<long long>> dp(E+1, vector<long long>(target+1, 0));
-        dp[0][0] = 1;
-        int processedTotal = 0;
-
-        for (int d = 0; d < 10; d++) {
-            int c = cnt[d];
-            if (c == 0) continue;
-            vector<vector<long long>> ndp(E+1, vector<long long>(target+1, 0));
-            for (int cntE = 0; cntE <= E; cntE++) {
-                for (int sumE = 0; sumE <= target; sumE++) {
-                    if (!dp[cntE][sumE]) continue;
-                    int cntO = processedTotal - cntE;
-                    for (int k = 0; k <= c; k++) {
-                        int ncntE = cntE + k, nsumE = sumE + d*k;
-                        if (ncntE > E || nsumE > target) continue;
-                        int remE = E - cntE, remO = O - cntO;
-                        long long ways = C(remE, k) * C(remO, c-k) % MOD;
-                        if (!ways) continue;
-                        ndp[ncntE][nsumE] = (ndp[ncntE][nsumE] + dp[cntE][sumE] * ways) % MOD;
-                    }
-                }
-            }
-            dp = ndp;
-            processedTotal += c;
+        for (const char &ch : num)
+        {
+            ++freq[ch - '0'];
+            sod += (ch - '0');
         }
+        if (sod & 1)
+            return 0;
 
-        return (int)dp[E][target];
+        memset(dp, -1, sizeof(dp));
+        for (int i = 1; i <= 10; ++i)
+            prefix[i] = prefix[i - 1] + freq[i - 1];
+
+        auto dfs = [&](this auto &&self, int i, int n, int sum) -> int
+        {
+            if (!i)
+                return (!n && !sum);
+            auto &ret = dp[i][n][sum];
+            if (ret != -1)
+                return ret;
+
+            int cnt = 0;
+            for (int j = 0; j <= freq[i - 1]; ++j)
+            {
+                if (j > n || (i - 1) * j > sum ||
+                    freq[i - 1] - j > prefix[i] - n)
+                    continue;
+                cnt = (cnt +
+                       ((1LL * C[n][j] * C[prefix[i] - n][freq[i - 1] - j]) %
+                        Modulus) *
+                           self(i - 1, n - j, sum - (i - 1) * j)) %
+                      Modulus;
+            }
+
+            return ret = cnt;
+        };
+
+        return dfs(10, size >> 1, sod >> 1);
     }
 };

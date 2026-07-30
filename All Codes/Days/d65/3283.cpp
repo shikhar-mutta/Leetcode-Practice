@@ -3,62 +3,111 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(m*2500 + 2^m * m^2), SC: O(m*2500 + 2^m * m)
-// Approach: BFS knight-move distances from each relevant point (start + every pawn) to every
-// board cell, giving exact pairwise distances between all m+1 nodes. Then minimax with
-// memoization over (bitmask of remaining pawns, current knight node): Alice (maximizer, even
-// number of pawns captured so far) and Bob (minimizer) alternate choosing which remaining pawn
-// to capture next, paying its knight-distance in moves.
-class Solution {
+//TC: O(8^n) where n is the number of positions
+//SC: O(n^2) where n is the number of positions
+//Approach: We can use a depth-first search (DFS) approach to solve this problem. We can start from the knight's position and try to move to all possible positions in the grid. We can keep track of the positions that have been visited and the number of moves taken to reach each position. We can then return the maximum number of moves taken to reach all positions in the grid. We can also use memoization to optimize the DFS approach by storing the results of previously computed states.
+const int mv[8][2] = {{1, 2}, {2, 1}, {2, -1}, {1, -2}, {-1, -2}, {-2, -1}, {-2, 1}, {-1, 2}};
+const int N = 50;
+int D[16][16]; // Store distances between positions (at most 16 positions)
+int sz;
+int dp[2][16][(1 << 16)];
+
+using int2 = pair<int, int>;
+class Solution
+{
 public:
-    int m;
-    vector<vector<int>> dist; // dist[node][pawnIndex] using node = 0(start) or 1..m
-    vector<vector<int>> memo;
-
-    int dp(int mask, int pos, int startPopcount) {
-        if (mask == 0) return 0;
-        if (memo[mask][pos] != -1) return memo[mask][pos];
-
-        bool maximizer = ((startPopcount - __builtin_popcount(mask)) % 2 == 0);
-        int best = maximizer ? INT_MIN : INT_MAX;
-        for (int p = 0; p < m; p++) {
-            if (!(mask & (1 << p))) continue;
-            int cost = dist[pos][p] + dp(mask ^ (1 << p), p + 1, startPopcount);
-            if (maximizer) best = max(best, cost);
-            else best = min(best, cost);
-        }
-        memo[mask][pos] = best;
-        return best;
+    inline bool isInside(int r0, int c0)
+    {
+        return 0 <= r0 && r0 < N && 0 <= c0 && c0 < N;
     }
-
-    int maxMoves(int kx, int ky, vector<vector<int>>& positions) {
-        m = positions.size();
-        vector<pair<int,int>> nodes;
-        nodes.push_back({kx, ky});
-        for (auto& p : positions) nodes.push_back({p[0], p[1]});
-
-        int BOARD = 50;
-        int dr[] = {-2,-2,-1,-1,1,1,2,2}, dc[] = {-1,1,-2,2,-2,2,-1,1};
-        dist.assign(m+1, vector<int>(m, 0));
-        for (int s = 0; s <= m; s++) {
-            vector<vector<int>> d(BOARD, vector<int>(BOARD, -1));
-            int sx = nodes[s].first, sy = nodes[s].second;
-            d[sx][sy] = 0;
-            queue<pair<int,int>> q; q.push({sx, sy});
-            while (!q.empty()) {
-                auto [x, y] = q.front(); q.pop();
-                for (int k = 0; k < 8; k++) {
-                    int nx = x+dr[k], ny = y+dc[k];
-                    if (nx<0||nx>=BOARD||ny<0||ny>=BOARD||d[nx][ny]!=-1) continue;
-                    d[nx][ny] = d[x][y] + 1;
-                    q.push({nx, ny});
+    inline int num(int i, int j) { return i * N + j; }
+    unordered_map<int, int> SetP;
+    inline void build_SetP(vector<vector<int>> &positions)
+    {
+        int i = 0;
+        for (auto &p : positions)
+        {
+            SetP[num(p[0], p[1])] = i++;
+        }
+    }
+    // Perform BFS from a single starting position to all other positions
+    void BFS_minMoves(int idx, vector<vector<int>> &positions)
+    {
+        int r0 = positions[idx][0], c0 = positions[idx][1];
+        int dist[N][N]; // Distance from (r0, c0) to all other positions
+        memset(dist, -1, sizeof(dist));
+        queue<int> q;
+        q.push(num(r0, c0));
+        dist[r0][c0] = 0;
+        int cnt = 0;
+        while (!q.empty() && cnt < sz)
+        {
+            int x = q.front();
+            auto [r, c] = div(x, N);
+            q.pop();
+            int currentD = dist[r][c];
+            if (SetP.count(x))
+            {
+                D[idx][SetP[x]] = currentD;
+                cnt++;
+            }
+            for (int a = 0; a < 8; a++)
+            {
+                int nr = r + mv[a][0], nc = c + mv[a][1];
+                if (isInside(nr, nc) && dist[nr][nc] == -1)
+                {
+                    dist[nr][nc] = currentD + 1;
+                    q.emplace(num(nr, nc));
                 }
             }
-            for (int p = 0; p < m; p++) dist[s][p] = d[nodes[p+1].first][nodes[p+1].second];
         }
+    }
 
-        memo.assign(1 << m, vector<int>(m+1, -1));
-        int fullMask = (1 << m) - 1;
-        return dp(fullMask, 0, m);
+    int dfs(bool isBob, int idx, int bMask, vector<vector<int>> &positions)
+    {
+        if (bMask == (1 << sz) - 1)
+            return 0; // All positions visited
+        if (dp[isBob][idx][bMask] != -1)
+            return dp[isBob][idx][bMask];
+
+        int moves = (isBob) ? INT_MAX : 0;
+        for (int i = 0; i < sz; i++)
+        {
+            if (bMask & (1 << i))
+                continue;         // If position i is already visited, skip
+            int dist = D[idx][i]; // Distance between positions idx and i
+            if (isBob)
+                moves =
+                    min(moves, dist + dfs(0, i, bMask | (1 << i),
+                                          positions)); // Bob minimizes moves
+            else
+                moves =
+                    max(moves, dist + dfs(1, i, bMask | (1 << i),
+                                          positions)); // Alice maximizes moves
+        }
+        return dp[isBob][idx][bMask] = moves;
+    }
+
+    int maxMoves(int kx, int ky, vector<vector<int>> &positions)
+    {
+        positions.push_back({kx, ky}); // add starting to positions
+        sz = positions.size();
+
+        build_SetP(positions); // Build SetPfrom positions
+        // Compute the shortest distances between all pairs of positions
+        for (int i = 0; i < sz; i++)
+            BFS_minMoves(i, positions);
+
+        memset(dp, -1, sizeof(dp)); // Initialize memoization array
+        return dfs(0, sz - 1, 1 << (sz - 1),
+                   positions); // Start DFS from the knight's position
     }
 };
+
+auto init = []()
+{
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    cout.tie(nullptr);
+    return 'c';
+}();

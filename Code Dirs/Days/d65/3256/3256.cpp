@@ -3,39 +3,132 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(R*C log C + R^3), SC: O(R)
-// Approach: an optimal rook can always be chosen among the top 3 values of its row (swapping a
-// lower-ranked pick for a higher one in the same row, avoiding column conflicts, never decreases
-// the sum). Keep the top 3 (value, col) per row, then brute-force all triples of rows (choosing
-// one of up to 3 candidates per row) checking column distinctness.
-class Solution {
+// TC: O(m*n) where m is the number of rows and n is the number of columns in board
+// SC: O(m*n) where m is the number of rows and n is the number of columns in board
+// Approach: We can use dynamic programming to keep track of the maximum value sum that can be obtained by placing three rooks on the board. We can use a dp array where dp[i][j] represents the maximum value sum that can be obtained by placing rooks on the first i rows and j columns of the board. We can initialize dp[0][0] = 0 since there is no value sum that can be obtained by placing rooks on the first row and column. For each subsequent row and column, we can update dp[i][j] based on the previous rows and columns. If we place a rook on the current row and column, we can add the value of the current cell to dp[i-1][j-1] since we can obtain the maximum value sum by placing rooks on the previous rows and columns. If we do not place a rook on the current row and column, we can take the maximum value sum from the previous rows and columns. Finally, we can return dp[m][n] as the result.
+class Solution
+{
+    struct Candidate
+    {
+        long long value;
+        int other;
+    };
+
+    static constexpr int MAX_SIZE = 100;
+    static constexpr long long NEG = -(1LL << 60);
+
 public:
-    long long maximumValueSum(vector<vector<int>>& board) {
-        int R = board.size(), C = board[0].size();
-        vector<vector<pair<int,int>>> top(R); // (value, col), top 3 per row
-        for (int r = 0; r < R; r++) {
-            vector<pair<int,int>> row;
-            for (int c = 0; c < C; c++) row.push_back({board[r][c], c});
-            sort(row.begin(), row.end(), greater<>());
-            for (int i = 0; i < min(3, (int)row.size()); i++) top[r].push_back(row[i]);
+    long long maximumValueSum(vector<vector<int>> &board)
+    {
+        const int m = static_cast<int>(board.size());
+        const int n = static_cast<int>(board[0].size());
+        const bool useRows = m <= n;
+        const int lines = useRows ? m : n;
+        const int others = useRows ? n : m;
+
+        int value[MAX_SIZE][MAX_SIZE];
+        for (int line = 0; line < lines; ++line)
+        {
+            for (int other = 0; other < others; ++other)
+            {
+                value[line][other] =
+                    useRows ? board[line][other] : board[other][line];
+            }
         }
 
-        long long ans = LLONG_MIN;
-        for (int r1 = 0; r1 < R; r1++) {
-            for (int r2 = r1+1; r2 < R; r2++) {
-                for (int r3 = r2+1; r3 < R; r3++) {
-                    for (auto& [v1, c1] : top[r1]) {
-                        for (auto& [v2, c2] : top[r2]) {
-                            if (c2 == c1) continue;
-                            for (auto& [v3, c3] : top[r3]) {
-                                if (c3 == c1 || c3 == c2) continue;
-                                ans = max(ans, (long long)v1 + v2 + v3);
-                            }
-                        }
-                    }
+        Candidate suffix[MAX_SIZE][3];
+        long long bestByOther[MAX_SIZE];
+        fillBest(bestByOther, others);
+
+        for (int line = lines - 1; line >= 0; --line)
+        {
+            fillTop(bestByOther, others, suffix[line]);
+            for (int other = 0; other < others; ++other)
+            {
+                if (value[line][other] > bestByOther[other])
+                {
+                    bestByOther[other] = value[line][other];
                 }
             }
         }
-        return ans;
+
+        fillBest(bestByOther, others);
+        for (int other = 0; other < others; ++other)
+            bestByOther[other] = value[0][other];
+
+        Candidate prefix[3];
+        fillTop(bestByOther, others, prefix);
+
+        long long answer = NEG;
+        for (int line = 1; line < lines - 1; ++line)
+        {
+            for (int middleOther = 0; middleOther < others; ++middleOther)
+            {
+                const long long middleValue = value[line][middleOther];
+                for (int leftIndex = 0; leftIndex < 3; ++leftIndex)
+                {
+                    const Candidate left = prefix[leftIndex];
+                    if (left.other == middleOther)
+                        continue;
+                    for (int rightIndex = 0; rightIndex < 3; ++rightIndex)
+                    {
+                        const Candidate right = suffix[line][rightIndex];
+                        if (right.other == middleOther ||
+                            right.other == left.other)
+                            continue;
+                        const long long sum =
+                            left.value + middleValue + right.value;
+                        if (sum > answer)
+                            answer = sum;
+                    }
+                }
+            }
+
+            for (int other = 0; other < others; ++other)
+            {
+                if (value[line][other] > bestByOther[other])
+                {
+                    bestByOther[other] = value[line][other];
+                }
+            }
+            fillTop(bestByOther, others, prefix);
+        }
+
+        return answer;
+    }
+
+private:
+    static void fillBest(long long bestByOther[MAX_SIZE], int count)
+    {
+        for (int i = 0; i < count; ++i)
+            bestByOther[i] = NEG;
+    }
+
+    static void fillTop(const long long bestByOther[MAX_SIZE], int count,
+                        Candidate top[3])
+    {
+        top[0] = {NEG, -1};
+        top[1] = {NEG, -1};
+        top[2] = {NEG, -1};
+
+        for (int other = 0; other < count; ++other)
+        {
+            const long long value = bestByOther[other];
+            if (value > top[0].value)
+            {
+                top[2] = top[1];
+                top[1] = top[0];
+                top[0] = {value, other};
+            }
+            else if (value > top[1].value)
+            {
+                top[2] = top[1];
+                top[1] = {value, other};
+            }
+            else if (value > top[2].value)
+            {
+                top[2] = {value, other};
+            }
+        }
     }
 };

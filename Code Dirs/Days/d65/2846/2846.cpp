@@ -3,70 +3,130 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(N log N + Q log N), SC: O(N log N + N*26)
-// Approach: binary lifting for LCA, plus root-to-node cumulative counts of each edge weight
-// (1..26). For a query (u,v): path weight-count[w] = rootCnt[u][w] + rootCnt[v][w] -
-// 2*rootCnt[lca][w]; path length via depth; answer = pathLength - max_w(pathCount[w])
-// (turn everything into the already-most-common weight on the path).
-class Solution {
+// TC: O(n + q * 26), SC: O(n * 26)
+// Approach: We can use a depth-first search (DFS) to traverse the tree and keep track of the number of times each character appears in the path from the root to the current node. We can also keep track of the depth of each node and the parent of each node. Then, for each query, we can find the lowest common ancestor (LCA) of the two nodes in the query and calculate the number of times each character appears in the path from the root to both nodes, subtracting the counts from the LCA. The answer for each query will be the total number of characters in both paths minus the maximum count of any character in both paths.
+const int MAXN = 20000;
+const int LIMIT = 16;
+int head[MAXN];
+int next_[MAXN * 2];
+int to[MAXN * 2];
+int val[MAXN * 2];
+int cnt = 0;
+int st[MAXN][LIMIT];
+int deep[MAXN];
+int times[MAXN][27];
+int power;
+
+int log_(int num)
+{
+    int ans = 0;
+    while ((1 << ans) <= (num >> 1))
+    {
+        ans++;
+    }
+    return ans;
+}
+
+void build(int a, int b, int c)
+{
+    next_[cnt] = head[a];
+    head[a] = cnt;
+    to[cnt] = b;
+    val[cnt++] = c;
+}
+
+void dfs(int cur, int fa, int v)
+{
+    deep[cur] = deep[fa] + 1;
+    st[cur][0] = fa;
+    for (int i = 1; i <= 26; i++)
+    {
+        times[cur][i] = times[fa][i];
+    }
+    times[cur][v] += 1;
+    for (int p = 1; (1 << p) <= deep[cur]; p++)
+    {
+        st[cur][p] = st[st[cur][p - 1]][p - 1];
+    }
+
+    for (int e = head[cur]; e != -1; e = next_[e])
+    {
+        if (to[e] != fa)
+        {
+            dfs(to[e], cur, val[e]);
+        }
+    }
+}
+
+int lca(int a, int b)
+{
+    if (deep[a] < deep[b])
+    {
+        int t = a;
+        a = b;
+        b = t;
+    }
+    for (int p = power; p >= 0; p--)
+    {
+        if ((1 << p) <= deep[a] && deep[st[a][p]] >= deep[b])
+        {
+            a = st[a][p];
+        }
+    }
+    if (a == b)
+    {
+        return a;
+    }
+    for (int p = power; p >= 0; p--)
+    {
+        if ((1 << p) <= deep[a] && st[a][p] != st[b][p])
+        {
+            a = st[a][p];
+            b = st[b][p];
+        }
+    }
+    return st[a][0];
+}
+
+class Solution
+{
 public:
-    vector<int> minOperationsQueries(int n, vector<vector<int>>& edges, vector<vector<int>>& queries) {
-        vector<vector<pair<int,int>>> adj(n); // (neighbor, weight)
-        for (auto& e : edges) {
-            adj[e[0]].push_back({e[1], e[2]});
-            adj[e[1]].push_back({e[0], e[2]});
-        }
-
-        int LOG = 1;
-        while ((1 << LOG) < n) LOG++;
-        LOG++;
-
-        vector<vector<int>> up(LOG, vector<int>(n, 0));
-        vector<int> depth(n, 0);
-        vector<vector<int>> rootCnt(n, vector<int>(27, 0));
-
-        vector<bool> visited(n, false);
-        queue<int> q;
-        q.push(0); visited[0] = true;
-        while (!q.empty()) {
-            int u = q.front(); q.pop();
-            for (auto& [v, w] : adj[u]) {
-                if (visited[v]) continue;
-                visited[v] = true;
-                depth[v] = depth[u] + 1;
-                up[0][v] = u;
-                rootCnt[v] = rootCnt[u];
-                rootCnt[v][w]++;
-                q.push(v);
-            }
-        }
-
-        for (int j = 1; j < LOG; j++)
-            for (int i = 0; i < n; i++)
-                up[j][i] = up[j-1][up[j-1][i]];
-
-        auto lca = [&](int u, int v) {
-            if (depth[u] < depth[v]) swap(u, v);
-            int diff = depth[u] - depth[v];
-            for (int j = 0; j < LOG; j++) if ((diff >> j) & 1) u = up[j][u];
-            if (u == v) return u;
-            for (int j = LOG-1; j >= 0; j--) {
-                if (up[j][u] != up[j][v]) { u = up[j][u]; v = up[j][v]; }
-            }
-            return up[0][u];
-        };
-
+    vector<int> minOperationsQueries(int n, vector<vector<int>> &edges,
+                                     vector<vector<int>> &queries)
+    {
+        cnt = 0;
+        power = log_(n);
+        deep[n] = 0;
         vector<int> ans;
-        for (auto& query : queries) {
-            int u = query[0], v = query[1];
-            int l = lca(u, v);
-            int pathLen = depth[u] + depth[v] - 2*depth[l];
-            int best = 0;
-            for (int w = 1; w <= 26; w++) {
-                int c = rootCnt[u][w] + rootCnt[v][w] - 2*rootCnt[l][w];
-                best = max(best, c);
+        for (int i = 0; i <= n; i++)
+        {
+            head[i] = -1;
+        }
+        for (int i = 0; i <= n; i++)
+        {
+            for (int j = 1; j <= 26; j++)
+            {
+                times[i][j] = 0;
             }
-            ans.push_back(pathLen - best);
+        }
+        for (vector<int> &v : edges)
+        {
+            build(v[0], v[1], v[2]);
+            build(v[1], v[0], v[2]);
+        }
+        dfs(0, n, 0);
+        for (vector<int> &v : queries)
+        {
+            int point = lca(v[0], v[1]);
+            int max_ = 0;
+            int all = 0;
+            for (int i = 1; i <= 26; i++)
+            {
+                max_ = max(max_, times[v[0]][i] + times[v[1]][i] -
+                                     2 * times[point][i]);
+                all += times[v[0]][i] + times[v[1]][i] - 2 * times[point][i];
+            }
+            ans.push_back(all - max_);
         }
         return ans;
     }

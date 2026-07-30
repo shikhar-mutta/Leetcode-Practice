@@ -4,48 +4,59 @@
 using namespace std;
 
 // TC: O(N), SC: O(N)
-// Approach: functional graph (one outgoing edge per node). Detect cycles via a per-run
-// step-index marker; every cycle node's answer is the cycle length. Then multi-source BFS on
-// the reverse edges from all cycle nodes outward: each tail node's answer is 1 + its successor's.
-class Solution {
+//  Approach: We can use a DFS to traverse the directed graph. We can keep track of the state of each node (unvisited, visiting, visited) and the number of nodes visited from each node. If we encounter a node that is already being visited, we have found a cycle and we can calculate the length of the cycle and update the number of nodes visited for each node in the cycle. If we encounter a node that has already been visited, we can simply return the number of nodes visited from that node. Otherwise, we mark the node as visiting and recursively visit its neighbor.
+class Solution
+{
 public:
-    vector<int> countVisitedNodes(vector<int>& edges) {
+    vector<int> res, state, edges;
+
+    int dfs(int u)
+    {
+        if (state[u] == 2)
+            return res[u];
+        if (state[u] == 1)
+        {
+            int v = edges[u];
+            int len = 1;
+            while (v != u)
+            {
+                len++;
+                v = edges[v];
+            }
+            v = u;
+            res[v] = len;
+            state[v] = 2;
+            v = edges[v];
+            while (v != u)
+            {
+                res[v] = len;
+                state[v] = 2;
+                v = edges[v];
+            }
+            return res[u];
+        }
+
+        state[u] = 1;
+        int next = edges[u];
+        int val = dfs(next);
+        if (res[u] == 0)
+            res[u] = val + 1;
+        state[u] = 2;
+        return res[u];
+    }
+
+    vector<int> countVisitedNodes(vector<int> &edgesInput)
+    {
+        edges = edgesInput;
         int n = edges.size();
-        vector<int> ans(n, -1);
-        vector<int> visited(n, 0), runId(n, -1), stepOf(n, -1);
+        res.assign(n, 0);
+        state.assign(n, 0);
 
-        for (int i = 0; i < n; i++) {
-            if (visited[i]) continue;
-            int cur = i, step = 0;
-            while (cur != -1 && !visited[cur]) {
-                visited[cur] = 1;
-                runId[cur] = i;
-                stepOf[cur] = step++;
-                cur = edges[cur];
-            }
-            if (cur != -1 && runId[cur] == i) {
-                int cycleLen = step - stepOf[cur];
-                int node = cur;
-                do {
-                    ans[node] = cycleLen;
-                    node = edges[node];
-                } while (node != cur);
-            }
+        for (int i = 0; i < n; i++)
+        {
+            if (state[i] == 0)
+                dfs(i);
         }
-
-        vector<vector<int>> rev(n);
-        for (int i = 0; i < n; i++) rev[edges[i]].push_back(i);
-
-        queue<int> q;
-        for (int i = 0; i < n; i++) if (ans[i] != -1) q.push(i);
-        while (!q.empty()) {
-            int u = q.front(); q.pop();
-            for (int p : rev[u]) {
-                if (ans[p] != -1) continue;
-                ans[p] = ans[u] + 1;
-                q.push(p);
-            }
-        }
-        return ans;
+        return res;
     }
 };

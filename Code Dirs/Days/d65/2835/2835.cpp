@@ -3,38 +3,50 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(maxBit), SC: O(maxBit)
-// Approach: nums are all powers of 2, so bucket by exponent. Walk target's bits from low to
-// high, keeping a "have" count of available pieces at the current level (merging surplus pairs
-// upward, like binary carry, is free). Whenever a bit is needed but have==0, borrow from the
-// nearest higher nonempty bucket, splitting it down one level at a time (each split = 1 op).
-class Solution {
+// TC: O(n), SC: O(1)
+// Approach: We can use a greedy approach to find the minimum number of operations. We will first count the number of elements in the array that are equal to each power of 2. Then, we will iterate through the bits of the target and check if we have enough elements to form the target. If we do not have enough elements, we will try to split larger elements into smaller ones until we have enough. We will keep track of the number of operations and return it at the end.
+class Solution
+{
 public:
-    int minOperations(vector<int>& nums, int target) {
-        long long total = 0;
-        for (int x : nums) total += x;
-        if (total < target) return -1;
+    int minOperations(vector<int> &nums, int target)
+    {
+        vector<long long> cnt(32);
 
-        int maxBit = 32;
-        vector<long long> cnt(maxBit + 2, 0);
-        for (int x : nums) cnt[__builtin_ctz((unsigned)x)]++;
-
-        long long ops = 0, have = 0;
-        for (int i = 0; i <= maxBit; i++) {
-            have += cnt[i];
-            int bit = (i < 32) ? ((target >> i) & 1) : 0;
-            if (bit) {
-                if (have == 0) {
-                    int j = i + 1;
-                    while (j <= maxBit + 1 && cnt[j] == 0) j++;
-                    ops += j - i;
-                    cnt[j]--;
-                    have = 1;
-                }
-                have--;
-            }
-            have /= 2;
+        for (int x : nums)
+        {
+            cnt[__builtin_ctz(x)]++;
         }
-        return (int)ops;
+
+        int ans = 0;
+
+        for (int i = 0; i < 31; i++)
+        {
+            if ((target >> i) & 1)
+            {
+                if (cnt[i] > 0)
+                {
+                    cnt[i]--;
+                }
+                else
+                {
+                    int j = i + 1;
+                    while (j < 31 && cnt[j] == 0)
+                        j++;
+                    if (j == 31)
+                        return -1;
+                    while (j > i)
+                    {
+                        cnt[j]--;
+                        cnt[j - 1] += 2;
+                        ans++;
+                        j--;
+                    }
+                    cnt[i]--;
+                }
+            }
+            cnt[i + 1] += cnt[i] / 2;
+        }
+
+        return ans;
     }
 };

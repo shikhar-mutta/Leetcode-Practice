@@ -4,39 +4,49 @@
 using namespace std;
 
 // TC: O(N), SC: O(N)
-// Approach: repeatedly peel leaves. If a leaf's accumulated value mod k is 0, it can be cut off
-// as its own valid component (count it); otherwise its value must merge into its parent since it
-// can't stand alone. Either way the leaf is removed and its parent's degree drops. The final
-// remaining node is always a valid component too (total sum is divisible by k).
-class Solution {
+//  Approach: We can use a queue to perform a BFS on the tree. We can keep track of the degree of each node and the value of each node modulo k. We can start by adding all the leaf nodes to the queue. Then, we can process each node in the queue by removing it from the tree and updating the value of its parent node. If the value of the current node is divisible by k, we can increment the answer. We can continue this process until we have processed all the nodes in the tree. Finally, we can return the answer plus one to account for the root node.
+class Solution
+{
 public:
-    int maxKDivisibleComponents(int n, vector<vector<int>>& edges, vector<int>& values, int k) {
-        if (n == 1) return 1;
-        vector<vector<int>> adj(n);
-        vector<int> degree(n, 0);
-        for (auto& e : edges) {
-            adj[e[0]].push_back(e[1]); adj[e[1]].push_back(e[0]);
-            degree[e[0]]++; degree[e[1]]++;
-        }
-        vector<long long> val(n);
-        for (int i = 0; i < n; i++) val[i] = values[i] % k;
+    int maxKDivisibleComponents(int n, vector<vector<int>> &edges,
+                                vector<int> &values, int k)
+    {
+        if (n == 1)
+            return 1;
+        vector<int> adj(n), idg(n);
 
-        vector<bool> removed(n, false);
+        for (auto &e : edges)
+        {
+            adj[e[0]] ^= e[1];
+            adj[e[1]] ^= e[0];
+            idg[e[0]]++;
+            idg[e[1]]++;
+        }
+
         queue<int> q;
-        for (int i = 0; i < n; i++) if (degree[i] == 1) q.push(i);
 
-        int ans = 0, processed = 0;
-        while (!q.empty() && processed < n - 1) {
-            int u = q.front(); q.pop();
-            if (removed[u]) continue;
-            removed[u] = true; processed++;
-            int parent = -1;
-            for (int v : adj[u]) if (!removed[v]) { parent = v; break; }
-            if (val[u] == 0) ans++;
-            else val[parent] = (val[parent] + val[u]) % k;
-            degree[parent]--;
-            if (degree[parent] == 1) q.push(parent);
+        for (int i = 0; i < n; i++)
+        {
+            if (idg[i] == 1)
+                q.emplace(i);
         }
-        return ans + 1;
+
+        int res = 0;
+        while (!q.empty())
+        {
+            int cur = q.front();
+            q.pop();
+            int nei = adj[cur];
+            adj[nei] ^= cur;
+            if (--idg[nei] == 1)
+                q.emplace(nei);
+            values[cur] %= k;
+            if (!values[cur])
+                res++;
+            values[nei] += values[cur];
+            values[nei] %= k;
+        }
+
+        return res;
     }
 };

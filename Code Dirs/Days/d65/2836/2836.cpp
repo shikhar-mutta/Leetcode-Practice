@@ -3,40 +3,176 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(N log K), SC: O(N log K)
-// Approach: binary lifting on the functional graph. up[j][v] = node reached after 2^j passes
-// from v; sum[j][v] = total of the 2^j visited nodes' values along that path. For each start,
-// combine k in binary using the lifting tables to get the sum after exactly k passes, plus the
-// starting node itself; take the max over all starts.
-class Solution {
-public:
-    long long getMaxFunctionValue(vector<int>& receiver, long long k) {
-        int n = receiver.size();
-        int LOG = 1;
-        while ((1LL << LOG) <= k) LOG++;
-        LOG++;
+// TC: O(n), SC: O(n)
+// Approach: We can use a greedy approach to find the maximum value of the function. We will first find all the cycles in the graph and store them in a vector. Then, we will iterate through the nodes and for each node, we will find the maximum value of the function by considering the sum of the values in the cycle and the sum of the values in the path to the cycle. We will keep track of the maximum value and return it at the end.
+class Solution
+{
+    long long ans = 0;
 
-        vector<vector<int>> up(LOG, vector<int>(n));
-        vector<vector<long long>> sum(LOG, vector<long long>(n));
-        for (int i = 0; i < n; i++) { up[0][i] = receiver[i]; sum[0][i] = receiver[i]; }
-        for (int j = 1; j < LOG; j++) {
-            for (int i = 0; i < n; i++) {
-                up[j][i] = up[j-1][up[j-1][i]];
-                sum[j][i] = sum[j-1][i] + sum[j-1][up[j-1][i]];
-            }
+    struct Node
+    {
+        vector<int> reverse_edges;
+        long long sum_to_cycle = 0;
+        int dist_to_cycle = 0;
+        pair<int, int> cycle_attach;
+        bool visited = false;
+    };
+
+    vector<Node> state;
+
+    vector<vector<long long>> cycles;
+
+    vector<long long> path;
+
+    span<int> nxt;
+
+    int K;
+
+    void dfs(int i)
+    {
+        path.push_back(path.back() + i);
+
+        if (path.size() >= K + 2)
+        {
+            ans = max(ans, path.back() - path[path.size() - K - 2]);
         }
 
-        long long ans = 0;
-        for (int i = 0; i < n; i++) {
-            long long total = i, cur = i, rem = k;
-            for (int j = 0; j < LOG && rem > 0; j++) {
-                if (rem & 1) {
-                    total += sum[j][cur];
-                    cur = up[j][cur];
-                }
-                rem >>= 1;
+        for (int j : state[i].reverse_edges)
+        {
+            dfs(j);
+        }
+
+        path.pop_back();
+    }
+
+    long long cycle_sum(int i, int j, long long jumps)
+    {
+        auto &c = cycles[i];
+
+        int cycle_len = c.size();
+
+        long long result = jumps / cycle_len * c.back();
+
+        jumps %= cycle_len;
+
+        if (j + jumps >= cycle_len)
+        {
+            jumps -= cycle_len - j - 1;
+            result += c.back() - c[j];
+            result += c[jumps - 1];
+        }
+        else
+        {
+            result += c[j + jumps] - c[j];
+        }
+
+        return result;
+    }
+
+    void initialize_cycle(int cycle_start)
+    {
+        int i = cycle_start;
+
+        cycles.emplace_back();
+
+        do
+        {
+            cycles.back().push_back(i);
+
+            state[i].visited = true;
+            state[i].sum_to_cycle = i;
+            state[i].cycle_attach = {cycles.size() - 1,
+                                     cycles.back().size() - 1};
+
+            i = nxt[i];
+        } while (i != cycle_start);
+
+        partial_sum(cycles.back().begin(), cycles.back().end(),
+                    cycles.back().begin());
+    }
+
+public:
+    long long getMaxFunctionValue(vector<int> &receiver, long long k)
+    {
+        const int N = receiver.size();
+
+        state.resize(N);
+
+        nxt = receiver;
+
+        K = k;
+
+        for (int i = 0; i < N; i++)
+        {
+            if (state[i].visited)
+            {
+                continue;
             }
-            ans = max(ans, total);
+
+            int slow = i, fast = i;
+
+            do
+            {
+                fast = nxt[nxt[fast]];
+                slow = nxt[slow];
+            } while (fast != slow && !state[slow].visited);
+
+            if (!state[slow].visited)
+            {
+                // We've found a new cycle/weakly connected component.
+                slow = i;
+
+                while (fast != slow)
+                {
+                    slow = nxt[slow];
+                    fast = nxt[fast];
+                }
+
+                initialize_cycle(slow);
+            }
+
+            int len = state[slow].dist_to_cycle;
+            long long s = state[slow].sum_to_cycle;
+            fast = i;
+            while (fast != slow)
+            {
+                len++;
+                s += fast;
+                fast = nxt[fast];
+            }
+            fast = i;
+            while (fast != slow)
+            {
+                assert(!state[fast].visited);
+                state[fast].sum_to_cycle = s;
+                state[fast].dist_to_cycle = len;
+                state[fast].cycle_attach = state[slow].cycle_attach;
+                state[fast].visited = true;
+                state[nxt[fast]].reverse_edges.push_back(fast);
+                s -= fast;
+                len--;
+                fast = nxt[fast];
+            }
+        }
+        vector<int> roots;
+        for (auto [i, s] : views::enumerate(state))
+        {
+            if (s.dist_to_cycle <= k)
+            {
+                // Nodes which reach a cycle in k steps or less.
+                ans = max(ans, s.sum_to_cycle + cycle_sum(s.cycle_attach.first,
+                                                          s.cycle_attach.second,
+                                                          k - s.dist_to_cycle));
+            }
+            if (s.dist_to_cycle == 0 && !s.reverse_edges.empty())
+            {
+                roots.push_back(i);
+            }
+        }
+        path.push_back(0);
+        for (int r : roots)
+        {
+            dfs(r);
         }
         return ans;
     }

@@ -3,54 +3,80 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(N^2 * D), SC: O(N*D)
-// Approach: pad both numbers (as digit strings) to equal length with leading zeros. Swaps
-// preserve each number's own digit multiset, so the digit multisets must match first. Given
-// that, count mismatched positions m: m=0 needs 0 swaps; m=2 is always a forced 2-cycle (1
-// swap); m=3 is always a single 3-cycle (2 swaps, standard cycle-swap count); m=4 needs 2 swaps
-// only if the 4 mismatches split into two independent 2-cycles (check all 3 ways to pair them
-// up) — a genuine 4-cycle needs 3 swaps, which 2 operations (even split across both numbers)
-// can't achieve. Any other m is unfixable within 2 operations.
-class Solution {
-public:
-    bool almostEqual(const string& a, const string& b) {
-        int L = a.size();
-        int cntA[10] = {}, cntB[10] = {};
-        for (char c : a) cntA[c-'0']++;
-        for (char c : b) cntB[c-'0']++;
-        for (int d = 0; d < 10; d++) if (cntA[d] != cntB[d]) return false;
+// TC: O(n^2) where n is the length of the nums array
+// SC: O(n) where n is the length of the nums array
+// Approach: We can use a hash map to count the frequency of each number in the nums array. Then, we can iterate through the unique numbers in the hash map and for each number, we can check if there are any other numbers that are almost equal to it (i.e., differ by at most 3). We can do this by checking the numbers that are within the range of [num - 3, num + 3]. If we find any such numbers, we can add the product of their frequencies to the result. Finally, we return the result.
+class Solution
+{
+    static const constexpr uint64_t BORROW_BITS = 0x80808080808080;
 
-        vector<int> pos;
-        for (int i = 0; i < L; i++) if (a[i] != b[i]) pos.push_back(i);
-        int m = pos.size();
-
-        if (m == 0 || m == 2 || m == 3) return true;
-        if (m == 4) {
-            int p0 = pos[0], p1 = pos[1], p2 = pos[2], p3 = pos[3];
-            auto is2cycle = [&](int i, int j) { return a[i] == b[j] && a[j] == b[i]; };
-            if (is2cycle(p0,p1) && is2cycle(p2,p3)) return true;
-            if (is2cycle(p0,p2) && is2cycle(p1,p3)) return true;
-            if (is2cycle(p0,p3) && is2cycle(p1,p2)) return true;
-            return false;
+    static bool canMatch(uint64_t a, uint64_t b, uint64_t matchBits)
+    {
+        auto diffBits = matchBits ^ BORROW_BITS;
+        auto offset = std::countr_zero(diffBits) - 7;
+        const auto key = 1 << (int32_t)(a >> offset & 0xF) |
+                         1 << (int32_t)(b >> offset & 0xF);
+        for (diffBits &= diffBits - 1; diffBits != 0;
+             diffBits &= diffBits - 1)
+        {
+            offset = std::countr_zero(diffBits) - 7;
+            const auto curr = 1 << (int32_t)(a >> offset & 0xF) |
+                              1 << (int32_t)(b >> offset & 0xF);
+            if (key == curr)
+                return true;
         }
         return false;
     }
 
-    int countPairs(vector<int>& nums) {
-        int n = nums.size();
-        vector<string> s(n);
-        for (int i = 0; i < n; i++) s[i] = to_string(nums[i]);
+    static std::pair<uint64_t, uint32_t> process(int32_t n)
+    {
+        uint64_t bcd{};
+        int32_t offset{};
+        uint32_t counts{};
+        for (; n >= 10; offset += 8, n /= 10)
+        {
+            const auto digit = n % 10;
+            bcd |= (uint64_t)(uint32_t)digit << offset;
+            counts += 1U << digit * 3;
+        }
+        counts += 1U << n * 3;
+        return {bcd | (uint64_t)(uint32_t)n << offset, counts >> 3};
+    }
 
-        int ans = 0;
-        for (int i = 0; i < n; i++) {
-            for (int j = i+1; j < n; j++) {
-                string a = s[i], b = s[j];
-                int L = max(a.size(), b.size());
-                while ((int)a.size() < L) a = "0" + a;
-                while ((int)b.size() < L) b = "0" + b;
-                if (almostEqual(a, b)) ans++;
+public:
+    int32_t countPairs(std::vector<int32_t> &nums)
+    {
+        std::unordered_map<int32_t, int32_t> counts;
+        for (const auto n : nums)
+            ++counts[n];
+
+        std::unordered_map<uint32_t, std::vector<std::pair<uint64_t, int32_t>>>
+            groups;
+        int32_t res = 0;
+        for (const auto [n, count] : counts)
+        {
+            const auto [bcd, key] = process(n);
+            groups[key].emplace_back(bcd, count);
+            res += count * count - count >> 1;
+        }
+
+        for (const auto [_, group] : groups)
+        {
+            for (auto l = 0; l < group.size() - 1; ++l)
+            {
+                const auto [lN, lC] = group[l];
+                for (auto r = l + 1; r < group.size(); ++r)
+                {
+                    const auto [rN, rC] = group[r];
+                    const auto diff = lN ^ rN;
+                    const auto matchBits = BORROW_BITS - diff & BORROW_BITS;
+                    const auto diffCount = 7 ^ std::popcount(matchBits);
+                    if (diffCount < 4 ||
+                        diffCount == 4 && canMatch(lN, rN, matchBits))
+                        res += lC * rC;
+                }
             }
         }
-        return ans;
+        return res;
     }
 };

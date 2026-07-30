@@ -3,35 +3,41 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(N log N), SC: O(N)
-// Approach: classic weighted-scheduling greedy. Each enemy needs time[i]=ceil(health[i]/power)
-// turns to kill; while alive it deals damage[i] per turn shared with everyone else still alive.
-// Order enemies to minimize total damage taken by sorting on damage[i]/time[i] descending
-// (kill the highest damage-per-turn-of-effort enemies first) — proven optimal via a standard
-// adjacent-swap exchange argument. Sum contributions using a running total of remaining damage.
-class Solution {
+// TC: O(nlogn) where n is the length of the damage array
+// SC: O(n) where n is the length of the damage array
+// Approach: We can use a greedy approach to solve this problem. We can sort the damage array in descending order and then iterate through the damage array and calculate the total damage dealt to Bob. We can keep track of the total damage dealt to Bob and the total damage dealt to Alice. We can return the total damage dealt to Bob as the result.
+class Solution
+{
 public:
-    long long minDamage(int power, vector<int>& damage, vector<int>& health) {
+#define ll long long
+
+    long long minDamage(int power, vector<int> &damage, vector<int> &health)
+    {
+
         int n = damage.size();
-        vector<long long> t(n);
-        long long totalDamage = 0;
-        for (int i = 0; i < n; i++) {
-            t[i] = (health[i] + power - 1) / power;
+
+        vector<pair<ll, ll>> v;
+
+        ll totalDamage = 0;
+
+        for (int i = 0; i < n; i++)
+        {
+            ll t = (health[i] + power - 1) / power;
+            v.push_back({damage[i], t});
             totalDamage += damage[i];
         }
 
-        vector<int> order(n);
-        iota(order.begin(), order.end(), 0);
-        sort(order.begin(), order.end(), [&](int a, int b) {
-            return (long long)damage[a] * t[b] > (long long)damage[b] * t[a];
-        });
+        sort(v.begin(), v.end(), [](auto &a, auto &b)
+             { return a.first * b.second > b.first * a.second; });
 
-        long long ans = 0;
-        long long remaining = totalDamage;
-        for (int i : order) {
-            ans += remaining * t[i];
-            remaining -= damage[i];
+        ll ans = 0;
+
+        for (auto &[d, t] : v)
+        {
+            ans += totalDamage * t;
+            totalDamage -= d;
         }
+
         return ans;
     }
 };

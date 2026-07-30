@@ -3,57 +3,77 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(N*26) amortized via memoization, SC: O(N*26)
-// Approach: DFS(i, mask, changeUsed) = max partitions from position i given the current
-// (incomplete) segment already contains letter-set mask. At each step either extend the segment
-// with s[i] (or start a new one if that would exceed k distinct letters), or — if the single
-// allowed change hasn't been used — try replacing s[i] with every possible letter and take the
-// best. Once changeUsed is true the "try all 26 letters" branch is gone, so the reachable
-// (position, mask) state space collapses to O(26N) despite the branching factor at the moment
-// the change is spent.
-class Solution {
+// TC: O(N), SC: O(N) where N = length of string s
+// Approach: Use prefix and suffix arrays to store the number of segments, the bitmask of characters, and the count of characters in the current segment. Iterate through the string and update the prefix and suffix arrays based on the character counts and the limit k. Finally, calculate the maximum number of partitions by combining the prefix and suffix information.
+using u16 = unsigned short;
+struct Data
+{
+    u16 segCnt = 0;
+    bitset<26> hasC = 0;
+    u16 cnt;
+    Data(u16 segCnt = 0, bitset<26> hasC = 0, u16 cnt = 0)
+        : segCnt(segCnt), hasC(hasC), cnt(cnt) {}
+};
+class Solution
+{
 public:
-    string str;
-    int K;
-    unordered_map<long long, int> memo;
-
-    int popcount(int m) { return __builtin_popcount(m); }
-
-    int dfs(int i, int mask, bool used) {
-        int n = str.size();
-        if (i == n) return mask != 0 ? 1 : 0;
-        long long key = ((long long)i * 2 + (used ? 1 : 0)) * (1 << 27) + mask;
-        auto it = memo.find(key);
-        if (it != memo.end()) return it->second;
-
-        int result = 0;
-        // option a: keep s[i] as is
-        int newMask = mask | (1 << (str[i] - 'a'));
-        if (popcount(newMask) <= K) {
-            result = dfs(i+1, newMask, used);
-        } else {
-            result = 1 + dfs(i+1, 1 << (str[i] - 'a'), used);
-        }
-
-        // option b: use the single change here (only if not yet used)
-        if (!used) {
-            for (int c = 0; c < 26; c++) {
-                int cm = mask | (1 << c);
-                int cand;
-                if (popcount(cm) <= K) cand = dfs(i+1, cm, true);
-                else cand = 1 + dfs(i+1, 1 << c, true);
-                result = max(result, cand);
+    static int maxPartitionsAfterOperations(string &s, int k)
+    {
+        const int n = s.size();
+        vector<Data> pref(n), suff(n); // 1-indexed prefix sum
+        int seg = 0, cnt = 0;
+        bitset<26> mask = 0;
+        for (int i = 0; i < n - 1; i++)
+        {
+            const int idx = s[i] - 'a';
+            if (mask[idx] == 0)
+            {
+                if (++cnt > k)
+                {
+                    seg++;
+                    cnt = 1;
+                    mask = 0;
+                }
+                mask[idx] = 1;
             }
+            //    cout<<"pref:"<<i+1<<"->";
+            //    cout<<"seg="<<seg<<" cnt="<<cnt<<" mask="<<mask.to_ulong()<<"
+            //    bitcount="<<mask.count()<<endl;
+            pref[i + 1] = Data(seg, mask, cnt);
         }
 
-        memo[key] = result;
-        return result;
-    }
-
-    int maxPartitionsAfterOperations(string s, int k) {
-        str = s;
-        K = k;
-        memo.clear();
-        return dfs(0, 0, false);
+        seg = cnt = 0;
+        mask = 0;
+        for (int i = n - 1; i > 0; i--)
+        {
+            const int idx = s[i] - 'a';
+            if (mask[idx] == 0)
+            {
+                if (++cnt > k)
+                {
+                    seg++;
+                    cnt = 1;
+                    mask = 0;
+                }
+                mask[idx] = 1;
+            }
+            //    cout<<"suff:"<<i-1<<"->";
+            //    cout<<"seg="<<seg<<" cnt="<<cnt<<" mask="<<mask.to_ulong()<<"
+            //    bitcount="<<mask.count()<<endl;
+            suff[i - 1] = Data(seg, mask, cnt);
+        }
+        int ans = 0;
+        for (int i = 0; i < n; i++)
+        {
+            auto &[segL, Lmask, Lcnt] = pref[i];
+            auto &[segR, Rmask, Rcnt] = suff[i];
+            int seg = segL + segR + 1;
+            int bz = (Lmask | Rmask).count();
+            int add = (min(bz + 1, 26) <= k)
+                          ? 0
+                          : ((Lcnt == k && Rcnt == k && bz < 26) ? 2 : 1);
+            ans = max(ans, seg + add);
+        }
+        return ans;
     }
 };

@@ -3,52 +3,36 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(N^2), SC: O(N)
-// Approach: DP over (round, net score bob-alice offset by n, Bob's last creature) — Bob may not
-// repeat his previous creature. Each round's score delta against Alice's fixed creature is
-// win(+1)/lose(-1)/tie(0), determined by (bob-alice+3)%3 (cyclic F>E>W>F beats relation).
-// Answer = sum of final states with positive net score.
-class Solution {
+// TC: O(n^2), SC: O(n)
+//  Approach: We can use dynamic programming to solve this problem. We can create a 3D array dp where dp[i][j][k] represents the number of winning sequences of length i that end with the j-th character and have a difference of k between the number of 'F' and 'W' characters. We can initialize dp[1][0][1] = dp[1][1][0] = dp[1][2][-1] = 1, and for each character in the input string, we can iterate through the possible values of j and k and update dp[i][j][k] based on the previous values of dp[i-1]. Finally, we can return the sum of dp[n][j][k] for all valid values of j and k.
+class Solution
+{
+    static const int R = (int)1e9 + 7;
+    int dp[2][3][2005];
+
 public:
-    int delta(int bob, int alice) {
-        int d = (bob - alice + 3) % 3;
-        if (d == 1) return 1;
-        if (d == 2) return -1;
-        return 0;
-    }
-
-    int countWinningSequences(string s) {
-        const long long MOD = 1e9+7;
+    int countWinningSequences(string s)
+    {
         int n = s.size();
-        auto enc = [](char c) { return c == 'F' ? 0 : (c == 'W' ? 1 : 2); };
-
-        vector<vector<long long>> dp(3, vector<long long>(2*n+1, 0));
-        int a0 = enc(s[0]);
-        for (int c = 0; c < 3; c++) dp[c][n + delta(c, a0)] = 1;
-
-        for (int i = 1; i < n; i++) {
-            int ai = enc(s[i]);
-            vector<vector<long long>> ndp(3, vector<long long>(2*n+1, 0));
-            for (int c = 0; c < 3; c++) {
-                int dl = delta(c, ai);
-                for (int d = 0; d <= 2*n; d++) {
-                    int nd = d + dl;
-                    if (nd < 0 || nd > 2*n) continue;
-                    long long sum = 0;
-                    for (int prevC = 0; prevC < 3; prevC++) {
-                        if (prevC == c) continue;
-                        sum += dp[prevC][d];
-                    }
-                    ndp[c][nd] = sum % MOD;
-                }
+        int t = (s[0] == 'F') ? 0 : ((s[0] == 'W') ? 1 : 2);
+        dp[1][t][0 + n + 1] = dp[1][(t + 1) % 3][1 + n + 1] = dp[1][(t + 2) % 3][-1 + n + 1] = 1;
+        int d = 1;
+        for (int i = 1; i < n; ++i)
+        {
+            d = 1 - d;
+            for (int j = 0; j <= 2 * n + 3; ++j)
+                dp[d][0][j] = dp[d][1][j] = dp[d][2][j] = 0;
+            t = (s[i] == 'F') ? 0 : ((s[i] == 'W') ? 1 : 2);
+            for (int j = 1; j <= 2 * n + 1; ++j)
+            {
+                dp[d][t][j] = (dp[1 - d][(t + 1) % 3][j] + dp[1 - d][(t + 2) % 3][j]) % R;
+                dp[d][(t + 1) % 3][j] = (dp[1 - d][t % 3][j - 1] + dp[1 - d][(t + 2) % 3][j - 1]) % R;
+                dp[d][(t + 2) % 3][j] = (dp[1 - d][t % 3][j + 1] + dp[1 - d][(t + 1) % 3][j + 1]) % R;
             }
-            dp = ndp;
         }
-
-        long long ans = 0;
-        for (int c = 0; c < 3; c++)
-            for (int d = n+1; d <= 2*n; d++)
-                ans = (ans + dp[c][d]) % MOD;
-        return (int)ans;
+        int ans = 0;
+        for (int j = 1 + n + 1; j <= 2 * n + 1; ++j)
+            ans = ((ans + dp[d][0][j]) % R + (dp[d][1][j] + dp[d][2][j]) % R) % R;
+        return ans;
     }
 };

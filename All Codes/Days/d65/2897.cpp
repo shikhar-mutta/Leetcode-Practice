@@ -3,28 +3,32 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(N*30), SC: O(30)
-// Approach: AND/OR operations can freely redistribute set bits among the array (each bit
-// position's total count is preserved but can be reassigned to any numbers). To maximize sum of
-// squares, concentrate bits into as few numbers as possible: count how many numbers have each
-// bit set, then greedily assign each bit to the first min(k, count) of k target "buckets".
-class Solution {
+// TC: O(N * K), SC: O(1)
+// Approach: We can use a frequency array to keep track of the number of elements that have a 1 in each bit position. For each operation, we can construct the largest possible number by checking which bits have a frequency greater than the current operation index. We then square this number and add it to the sum. Finally, we return the sum modulo 1e9 + 7.
+class Solution
+{
 public:
-    int maxSum(vector<int>& nums, int k) {
-        const long long MOD = 1e9+7;
-        vector<int> cnt(30, 0);
-        for (int x : nums)
-            for (int b = 0; b < 30; b++)
-                if ((x >> b) & 1) cnt[b]++;
-
-        vector<long long> result(k, 0);
-        for (int b = 0; b < 30; b++) {
-            int limit = min(k, cnt[b]);
-            for (int i = 0; i < limit; i++) result[i] |= (1LL << b);
+    int maxSum(const vector<int> &nums, int k)
+    {
+        array<unsigned int, 30> frequency{};
+        const int MOD = 1e9 + 7;
+        for (const int num : nums)
+        {
+            for (int j = 0; j < 30; j++)
+            {
+                frequency[j] += ((num >> j) & 1);
+            }
         }
-
-        long long ans = 0;
-        for (long long r : result) ans = (ans + r % MOD * (r % MOD)) % MOD;
-        return (int)ans;
+        __int128 sum = 0;
+        for (int i = 0; i < k; i++)
+        {
+            long long candidate = 0;
+            for (int j = 0; j < 30; j++)
+            {
+                candidate |= (static_cast<long long>(frequency[j] > i) << j);
+            }
+            sum += (candidate * candidate);
+        }
+        return sum % MOD;
     }
 };

@@ -3,57 +3,39 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(N^2), SC: O(N)
-// Approach: child1's move set forces it onto the main diagonal with no freedom (row and col
-// must both increase by exactly 1 every step to cover n-1 steps each way), so its contribution
-// is just sum(fruits[i][i]). For child2, col-row is provably non-increasing each step (starts
-// positive, must end at 0), so it stays in the col>=row region the whole trip — likewise child3
-// stays in row>=col — meaning child2 and child3 only ever meet the diagonal (child1's territory)
-// and never collide with each other. DP each of their optimal paths independently, treating
-// diagonal cells as 0 (already credited to child1), and sum all three contributions.
-class Solution {
+// TC: O(n^2), SC: O(1)
+// Approach: We can use dynamic programming to keep track of the maximum number of fruits that can be collected at each cell in the grid. We can iterate through the grid and for each cell, we can calculate the maximum number of fruits that can be collected by taking the maximum of the three possible previous cells (top-left, top, top-right) and adding the number of fruits in the current cell. We can also keep track of the maximum number of fruits collected so far and return it at the end. We can also optimize the space complexity by using a single array to store the maximum number of fruits collected at each cell in the current row and updating it as we iterate through the grid.
+class Solution
+{
 public:
-    int maxCollectedFruits(vector<vector<int>>& fruits) {
-        int n = fruits.size();
-        const int NEG = INT_MIN / 2;
-
-        long long ans = 0;
-        for (int i = 0; i < n; i++) ans += fruits[i][i];
-
-        auto val = [&](int r, int c) { return (r == c) ? 0 : fruits[r][c]; };
-
-        // child2: starts (0, n-1), moves increase row by 1, col by -1/0/+1
-        vector<int> dp2(n, NEG);
-        dp2[n-1] = val(0, n-1);
-        for (int r = 1; r < n; r++) {
-            vector<int> ndp(n, NEG);
-            for (int c = 0; c < n; c++) {
-                int best = NEG;
-                if (c-1 >= 0 && dp2[c-1] > NEG) best = max(best, dp2[c-1]);
-                if (dp2[c] > NEG) best = max(best, dp2[c]);
-                if (c+1 < n && dp2[c+1] > NEG) best = max(best, dp2[c+1]);
-                if (best > NEG) ndp[c] = best + val(r, c);
-            }
-            dp2 = ndp;
+    int maxCollectedFruits(vector<vector<int>> &fruits)
+    {
+        const int n = fruits.size();
+        int ans = 0;
+        for (int i = 0; i < n; i++)
+            ans += fruits[i][i];
+        for (int i = 0; i < n - 2; i++)
+        {
+            fruits[i][n - i - 2] = fruits[i][n - i - 3] = 0;
         }
-        ans += dp2[n-1];
+        fruits[n - 2][0] = 0;
 
-        // child3: starts (n-1, 0), moves increase col by 1, row by -1/0/+1
-        vector<int> dp3(n, NEG);
-        dp3[n-1] = val(n-1, 0);
-        for (int c = 1; c < n; c++) {
-            vector<int> ndp(n, NEG);
-            for (int r = 0; r < n; r++) {
-                int best = NEG;
-                if (r-1 >= 0 && dp3[r-1] > NEG) best = max(best, dp3[r-1]);
-                if (dp3[r] > NEG) best = max(best, dp3[r]);
-                if (r+1 < n && dp3[r+1] > NEG) best = max(best, dp3[r+1]);
-                if (best > NEG) ndp[r] = best + val(r, c);
+        for (int i = 1; i < n; i++)
+        {
+            int j0 = max(n - 1 - i, i + 1);
+            for (int j = j0; j < n - 1; j++)
+            {
+                fruits[i][j] +=
+                    max(fruits[i - 1][j - 1],
+                        max(fruits[i - 1][j], fruits[i - 1][j + 1]));
+                fruits[j][i] +=
+                    max(fruits[j - 1][i - 1],
+                        max(fruits[j][i - 1], fruits[j + 1][i - 1]));
             }
-            dp3 = ndp;
+            fruits[i][n - 1] += max(fruits[i - 1][n - 1], fruits[i - 1][n - 2]);
+            fruits[n - 1][i] += max(fruits[n - 1][i - 1], fruits[n - 2][i - 1]);
         }
-        ans += dp3[n-1];
-
-        return (int)ans;
+        ans += fruits[n - 2][n - 1] + fruits[n - 1][n - 2];
+        return ans;
     }
 };

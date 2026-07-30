@@ -10,19 +10,25 @@ using namespace std;
 // then repeatedly check whether k falls in the second half of the length-2^i string (i counting
 // down from m-1); if so it originated from the mirrored first-half position, accumulating a
 // shift for each type-1 operation involved, until reaching the original 'a' at position 0.
-class Solution {
+class Solution
+{
 public:
-    char kthCharacter(long long k, vector<int>& operations) {
+    char kthCharacter(long long k, vector<int> &operations)
+    {
         long long pos = k - 1;
         int m = 0;
-        while ((1LL << m) < k) m++;
+        while ((1LL << m) < k)
+            m++;
 
         int shift = 0;
-        for (int i = m - 1; i >= 0; i--) {
+        for (int i = m - 1; i >= 0; i--)
+        {
             long long half = 1LL << i;
-            if (pos >= half) {
+            if (pos >= half)
+            {
                 pos -= half;
-                if (operations[i] == 1) shift++;
+                if (operations[i] == 1)
+                    shift++;
             }
         }
         return 'a' + (shift % 26);

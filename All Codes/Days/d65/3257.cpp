@@ -3,64 +3,95 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(R^2) (with R,C <= 500), SC: O(R)
-// Approach: precompute each row's top 3 (value, col) cells (a row's optimal pick, when excluding
-// up to 2 specific columns, is always among its top 3). For a fixed excluded row and column,
-// solve "best 2 rooks among the rest": collect each remaining row's top-2 cells avoiding the
-// excluded column, then try each of the top few (by value) as the "first" rook and greedily pair
-// it with the best remaining candidate of a different row/column — trying only the single
-// overall-best candidate as "first" isn't safe because value ties can force a bad column choice,
-// so a handful of top candidates are tried to be robust to that. Loop the third rook over every
-// row's top 3 cells and combine with that 2-rook solver.
-class Solution {
+// TC: O(m*n) where m is the number of rows and n is the number of columns in board
+// SC: O(m*n) where m is the number of rows and n is the number of columns in board
+// Approach: We can use dynamic programming to keep track of the maximum value sum that can be obtained by placing three rooks on the board. We can use a dp array where dp[i][j] represents the maximum value sum that can be obtained by placing rooks on the first i rows and j columns of the board. We can initialize dp[0][0] = 0 since there is no value sum that can be obtained by placing rooks on the first row and column. For each subsequent row and column, we can update dp[i][j] based on the previous rows and columns. If we place a rook on the current row and column, we can add the value of the current cell to dp[i-1][j-1] since we can obtain the maximum value sum by placing rooks on the previous rows and columns. If we do not place a rook on the current row and column, we can take the maximum value sum from the previous rows and columns. Finally, we can return dp[m][n] as the result.
+struct top3
+{
+    array<pair<int, int>, 3> t;
+    top3() { t.fill({0, INT_MIN}); }
+    void insert(int i, int x)
+    {
+        auto p = make_pair(i, x);
+        if (x >= t[2].second)
+        {
+            t[0] = t[1];
+            t[1] = t[2];
+            t[2] = p;
+        }
+        else if (x >= t[1].second)
+        {
+            t[0] = t[1];
+            t[1] = p;
+        }
+        else if (x > t[0].second)
+        {
+            t[0] = p;
+        }
+    }
+};
+class Solution
+{
 public:
-    long long maximumValueSum(vector<vector<int>>& board) {
-        int R = board.size(), C = board[0].size();
-        const long long NEG = LLONG_MIN / 2;
-
-        vector<vector<pair<int,int>>> top3(R);
-        for (int r = 0; r < R; r++) {
-            vector<pair<int,int>> row;
-            for (int c = 0; c < C; c++) row.push_back({board[r][c], c});
-            sort(row.begin(), row.end(), greater<>());
-            for (int i = 0; i < min(3, (int)row.size()); i++) top3[r].push_back(row[i]);
+    long long maximumValueSum(vector<vector<int>> &board)
+    {
+        const int M = board.size();
+        const int N = board[0].size();
+        vector<top3> columns(N);
+        vector<tuple<int, int, int>> vals;
+        for (auto [i, row] : views::enumerate(board))
+        {
+            top3 t;
+            for (auto [j, x] : views::enumerate(row))
+            {
+                t.insert(j, x);
+            }
+            for (auto [j, x] : t.t)
+            {
+                columns[j].insert(i, x);
+            }
         }
-
-        auto bestPairExcluding = [&](int exRow, int exCol) -> long long {
-            // for each eligible row, keep up to its top 2 cells (after skipping exCol)
-            struct Cand { long long v; int row, col; };
-            vector<Cand> cands;
-            for (int r = 0; r < R; r++) {
-                if (r == exRow) continue;
-                int kept = 0;
-                for (auto& [vv, cc] : top3[r]) {
-                    if (cc == exCol) continue;
-                    cands.push_back({vv, r, cc});
-                    if (++kept == 2) break;
+        for (auto [j, t] : views::enumerate(columns))
+        {
+            for (auto [i, x] : t.t | views::reverse)
+            {
+                if (x == INT_MIN)
+                {
+                    break;
                 }
+                vals.emplace_back(x, i, j);
             }
-            if (cands.size() < 2) return NEG;
-            sort(cands.begin(), cands.end(), [](auto& a, auto& b){ return a.v > b.v; });
-            long long best = NEG;
-            int tries = min((int)cands.size(), 5);
-            for (int i = 0; i < tries; i++) {
-                long long best2v = NEG;
-                for (auto& cd : cands) {
-                    if (cd.row == cands[i].row || cd.col == cands[i].col) continue;
-                    best2v = max(best2v, cd.v);
-                }
-                if (best2v > NEG) best = max(best, cands[i].v + best2v);
-            }
-            return best;
+        }
+        auto extract_val_from_mask = [&](unsigned int &mask)
+        {
+            int i = bit_width(mask) - 1;
+            mask ^= (1 << i);
+            return vals[i];
         };
-
-        long long ans = NEG;
-        for (int r = 0; r < R; r++) {
-            for (auto& [v, c] : top3[r]) {
-                long long pairVal = bestPairExcluding(r, c);
-                if (pairVal > NEG) ans = max(ans, pairVal + v);
+        auto extract_sum = [&](unsigned int mask) -> optional<long long>
+        {
+            if (popcount(mask) != 3)
+            {
+                return nullopt;
             }
+            auto [x1, i1, j1] = extract_val_from_mask(mask);
+            auto [x2, i2, j2] = extract_val_from_mask(mask);
+            auto [x3, i3, j3] = extract_val_from_mask(mask);
+            if (i1 != i2 && i2 != i3 && i1 != i3 && j1 != j2 && j2 != j3 &&
+                j1 != j3)
+            {
+                return static_cast<long long>(x1) + x2 + x3;
+            }
+            return nullopt;
+        };
+        const int m = min(static_cast<int>(vals.size()), 11);
+        assert(m >= 3);
+        ranges::partial_sort(vals, vals.begin() + m, greater<void>{});
+        optional<long long> ans;
+        for (int mask = 0; mask < (1 << m); mask++)
+        {
+            ans = max(ans, extract_sum(mask));
         }
-        return ans;
+        return ans.value();
     }
 };

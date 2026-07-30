@@ -3,49 +3,81 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(N + Q log N), SC: O(N)
-// Approach: two-pointer to find maxR[l] = furthest r such that s[l..r] satisfies the constraint
-// (count of 0s or count of 1s <= k); maxR is non-decreasing in l. For a query [l,r], substrings
-// starting at s in [l,r] contribute min(maxR[s],r)-s+1 each. Binary search the threshold where
-// maxR[s] first reaches r; before it, sum via a precomputed prefix sum of (maxR[s]-s+1); from
-// there to r, the contribution is a simple triangular-number sum.
-class Solution {
+// TC: O(n + q) where n is the length of the string s and q is the number of queries
+// SC: O(n) where n is the length of the string s
+// Approach: We can use a two-pointer approach to find the rightmost index for each starting index of the substring. We can maintain two pointers, i and j, where i is the starting index of the substring and j is the rightmost index that satisfies the k-constraint. We can also maintain a cumulative sum array to store the number of valid substrings ending at each index.
+class Solution
+{
 public:
-    vector<long long> countKConstraintSubstrings(string s, int k, vector<vector<int>>& queries) {
-        int n = s.size();
-        vector<int> maxR(n);
-        int cnt[2] = {0, 0};
-        int right = -1;
-        for (int l = 0; l < n; l++) {
-            if (right < l - 1) right = l - 1;
-            while (right + 1 < n) {
-                int nc = s[right+1] - '0';
-                cnt[nc]++;
-                if (cnt[0] <= k || cnt[1] <= k) { right++; }
-                else { cnt[nc]--; break; }
+    vector<long long> countKConstraintSubstrings(string s, int k,
+                                                 vector<vector<int>> &queries)
+    {
+        int n = s.length();
+        vector<int> rightMost(n);
+        int i = n - 1, j = n - 1;
+        int zero = 0, one = 0;
+        while (j >= 0)
+        {
+            if (s[j] == '0')
+                zero++;
+            else
+                one++;
+            while (zero > k && one > k)
+            {
+                if (s[i] == '0')
+                    zero--;
+                else
+                    one--;
+                i--;
             }
-            maxR[l] = right;
-            cnt[s[l]-'0']--;
-        }
 
-        vector<long long> prefixSum(n+1, 0);
-        for (int i = 0; i < n; i++) prefixSum[i+1] = prefixSum[i] + (maxR[i] - i + 1);
+            rightMost[j] = i;
+            j--;
+        }
+        vector<long long> cumSum(n);
+
+        i = 0;
+        j = 0;
+        zero = 0;
+        one = 0;
+
+        while (j < n)
+        {
+            if (s[j] == '0')
+                zero++;
+            else
+                one++;
+
+            while (zero > k && one > k)
+            {
+                if (s[i] == '0')
+                    zero--;
+                else
+                    one--;
+                i++;
+            }
+
+            if (j == 0)
+                cumSum[j] = j - i + 1;
+            else
+                cumSum[j] = cumSum[j - 1] + (j - i + 1);
+            j++;
+        }
 
         vector<long long> ans;
-        for (auto& q : queries) {
-            int l = q[0], r = q[1];
-            // find smallest s in [l,r] with maxR[s] >= r
-            int lo = l, hi = r, threshold = r + 1;
-            while (lo <= hi) {
-                int mid = (lo + hi) / 2;
-                if (maxR[mid] >= r) { threshold = mid; hi = mid - 1; }
-                else lo = mid + 1;
-            }
-            long long sumBefore = prefixSum[threshold] - prefixSum[l];
-            long long countAfter = r - threshold + 1;
-            long long sumAfter = countAfter * (countAfter + 1) / 2;
-            ans.push_back(sumBefore + sumAfter);
+        for (auto &q : queries)
+        {
+            int low = q[0];
+            int high = q[1];
+            int validRightIdx = min(high, rightMost[low]);
+            long long len = validRightIdx - low + 1;
+            long long res = len * (len + 1) / 2;
+            if (validRightIdx < high)
+                res += cumSum[high] - cumSum[validRightIdx];
+
+            ans.push_back(res);
         }
+
         return ans;
     }
 };

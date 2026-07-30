@@ -3,84 +3,61 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(N log N), SC: O(N)
-// Approach: forward[i] = longest strictly-increasing (both coords) path ending at i; backward[i]
-// = longest such path starting at i. Both are LIS-style DPs over y-coordinate (after sorting by
-// x), computed with a Fenwick tree doing prefix/suffix max queries over compressed y-ranks.
-// Points sharing the same x must never chain to each other, so each x-group is processed as a
-// batch: compute all its DP values first, then insert them into the tree together. Answer =
-// forward[k] + backward[k] - 1.
-class Solution {
+// TC: O(n^2) where n is the length of the nums array
+// SC: O(n^2) where n is the length of the nums array
+// Approach: We can use dynamic programming to solve this problem. We can create a 2D array dp where dp[i][j] represents the maximum xor score of the subarray nums[i...j]. We can fill the dp array by iterating through all possible subarrays and calculating the maximum xor score for each subarray. Finally, we can return the maximum xor score for each query by accessing the dp array.
+
+#define all(a) (a).begin(), (a).end()
+class Solution
+{
 public:
-    vector<int> tree;
-    int sz;
+    int maxPathLength(vector<vector<int>> &coordinates, int k)
+    {
+        auto cmp = [&](auto &a, auto &b)
+        {
+            if (a.first != b.first)
+                return a.first < b.first;
 
-    void update(int i, int val) {
-        for (i++; i <= sz; i += i & (-i)) tree[i] = max(tree[i], val);
-    }
-    int query(int i) { // max over [1..i], 1-indexed after +1 shift
-        int r = 0;
-        for (; i > 0; i -= i & (-i)) r = max(r, tree[i]);
-        return r;
-    }
+            return a.second > b.second;
+        };
 
-    int maxPathLength(vector<vector<int>>& coordinates, int k) {
-        int n = coordinates.size();
-        vector<int> ys;
-        for (auto& c : coordinates) ys.push_back(c[1]);
-        vector<int> sortedY = ys;
-        sort(sortedY.begin(), sortedY.end());
-        sortedY.erase(unique(sortedY.begin(), sortedY.end()), sortedY.end());
-        sz = sortedY.size();
-        auto rank = [&](int y) { return lower_bound(sortedY.begin(), sortedY.end(), y) - sortedY.begin(); };
+        vector<pair<int, int>> left, right;
 
-        vector<int> idx(n);
-        iota(idx.begin(), idx.end(), 0);
+        int x = coordinates[k][0], y = coordinates[k][1];
 
-        // forward pass: sort by x asc, tie y desc; batch by x
-        sort(idx.begin(), idx.end(), [&](int a, int b) {
-            if (coordinates[a][0] != coordinates[b][0]) return coordinates[a][0] < coordinates[b][0];
-            return coordinates[a][1] > coordinates[b][1];
-        });
-        vector<int> forward(n, 1);
-        tree.assign(sz+1, 0);
-        for (int i = 0; i < n; ) {
-            int j = i;
-            while (j < n && coordinates[idx[j]][0] == coordinates[idx[i]][0]) j++;
-            for (int t = i; t < j; t++) {
-                int r = rank(coordinates[idx[t]][1]);
-                forward[idx[t]] = query(r) + 1; // strictly smaller y -> ranks [0, r-1] -> query(r) using 1-indexed shift covers [0,r-1]
-            }
-            for (int t = i; t < j; t++) {
-                int r = rank(coordinates[idx[t]][1]);
-                update(r, forward[idx[t]]);
-            }
-            i = j;
+        for (auto &p : coordinates)
+        {
+            int x_ = p[0], y_ = p[1];
+
+            if (x_ < x && y_ < y)
+                left.emplace_back(x_, y_);
+
+            else if (x_ > x && y_ > y)
+                right.emplace_back(x_, y_);
         }
 
-        // backward pass: sort by x desc, tie y asc; batch by x
-        sort(idx.begin(), idx.end(), [&](int a, int b) {
-            if (coordinates[a][0] != coordinates[b][0]) return coordinates[a][0] > coordinates[b][0];
-            return coordinates[a][1] < coordinates[b][1];
-        });
-        vector<int> backward(n, 1);
-        tree.assign(sz+1, 0);
-        for (int i = 0; i < n; ) {
-            int j = i;
-            while (j < n && coordinates[idx[j]][0] == coordinates[idx[i]][0]) j++;
-            for (int t = i; t < j; t++) {
-                int r = rank(coordinates[idx[t]][1]);
-                int rr = sz - 1 - r; // reverse rank so "suffix max over y>current" becomes prefix query
-                backward[idx[t]] = query(rr) + 1;
-            }
-            for (int t = i; t < j; t++) {
-                int r = rank(coordinates[idx[t]][1]);
-                int rr = sz - 1 - r;
-                update(rr, backward[idx[t]]);
-            }
-            i = j;
+        sort(all(left), cmp);
+        sort(all(right), cmp);
+
+        return lis(left) + 1 + lis(right);
+    }
+
+private:
+    int lis(vector<pair<int, int>> &A)
+    {
+        vector<int> l;
+
+        for (auto &[x, y] : A)
+        {
+            auto it = lower_bound(all(l), y);
+
+            if (it == l.end())
+                l.push_back(y);
+
+            else
+                *it = y;
         }
 
-        return forward[k] + backward[k] - 1;
+        return l.size();
     }
 };

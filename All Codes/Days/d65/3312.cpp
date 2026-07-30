@@ -3,45 +3,36 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(maxVal log maxVal + Q log maxVal), SC: O(maxVal)
-// Approach: count pairs by gcd via the classic divisor sieve + inclusion-exclusion. For each g,
-// cntMultiple[g] = count of nums that are multiples of g, giving C(cntMultiple[g],2) pairs whose
-// gcd is a multiple of g. Subtracting off (processing g descending) the exact-pair counts of all
-// larger multiples of g isolates exactPairs[g] = pairs whose gcd is EXACTLY g. Prefix-sum those
-// by g ascending, then answer each query (0-indexed rank) via binary search on that prefix sum.
-class Solution {
+// TC: O(n log n + q log n), SC: O(n)
+//  Approach: We can use a frequency array to count the occurrences of each number in the input array. Then, we can iterate through the frequency array in reverse order and calculate the number of pairs that have a GCD equal to the current number. We can use the formula n * (n - 1) / 2 to calculate the number of pairs for each number. We can also use a prefix sum array to store the cumulative number of pairs for each number. Finally, we can use binary search to find the number of pairs that have a GCD less than or equal to each query value.
+class Solution
+{
+    using ll = long long;
+
 public:
-    vector<int> gcdValues(vector<int>& nums, vector<long long>& queries) {
-        int maxVal = *max_element(nums.begin(), nums.end());
-        vector<long long> freq(maxVal+1, 0);
-        for (int x : nums) freq[x]++;
+    vector<int> gcdValues(vector<int> &A, vector<long long> &queries)
+    {
+        int mx = ranges::max(A);
+        vector<int> freq(mx + 1, 0);
+        vector<ll> GCD(mx + 1, 0);
 
-        vector<long long> cntMultiple(maxVal+1, 0);
-        for (int g = 1; g <= maxVal; g++)
-            for (int m = g; m <= maxVal; m += g)
-                cntMultiple[g] += freq[m];
+        for (auto &a : A)
+            freq[a]++;
 
-        vector<long long> exactPairs(maxVal+1, 0);
-        for (int g = maxVal; g >= 1; g--) {
-            long long c = cntMultiple[g];
-            exactPairs[g] = c * (c-1) / 2;
-            for (int m = 2*g; m <= maxVal; m += g) exactPairs[g] -= exactPairs[m];
+        for (int i = mx; i > 0; i--)
+        {
+            ll sm = 0, extra = 0;
+            for (int j = i; j <= mx; j += i)
+                sm += freq[j], extra += GCD[j];
+            GCD[i] = sm * (sm - 1) / 2 - extra;
         }
 
-        vector<long long> prefix(maxVal+1, 0);
-        for (int g = 1; g <= maxVal; g++) prefix[g] = prefix[g-1] + exactPairs[g];
+        partial_sum(GCD.begin(), GCD.end(), GCD.begin());
 
-        vector<int> ans;
-        for (long long k : queries) {
-            // find smallest g with prefix[g] > k
-            int lo = 1, hi = maxVal, res = maxVal;
-            while (lo <= hi) {
-                int mid = (lo + hi) / 2;
-                if (prefix[mid] > k) { res = mid; hi = mid - 1; }
-                else lo = mid + 1;
-            }
-            ans.push_back(res);
-        }
-        return ans;
+        vector<int> res(queries.size());
+        for (int i = 0; i < queries.size(); i++)
+            res[i] = ranges::upper_bound(GCD, queries[i]) - GCD.begin();
+
+        return res;
     }
 };

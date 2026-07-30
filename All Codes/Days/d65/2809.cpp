@@ -3,35 +3,43 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(N^2), SC: O(N)
-// Approach: after T seconds with T zeroing operations, total = sum(nums1) + T*sum(nums2) minus
-// the savings from the chosen zeroed indices; zeroing index i at "slot" k (1-indexed, later slots
-// accrue more nums2 growth) saves nums1[i] + k*nums2[i]. To maximize savings for exactly k
-// choices, assign larger nums2 values to later slots — sort ascending by nums2 and run a
-// knapsack where dp[k] = max total saved choosing k indices (processed in nums2 order, so the
-// current item is always eligible to be the largest-numbered slot so far).
-class Solution {
+// TC: O(n^2) where n is the length of the array, SC: O(n) where n is the length of the array
+// Approach: We can use dynamic programming to find the minimum time required to make the sum of the array at most x. We will maintain a dp array where dp[i] represents the maximum sum we can achieve by using i operations. We will iterate through the elements of the array and for each element, we will update the dp array by considering the current element and the number of operations used. Finally, we will check for the minimum number of operations required to make the sum of the array at most x.
+class Solution
+{
 public:
-    int minimumTime(vector<int>& nums1, vector<int>& nums2, int x) {
-        int n = nums1.size();
-        vector<int> idx(n);
-        iota(idx.begin(), idx.end(), 0);
-        sort(idx.begin(), idx.end(), [&](int a, int b) { return nums2[a] < nums2[b]; });
-
-        vector<long long> dp(n+1, LLONG_MIN / 2);
-        dp[0] = 0;
-        for (int i : idx) {
-            for (int k = n; k >= 1; k--) {
-                if (dp[k-1] > LLONG_MIN / 4)
-                    dp[k] = max(dp[k], dp[k-1] + nums1[i] + (long long)k * nums2[i]);
+    int minimumTime(vector<int> &array1, vector<int> &array2, int x)
+    {
+        int n = array1.size();
+        int sum1 = accumulate(array1.begin(), array1.end(), 0);
+        int sum2 = accumulate(array2.begin(), array2.end(), 0);
+        if (sum1 <= x)
+        {
+            return 0;
+        }
+        vector<pair<int, int>> array(n);
+        for (int i = 0; i < n; i++)
+        {
+            array[i] = {array2[i], array1[i]};
+        }
+        ranges::sort(array);
+        vector<int> dp(n + 1);
+        for (int i = 0; i < n; i++)
+        {
+            int number2 = array[i].first;
+            int number1 = array[i].second;
+            for (int j = i + 1; j >= 1; j--)
+            {
+                dp[j] = max(dp[j], dp[j - 1] + number1 + j * number2);
             }
         }
-
-        long long sum1 = accumulate(nums1.begin(), nums1.end(), 0LL);
-        long long sum2 = accumulate(nums2.begin(), nums2.end(), 0LL);
-        for (int T = 0; T <= n; T++) {
-            long long total = sum1 + (long long)T * sum2 - dp[T];
-            if (total <= x) return T;
+        for (int t = 0; t <= n; t++)
+        {
+            int currentSum = sum1 + t * sum2 - dp[t];
+            if (currentSum <= x)
+            {
+                return t;
+            }
         }
         return -1;
     }

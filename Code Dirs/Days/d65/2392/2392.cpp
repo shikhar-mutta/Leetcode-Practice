@@ -3,43 +3,94 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(K + E), SC: O(K + E)
-// Approach: DFS-based topological sort of rowConditions and colConditions independently to get
-// row/col position of each value; if either has a cycle, return []. Place value v at (rowPos[v], colPos[v]).
-class Solution {
-public:
-    bool dfs(int u, vector<vector<int>>& adj, vector<int>& state, vector<int>& order) {
-        state[u] = 1;
-        for (int v : adj[u]) {
-            if (state[v] == 1) return false;
-            if (state[v] == 0 && !dfs(v, adj, state, order)) return false;
+// TC: O(k + r + c), SC: O(k + r + c)
+// Approach: Use topological sort to determine the order of rows and columns based on the given conditions. If a valid order exists for both rows and columns, construct the matrix accordingly. If not, return an empty matrix.
+// Helper function to perform topological sort using Kahn's Algorithm
+class Solution
+{
+private:
+    // Helper function to perform topological sort using Kahn's Algorithm
+    std::vector<int> topoSort(int k,
+                              const std::vector<std::vector<int>> &conditions)
+    {
+        std::vector<std::vector<int>> adj(k + 1);
+        std::vector<int> inDegree(k + 1, 0);
+
+        for (const auto &cond : conditions)
+        {
+            int u = cond[0];
+            int v = cond[1];
+            adj[u].push_back(v);
+            inDegree[v]++;
         }
-        state[u] = 2;
-        order.push_back(u);
-        return true;
+
+        std::queue<int> q;
+        for (int i = 1; i <= k; ++i)
+        {
+            if (inDegree[i] == 0)
+            {
+                q.push(i);
+            }
+        }
+
+        std::vector<int> order;
+        while (!q.empty())
+        {
+            int curr = q.front();
+            q.pop();
+            order.push_back(curr);
+
+            for (int neighbor : adj[curr])
+            {
+                inDegree[neighbor]--;
+                if (inDegree[neighbor] == 0)
+                {
+                    q.push(neighbor);
+                }
+            }
+        }
+
+        // If topological sort includes all k nodes, return the order;
+        // otherwise, a cycle exists
+        if (order.size() == k)
+        {
+            return order;
+        }
+        return {};
     }
 
-    vector<int> topoSort(int k, vector<vector<int>>& conditions) {
-        vector<vector<int>> adj(k+1);
-        for (auto& c : conditions) adj[c[0]].push_back(c[1]);
-        vector<int> state(k+1, 0), order;
-        for (int i = 1; i <= k; i++)
-            if (state[i] == 0 && !dfs(i, adj, state, order)) return {};
-        reverse(order.begin(), order.end());
-        return order;
-    }
+public:
+    std::vector<std::vector<int>>
+    buildMatrix(int k, std::vector<std::vector<int>> &rowConditions,
+                std::vector<std::vector<int>> &colConditions)
+    {
+        std::vector<int> rowOrder = topoSort(k, rowConditions);
+        std::vector<int> colOrder = topoSort(k, colConditions);
 
-    vector<vector<int>> buildMatrix(int k, vector<vector<int>>& rowConditions, vector<vector<int>>& colConditions) {
-        vector<int> rowOrder = topoSort(k, rowConditions);
-        vector<int> colOrder = topoSort(k, colConditions);
-        if (rowOrder.empty() || colOrder.empty()) return {};
+        // If either ordering has a cycle, it's impossible to build the matrix
+        if (rowOrder.empty() || colOrder.empty())
+        {
+            return {};
+        }
 
-        vector<int> rowPos(k+1), colPos(k+1);
-        for (int i = 0; i < k; i++) rowPos[rowOrder[i]] = i;
-        for (int i = 0; i < k; i++) colPos[colOrder[i]] = i;
+        // Map each value (1 to k) to its row and column positions
+        std::vector<int> rowPos(k + 1);
+        std::vector<int> colPos(k + 1);
 
-        vector<vector<int>> matrix(k, vector<int>(k, 0));
-        for (int v = 1; v <= k; v++) matrix[rowPos[v]][colPos[v]] = v;
+        for (int i = 0; i < k; ++i)
+        {
+            rowPos[rowOrder[i]] = i;
+            colPos[colOrder[i]] = i;
+        }
+
+        // Construct the k x k matrix initialized to 0
+        std::vector<std::vector<int>> matrix(k, std::vector<int>(k, 0));
+
+        for (int val = 1; val <= k; ++val)
+        {
+            matrix[rowPos[val]][colPos[val]] = val;
+        }
+
         return matrix;
     }
 };

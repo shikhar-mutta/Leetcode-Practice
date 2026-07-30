@@ -4,43 +4,60 @@
 using namespace std;
 
 // TC: O(N alpha(N)), SC: O(N)
-// Approach: process queries in reverse (build-up instead of tear-down), DSU union with active
-// left/right neighbors, track running max segment sum.
-class Solution {
-public:
-    vector<int> parent;
-    vector<long long> segSum;
-
-    int find(int x) { return parent[x] == x ? x : parent[x] = find(parent[x]); }
-
-    void unite(int a, int b) {
-        a = find(a); b = find(b);
-        if (a == b) return;
-        parent[a] = b;
-        segSum[b] += segSum[a];
+//  Approach: process queries in reverse (build-up instead of tear-down), DSU union with active left/right neighbors, track running max segment sum.
+struct DSU
+{
+    inline static constexpr int nMx{100001};
+    inline static int id[nMx];
+    inline static long long sz[nMx];
+    int cnt;
+    DSU(const int n, vector<int> &nums) : cnt{n}
+    {
+        iota(id, id + n, 0);
+        copy(nums.begin(), nums.end(), sz);
     }
-
-    vector<long long> maximumSegmentSum(vector<int>& nums, vector<int>& removeQueries) {
-        int n = nums.size();
-        parent.resize(n);
-        iota(parent.begin(), parent.end(), 0);
-        segSum.assign(n, 0);
-        vector<int> active(n, 0);
-
-        int q = removeQueries.size();
-        vector<long long> revAns(q);
-        long long curMax = 0;
-
-        for (int i = q - 1; i >= 0; i--) {
-            revAns[i] = curMax;
-            int idx = removeQueries[i];
-            active[idx] = 1;
-            segSum[idx] = nums[idx];
-            if (idx > 0 && active[idx-1]) unite(idx, idx-1);
-            if (idx < n-1 && active[idx+1]) unite(idx, idx+1);
-            curMax = max(curMax, segSum[find(idx)]);
+    int fnd(const int i) { return id[i] == i ? i : (id[i] = fnd(id[i])); }
+    bool con(const int i, const int j)
+    {
+        int rI{fnd(i)}, rJ{fnd(j)};
+        if (rI != rJ)
+        {
+            if (sz[rI] > sz[rJ])
+            {
+                rI ^= rJ;
+                rJ ^= rI;
+                rI ^= rJ;
+            }
+            id[rI] = rJ;
+            sz[rJ] += sz[rI];
+            --cnt;
+            return true;
         }
+        return false;
+    }
+};
 
-        return revAns;
+class Solution
+{
+public:
+    vector<long long> maximumSegmentSum(vector<int> &nums,
+                                        vector<int> &removeQueries)
+    {
+        const int n{static_cast<int>(nums.size())};
+        DSU uf{n, nums};
+        vector<long long> res(n);
+        long long mx{0};
+        for (const int j : views::reverse(views::iota(0, n)))
+        {
+            const int i{removeQueries[j]};
+            res[j] = mx;
+            if (i < n - 1 && nums[i + 1] == 0)
+                uf.con(i, i + 1);
+            if (i > 0 && nums[i - 1] == 0)
+                uf.con(i, i - 1);
+            nums[i] = 0;
+            mx = max(mx, uf.sz[uf.fnd(i)]);
+        }
+        return res;
     }
 };

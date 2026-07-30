@@ -3,32 +3,97 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(R*C*K), SC: O(R*C*K)
-// Approach: dp[r][c][rem] = number of paths from (0,0) to (r,c) with path-sum % k == rem;
-// transition from up/left cells with new remainder (rem + grid[r][c]) % k.
-class Solution {
+// TC: O(m*n*k), SC: O(m*n*k)
+//  Approach: dp[i][j][l] denotes number of paths from i,j to m-1,n-1 with reminder l. We can move either down or right. So we can use bottom up approach to fill the dp table. The answer will be dp[0][0][0] as we need to find number of paths from 0,0 to m-1,n-1 with reminder 0.
+#define ll long long int
+class Solution
+{
 public:
-    int numberOfPaths(vector<vector<int>>& grid, int k) {
-        int R = grid.size(), C = grid[0].size();
-        const int MOD = 1e9+7;
-        vector<vector<vector<long long>>> dp(R, vector<vector<long long>>(C, vector<long long>(k, 0)));
+    int numberOfPaths(vector<vector<int>> &grid, int k)
+    {
+        ll m = grid.size();
+        ll n = grid[0].size();
+        ll dp[m][n][k];
+        ll mod = 1000000007;
+        // dp[i][j][l] denotes no of paths from i,j to m-1,n-1 with reminder k
 
-        for (int r = 0; r < R; r++) {
-            for (int c = 0; c < C; c++) {
-                int v = grid[r][c] % k;
-                if (r == 0 && c == 0) {
-                    dp[r][c][v] = 1;
-                    continue;
-                }
-                for (int rem = 0; rem < k; rem++) {
-                    long long ways = 0;
-                    int prev = ((rem - v) % k + k) % k;
-                    if (r > 0) ways += dp[r-1][c][prev];
-                    if (c > 0) ways += dp[r][c-1][prev];
-                    dp[r][c][rem] = ways % MOD;
+        for (ll i = 0; i < m; i++)
+        {
+            for (ll j = 0; j < n; j++)
+            {
+                for (ll l = 0; l < k; l++)
+                {
+                    dp[i][j][l] = 0;
                 }
             }
         }
-        return (int)dp[R-1][C-1][0];
+
+        dp[m - 1][n - 1][grid[m - 1][n - 1] % k] = 1;
+
+        for (ll i = m - 1; i >= 0; i--)
+        {
+            for (ll j = n - 1; j >= 0; j--)
+            {
+                if (i == m - 1)
+                {
+                    if (j < n - 1)
+                    {
+                        for (ll l = 0; l < k; l++)
+                        {
+                            ll existing = grid[i][j] % k;
+                            ll desired = l;
+                            if (desired >= existing)
+                            {
+                                dp[i][j][l] = dp[i][j + 1][l - existing];
+                            }
+                            else
+                            {
+                                dp[i][j][l] = dp[i][j + 1][l + k - existing];
+                            }
+                        }
+                    }
+                }
+                else if (j == n - 1)
+                {
+                    if (i < m - 1)
+                    {
+                        for (ll l = 0; l < k; l++)
+                        {
+                            ll existing = grid[i][j] % k;
+                            ll desired = l;
+                            if (desired >= existing)
+                            {
+                                dp[i][j][l] = dp[i + 1][j][l - existing];
+                            }
+                            else
+                            {
+                                dp[i][j][l] = dp[i + 1][j][l + k - existing];
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    for (ll l = 0; l < k; l++)
+                    {
+                        ll existing = grid[i][j] % k;
+                        ll desired = l;
+                        if (desired >= existing)
+                        {
+                            dp[i][j][l] = (dp[i + 1][j][l - existing] +
+                                           dp[i][j + 1][l - existing]) %
+                                          mod;
+                        }
+                        else
+                        {
+                            dp[i][j][l] = (dp[i + 1][j][l + k - existing] +
+                                           dp[i][j + 1][l + k - existing]) %
+                                          mod;
+                        }
+                    }
+                }
+            }
+        }
+        return dp[0][0][0];
     }
 };

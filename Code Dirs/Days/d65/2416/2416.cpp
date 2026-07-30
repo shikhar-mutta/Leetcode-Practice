@@ -3,35 +3,56 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(sum|words|*26) build worst-case (26 fixed), SC: O(sum|words|)
-// Approach: trie where each node stores count of words passing through it; insert all words,
-// then for each word walk down summing counts along the path.
-class Solution {
+// TC: O(NlogN + N^2), SC: O(N)
+// Approach: Sort the words and find the common prefix with the next word. Then, for each word, add its length to the answer and add the common prefix length with the next words until the common prefix becomes 0.
+using ll = long long;
+class Solution
+{
 public:
-    struct Node { Node* child[26] = {}; int cnt = 0; };
-    Node* root = new Node();
+    vector<int> sumPrefixScores(vector<string> &words)
+    {
+        int n = words.size();
 
-    void insert(const string& w) {
-        Node* cur = root;
-        for (char c : w) {
-            int i = c - 'a';
-            if (!cur->child[i]) cur->child[i] = new Node();
-            cur = cur->child[i];
-            cur->cnt++;
+        vector<pair<string, int>> w(n);
+
+        for (int i = 0; i < n; i++)
+        {
+            w[i] = {words[i], i};
         }
-    }
 
-    vector<int> sumPrefixScores(vector<string>& words) {
-        for (auto& w : words) insert(w);
-        vector<int> ans;
-        for (auto& w : words) {
-            Node* cur = root;
-            int score = 0;
-            for (char c : w) {
-                cur = cur->child[c - 'a'];
-                score += cur->cnt;
+        sort(w.begin(), w.end());
+        vector<int> commonPrefix(n);
+        for (int i = 1; i < n; i++)
+        {
+            auto &a = w[i - 1].first;
+
+            auto &b = w[i].first;
+            int ln = min(a.size(), b.size());
+            int j = 0;
+            while (j < ln && a[j] == b[j])
+            {
+                j++;
             }
-            ans.push_back(score);
+            commonPrefix[i] = j;
+        }
+
+        vector<int> ans(n);
+
+        for (int i = 0; i < n; i++)
+        {
+            int prefix = w[i].first.size();
+
+            ans[w[i].second] += prefix;
+            for (int j = i + 1; j < n; j++)
+            {
+                prefix = min(prefix, commonPrefix[j]);
+                if (prefix == 0)
+                {
+                    break;
+                }
+                ans[w[j].second] += prefix;
+                ans[w[i].second] += prefix;
+            }
         }
         return ans;
     }

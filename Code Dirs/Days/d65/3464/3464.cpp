@@ -3,57 +3,72 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-class Solution {
+// TC: O(nlogn), SC: O(n)
+// Approach: We can use a binary search to find the maximum distance between the points. We can use a greedy approach to check if we can place k points with a minimum distance of n. We can use a vector to store the positions of the points on the square. We can sort the positions and use a lower bound to find the next position that is at least n distance away from the current position. If we can place k points, we return true, otherwise false. We can then use binary search to find the maximum distance.
+class Solution
+{
 public:
-    int maxDistance(int side, vector<vector<int>>& points, int k) {
-        long long L = 4LL * side;
-        int n = points.size();
-        vector<long long> pos(n);
-        for (int i = 0; i < n; i++) {
-            long long x = points[i][0], y = points[i][1];
-            long long t;
-            if (y == 0) t = x;
-            else if (x == side) t = side + y;
-            else if (y == side) t = 2LL * side + (side - x);
-            else t = 3LL * side + (side - y);
-            pos[i] = t;
+    int maxDistance(int side, vector<vector<int>> &points, int k)
+    {
+        vector<long long> res;
+        for (auto &p : points)
+        {
+            int x = p[0], y = p[1];
+            if (x == 0)
+                res.push_back(y);
+            else if (y == side)
+                res.push_back((long long)side + x);
+            else if (x == side)
+                res.push_back((long long)side * 3 - y);
+            else
+                res.push_back((long long)side * 4 - x);
         }
-        sort(pos.begin(), pos.end());
+        sort(res.begin(), res.end());
 
-        vector<long long> pos2(2 * n);
-        for (int i = 0; i < 2 * n; i++) pos2[i] = pos[i % n] + (i / n) * L;
+        auto check = [&](int n)
+        {
+            int m = res.size();
+            vector<int> idx(k);
+            long long curr = res[0];
+            idx[0] = 0;
+            for (int i = 1; i < k; i++)
+            {
+                auto it = lower_bound(res.begin(), res.end(), curr + n);
+                if (it == res.end())
+                    return false;
+                idx[i] = distance(res.begin(), it);
+                curr = *it;
+            }
+            if (res[idx[k - 1]] - res[0] <= (long long)side * 4 - n)
+                return true;
 
-        auto feasible = [&](long long d) -> bool {
-            if (d == 0) return true;
-            for (int i = 0; i < n; i++) {
-                long long start = pos2[i];
-                long long limit = start + L;
-                long long cur = start;
-                int cnt = 1;
-                int j = i;
-                while (cnt < k) {
-                    long long need = cur + d;
-                    int lo = j + 1, hi = 2 * n - 1, res = -1;
-                    while (lo <= hi) {
-                        int mid = (lo + hi) / 2;
-                        if (pos2[mid] >= need) { res = mid; hi = mid - 1; }
-                        else lo = mid + 1;
+            for (idx[0] = 1; idx[0] < idx[1]; idx[0]++)
+            {
+                for (int j = 1; j < k; j++)
+                {
+                    while (idx[j] < m && res[idx[j]] < res[idx[j - 1]] + n)
+                    {
+                        idx[j]++;
                     }
-                    if (res == -1 || pos2[res] >= limit) break;
-                    cur = pos2[res];
-                    j = res;
-                    cnt++;
+                    if (idx[j] == m)
+                        return false;
                 }
-                if (cnt >= k && (limit - cur) >= d) return true;
+                if (res[idx[k - 1]] - res[idx[0]] <= (long long)side * 4 - n)
+                    return true;
             }
             return false;
         };
 
-        long long lo = 0, hi = L / k;
-        while (lo < hi) {
-            long long mid = lo + (hi - lo + 1) / 2;
-            if (feasible(mid)) lo = mid; else hi = mid - 1;
+        int left = 1;
+        int right = (1LL * side * 4) / k + 1;
+        while (left + 1 < right)
+        {
+            int mid = left + (right - left) / 2;
+            if (check(mid))
+                left = mid;
+            else
+                right = mid;
         }
-        return (int)lo;
+        return left;
     }
 };

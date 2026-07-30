@@ -3,42 +3,45 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-class Solution {
+// TC: O(n), SC: O(n)
+// Approach: We can use a greedy approach to find the maximum number of subarrays after removing one conflicting pair. We can use two arrays to store the minimum conflicting pairs for each index. We can then iterate through the array and keep track of the minimum conflicting pairs for the current index. We can then calculate the number of subarrays that can be formed by removing one conflicting pair and return the maximum value.
+class Solution
+{
 public:
-    long long maxSubarrays(int n, vector<vector<int>>& conflictingPairs) {
-        int m = conflictingPairs.size();
-        vector<vector<int>> byHi(n + 1); // stores pair index
-        vector<int> lo(m);
-        for (int i = 0; i < m; i++) {
-            int a = conflictingPairs[i][0], b = conflictingPairs[i][1];
-            int l = min(a, b), h = max(a, b);
-            lo[i] = l;
-            byHi[h].push_back(i);
-        }
-
-        vector<long long> gain(m, 0);
-        long long top1Val = 0, top2Val = 0;
-        int top1Idx = -1;
-        long long baseline = 0;
-
-        for (int r = 1; r <= n; r++) {
-            for (int idx : byHi[r]) {
-                long long v = lo[idx];
-                if (v > top1Val) {
-                    top2Val = top1Val;
-                    top1Val = v;
-                    top1Idx = idx;
-                } else if (v > top2Val) {
-                    top2Val = v;
-                }
+    long long maxSubarrays(int n, vector<vector<int>> &conflictingPairs)
+    {
+        vector<int> bMin1(n + 1, INT_MAX), bMin2(n + 1, INT_MAX);
+        for (const auto &pair : conflictingPairs)
+        {
+            int a = min(pair[0], pair[1]), b = max(pair[0], pair[1]);
+            if (bMin1[a] > b)
+            {
+                bMin2[a] = bMin1[a];
+                bMin1[a] = b;
             }
-            baseline += (long long)r - top1Val;
-            if (top1Idx != -1) gain[top1Idx] += top1Val - top2Val;
+            else if (bMin2[a] > b)
+            {
+                bMin2[a] = b;
+            }
         }
-
-        long long best = 0;
-        for (int i = 0; i < m; i++) best = max(best, gain[i]);
-
-        return baseline + best;
+        long long res = 0;
+        int ib1 = n, b2 = INT_MAX;
+        vector<long long> delCount(n + 1, 0);
+        for (int i = n; i >= 1; i--)
+        {
+            if (bMin1[ib1] > bMin1[i])
+            {
+                b2 = min(b2, bMin1[ib1]);
+                ib1 = i;
+            }
+            else
+            {
+                b2 = min(b2, bMin1[i]);
+            }
+            res += min(bMin1[ib1], n + 1) - i;
+            delCount[ib1] +=
+                min(min(b2, bMin2[ib1]), n + 1) - min(bMin1[ib1], n + 1);
+        }
+        return res + *max_element(delCount.begin(), delCount.end());
     }
 };

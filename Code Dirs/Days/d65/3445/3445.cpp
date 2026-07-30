@@ -3,54 +3,67 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-class Solution {
+// TC: O(5*5*n), SC: O(5*n)
+// Approach: We can use prefix sum to calculate the frequency of each digit in the string. Then we can use sliding window to find the maximum difference between even and odd frequency of two different digits. We can use a 2D array to store the minimum frequency of each digit with parity status (0,0), (0,1), (1,0), (1,1). Then we can iterate through all pairs of digits and calculate the maximum difference.
+array<vector<int>, 5> freq;
+int n;
+class Solution
+{
 public:
-    int maxDifference(string s, int k) {
-        int n = s.size();
-        const int INF = INT_MAX / 2;
+    static int maxD_ab(int a, int b, int k)
+    {
+        int cnt = INT_MIN;
+        // count min(freq(a)-freq(b)) with parity status (0,0), (0,1), (1,0),
+        // (1,1)
+        const int INF = 1e8;
+        int minFreq[2][2] = {{INF, INF},
+                             {INF, INF}}; // 4 different of parity cases
+        int freq_a = 0, freq_b = 0, prev_a = 0, prev_b = 0;
+        for (int l = 0, r = k - 1; r < n;
+             r++)
+        { // use the advantage of of prefix sum r begins with k-1
+          // instead of 0
+            // freq[a], freq[b] at r, 1-indexed prefix sum
+            freq_a = freq[a][r + 1], freq_b = freq[b][r + 1];
+            // after shrinking, at least 1 b
+            while (r - l + 1 >= k && freq_b - prev_b >= 2)
+            {
+                minFreq[prev_a & 1][prev_b & 1] =
+                    min(minFreq[prev_a & 1][prev_b & 1],
+                        prev_a - prev_b); // update freq[a]-freq[b] at l
+                prev_a =
+                    freq[a][l +
+                            1]; // update prev freq, notice 1-indexed prefix sum
+                prev_b = freq[b][l + 1];
+                l++; // moving l
+            }
+            cnt = max(cnt,
+                      freq_a - freq_b - minFreq[1 - (freq_a & 1)][freq_b & 1]);
+        }
+        return cnt;
+    }
+
+    static int maxDifference(string &s, int k)
+    {
+        n = s.size();
+        freq.fill(vector<int>(n + 1, 0)); // prefix sum 1-indexed
+        for (int i = 0; i < n; i++)
+        {
+            for (int d = 0; d <= 4; d++)
+                freq[d][i + 1] = freq[d][i];
+            freq[s[i] - '0'][i + 1]++;
+        }
+
         int ans = INT_MIN;
-
-        for (int x = 0; x < 5; x++) {
-            for (int y = 0; y < 5; y++) {
-                if (x == y) continue;
-                char cx0 = '0' + x, cy0 = '0' + y;
-
-                int bucket[2][2];
-                for (int a = 0; a < 2; a++) for (int b = 0; b < 2; b++) bucket[a][b] = INF;
-
-                int cx = 0, cy = 0; // prefix counts at current r
-                int lcx = 0, lcy = 0; // prefix counts at l_inserted
-                int l_inserted = 0;
-                int lastYBound = -1;
-
-                for (int r = 1; r <= n; r++) {
-                    char c = s[r-1];
-                    if (c == cx0) cx++;
-                    if (c == cy0) { cy++; lastYBound = r - 1; }
-
-                    if (lastYBound == -1) continue;
-                    int U = min(r - k, lastYBound);
-                    while (l_inserted <= U) {
-                        int pa = lcx & 1, pb = lcy & 1;
-                        int val = lcx - lcy;
-                        if (val < bucket[pa][pb]) bucket[pa][pb] = val;
-                        // advance lcx,lcy to position l_inserted+1
-                        if (l_inserted < n) {
-                            if (s[l_inserted] == cx0) lcx++;
-                            if (s[l_inserted] == cy0) lcy++;
-                        }
-                        l_inserted++;
-                    }
-
-                    if (r < k) continue;
-                    int wantCxParity = 1 - (cx & 1);
-                    int wantCyParity = cy & 1;
-                    int bm = bucket[wantCxParity][wantCyParity];
-                    if (bm < INF) {
-                        int candidate = (cx - cy) - bm;
-                        ans = max(ans, candidate);
-                    }
-                }
+        for (int a = 0; a <= 4; a++)
+        {
+            if (freq[a][n] == 0)
+                continue; // no a skip it
+            for (int b = 0; b <= 4; b++)
+            {
+                if (a == b || freq[b][n] == 0)
+                    continue; // a==b or no b, skip it
+                ans = max(ans, maxD_ab(a, b, k));
             }
         }
 

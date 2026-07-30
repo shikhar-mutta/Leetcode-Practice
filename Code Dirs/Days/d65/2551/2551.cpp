@@ -3,22 +3,37 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(N log N), SC: O(N)
-// Approach: any split's total score = weights[0]+weights[n-1] + sum of pairSum(i)=w[i]+w[i+1]
-// at the k-1 chosen cut points. Max-min difference = (sum of k-1 largest pairSums) - (sum of
-// k-1 smallest pairSums), independent of the fixed endpoint terms.
-class Solution {
+// TC: O(NlogN), SC: O(N)
+//  Approach: We can use a greedy approach to solve this problem. We can calculate the sum of the weights of each pair of adjacent bags and store them in a vector. Then, we can sort the vector and take the sum of the largest k-1 pairs and the sum of the smallest k-1 pairs. The difference between these two sums will be the maximum difference we can achieve by putting the marbles in the bags.
+class Solution
+{
 public:
-    long long putMarbles(vector<int>& weights, int k) {
-        int n = weights.size();
-        if (k == 1) return 0;
-        vector<int> pairSum(n-1);
-        for (int i = 0; i < n-1; i++) pairSum[i] = weights[i] + weights[i+1];
-        sort(pairSum.begin(), pairSum.end());
+    long long putMarbles(vector<int> &weights, int k)
+    {
+        if (k == 1)
+            return 0;
 
-        long long maxScore = 0, minScore = 0;
-        for (int i = 0; i < k-1; i++) minScore += pairSum[i];
-        for (int i = 0; i < k-1; i++) maxScore += pairSum[n-2-i];
-        return maxScore - minScore;
+        vector<long long> pairs;
+        for (int i = 1; i < weights.size(); i++)
+        {
+            pairs.push_back(weights[i - 1] + weights[i]);
+        }
+
+        long long min_val = 0, max_val = 0;
+
+        nth_element(pairs.begin(), pairs.begin() + k - 1, pairs.end());
+        for (int i = 0; i < k - 1; i++)
+        {
+            min_val += pairs[i];
+        }
+
+        nth_element(pairs.begin(), pairs.begin() + k - 1, pairs.end(),
+                    greater<>());
+        for (int i = 0; i < k - 1; i++)
+        {
+            max_val += pairs[i];
+        }
+
+        return max_val - min_val;
     }
 };

@@ -3,38 +3,41 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(|s|), SC: O(|s|)
-// Approach: for each word, distinct anagram count = len! / prod(charCount!). Precompute
-// factorials and modular inverse factorials, multiply across all words.
-class Solution {
+// TC: O(N), SC: O(1)
+// Approach: The problem is to count the number of anagrams that can be formed from the words in a given string. The solution involves splitting the string into words, counting the frequency of each character in each word, and calculating the number of anagrams using the formula for permutations of multisets. The result is computed modulo 10^9 + 7. The solution uses a helper function to calculate the modular exponentiation for computing the modular inverse of the factorial of character counts.
+class Solution
+{
 public:
-    const long long MOD = 1e9+7;
+    const int mod = 1e9 + 7;
 
-    long long power(long long b, long long e) {
-        long long r = 1; b %= MOD;
-        while (e) { if (e & 1) r = r * b % MOD; b = b * b % MOD; e >>= 1; }
-        return r;
+    int countAnagrams(string s)
+    {
+        stringstream ss(s);
+        string w;
+        long ans = 1, mul = 1;
+        while (ss >> w)
+        {
+            int cnt[26] = {0};
+            for (int i = 1; i <= w.size(); ++i)
+            {
+                int c = w[i - 1] - 'a';
+                ++cnt[c];
+                ans = ans * i % mod;
+                mul = mul * cnt[c] % mod;
+            }
+        }
+        return ans * pow(mul, mod - 2) % mod;
     }
 
-    int countAnagrams(string s) {
-        int n = s.size();
-        vector<long long> fact(n+1), invFact(n+1);
-        fact[0] = 1;
-        for (int i = 1; i <= n; i++) fact[i] = fact[i-1] * i % MOD;
-        invFact[n] = power(fact[n], MOD-2);
-        for (int i = n; i > 0; i--) invFact[i-1] = invFact[i] * i % MOD;
-
-        long long ans = 1;
-        int i = 0;
-        while (i < n) {
-            int cnt[26] = {};
-            int j = i, len = 0;
-            while (j < n && s[j] != ' ') { cnt[s[j]-'a']++; j++; len++; }
-            long long ways = fact[len];
-            for (int c = 0; c < 26; c++) ways = ways * invFact[cnt[c]] % MOD;
-            ans = ans * ways % MOD;
-            i = j + 1;
+    long pow(long x, int n)
+    {
+        long res = 1L;
+        for (; n; n /= 2)
+        {
+            if (n % 2)
+                res = res * x % mod;
+            x = x * x % mod;
         }
-        return (int)ans;
+        return res;
     }
 };

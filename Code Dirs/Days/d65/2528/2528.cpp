@@ -3,55 +3,82 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(N log(sum)), SC: O(N)
-// Approach: binary search the answer (min power target). Feasibility check: sliding window sum
-// gives base power per city; greedily, whenever a city falls short, place all needed extra
-// stations as far right as possible (i+r) to cover the most future cities, tracked via a diff array.
-class Solution {
+// TC: O(N log(max power)), SC: O(N)
+// Approach: The problem is to maximize the minimum power of a city after adding k power stations. The solution involves using binary search to find the maximum minimum power that can be achieved. For each candidate minimum power, we simulate the process of adding power stations and check if it is possible to achieve that minimum power with the given number of additional stations. We use a difference array to efficiently manage the power distribution and keep track of the total power added. The binary search continues until we find the maximum minimum power that can be achieved.
+class Solution
+{
 public:
-    long long maxPower(vector<int>& stations, int r, int k) {
+    long long maxPower(vector<int> &stations, int r, int k)
+    {
         int n = stations.size();
-        vector<long long> base(n, 0);
-        long long windowSum = 0;
-        for (int i = 0; i < min((long long)r + 1, (long long)n); i++) windowSum += stations[i];
-        for (int i = 0; i < n; i++) {
-            base[i] = windowSum;
-            int addIdx = i + r + 1;
-            int removeIdx = i - r;
-            if (addIdx < n) windowSum += stations[addIdx];
-            if (removeIdx >= 0) windowSum -= stations[removeIdx];
+
+        static long long p[100005];
+        static long long diff[100005];
+
+        long long cur = 0;
+        for (int i = 0; i < r && i < n; ++i)
+            cur += stations[i];
+
+        for (int i = 0; i < n; ++i)
+        {
+            if (i + r < n)
+                cur += stations[i + r];
+            if (i - r - 1 >= 0)
+                cur -= stations[i - r - 1];
+            p[i] = cur;
         }
 
-        auto feasible = [&](long long target) -> bool {
-            vector<long long> power = base;
-            vector<long long> diff(n + 1, 0);
-            long long extra = 0;
-            long long budget = k;
-            for (int i = 0; i < n; i++) {
-                extra += diff[i];
-                long long cur = power[i] + extra;
-                if (cur < target) {
-                    long long need = target - cur;
-                    budget -= need;
-                    if (budget < 0) return false;
-                    extra += need;
-                    int placeEnd = min(n, i + 2*r + 1);
-                    diff[placeEnd] -= need;
+        long long low = 0;
+        long long high = *max_element(p, p + n) + k;
+        long long ans = 0;
+
+        int window_len = 2 * r + 1;
+
+        while (low <= high)
+        {
+            long long mid = (low + high) >> 1;
+
+            memset(diff, 0, sizeof(long long) * (n + 1));
+
+            long long add_sum = 0, spent = 0;
+            bool ok = true;
+
+            for (int i = 0; i < n; ++i)
+            {
+                add_sum -= diff[i];
+
+                long long total = p[i] + add_sum;
+
+                if (total < mid)
+                {
+                    long long need = mid - total;
+                    spent += need;
+
+                    if (spent > k)
+                    {
+                        ok = false;
+                        break;
+                    }
+
+                    add_sum += need;
+
+                    int end = i + window_len;
+                    if (end < n)
+                        diff[end] += need;
                 }
             }
-            return true;
-        };
 
-        long long lo = *min_element(base.begin(), base.end());
-        long long hi = base[0];
-        for (long long b : base) hi = max(hi, b);
-        hi += k;
-        long long ans = lo;
-        while (lo <= hi) {
-            long long mid = lo + (hi - lo) / 2;
-            if (feasible(mid)) { ans = mid; lo = mid + 1; }
-            else hi = mid - 1;
+            if (ok)
+            {
+                ans = mid;
+                low = mid + 1;
+            }
+            else
+            {
+                high = mid - 1;
+            }
         }
+
         return ans;
     }
 };

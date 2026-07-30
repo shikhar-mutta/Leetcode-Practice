@@ -4,58 +4,44 @@
 using namespace std;
 
 // TC: O(N), SC: O(N)
-// Approach: min path from any root is always the root alone (all prices positive), so answer for
-// root u = (best downward path sum from u over the whole tree) - price[u]. Compute D[u] (best
-// path sum strictly within u's subtree) bottom-up with top-2 child values tracked, then reroot
-// top-down to get up[u] (best extension available through u's parent), combining both directions.
-class Solution {
+// Approach: The problem is to find the maximum difference between the sum of prices of two paths in a tree. We can use depth-first search (DFS) to traverse the tree and calculate the maximum and minimum path sums for each node. We maintain two values for each node: the maximum path sum that includes the node and the maximum path sum that does not include the node. We update the global answer with the maximum difference found during the traversal.
+class Solution
+{
 public:
-    long long maxOutput(int n, vector<vector<int>>& edges, vector<int>& price) {
-        vector<vector<int>> adj(n);
-        for (auto& e : edges) { adj[e[0]].push_back(e[1]); adj[e[1]].push_back(e[0]); }
+    long long ans = 0;
+    vector<vector<int>> g;
+    vector<int> price;
 
-        vector<int> parent(n, -1), order;
-        vector<bool> visited(n, false);
-        queue<int> q;
-        q.push(0); visited[0] = true;
-        while (!q.empty()) {
-            int u = q.front(); q.pop();
-            order.push_back(u);
-            for (int v : adj[u]) if (!visited[v]) { visited[v] = true; parent[v] = u; q.push(v); }
+    pair<long long, long long> dfs(int node, int parent)
+    {
+        long long withLeaf = price[node];
+        long long withoutLeaf = 0;
+        for (int nbr : g[node])
+        {
+            if (nbr == parent)
+                continue;
+            auto [childWithLeaf, childWithoutLeaf] = dfs(nbr, node);
+            ans = max(ans, withLeaf + childWithoutLeaf);
+            ans = max(ans, withoutLeaf + childWithLeaf);
+            withLeaf = max(withLeaf, childWithLeaf + price[node]);
+            withoutLeaf = max(withoutLeaf, childWithoutLeaf + price[node]);
         }
+        return {withLeaf, withoutLeaf};
+    }
 
-        vector<long long> D(n, 0), top1D(n, 0), top2D(n, 0), up(n, 0);
-        vector<int> top1Child(n, -1);
-
-        for (int i = (int)order.size()-1; i >= 0; i--) {
-            int u = order[i];
-            D[u] = price[u] + top1D[u];
-            for (int v : adj[u]) {
-                if (v == parent[u]) continue;
-                if (D[v] > top1D[u]) {
-                    top2D[u] = top1D[u];
-                    top1D[u] = D[v];
-                    top1Child[u] = v;
-                } else if (D[v] > top2D[u]) {
-                    top2D[u] = D[v];
-                }
-            }
-            D[u] = price[u] + top1D[u];
+    long long maxOutput(int n, vector<vector<int>> &edges,
+                        vector<int> &price_)
+    {
+        price = price_;
+        g.resize(n);
+        for (auto &e : edges)
+        {
+            int u = e[0];
+            int v = e[1];
+            g[u].push_back(v);
+            g[v].push_back(u);
         }
-
-        long long ans = 0;
-        for (int u : order) ans = max(ans, max(top1D[u], up[u]));
-
-        for (int u : order) {
-            for (int v : adj[u]) {
-                if (v == parent[u]) continue;
-                long long childExclude = (top1Child[u] == v) ? top2D[u] : top1D[u];
-                long long bestExcl = max(up[u], childExclude);
-                up[v] = max(0LL, price[u] + bestExcl);
-                ans = max(ans, up[v]);
-            }
-        }
-
+        dfs(0, -1);
         return ans;
     }
 };

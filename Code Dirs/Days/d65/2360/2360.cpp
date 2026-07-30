@@ -3,29 +3,36 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(N), SC: O(N)
-// Approach: functional graph (each node has <=1 outgoing edge). Walk from each unvisited node
-// recording step index; if we re-hit a node from the current walk, cycle length = curStep - itsStep.
-class Solution {
+// TC: O(n), SC: O(n)
+//  Approach: We can use a depth-first search (DFS) approach to find the longest cycle in the graph. We maintain a visited array to keep track of the nodes we have already visited.
+class Solution
+{
 public:
-    int longestCycle(vector<int>& edges) {
-        int n = edges.size();
-        vector<int> visited(n, 0), runId(n, -1), stepOf(n, -1);
-        int ans = -1;
+    int longestCycle(vector<int> &edges)
+    {
+        int time = 0, ans = -1, n = edges.size();
+        vector<int> vis(n, 0);
 
-        for (int i = 0; i < n; i++) {
-            if (visited[i]) continue;
-            int cur = i, step = 0;
-            while (cur != -1 && !visited[cur]) {
-                visited[cur] = 1;
-                runId[cur] = i;
-                stepOf[cur] = step++;
-                cur = edges[cur];
+        for (int i = 0; i < n; i++)
+        {
+            if (vis[i])
+                continue;
+
+            int next = i;
+            int start = time;
+            while (next != -1 && vis[next] == 0)
+            {
+                vis[next] = time++;
+                next = edges[next];
             }
-            if (cur != -1 && runId[cur] == i) {
-                ans = max(ans, step - stepOf[cur]);
+
+            // if we find a cycle (vis[next] != 0)
+            if (next != -1 && vis[next] >= start)
+            {
+                ans = max(ans, time - vis[next]);
             }
         }
+
         return ans;
     }
 };

@@ -3,20 +3,25 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(N + 32*32), SC: O(N)
-// Approach: identity popcount(a|b)+popcount(a&b)=popcount(a)+popcount(b). Group distinct values
-// by popcount, sum freq[p1]*freq[p2] over ordered popcount pairs with p1+p2>=k.
-class Solution {
+// TC: O(nlogn + 30^2), SC: O(30)
+// Approach: Count the number of 1s in the binary representation of each number and store the counts in an array. Then, for each pair of counts, check if their sum is greater than or equal to k and calculate the number of excellent pairs accordingly.
+class Solution
+{
 public:
-    long long countExcellentPairs(vector<int>& nums, int k) {
-        unordered_set<int> distinct(nums.begin(), nums.end());
-        long long freq[32] = {};
-        for (int v : distinct) freq[__builtin_popcount(v)]++;
-
-        long long ans = 0;
-        for (int p1 = 0; p1 < 32; p1++)
-            for (int p2 = 0; p2 < 32; p2++)
-                if (p1 + p2 >= k) ans += freq[p1] * freq[p2];
-        return ans;
+    long long countExcellentPairs(vector<int> &nums, int k)
+    {
+        sort(nums.begin(), nums.end());
+        nums.erase(unique(nums.begin(), nums.end()), nums.end());
+        const int n = nums.size();
+        int cnt[30] = {0};
+        for (int i = 0; i < n; ++i)
+            ++cnt[__builtin_popcount(nums[i])];
+        long long res = 0;
+        for (int i = 1; i < 30; ++i)
+        {
+            for (int j = max(i, k - i); j < 30; ++j)
+                res += (i == j ? 1LL : 2LL) * cnt[i] * cnt[j];
+        }
+        return res;
     }
 };

@@ -3,44 +3,64 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(N^2), SC: O(N)
-// Approach: root tree, compute subtree XOR + Euler in/out times via DFS. Removing two edges
-// (to nodes u,v, u!=root,v!=root) splits into 3 pieces; use ancestor check via tin/tout to
-// derive the 3 XOR values, try all O(N^2) pairs, minimize max-min.
-class Solution {
+// TC: O(n^2), SC: O(n)
+//  Approach: Use DFS to calculate the XOR sum of each subtree and store the in-time and out-time of each node. Then, for each pair of edges, determine if one edge is in the subtree of the other using the in-time and out-time. Calculate the score based on the XOR sums of the three resulting components and keep track of the minimum score found.
+class Solution
+{
 public:
-    vector<vector<int>> adj;
-    vector<int> subXor, tin, tout;
-    int timer = 0;
-
-    void dfs(int u, int p, vector<int>& nums) {
-        tin[u] = timer++;
-        subXor[u] = nums[u];
-        for (int v : adj[u]) if (v != p) { dfs(v, u, nums); subXor[u] ^= subXor[v]; }
-        tout[u] = timer++;
+    int calc(int part1, int part2, int part3)
+    {
+        return max(part1, max(part2, part3)) - min(part1, min(part2, part3));
     }
+    int minimumScore(vector<int> &nums, vector<vector<int>> &edges)
+    {
+        int n = nums.size(), cnt = 0;
+        vector<int> sum(n), in(n), out(n);
+        vector<vector<int>> adj(n);
+        for (auto &e : edges)
+        {
+            adj[e[0]].push_back(e[1]);
+            adj[e[1]].push_back(e[0]);
+        }
+        function<void(int, int)> dfs = [&](int x, int fa)
+        {
+            in[x] = cnt++;
+            sum[x] = nums[x];
+            for (auto &y : adj[x])
+            {
+                if (y == fa)
+                {
+                    continue;
+                }
+                dfs(y, x);
+                sum[x] ^= sum[y];
+            }
+            out[x] = cnt;
+        };
 
-    bool isAncestor(int a, int b) { return tin[a] <= tin[b] && tout[b] <= tout[a]; }
-
-    int minimumScore(vector<int>& nums, vector<vector<int>>& edges) {
-        int n = nums.size();
-        adj.assign(n, {});
-        for (auto& e : edges) { adj[e[0]].push_back(e[1]); adj[e[1]].push_back(e[0]); }
-        subXor.assign(n, 0); tin.assign(n, 0); tout.assign(n, 0);
-        dfs(0, -1, nums);
-        int total = subXor[0];
-
-        int ans = INT_MAX;
-        for (int i = 1; i < n; i++) {
-            for (int j = i+1; j < n; j++) {
-                int x1, x2, x3;
-                if (isAncestor(i, j)) { x1 = subXor[j]; x2 = subXor[i]^subXor[j]; x3 = total^subXor[i]; }
-                else if (isAncestor(j, i)) { x1 = subXor[i]; x2 = subXor[i]^subXor[j]; x3 = total^subXor[j]; }
-                else { x1 = subXor[i]; x2 = subXor[j]; x3 = total^subXor[i]^subXor[j]; }
-                int mx = max({x1,x2,x3}), mn = min({x1,x2,x3});
-                ans = min(ans, mx - mn);
+        dfs(0, -1);
+        int res = INT_MAX;
+        for (int u = 1; u < n; u++)
+        {
+            for (int v = u + 1; v < n; v++)
+            {
+                if (in[v] > in[u] && in[v] < out[u])
+                {
+                    res = min(res,
+                              calc(sum[0] ^ sum[u], sum[u] ^ sum[v], sum[v]));
+                }
+                else if (in[u] > in[v] && in[u] < out[v])
+                {
+                    res = min(res,
+                              calc(sum[0] ^ sum[v], sum[v] ^ sum[u], sum[u]));
+                }
+                else
+                {
+                    res = min(res,
+                              calc(sum[0] ^ sum[u] ^ sum[v], sum[u], sum[v]));
+                }
             }
         }
-        return ans;
+        return res;
     }
 };

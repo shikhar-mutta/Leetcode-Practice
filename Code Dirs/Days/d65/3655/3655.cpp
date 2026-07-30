@@ -3,69 +3,113 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-class Solution {
-public:
-    static const long long MOD = 1000000007;
+// TC: O(n * sqrt(n) + q * log(q)) where n is the size of nums and q is the number of queries.
+// SC: O(n + q) for the events array and O(1) for other variables.
+// Approach: The solution uses a combination of modular arithmetic and event processing to efficiently handle the range multiplication queries. It divides the queries into two categories based on the value of k (the step size). For large k, it directly updates the nums array, while for small k, it uses an event-based approach to track the multiplications and their inverses. The final result is computed by taking the XOR of all elements in the modified nums array.
+class Solution
+{
+    static constexpr int MOD = 1000000007;
 
-    long long power(long long b, long long e, long long m) {
-        long long r = 1; b %= m;
-        while (e > 0) {
-            if (e & 1) r = r * b % m;
-            b = b * b % m;
+    long long modpow(long long a, long long e)
+    {
+        long long r = 1 % MOD;
+        a %= MOD;
+        while (e > 0)
+        {
+            if (e & 1)
+            {
+                r = (r * a) % MOD;
+            }
+            a = (a * a) % MOD;
             e >>= 1;
         }
         return r;
     }
-    long long modinv(long long v) { return power(v, MOD - 2, MOD); }
 
-    int xorAfterQueries(vector<int>& nums, vector<vector<int>>& queries) {
+public:
+    int xorAfterQueries(vector<int> &nums, vector<vector<int>> &queries)
+    {
         int n = nums.size();
-        vector<long long> a(nums.begin(), nums.end());
+        int B = sqrt(n) + 1;
 
-        int sqrtN = max(1, (int)sqrt((double)n));
-
-        map<int, vector<array<int,3>>> smallGroups; // k -> list of (l, r, v)
-        vector<array<int,4>> largeQueries;
-
-        for (auto& q : queries) {
-            int l = q[0], r = q[1], k = q[2], v = q[3];
-            if (k <= sqrtN) {
-                smallGroups[k].push_back({l, r, v});
-            } else {
-                largeQueries.push_back({l, r, k, v});
-            }
+        vector<vector<vector<pair<int, int>>>> events(B + 1);
+        for (int k = 1; k <= B; ++k)
+        {
+            events[k].resize(k);
         }
 
-        // large-k: direct simulation
-        for (auto& q : largeQueries) {
-            int l = q[0], r = q[1], k = q[2], v = q[3];
-            for (int idx = l; idx <= r; idx += k) {
-                a[idx] = (a[idx] * v) % MOD;
+        for (auto &qq : queries)
+        {
+            int l = qq[0], r = qq[1], k = qq[2], v = qq[3];
+            if (k > B)
+            {
+                for (int idx = l; idx <= r; idx += k)
+                {
+                    nums[idx] = (long long)nums[idx] * v % MOD;
+                }
             }
-        }
+            else
+            {
+                int res = l % k;
+                int t1 = (l - res) / k;
+                int t2 = (r - res) / k;
+                events[k][res].push_back({t1, v});
 
-        // small-k: grouped difference technique
-        vector<long long> diff(n + 1);
-        for (auto& [k, qs] : smallGroups) {
-            fill(diff.begin(), diff.end(), 1LL);
-            for (auto& q : qs) {
-                int l = q[0], r = q[1], v = q[2];
-                int lastIdx = l + ((r - l) / k) * k;
-                diff[l] = (diff[l] * v) % MOD;
-                int undoPos = lastIdx + k;
-                if (undoPos < n) diff[undoPos] = (diff[undoPos] * modinv(v)) % MOD;
-            }
-            for (int residue = 0; residue < k; residue++) {
-                long long running = 1;
-                for (int idx = residue; idx < n; idx += k) {
-                    running = (running * diff[idx]) % MOD;
-                    a[idx] = (a[idx] * running) % MOD;
+                if (t2 + 1 <= (n - 1 - res) / k)
+                {
+                    int invv = modpow(v, MOD - 2);
+                    events[k][res].push_back({t2 + 1, invv});
                 }
             }
         }
 
-        long long result = 0;
-        for (long long x : a) result ^= x;
-        return (int)result;
+        for (int k = 1; k <= B; ++k)
+        {
+            for (int res = 0; res < k; ++res)
+            {
+                auto &ev = events[k][res];
+                if (ev.empty())
+                {
+                    continue;
+                }
+
+                sort(ev.begin(), ev.end());
+                vector<pair<int, int>> comp;
+
+                for (auto &p : ev)
+                {
+                    if (!comp.empty() && comp.back().first == p.first)
+                    {
+                        comp.back().second =
+                            (long long)comp.back().second * p.second % MOD;
+                    }
+                    else
+                    {
+                        comp.push_back(p);
+                    }
+                }
+
+                long long cur = 1;
+                int ptr = 0;
+                int t = 0;
+                for (int idx = res; idx < n; idx += k, ++t)
+                {
+                    while (ptr < comp.size() && comp[ptr].first == t)
+                    {
+                        cur = (cur * comp[ptr].second) % MOD;
+                        ++ptr;
+                    }
+                    nums[idx] = nums[idx] * cur % MOD;
+                }
+            }
+        }
+
+        int xr = 0;
+        for (int x : nums)
+        {
+            xr ^= x;
+        }
+
+        return xr;
     }
 };

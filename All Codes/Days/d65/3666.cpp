@@ -3,24 +3,32 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-class Solution {
+// TC: O(n) where n is the length of the string s.
+// SC: O(1) for all variables used in the function.
+// Approach: The solution uses a greedy approach to minimize the number of operations needed to equalize the binary string. It first counts the number of zeros in the string. Then, it calculates the minimum number of operations needed to make all characters in the string equal by considering both odd and even cases. The final result is the minimum of the two calculated values, or -1 if it's not possible to equalize the string.
+class Solution
+{
 public:
-    int minOperations(string s, int k) {
-        long long n = s.size();
-        long long z = 0;
-        for (char c : s) if (c == '0') z++;
-        if (z == 0) return 0;
-
-        long long limit = 2 * n + 4;
-        for (long long t = 1; t <= limit; t++) {
-            long long total = (long long)k * t;
-            if ((total % 2) != (z % 2)) continue;
-            if (total < z) continue;
-            long long maxZeroPerPos = (t % 2 == 1) ? t : t - 1;
-            long long maxOnePerPos = (t % 2 == 0) ? t : t - 1;
-            long long maxSum = z * maxZeroPerPos + (n - z) * maxOnePerPos;
-            if (total <= maxSum) return (int)t;
-        }
-        return -1;
+    int minOperations(string s, int k)
+    {
+        int zero = 0;
+        int len = s.length();
+        for (int i = 0; i < len; i++)
+            zero += ~s[i] & 1;
+        if (!zero)
+            return 0;
+        if (len == k)
+            return ((zero == len) << 1) - 1;
+        int base = len - k;
+        int odd = max((zero + k - 1) / k, (len - zero + base - 1) / base);
+        odd += ~odd & 1;
+        int even = max((zero + k - 1) / k, (zero + base - 1) / base);
+        even += even & 1;
+        int res = INT_MAX;
+        if ((k & 1) == (zero & 1))
+            res = min(res, odd);
+        if (~zero & 1)
+            res = min(res, even);
+        return res == INT_MAX ? -1 : res;
     }
 };

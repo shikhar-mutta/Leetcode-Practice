@@ -3,57 +3,107 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-class Solution {
+// TC: O(2^n * m * n) where n is the number of people and m is the number of stages. The algorithm explores all possible combinations of people to transport and all stages, leading to exponential growth in the number of states. The priority queue operations add a logarithmic factor, but the dominant term is the exponential growth due to the bitmasking approach.
+// SC: O(2^n * m) for storing the minimum time for each state
+// Approach: The solution uses a priority queue to implement a modified Dijkstra's algorithm. It explores all possible states of transporting people across stages, using bitmasking to represent which individuals have been transported. The algorithm calculates the minimum time required to transport all individuals while considering the constraints of the problem.
+class Solution
+{
 public:
-    double minTime(int n, int k, int m, vector<int>& time, vector<double>& mul) {
-        int fullMask = (1 << n) - 1;
-        int numStates = (1 << n) * m;
-        vector<double> dist(numStates, 1e18);
-        auto encode = [&](int mask, int stage) { return mask * m + stage; };
+    double minTime(int n, int k, int m, vector<int> &time,
+                   vector<double> &mul)
+    {
+        const int stage_base = 2;
+        const int mask_base = stage_base * m;
+        const int final_mask = (1 << n) - 1;
+        const int total_state = final_mask * mask_base + m * stage_base + 3;
+        priority_queue<pair<double, int>, vector<pair<double, int>>,
+                       greater<pair<double, int>>>
+            min_heap;
+        vector<double> dist(total_state, DBL_MAX);
 
-        dist[encode(fullMask, 0)] = 0;
-        priority_queue<pair<double,int>, vector<pair<double,int>>, greater<>> pq;
-        pq.push({0.0, encode(fullMask, 0)});
+        vector<int> mask_time(final_mask + 1);
+        for (size_t mask = final_mask; mask > 0;
+             mask = (mask - 1) & final_mask)
+        {
+            if (popcount(mask) > k)
+            {
+                continue;
+            }
+            int max_time = 0;
+            for (int i = 0; i < n; ++i)
+            {
+                if ((1 << i) & mask)
+                {
+                    max_time = max(max_time, time[i]);
+                }
+            }
+            mask_time[mask] = max_time;
+        }
 
-        double answer = -1;
-        bool found = false;
-
-        while (!pq.empty()) {
-            auto [d, state] = pq.top(); pq.pop();
-            if (d > dist[state] + 1e-12) continue;
-            int mask = state / m, stage = state % m;
-
-            // enumerate non-empty submasks S of mask with popcount <= k
-            for (int S = mask; S > 0; S = (S - 1) & mask) {
-                int pc = __builtin_popcount(S);
-                if (pc > k) continue;
-                double maxT = 0;
-                for (int i = 0; i < n; i++) if (S & (1 << i)) maxT = max(maxT, (double)time[i]);
-                double cost1 = maxT * mul[stage];
-                int newMask = mask ^ S;
-                int newStage = (stage + (int)floor(cost1)) % m;
-
-                if (newMask == 0) {
-                    double cand = d + cost1;
-                    if (!found || cand < answer) { answer = cand; found = true; }
-                } else {
-                    int atDest = (~newMask) & fullMask;
-                    for (int r = 0; r < n; r++) {
-                        if (!(atDest & (1 << r))) continue;
-                        double cost2 = time[r] * mul[newStage];
-                        int newMask2 = newMask | (1 << r);
-                        int newStage2 = (newStage + (int)floor(cost2)) % m;
-                        double nd = d + cost1 + cost2;
-                        int state2 = encode(newMask2, newStage2);
-                        if (nd < dist[state2]) {
-                            dist[state2] = nd;
-                            pq.push({nd, state2});
-                        }
+        min_heap.push({0.0, 0});
+        while (!min_heap.empty())
+        {
+            auto [cost, state] = min_heap.top();
+            min_heap.pop();
+            int end_mask = state / mask_base;
+            if (end_mask == final_mask)
+            {
+                return cost;
+            }
+            if (cost > dist[state])
+            {
+                continue;
+            }
+            int stage = (state % mask_base) / stage_base;
+            int boat_pos = (state % stage_base);
+            if (boat_pos == 1)
+            {
+                for (int i = 0; i < time.size(); ++i)
+                {
+                    // people not in end
+                    if (!((1 << i) & end_mask))
+                    {
+                        continue;
+                    }
+                    double time_cost = time[i] * mul[stage];
+                    double next_cost = cost + time_cost;
+                    int next_end_mask = end_mask ^ (1 << i);
+                    int next_stage =
+                        (stage + static_cast<int>(floor(time_cost))) % m;
+                    int next_state =
+                        next_end_mask * mask_base + next_stage * stage_base;
+                    if (dist[next_state] > next_cost)
+                    {
+                        dist[next_state] = next_cost;
+                        min_heap.emplace(next_cost, next_state);
+                    }
+                }
+            }
+            else
+            {
+                int remaining = final_mask ^ end_mask;
+                for (size_t mask = remaining; mask > 0;
+                     mask = (mask - 1) & remaining)
+                {
+                    if (popcount(mask) > k)
+                    {
+                        continue;
+                    }
+                    double time_cost = mask_time[mask] * mul[stage];
+                    int next_stage =
+                        (stage + static_cast<int>(floor(time_cost))) % m;
+                    int next_end_mask = mask | end_mask;
+                    double next_cost = cost + time_cost;
+                    int next_state =
+                        next_end_mask * mask_base + next_stage * stage_base + 1;
+                    if (dist[next_state] > next_cost)
+                    {
+                        dist[next_state] = next_cost;
+                        min_heap.emplace(next_cost, next_state);
                     }
                 }
             }
         }
-
-        return found ? answer : -1.0;
+        return -1;
     }
 };

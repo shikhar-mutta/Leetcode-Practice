@@ -3,61 +3,102 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-class Solution {
-public:
-    int minCost(vector<vector<int>>& grid, int k) {
-        int m = grid.size(), n = grid[0].size();
-        const long long INF = LLONG_MAX / 2;
+// TC: O(r * c * k) where r is the number of rows, c is the number of columns, and k is the number of teleports allowed.
+// SC: O(r * c) for the dp array and O(M) for the xList and suffixMin arrays, where M is the maximum value in the grid.
+// Approach: The solution uses dynamic programming to find the minimum cost path in a grid with teleportation. It maintains a dp array to store the minimum cost to reach each cell with a certain number of teleports. The algorithm iterates through the grid, updating the dp array based on the current cell's value and the minimum cost from previous cells. It also uses a linked list to group indices by values in the grid, allowing for efficient teleportation calculations. The final result is obtained from the dp array after considering all teleports.
 
-        vector<vector<long long>> dp(m, vector<long long>(n, INF));
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                if (i == 0 && j == 0) { dp[i][j] = 0; continue; }
-                long long best = INF;
-                if (i > 0) best = min(best, dp[i-1][j] + grid[i][j]);
-                if (j > 0) best = min(best, dp[i][j-1] + grid[i][j]);
-                dp[i][j] = best;
+const int M = 1e4 + 1, NN = 6400;
+const int INF = 1e9 + 7;
+
+// Using an array version for linked list to replace x_pos[M]
+static int xList[M], nxt[NN];
+
+static unsigned dp[2][NN];
+static unsigned suffixMin[M];
+
+class Solution
+{
+public:
+    static inline int idx(int i, int j, int c) { return i * c + j; }
+
+    static int minCost(vector<vector<int>> &grid, int k)
+    {
+        const int r = grid.size(), c = grid[0].size(), N = r * c;
+
+        if (xList[0] != -1) // fill all with -1 at 1st times
+            memset(xList, -1, sizeof(xList));
+
+        int xMax = 0;
+        // Group indices by values of grid
+        for (int i = 0; i < r; i++)
+        {
+            for (int j = 0; j < c; j++)
+            {
+                const int x = grid[i][j], p = idx(i, j, c);
+                nxt[p] = xList[x]; // insert node at 1st place
+                xList[x] = p;
+                if (x > xMax)
+                    xMax = x;
             }
         }
 
-        long long ans = dp[m-1][n-1];
+        // Initialize DP for 0th row
+        fill(dp[0], dp[0] + N, INF);
 
-        for (int t = 1; t <= k; t++) {
-            // build sorted-by-grid-desc list of previous level's dp values
-            vector<pair<int,long long>> cells; // (grid value, dp value)
-            for (int i = 0; i < m; i++)
-                for (int j = 0; j < n; j++)
-                    cells.push_back({grid[i][j], dp[i][j]});
-            sort(cells.begin(), cells.end(), [](auto& a, auto& b){ return a.first > b.first; });
-            vector<long long> prefMin(cells.size());
-            prefMin[0] = cells[0].second;
-            for (size_t idx = 1; idx < cells.size(); idx++) prefMin[idx] = min(prefMin[idx-1], cells[idx].second);
-            vector<int> sortedVals(cells.size());
-            for (size_t idx = 0; idx < cells.size(); idx++) sortedVals[idx] = cells[idx].first;
+        dp[0][0] = 0;
+        for (int i = 0; i < r; i++)
+        {
+            for (int j = 0; j < c; j++)
+            {
+                int pos = idx(i, j, c);
+                if (i > 0)
+                    dp[0][pos] = min(dp[0][pos], dp[0][pos - c] + grid[i][j]);
+                if (j > 0)
+                    dp[0][pos] = min(dp[0][pos], dp[0][pos - 1] + grid[i][j]);
+            }
+        }
 
-            vector<vector<long long>> ndp(m, vector<long long>(n, INF));
-            for (int i = 0; i < m; i++) {
-                for (int j = 0; j < n; j++) {
-                    // find last index with value >= grid[i][j] (sortedVals descending)
-                    int lo = 0, hi = (int)sortedVals.size() - 1, resIdx = -1;
-                    while (lo <= hi) {
-                        int mid = (lo + hi) / 2;
-                        if (sortedVals[mid] >= grid[i][j]) { resIdx = mid; lo = mid + 1; }
-                        else hi = mid - 1;
-                    }
-                    long long seed = (resIdx == -1) ? INF : prefMin[resIdx];
+        // DP with t Teleports
+        for (int t = 1; t <= k; t++)
+        {
+            // &1 trick used here
+            const bool curr = t & 1, prev = (t - 1) & 1;
 
-                    long long best = seed;
-                    if (i > 0) best = min(best, ndp[i-1][j] + grid[i][j]);
-                    if (j > 0) best = min(best, ndp[i][j-1] + grid[i][j]);
-                    ndp[i][j] = best;
+            // Compute suffixMin[x]
+            unsigned currMin = INF;
+            for (int x = xMax; x >= 0; x--)
+            {
+                // trasverse the linked list
+                for (int e = xList[x]; e != -1; e = nxt[e])
+                {
+                    currMin = min(currMin, dp[prev][e]);
+                }
+                suffixMin[x] = currMin; // teleport
+            }
+
+            // Update cells for current teleport
+            for (int i = 0; i < r; i++)
+            {
+                for (int j = 0; j < c; j++)
+                {
+                    const int pos = idx(i, j, c);
+                    const int x = grid[i][j];
+
+                    // best result with fewer teleports or by teleport
+                    unsigned best = min(dp[prev][pos], suffixMin[x]);
+
+                    // step from up or Left
+                    if (i > 0)
+                        best = min(best, dp[curr][pos - c] + x);
+                    if (j > 0)
+                        best = min(best, dp[curr][pos - 1] + x);
+
+                    dp[curr][pos] = best;
                 }
             }
-
-            dp = ndp;
-            ans = min(ans, dp[m-1][n-1]);
         }
-
-        return (int)ans;
+        // Reset for the next test case
+        memset(xList, -1, sizeof(int) * (xMax + 1));
+        return dp[k & 1][N - 1];
     }
 };

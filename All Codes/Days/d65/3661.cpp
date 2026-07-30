@@ -3,74 +3,118 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-class Solution {
+// TC: O(n log n) where n is the number of robots and walls.
+// SC: O(n) for the rds vector and O(1) for other variables
+// Approach: The solution uses a greedy approach to maximize the number of walls destroyed by robots. It first sorts the robots based on their positions and the walls in ascending order. Then, it iterates through the robots and calculates the number of walls that can be destroyed by each robot when shooting left and right. It maintains two dynamic programming states (dp0 and dp1) to keep track of the maximum walls destroyed when the previous robot shoots left or right. The final result is the maximum of dp0 and dp1 after processing all robots.
+class Solution
+{
 public:
-    int maxWalls(vector<int>& robots, vector<int>& distance, vector<int>& walls) {
-        int n = robots.size();
-        vector<int> idx(n);
-        iota(idx.begin(), idx.end(), 0);
-        sort(idx.begin(), idx.end(), [&](int a, int b){ return robots[a] < robots[b]; });
-        vector<long long> pos(n), dist(n);
-        for (int i = 0; i < n; i++) { pos[i] = robots[idx[i]]; dist[i] = distance[idx[i]]; }
+    static int maxWalls(vector<int> &robots_, vector<int> &distance_,
+                        vector<int> &walls)
+    {
+        struct robot_and_distance
+        {
+            robot_and_distance() {}
 
-        vector<long long> w(walls.begin(), walls.end());
-        sort(w.begin(), w.end());
+            robot_and_distance(int pos, int shoot_dist)
+                : pos(pos), shoot_dist(shoot_dist) {}
 
-        auto countInRange = [&](long long lo, long long hi) -> long long {
-            if (lo > hi) return 0;
-            auto l = lower_bound(w.begin(), w.end(), lo);
-            auto r = upper_bound(w.begin(), w.end(), hi);
-            return (long long)(r - l);
+            int pos;
+            int shoot_dist;
         };
 
-        // edge ranges
-        long long edgeLeft = countInRange(pos[0] - dist[0], pos[0]);
-        long long edgeRight = countInRange(pos[n-1], pos[n-1] + dist[n-1]);
+        vector<robot_and_distance> rds;
+        rds.reserve(robots_.size());
+        for (size_t i = 0; i < robots_.size(); i++)
+            rds.push_back(robot_and_distance(robots_[i], distance_[i]));
+        std::sort(rds.begin(), rds.end(),
+                  [](auto &a, auto &b)
+                  { return a.pos < b.pos; });
 
-        if (n == 1) {
-            return (int)max(edgeLeft, edgeRight);
-        }
+        std::sort(walls.begin(), walls.end());
 
-        // per-gap ranges
-        vector<pair<long long,long long>> rightRange(n-1), leftRange(n-1);
-        for (int i = 0; i < n - 1; i++) {
-            rightRange[i] = {pos[i], min(pos[i] + dist[i], pos[i+1] - 1)};
-        }
-        for (int i = 1; i < n; i++) {
-            leftRange[i-1] = {max(pos[i] - dist[i], pos[i-1] + 1), pos[i]};
-        }
+        auto wit = walls.begin();
+        unsigned dp0 = 0;
+        unsigned dp1 = 0;
+        vector<int>::iterator wit_after_prev_right_reach;
 
-        auto gapContrib = [&](int gapIdx, bool prevR, bool curL) -> long long {
-            long long cR = 0, cL = 0, cBoth = 0;
-            if (prevR) cR = countInRange(rightRange[gapIdx].first, rightRange[gapIdx].second);
-            if (curL) cL = countInRange(leftRange[gapIdx].first, leftRange[gapIdx].second);
-            if (prevR && curL) {
-                long long lo = max(rightRange[gapIdx].first, leftRange[gapIdx].first);
-                long long hi = min(rightRange[gapIdx].second, leftRange[gapIdx].second);
-                cBoth = countInRange(lo, hi);
+        for (size_t ri = 0; ri < robots_.size(); ri++)
+        {
+            // "wit" points to the wall located just after the previous (ri - 1)
+            // robot
+
+            unsigned shoot_left_count = 0;
+            unsigned shoot_right_count = 0;
+
+            // calculate shoot left
+            int shoot_left_reach = rds[ri].pos - rds[ri].shoot_dist;
+            if (ri > 0 && shoot_left_reach <= rds[ri - 1].pos)
+                shoot_left_reach = rds[ri - 1].pos + 1;
+            while (wit < walls.end() && *wit < shoot_left_reach)
+                wit++;
+            auto wit_before_shoot_left_reach = wit;
+            while (wit < walls.end() && *wit < rds[ri].pos)
+            {
+                shoot_left_count++;
+                wit++;
             }
-            return cR + cL - cBoth;
-        };
+            if (wit < walls.end() && *wit == rds[ri].pos)
+                shoot_left_count++;
 
-        // dp[0] = L, dp[1] = R
-        vector<long long> dp(2);
-        dp[0] = edgeLeft;
-        dp[1] = 0;
+            // "wit" points to the wall located just after this robot
 
-        for (int i = 1; i < n; i++) {
-            vector<long long> ndp(2, LLONG_MIN);
-            for (int cur = 0; cur < 2; cur++) { // 0=L,1=R
-                bool curL = (cur == 0);
-                for (int prev = 0; prev < 2; prev++) {
-                    bool prevR = (prev == 1);
-                    long long val = dp[prev] + gapContrib(i-1, prevR, curL);
-                    ndp[cur] = max(ndp[cur], val);
+            // calculate shoot right
+            int shoot_right_reach = rds[ri].pos + rds[ri].shoot_dist;
+            if (ri < robots_.size() - 1 && shoot_right_reach >= rds[ri + 1].pos)
+                shoot_right_reach = rds[ri + 1].pos - 1;
+            auto wit_after_right_reach = wit;
+            while (wit_after_right_reach < walls.end() &&
+                   *wit_after_right_reach <= shoot_right_reach)
+            {
+                shoot_right_count++;
+                wit_after_right_reach++;
+            }
+
+            // -------------------------------------
+
+            if (ri == 0)
+            {
+                dp0 = shoot_left_count;
+                dp1 = shoot_right_count;
+            }
+            else
+            {
+                // if prev robot shoots left, no overlap
+                size_t left_if_prev_shot_left = shoot_left_count;
+
+                // if prev robot shoots right, we may have overlap with the
+                // current robot shooting left.
+                size_t left_if_prev_shot_right;
+                if (wit_after_prev_right_reach <= wit_before_shoot_left_reach)
+                {
+                    left_if_prev_shot_right = shoot_left_count;
                 }
+                else
+                {
+                    // we have walls shot by both previous robot to the right,
+                    // and current robot to the left
+                    left_if_prev_shot_right = 0;
+                    for (auto wit1 = wit_after_prev_right_reach;
+                         wit1 < walls.end() && *wit1 <= rds[ri].pos; wit1++)
+                        left_if_prev_shot_right++;
+                }
+
+                size_t left = std::max(dp0 + left_if_prev_shot_left,
+                                       dp1 + left_if_prev_shot_right);
+                size_t right = std::max(dp0, dp1) + shoot_right_count;
+
+                dp0 = left;
+                dp1 = right;
             }
-            dp = ndp;
+
+            wit_after_prev_right_reach = wit_after_right_reach;
         }
 
-        long long ans = max(dp[0], dp[1] + edgeRight);
-        return (int)ans;
+        return std::max(dp0, dp1);
     }
 };

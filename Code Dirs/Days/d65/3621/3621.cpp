@@ -3,60 +3,68 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-class Solution {
+// TC: O(1) for precomputation and O(log n) for each query due to bit manipulation and combinatorial calculations.
+// SC: O(1) for precomputation and O(1) for each query
+// Approach: The solution precomputes the binomial coefficients (nCk) for all combinations of n and k up to 50, which allows for efficient calculation of the number of integers with a specific popcount depth. It also precomputes the numbers that have a specific popcount depth for depths 1 to 4. For each query, it uses bit manipulation to count the number of valid integers less than or equal to n that have a popcount depth equal to k by iterating through the bits of n and using the precomputed values.
+#pragma GCC optimize("O3,unroll-loops")
+#pragma GCC target("avx2,bmi,bmi2,lzcnt,popcnt")
+
+// @lc code=start
+class Solution
+{
+    inline static long long nCk[50][50];
+    inline static int nums_depth[4][50];
+
+    inline static int _precomp = []()
+    {
+        for (int n = 0; n < 50; ++n)
+        {
+            nCk[n][0] = 1;
+            for (int k = 1; k <= n; ++k)
+                nCk[n][k] = nCk[n - 1][k] + nCk[n - 1][k - 1];
+        }
+
+        int idx[4]{};
+        for (int n = 1; n < 50; ++n)
+        {
+            int d = 0;
+            for (unsigned m = n; m > 1; m = popcount(m))
+                ++d;
+            nums_depth[d][idx[d]++] = n;
+        }
+
+        return 0;
+    }();
+
 public:
-    int depthOf(long long x) {
-        int d = 0;
-        while (x != 1) {
-            x = __builtin_popcountll(x);
-            d++;
-        }
-        return d;
-    }
+    long long popcountDepth(long long n, int k)
+    {
+        if (k == 0)
+            return 1;
+        if (k == 5)
+            return 0;
 
-    long long C[65][65];
+        ++n;
 
-    long long countWithPopcount(long long n, int m) {
-        if (n < 0) return 0;
-        vector<int> bits;
-        for (int i = 62; i >= 0; i--) bits.push_back((n >> i) & 1);
-        // strip leading zeros (keep at least representation consistent)
-        int start = 0;
-        while (start < (int)bits.size() - 1 && bits[start] == 0) start++;
-        vector<int> b(bits.begin() + start, bits.end());
+        int *tar = nums_depth[k - 1];
+        int num_bits = 64 - countl_zero(1ull * n);
 
-        int onesSoFar = 0;
-        long long result = 0;
-        int len = b.size();
-        for (int i = 0; i < len; i++) {
-            if (b[i] == 1) {
-                int remaining = len - i - 1;
-                int need = m - onesSoFar;
-                if (need >= 0 && need <= remaining) result += C[remaining][need];
-                onesSoFar++;
-            }
-        }
-        if (onesSoFar == m) result += 1;
-        return result;
-    }
+        long long ans = k > 1 ? 0 : -1;
 
-    long long popcountDepth(long long n, int k) {
-        for (int i = 0; i <= 64; i++) {
-            for (int j = 0; j <= i; j++) {
-                if (j == 0 || j == i) C[i][j] = 1;
-                else C[i][j] = C[i-1][j-1] + C[i-1][j];
-            }
+        int bits_left = 0;
+        for (int i = num_bits - 1; i >= 0; --i)
+        {
+            if (!(n & (1ll << i)))
+                continue;
+
+            for (int *tar_bits = tar; *tar_bits && *tar_bits - bits_left <= i; ++tar_bits)
+                ans += nCk[i][*tar_bits - bits_left];
+
+            ++bits_left;
+            if (*tar && *tar < bits_left)
+                ++tar;
         }
 
-        if (k == 0) return (n >= 1) ? 1 : 0;
-
-        long long total = 0;
-        for (int m = 1; m <= 60; m++) {
-            if (depthOf(m) == k - 1) total += countWithPopcount(n, m);
-        }
-        // x = 1 has depth 0 by definition (base case), not via the recursive relation;
-        // it gets miscounted above when k == 1 since popcount(1) = 1 and depth(1) == 0.
-        if (k == 1 && n >= 1) total -= 1;
-        return total;
+        return ans;
     }
 };

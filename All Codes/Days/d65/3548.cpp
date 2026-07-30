@@ -3,70 +3,141 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-class Solution {
+// TC: O(r * c) where r is the number of rows and c is the number of columns in the grid.
+// SC: O(M) where M is the maximum value in the grid.
+// Approach: The solution uses a greedy approach to check for possible partitions of the grid. It calculates the total sum of the grid and iterates through the rows and columns to find potential horizontal and vertical cuts. For each cut, it checks if the sums of the two resulting parts are equal or if the difference between them can be matched by any element in the grid. The use of bitsets allows for efficient tracking of seen values during the iteration.
+static const int M = 1e5 + 1;
+static bitset<M> tSeen, bSeen, lSeen, rSeen;
+
+class Solution
+{
 public:
-    bool exists(int a, int b, int n, function<int(int,int)> at, long long v, unordered_map<long long,int>& counts) {
-        if (v < 0) return false;
-        if (b - a + 1 == 1) {
-            return at(a, 0) == v || at(a, n - 1) == v;
-        } else if (n == 1) {
-            return at(a, 0) == v || at(b, 0) == v;
-        } else {
-            auto it = counts.find(v);
-            return it != counts.end() && it->second > 0;
-        }
-    }
+    static bool canPartitionGrid(vector<vector<int>> &grid)
+    {
+        const int r = grid.size(), c = grid[0].size();
+        long long Tsum = 0;
 
-    bool checkDirection(int m, int n, function<int(int,int)> at, function<long long(int)> lineSum, long long total) {
-        // "lines" are rows for horizontal (m of them, dims n each), cuts at i=0..m-2
-        unordered_map<long long,int> topCounts, botCounts;
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) botCounts[at(i, j)]++;
-        }
-        long long topSum = 0;
-        for (int i = 0; i <= m - 2; i++) {
-            for (int j = 0; j < n; j++) {
-                long long val = at(i, j);
-                botCounts[val]--;
-                topCounts[val]++;
-            }
-            topSum += lineSum(i);
-            long long botSum = total - topSum;
-            long long diff = topSum - botSum;
-            if (diff == 0) return true;
-            long long v = llabs(diff);
-            if (diff > 0) {
-                // remove from top: rows 0..i
-                if (exists(0, i, n, at, v, topCounts)) return true;
-            } else {
-                // remove from bottom: rows i+1..m-1
-                if (exists(i + 1, m - 1, n, at, v, botCounts)) return true;
+        tSeen.reset();
+        bSeen.reset();
+        lSeen.reset();
+        rSeen.reset();
+        int xMax = 0;
+        for (auto &row : grid)
+        {
+            for (int x : row)
+            {
+                Tsum += x;
+                xMax = max(x, xMax);
             }
         }
-        return false;
-    }
 
-    bool canPartitionGrid(vector<vector<int>>& grid) {
-        int m = grid.size(), n = grid[0].size();
-        long long total = 0;
-        for (auto& row : grid) for (int x : row) total += x;
+        // Horizontal Cuts
+        long long top = 0;
+        // First pass for Top removals
+        for (int i = 0; i < r - 1; i++)
+        {
+            for (int x : grid[i])
+            {
+                top += x;
+                tSeen[x] = 1;
+            }
+            long long bot = Tsum - top;
+            if (top == bot)
+                return 1;
 
-        auto atRC = [&](int r, int c) { return grid[r][c]; };
-        auto rowSum = [&](int r) {
-            long long s = 0;
-            for (int c = 0; c < n; c++) s += grid[r][c];
-            return s;
-        };
-        if (m >= 2 && checkDirection(m, n, atRC, rowSum, total)) return true;
+            long long d = top - bot;
+            if (d > 0 && d <= xMax)
+            {
+                if (i > 0 && c > 1)
+                {
+                    if (tSeen[d])
+                        return 1;
+                }
+                else if (grid[0][0] == d || grid[i][c - 1] == d)
+                    return 1;
+            }
+        }
 
-        auto atCR = [&](int c, int r) { return grid[r][c]; }; // "a"=col index, "b"=row index within col-major view
-        auto colSum = [&](int c) {
-            long long s = 0;
-            for (int r = 0; r < m; r++) s += grid[r][c];
-            return s;
-        };
-        if (n >= 2 && checkDirection(n, m, atCR, colSum, total)) return true;
+        long long bot = 0;
+        // Second pass for Bottom removals
+        for (int i = r - 1; i >= 1; i--)
+        {
+            for (int x : grid[i])
+            {
+                bot += x;
+                bSeen[x] = 1;
+            }
+            long long topS = Tsum - bot;
+            long long d = bot - topS;
+            if (d > 0 && d <= xMax)
+            {
+                if ((r - 1 - i) > 0 && c > 1)
+                {
+                    if (bSeen[d])
+                        return 1;
+                }
+                else if (grid[i][0] == d || grid[r - 1][c - 1] == d)
+                    return 1;
+            }
+        }
 
-        return false;
+        // Vertical Cuts
+        long long left = 0;
+        for (int j = 0; j < c - 1; j++)
+        {
+            for (int i = 0; i < r; i++)
+            {
+                int x = grid[i][j];
+                left += x;
+                lSeen[x] = 1;
+            }
+            long long right = Tsum - left;
+            if (left == right)
+                return 1;
+
+            long long d = left - right;
+            if (d > 0 && d <= xMax)
+            {
+                if (r > 1 && j > 0)
+                {
+                    if (lSeen[d])
+                        return 1;
+                }
+                else if (grid[0][0] == d || grid[r - 1][j] == d)
+                    return 1;
+            }
+        }
+
+        long long right = 0;
+        for (int j = c - 1; j >= 1; j--)
+        {
+            for (int i = 0; i < r; i++)
+            {
+                int x = grid[i][j];
+                right += x;
+                rSeen[x] = 1;
+            }
+            long long leftS = Tsum - right;
+            long long d = right - leftS;
+            if (d > 0 && d <= xMax)
+            {
+                if (r > 1 && (c - 1 - j) > 0)
+                {
+                    if (rSeen[d])
+                        return 1;
+                }
+                else if (grid[0][j] == d || grid[r - 1][c - 1] == d)
+                    return 1;
+            }
+        }
+        return 0;
     }
 };
+
+auto init = []()
+{
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
+    return 'c';
+}();

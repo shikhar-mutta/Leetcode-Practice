@@ -3,58 +3,85 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-class Solution {
+// TC: O(n + m log m) where n is the number of nodes and m is the number of edges.
+// SC: O(n + m) for storing the graph representation and additional arrays for topological sorting and distance calculations.
+// Approach: The solution first constructs a directed graph from the given edges, considering only the nodes that are online. It then performs a topological sort on the graph to determine the order of processing nodes. After obtaining the topological order, it uses dynamic programming to evaluate the maximum path score that can be achieved within the given time limit k. The algorithm employs binary search to find the maximum edge weight that allows for a valid path from the source to the destination node within the time constraint.
+constexpr long long INF = 100'000'000'000'000;
+int nbi[50001], srt[50000];
+long long dis[50000];
+char vis[50000];
+pair<int, int> nbs[100000];
+
+void tSort(int n, int &p)
+{
+    if (vis[n])
+        return;
+    else
+        vis[n] = 1;
+    for (int i = nbi[n], e = nbi[n + 1]; i != e; ++i)
+        tSort(nbs[i].first, p);
+    if (p || !n)
+        srt[p++] = n;
+}
+
+bool eval(int n, int x, long long k)
+{
+    dis[0] = 0;
+    for (int i = 1; i < n; ++i)
+    {
+        int nd = srt[i];
+        long long dmin = INF;
+        for (int j = nbi[nd], e = nbi[nd + 1]; j != e; ++j)
+            if (nbs[j].second >= x)
+            {
+                dmin = min(dmin, dis[nbs[j].first] + nbs[j].second);
+            }
+        dis[nd] = dmin;
+    }
+    return dis[srt[n - 1]] <= k;
+}
+
+class Solution
+{
 public:
-    int findMaxPathScore(vector<vector<int>>& edges, vector<bool>& online, long long k) {
-        int n = online.size();
-        vector<vector<pair<int,int>>> adj(n); // v, cost
-        vector<int> indeg(n, 0);
-        for (auto& e : edges) {
-            adj[e[0]].push_back({e[1], e[2]});
-            indeg[e[1]]++;
+    int findMaxPathScore(vector<vector<int>> &edges, vector<bool> &online,
+                         long long k)
+    {
+        int N = size(online);
+        fill(nbi, nbi + N, 0);
+        for (const auto &e : edges)
+            if (online[e[0]] && online[e[1]])
+                ++nbi[e[1]];
+        for (int i = 1; i < N; ++i)
+            nbi[i] += nbi[i - 1];
+        nbi[N] = nbi[N - 1];
+        for (const auto &e : edges)
+            if (online[e[0]] && online[e[1]])
+                nbs[--nbi[e[1]]] = {e[0], e[2]};
+
+        int n = 0;
+        fill(vis, vis + N, 0);
+        tSort(N - 1, n);
+        // for (int i = 0; i < n; ++i) cout << srt[i] << " "; cout << endl;
+        fill(dis, dis + N, INF);
+        if (!(n && eval(n, 0, k)))
+            return -1;
+
+        int lo = INT_MAX, hi = 0;
+        for (int i = 0, e = nbi[N]; i != e; ++i)
+        {
+            int d = nbs[i].second;
+            lo = min(lo, d);
+            hi = max(hi, d);
         }
-
-        // topological order (Kahn's)
-        vector<int> topo;
-        queue<int> q;
-        vector<int> deg = indeg;
-        for (int i = 0; i < n; i++) if (deg[i] == 0) q.push(i);
-        while (!q.empty()) {
-            int u = q.front(); q.pop();
-            topo.push_back(u);
-            for (auto& [v, c] : adj[u]) {
-                if (--deg[v] == 0) q.push(v);
-            }
+        while (lo < hi)
+        {
+            int m = (lo + hi + 1) / 2;
+            if (eval(n, m, k))
+                lo = m;
+            else
+                hi = m - 1;
         }
-
-        vector<int> costs;
-        for (auto& e : edges) costs.push_back(e[2]);
-        sort(costs.begin(), costs.end());
-        costs.erase(unique(costs.begin(), costs.end()), costs.end());
-
-        auto feasible = [&](int X) -> bool {
-            vector<long long> dist(n, LLONG_MAX);
-            dist[0] = 0;
-            for (int u : topo) {
-                if (dist[u] == LLONG_MAX) continue;
-                for (auto& [v, c] : adj[u]) {
-                    if (c < X) continue;
-                    if (!online[v]) continue;
-                    if (dist[u] + c < dist[v]) dist[v] = dist[u] + c;
-                }
-            }
-            return dist[n-1] != LLONG_MAX && dist[n-1] <= k;
-        };
-
-        if (costs.empty()) return -1;
-        int lo = 0, hi = (int)costs.size() - 1;
-        int best = -1;
-        while (lo <= hi) {
-            int mid = (lo + hi) / 2;
-            if (feasible(costs[mid])) { best = costs[mid]; lo = mid + 1; }
-            else hi = mid - 1;
-        }
-
-        return best;
+        return lo;
     }
 };

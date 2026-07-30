@@ -3,43 +3,50 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(N^2) worst case, SC: O(N)
-// Approach: try number of parts k from N down to 1; target = totalSum/k must be integer and
-// >= max(nums). DFS the tree: subtree sum resets to 0 (a cut) whenever it hits target exactly,
-// fails if it ever exceeds target. First feasible k gives answer k-1 (edges removed).
-class Solution {
+// TC: O(N^2), SC: O(N)
+// Approach: For each divisor d of the total sum, check if we can partition the tree into components with sum d using DFS. If we can, return the number of components - 1.
+class Solution
+{
 public:
-    vector<vector<int>> adj;
-    vector<int>* nums;
-    int target;
-    bool ok;
-
-    int dfs(int u, int p) {
-        int sum = (*nums)[u];
-        for (int v : adj[u]) {
-            if (v == p) continue;
-            sum += dfs(v, u);
-            if (!ok) return 0;
+    int componentValue(vector<int> &nums, vector<vector<int>> &edges)
+    {
+        const int n{static_cast<int>(nums.size())};
+        const int tot{reduce(nums.begin(), nums.end())};
+        static int from[20001]{}, to[39998]{};
+        memset(from, 0, sizeof(int) * n);
+        for (const vector<int> &e : edges)
+        {
+            const int u{e[0]}, v{e[1]};
+            ++from[u];
+            ++from[v];
         }
-        if (sum > target) { ok = false; return 0; }
-        return sum == target ? 0 : sum;
-    }
-
-    int componentValue(vector<int>& nums_, vector<vector<int>>& edges) {
-        int n = nums_.size();
-        nums = &nums_;
-        adj.assign(n, {});
-        for (auto& e : edges) { adj[e[0]].push_back(e[1]); adj[e[1]].push_back(e[0]); }
-        int total = accumulate(nums_.begin(), nums_.end(), 0);
-        int mx = *max_element(nums_.begin(), nums_.end());
-
-        for (int k = n; k >= 1; k--) {
-            if (total % k != 0) continue;
-            target = total / k;
-            if (target < mx) continue;
-            ok = true;
-            dfs(0, -1);
-            if (ok) return k - 1;
+        exclusive_scan(from, from + n, from, 0);
+        for (const vector<int> &e : edges)
+        {
+            const int u{e[0]}, v{e[1]};
+            to[from[u]++] = v;
+            to[from[v]++] = u;
+        }
+        memmove(from + 1, from, sizeof(int) * n);
+        from[0] = 0;
+        auto dfs{[&](this auto &&dfs, int i, int p, int d) -> int
+                 {
+                     int acc{nums[i]};
+                     for (const int j :
+                          span<const int>{to + from[i], to + from[i + 1]})
+                     {
+                         if (j == p)
+                             continue;
+                         acc += dfs(j, i, d);
+                     }
+                     return acc == d ? 0 : acc;
+                 }};
+        for (const int d : views::iota(1, tot + 1))
+        {
+            if (tot % d)
+                continue;
+            if (dfs(0, -1, d) == 0)
+                return tot / d - 1;
         }
         return 0;
     }

@@ -3,21 +3,41 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(N log N), SC: O(N)
-// Approach: parity is invariant under +2/-2 ops, so separate odds/evens, sort each group in
-// both arrays, pair them up positionally; sum of positive (nums-target) differences / 2 = answer.
-class Solution {
+// TC: O(NlogN), SC: O(1)
+// Approach: Sort both arrays. For each odd number in nums, find the corresponding odd number in target and add the difference/2 to ops. Do the same for even numbers. Return ops/2.
+// Note: We divide by 2 at the end because each operation can change two numbers (one in nums and one in target).
+class Solution
+{
 public:
-    long long makeSimilar(vector<int>& nums, vector<int>& target) {
-        vector<int> no, ne, to, te;
-        for (int x : nums) (x % 2 ? no : ne).push_back(x);
-        for (int x : target) (x % 2 ? to : te).push_back(x);
-        sort(no.begin(), no.end()); sort(ne.begin(), ne.end());
-        sort(to.begin(), to.end()); sort(te.begin(), te.end());
-
+    long long makeSimilar(vector<int> &nums, vector<int> &target)
+    {
+        int n = nums.size();
+        int odd = 0;
+        int even = 0;
         long long ops = 0;
-        for (size_t i = 0; i < no.size(); i++) if (no[i] > to[i]) ops += no[i] - to[i];
-        for (size_t i = 0; i < ne.size(); i++) if (ne[i] > te[i]) ops += ne[i] - te[i];
+        sort(nums.begin(), nums.end());
+        sort(target.begin(), target.end());
+        for (int &i : nums)
+        {
+            if (i % 2)
+            {
+                while (target[odd] % 2 == 0)
+                {
+                    odd++;
+                }
+                ops += abs(target[odd] - i) / 2;
+                odd++;
+            }
+            else
+            {
+                while (target[even] % 2)
+                {
+                    even++;
+                }
+                ops += abs(target[even] - i) / 2;
+                even++;
+            }
+        }
         return ops / 2;
     }
 };

@@ -4,34 +4,30 @@
 using namespace std;
 
 // TC: O(N), SC: O(N)
-// Approach: every valid subarray must contain the (unique) occurrence of k. Score elements
-// +1 (>k), -1 (<k), 0 (==k). Count cumulative balance walking left from pos, store in a map;
-// walking right from pos, for balance b a valid subarray needs left balance -b or 1-b
-// (median==k means equal counts, or one extra smaller since k is the lower median on ties).
-class Solution {
+// Approach: Let p be the index of k in nums. For each i >= p, maintain a balance bal = #nums[i] > k - #nums[i] < k. Count the number of occurrences of each balance in cnt[]. For each i <= p, maintain a balance bal = #nums[i] > k - #nums[i] < k. The number of valid subarrays with median k is cnt[-bal] + cnt[-bal + 1].
+class Solution
+{
 public:
-    int countSubarrays(vector<int>& nums, int k) {
-        int n = nums.size();
-        int pos = -1;
-        for (int i = 0; i < n; i++) if (nums[i] == k) { pos = i; break; }
+    int countSubarrays(vector<int> &nums, int k)
+    {
+        const int n = nums.size();
+        vector<int> cnt(2 * n + 1, 0);
+        int p = find(nums.begin(), nums.end(), k) - nums.begin(), res = 0;
 
-        unordered_map<int,int> leftCount;
-        int balance = 0;
-        leftCount[0] = 1;
-        for (int i = pos - 1; i >= 0; i--) {
-            balance += (nums[i] > k) ? 1 : -1;
-            leftCount[balance]++;
+        for (int i = p, bal = 0; i < n; i++)
+        {
+            bal += nums[i] == k ? 0 : nums[i] < k ? -1
+                                                  : 1;
+            cnt[bal + n]++;
         }
 
-        long long ans = 0;
-        balance = 0;
-        for (int i = pos; i < n; i++) {
-            if (i > pos) balance += (nums[i] > k) ? 1 : -1;
-            auto it1 = leftCount.find(-balance);
-            if (it1 != leftCount.end()) ans += it1->second;
-            auto it2 = leftCount.find(1 - balance);
-            if (it2 != leftCount.end()) ans += it2->second;
+        for (int i = p, bal = 0; i >= 0; i--)
+        {
+            bal += nums[i] == k ? 0 : nums[i] < k ? -1
+                                                  : 1;
+            res += cnt[-bal + n] + cnt[-bal + 1 + n];
         }
-        return (int)ans;
+
+        return res;
     }
 };

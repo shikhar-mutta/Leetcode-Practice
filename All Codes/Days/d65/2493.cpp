@@ -3,60 +3,90 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(N*(N+E)), SC: O(N+E)
-// Approach: each connected component must be bipartite (BFS 2-coloring), else impossible.
-// For each valid component, the max number of groups equals the max BFS depth (levels) achieved
-// starting from any single node in that component; sum over components.
-class Solution {
-public:
-    int magnificentSets(int n, vector<vector<int>>& edges) {
-        vector<vector<int>> adj(n+1);
-        for (auto& e : edges) { adj[e[0]].push_back(e[1]); adj[e[1]].push_back(e[0]); }
+// TC: O(N^2), SC: O(N^2)
+//  Approach: The problem can be solved using graph theory. We can represent the nodes and edges as a graph and check if the graph is bipartite. If the graph is not bipartite, we cannot divide the nodes into groups. If the graph is bipartite, we can use BFS to find the maximum distance from each node in the graph. The maximum distance will give us the number of groups we can divide the nodes into. We can sum up the maximum distances from each component to get the final answer. If any component is not bipartite, we return -1.
+class Solution
+{
 
-        vector<int> comp(n+1, -1);
-        int numComp = 0;
-        for (int i = 1; i <= n; i++) {
-            if (comp[i] != -1) continue;
-            queue<int> q; q.push(i); comp[i] = numComp;
-            while (!q.empty()) {
-                int u = q.front(); q.pop();
-                for (int v : adj[u]) if (comp[v] == -1) { comp[v] = numComp; q.push(v); }
+    vector<vector<int>> g;
+    vector<int> vis;
+    vector<vector<int>> comp;
+
+    int is_bipartite = true;
+
+    void dfs(int node, int color, int idx)
+    {
+        vis[node] = color;
+        comp[idx].push_back(node);
+        for (auto v : g[node])
+        {
+            if (!vis[v])
+            {
+                dfs(v, 3 - color, idx);
             }
-            numComp++;
+            else if (vis[node] == vis[v])
+                is_bipartite = false;
         }
+    }
 
-        auto bfsDepth = [&](int src) -> int {
-            vector<int> dist(n+1, -1);
-            dist[src] = 0;
-            queue<int> q; q.push(src);
-            int maxD = 0;
-            vector<int> color(n+1, -1);
-            color[src] = 0;
-            while (!q.empty()) {
-                int u = q.front(); q.pop();
-                maxD = max(maxD, dist[u]);
-                for (int v : adj[u]) {
-                    if (dist[v] == -1) {
-                        dist[v] = dist[u] + 1;
-                        color[v] = color[u] ^ 1;
-                        q.push(v);
-                    } else if (color[v] == color[u]) {
-                        return -1; // odd cycle
-                    }
+    int bfs(int node)
+    {
+        queue<int> q;
+        q.push(node);
+        vector<int> dis(501, INT_MAX);
+        dis[node] = 1;
+        int mx = 1;
+        while (!q.empty())
+        {
+            int val = q.front();
+            q.pop();
+            for (auto v : g[val])
+            {
+                if (dis[v] == INT_MAX)
+                {
+                    dis[v] = dis[val] + 1;
+                    q.push(v);
+                    mx = max(mx, dis[v]);
                 }
             }
-            return maxD + 1;
-        };
+        }
+        return mx;
+    }
 
-        vector<int> best(numComp, 0);
-        for (int i = 1; i <= n; i++) {
-            int d = bfsDepth(i);
-            if (d == -1) return -1;
-            best[comp[i]] = max(best[comp[i]], d);
+public:
+    int magnificentSets(int n, vector<vector<int>> &edges)
+    {
+        g.resize(n + 1);
+        comp.resize(n + 1);
+        for (int i = 0; i < edges.size(); i++)
+        {
+            g[edges[i][0]].push_back(edges[i][1]);
+            g[edges[i][1]].push_back(edges[i][0]);
         }
 
+        vis.assign(n + 1, 0);
+        int idxx = 0;
+        for (int i = 1; i <= n; i++)
+        {
+            if (!vis[i])
+            {
+                dfs(i, 1, idxx);
+                idxx++;
+            }
+        }
+        if (!is_bipartite)
+            return -1;
         int ans = 0;
-        for (int b : best) ans += b;
+        for (auto &it : comp)
+        {
+            int temp = INT_MIN;
+            for (auto node : it)
+            {
+                temp = max(temp, bfs(node));
+            }
+            if (temp != INT_MIN)
+                ans += temp;
+        }
         return ans;
     }
 };

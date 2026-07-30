@@ -3,37 +3,52 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(N * digits), SC: O(N)
-// Approach: try total part count b from 1 upward; suffix "<i/b>" length depends on digit counts.
-// Find smallest b where every part has capacity>=1 and total capacity across parts >= message
-// length, then greedily fill parts front-to-back with as many message chars as each fits.
-class Solution {
+// TC: O(N), SC: O(N)
+// Approach: We can use binary search to find the number of parts needed to split the message. We can then use this number to split the message into parts. We can use a vector to store the lengths of the parts and then use this vector to split the message into parts.
+class Solution
+{
 public:
-    vector<string> splitMessage(string message, int limit) {
-        int n = message.size();
-        for (long long b = 1; b <= n; b++) {
-            string bStr = to_string(b);
-            long long sumSuffix = 0;
-            bool feasible = true;
-            for (long long i = 1; i <= b; i++) {
-                long long suffixLen = (long long)to_string(i).size() + bStr.size() + 3;
-                if (suffixLen >= limit) { feasible = false; break; }
-                sumSuffix += suffixLen;
-            }
-            if (!feasible) continue;
-            if (b * (long long)limit - sumSuffix < n) continue;
-
-            vector<string> ans;
-            int pos = 0;
-            for (long long i = 1; i <= b; i++) {
-                string suffix = "<" + to_string(i) + "/" + bStr + ">";
-                int cap = limit - (int)suffix.size();
-                int take = min((int)(n - pos), cap);
-                ans.push_back(message.substr(pos, take) + suffix);
-                pos += take;
-            }
-            return ans;
+    int leng(int i)
+    {
+        int length = 0;
+        while (i > 0)
+        {
+            i = i / 10;
+            length++;
         }
-        return {};
+        return length;
+    }
+    vector<string> splitMessage(string message, int limit)
+    {
+        int n = message.size();
+        vector<int> a(10001, 0);
+        int b = 0;
+        for (int i = 1; i <= 10000; i++)
+        {
+            if (2 * leng(i) + 3 >= limit)
+                return {};
+            int tsuf = 3 * i + i * leng(i) + a[i - 1] + leng(i);
+            a[i] = a[i - 1] + leng(i);
+            int cap = i * limit - tsuf;
+            if (cap >= n)
+            {
+                b = i;
+                break;
+            }
+        }
+
+        vector<string> ans;
+        int part = 1;
+        int i = 0;
+        while (part <= b)
+        {
+            int rem = limit - (3 + leng(b) + leng(part));
+            string temp = message.substr(i, rem);
+            i += rem;
+            temp = temp + "<" + to_string(part) + "/" + to_string(b) + ">";
+            part++;
+            ans.push_back(temp);
+        }
+        return ans;
     }
 };

@@ -3,42 +3,24 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-class Solution
-{
+class Solution {
 public:
-    // TC: O(N), SC: O(1)
-    // Approach:
-    //  1. Count the frequency of each character in the first half of the string.
-    //  2. Reconstruct the first half of the string in lexicographical order based on the character counts.
-    //  3. Mirror the first half to the second half to form the palindrome.
-    // Note: The input string is guaranteed to be a palindrome, so we only need to consider the first half of the string for rearrangement.
-    string smallestPalindrome(string s)
-    {
-        int n = s.size();
-        int counts[26] = {0};
+    string smallestPalindrome(string s) {
+        int cnt[26] = {0};
+        for (char c : s) cnt[c - 'a']++;
 
-        // 1. O(N) 統計頻率
-        for (int i = 0; i < n / 2; ++i)
-        {
-            counts[s[i] - 'a']++;
+        string half;
+        char mid = 0;
+        for (int c = 0; c < 26; c++) {
+            half += string(cnt[c] / 2, 'a' + c);
+            if (cnt[c] % 2) mid = 'a' + c;
         }
 
-        // 2. O(N) 原地重建前半段
-        int idx = 0;
-        for (int i = 0; i < 26; ++i)
-        {
-            while (counts[i]-- > 0)
-            {
-                s[idx++] = (char)(i + 'a');
-            }
-        }
-
-        // 3. O(N) 鏡像複製到後半段
-        for (int i = 0; i < n / 2; ++i)
-        {
-            s[n - 1 - i] = s[i];
-        }
-
-        return s;
+        string result = half;
+        if (mid) result += mid;
+        string revHalf = half;
+        reverse(revHalf.begin(), revHalf.end());
+        result += revHalf;
+        return result;
     }
 };

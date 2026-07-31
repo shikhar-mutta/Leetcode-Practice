@@ -3,17 +3,12 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-class Solution
-{
+class Solution {
 public:
-    // TC: O(n) and SC: O(n)
-    vector<int> recoverOrder(vector<int> &order, vector<int> &friends)
-    {
-        unordered_set<int> s(friends.begin(), friends.end());
+    vector<int> recoverOrder(vector<int>& order, vector<int>& friends) {
+        unordered_set<int> f(friends.begin(), friends.end());
         vector<int> result;
-        for (int x : order)
-            if (s.count(x))
-                result.push_back(x);
+        for (int x : order) if (f.count(x)) result.push_back(x);
         return result;
     }
 };

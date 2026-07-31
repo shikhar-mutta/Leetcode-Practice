@@ -3,17 +3,16 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-class Solution
-{
+class Solution {
 public:
-    // TC: O(n). SC: O(1).
-    vector<int> minCosts(vector<int> &cost)
-    {
+    vector<int> minCosts(vector<int>& cost) {
         int n = cost.size();
-        cost[0] = cost[0];
-        for (int i = 1; i < n; i++)
-            cost[i] = min(cost[i - 1], cost[i]);
-
-        return cost;
+        vector<int> ans(n);
+        int best = cost[0];
+        for (int i = 0; i < n; i++) {
+            best = min(best, cost[i]);
+            ans[i] = best;
+        }
+        return ans;
     }
 };

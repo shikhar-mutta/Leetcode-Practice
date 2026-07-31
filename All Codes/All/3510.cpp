@@ -3,82 +3,66 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-class Solution
-{
+class Solution {
 public:
-    // TC: O(n log n), SC: O(n)
-    int minimumPairRemoval(vector<int> &nums)
-    {
+    int minimumPairRemoval(vector<int>& nums) {
         int n = nums.size();
-        if (n <= 1)
-            return 0;
-
+        if (n <= 1) return 0;
         vector<long long> val(n);
-        vector<int> prv(n), nxt(n); // Doubly linked list of the nodes, to allow O(1) merges.
-        for (int i = 0; i < n; i++)
-        {
-            val[i] = nums[i];                  // Current value of the node, after merges.
-            prv[i] = i - 1;                    // Previous node index, or -1 if none.
-            nxt[i] = (i + 1 < n) ? i + 1 : -1; // Next node index, or -1 if none.
+        vector<int> prevI(n), nextI(n);
+        for (int i = 0; i < n; i++) {
+            val[i] = nums[i];
+            prevI[i] = i - 1;
+            nextI[i] = (i + 1 < n) ? i + 1 : -1;
         }
 
-        set<pair<long long, int>> pairs; // {sum, left node index}(sorted by sum).
-        long long bad = 0;               // Number of pairs that are out of order.
-        for (int i = 0; i + 1 < n; i++)
-        {
-            pairs.insert({val[i] + val[i + 1], i});
-            if (val[i] > val[i + 1]) // This pair is out of order.
-                bad++;
+        set<pair<long long,int>> pq; // (sum, leftIndex)
+        int badCount = 0;
+        for (int i = 0; i < n; i++) {
+            if (nextI[i] != -1) {
+                pq.insert({val[i] + val[nextI[i]], i});
+                if (val[i] > val[nextI[i]]) badCount++;
+            }
         }
 
-        int ops = 0; // Number of merge operations performed.
-        while (bad > 0)
-        {
+        auto removeRelation = [&](int i) {
+            // remove pair record for (i, nextI[i])
+            int j = nextI[i];
+            if (j == -1) return;
+            pq.erase({val[i] + val[j], i});
+            if (val[i] > val[j]) badCount--;
+        };
+        auto addRelation = [&](int i) {
+            int j = nextI[i];
+            if (j == -1) return;
+            pq.insert({val[i] + val[j], i});
+            if (val[i] > val[j]) badCount++;
+        };
+
+        int ops = 0;
+        while (badCount > 0) {
+            auto it = pq.begin();
+            int i = it->second;
+            int j = nextI[i];
+
+            int p = prevI[i];
+            int nx = nextI[j];
+
+            if (p != -1) removeRelation(p);
+            removeRelation(i); // (i,j)
+            if (j != -1) removeRelation(j); // (j,nx) — j has nextI[j]=nx
+
+            long long newVal = val[i] + val[j];
+            val[i] = newVal;
+            nextI[i] = nx;
+            if (nx != -1) prevI[nx] = i;
+
+            if (p != -1) addRelation(p);
+            addRelation(i);
+
             ops++;
-            int i = pairs.begin()->second; // min Sum index
-            int nt = nxt[i];               // next
-            int pr = prv[i];               // pre
-            int ntt = nxt[nt];             // next of next
-
-            // Drop the (up to) three pairs touching i ans nt.
-            if (pr != -1)
-            { // Drop the pair (pr, i).
-                pairs.erase({val[pr] + val[i], pr});
-                if (val[pr] > val[i]) // Reduce bad cnt
-                    bad--;
-            }
-
-            pairs.erase({val[i] + val[nt], i}); // Drop the pair (i, nt).
-            if (val[i] > val[nt])
-                bad--;
-
-            if (ntt != -1) // Drop the pair (nt, ntt).
-            {
-                pairs.erase({val[nt] + val[ntt], nt});
-                if (val[nt] > val[ntt])
-                    bad--;
-            }
-
-            // Merge nt into i.
-            val[i] += val[nt];
-            nxt[i] = ntt;
-            if (ntt != -1)// Update the previous pointer of ntt, if it exists.
-                prv[ntt] = i;
-
-            // Re-add the pairs around the merged node.
-            if (pr != -1)
-            {
-                pairs.insert({val[pr] + val[i], pr});
-                if (val[pr] > val[i])
-                    bad++;
-            }
-            if (ntt != -1)
-            {
-                pairs.insert({val[i] + val[ntt], i});
-                if (val[i] > val[ntt])
-                    bad++;
-            }
         }
+
         return ops;
     }
 };

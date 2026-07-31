@@ -5,22 +5,21 @@ using namespace std;
 
 class Solution {
 public:
-    // convert v to the given base (<=36) as an uppercase string
-    string toBase(long long v, int base) {
-        if (v == 0) return "0";
-        string r;
-        while (v) {
-            int d = v % base;
-            r += (d < 10) ? char('0' + d) : char('A' + d - 10);
-            v /= base;
+    string toBase(long long x, int base) {
+        if (x == 0) return "0";
+        string digits = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        string res;
+        while (x > 0) {
+            res += digits[x % base];
+            x /= base;
         }
-        reverse(r.begin(), r.end());
-        return r;
+        reverse(res.begin(), res.end());
+        return res;
     }
 
     string concatHex36(int n) {
-        // hex (base 16) of n^2 followed by base-36 of n^3
-        long long sq = 1LL * n * n, cube = 1LL * n * n * n;
-        return toBase(sq, 16) + toBase(cube, 36);
+        long long sq = (long long)n * n;
+        long long cu = (long long)n * n * n;
+        return toBase(sq, 16) + toBase(cu, 36);
     }
 };

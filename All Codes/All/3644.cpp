@@ -3,18 +3,15 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-class Solution
-{
+class Solution {
 public:
-    // TC: O(n), SC: O(1)
-    int sortPermutation(vector<int> &nums)
-    // Each misplaced value v must be swapped, and any swap forces K to be a
-    // submask of v. So the largest valid K is the AND of all misplaced values.
-    {
-        int ans = -1; // all ones, identity for AND
-        for (int i = 0; i < (int)nums.size(); i++)
-            if (nums[i] != i)
-                ans &= nums[i];
-        return ans == -1 ? 0 : ans; // already sorted -> 0
+    int sortPermutation(vector<int>& nums) {
+        int result = -1;
+        for (int i = 0; i < (int)nums.size(); i++) {
+            if (nums[i] != i) {
+                result = (result == -1) ? nums[i] : (result & nums[i]);
+            }
+        }
+        return result == -1 ? 0 : result;
     }
 };

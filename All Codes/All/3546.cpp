@@ -3,29 +3,28 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(m * n) SC: O(1)
-// Approach: total sum must be even. Scan row sums top-down accumulating
-// a running prefix; if it ever equals exactly half the total (before the
-// last row) a horizontal cut works. Do the same over column sums for a
-// vertical cut.
 class Solution {
 public:
     bool canPartitionGrid(vector<vector<int>>& grid) {
         int m = grid.size(), n = grid[0].size();
+        vector<long long> rowSum(m, 0), colSum(n, 0);
         long long total = 0;
-        for (auto& row : grid) for (int x : row) total += x;
-        if (total % 2 != 0) return false;
+        for (int i = 0; i < m; i++)
+            for (int j = 0; j < n; j++) {
+                rowSum[i] += grid[i][j];
+                colSum[j] += grid[i][j];
+                total += grid[i][j];
+            }
 
-        long long pre = 0;
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) pre += grid[i][j];
-            if (pre * 2 == total && i != m - 1) return true;
+        long long acc = 0;
+        for (int i = 0; i < m - 1; i++) {
+            acc += rowSum[i];
+            if (2 * acc == total) return true;
         }
-
-        pre = 0;
-        for (int j = 0; j < n; j++) {
-            for (int i = 0; i < m; i++) pre += grid[i][j];
-            if (pre * 2 == total && j != n - 1) return true;
+        acc = 0;
+        for (int j = 0; j < n - 1; j++) {
+            acc += colSum[j];
+            if (2 * acc == total) return true;
         }
         return false;
     }

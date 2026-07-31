@@ -3,17 +3,14 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-class Solution
-{
+class Solution {
 public:
-    // TC: O(k^2), SC: O(1)
-    vector<vector<int>> reverseSubmatrix(vector<vector<int>> &grid, int x, int y, int k)
-    {
-        int n = grid.size();
-        for (int i = x; i < x + k / 2; i++)
-            for (int j = y; j < y + k; j++)
-                swap(grid[i][j], grid[x + k - 1 - (i - x)][j]);
-
+    vector<vector<int>> reverseSubmatrix(vector<vector<int>>& grid, int x, int y, int k) {
+        for (int i = 0; i < k / 2; i++) {
+            for (int j = 0; j < k; j++) {
+                swap(grid[x + i][y + j], grid[x + k - 1 - i][y + j]);
+            }
+        }
         return grid;
     }
 };

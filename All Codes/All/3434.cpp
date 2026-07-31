@@ -3,27 +3,36 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(n) SC: O(1)
-//  Approach: maintain frequency count for each value, update maximum frequency
-//  as we iterate through the array.
-//  The frequency of a number is incremented when we encounter it, and if it is equal to k, we also increment the result and the count of numbers equal to k.
-class Solution
-{
+class Solution {
 public:
-    int maxFrequency(vector<int> &nums, int k)
-    {
-        int freq[51] = {0}, res = 0, cnt = 0;
-        for (int i = 0, n = nums.size(); i < n; ++i)
-        {
-            int num = nums[i];
-            freq[num] = max(freq[num], cnt) + 1;
-            if (num == k)
-            {
-                ++res;
-                ++cnt;
-            }
-            res = max(res, freq[num]);
+    int maxFrequency(vector<int>& nums, int k) {
+        int n = nums.size();
+        vector<int> prefK(n + 1, 0);
+        int countK = 0;
+        for (int i = 0; i < n; i++) {
+            prefK[i + 1] = prefK[i] + (nums[i] == k ? 1 : 0);
+            if (nums[i] == k) countK++;
         }
-        return res;
+
+        unordered_map<int,int> lastOcc, prevDp;
+        int best = 0;
+        for (int i = 0; i < n; i++) {
+            int v = nums[i];
+            if (v == k) continue;
+            auto it = lastOcc.find(v);
+            int dp;
+            if (it == lastOcc.end()) {
+                dp = 1;
+            } else {
+                int p1 = it->second;
+                int kBetween = prefK[i] - prefK[p1 + 1];
+                dp = max(prevDp[v] - kBetween, 0) + 1;
+            }
+            lastOcc[v] = i;
+            prevDp[v] = dp;
+            best = max(best, dp);
+        }
+
+        return countK + best;
     }
 };

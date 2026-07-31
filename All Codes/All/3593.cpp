@@ -3,50 +3,60 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-//TC: O(n) SC: O(n)
-// Approach: post-order DFS. Each subtree returns the target root-to-leaf
-// path sum all its leaves must share. For an internal node, gather each
-// child's returned target; increasing that ONE child's own cost is
-// enough to fix every leaf path under it (the delta propagates to all
-// its leaves), so we only need to change nodes for children whose target
-// differs from the most common one — pick the mode as this node's shared
-// target to minimize changes, and return mode + cost[node] upward. 
-   class Solution
-{
+class Solution {
 public:
-    int ans = 0;
-    long long dfs(vector<vector<int>> &graph, int u, vector<int> &cost)
-    {
-        long long maxi = INT_MIN, cnt = 0;
-        if (graph[u].size() == 0)
-            return cost[u];
-        for (auto it = graph[u].begin(); it != graph[u].end(); ++it)
-        {
-            long long val = dfs(graph, *it, cost);
-            if (val >= maxi)
-            {
-                if (maxi == val)
-                    cnt++;
-                else
-                    cnt = 1;
-                maxi = val;
+    int minIncrease(int n, vector<vector<int>>& edges, vector<int>& cost) {
+        vector<vector<int>> adj(n);
+        for (auto& e : edges) {
+            adj[e[0]].push_back(e[1]);
+            adj[e[1]].push_back(e[0]);
+        }
+
+        vector<long long> value(n, 0);
+        vector<long long> fixCount(n, 0);
+
+        vector<int> parent(n, -1), order;
+        vector<bool> vis(n, false);
+        queue<int> q;
+        q.push(0);
+        vis[0] = true;
+        while (!q.empty()) {
+            int u = q.front(); q.pop();
+            order.push_back(u);
+            for (int v : adj[u]) {
+                if (!vis[v]) {
+                    vis[v] = true;
+                    parent[v] = u;
+                    q.push(v);
+                }
             }
-            // cout<<val<<" "<<maxi<<" "<<cnt<<endl;
         }
-        // cout<<maxi<<" "<<cnt<<endl;
-        ans += graph[u].size() - cnt;
-        return maxi + cost[u];
-    }
-    int minIncrease(int n, vector<vector<int>> &edges, vector<int> &cost)
-    {
-        vector<vector<int>> graph(n);
-        for (int i = 0; i < edges.size(); i++)
-        {
-            if (edges[i][1] == 0)
-                sort(edges[i].begin(), edges[i].end());
-            graph[edges[i][0]].push_back(edges[i][1]);
+
+        vector<vector<int>> children(n);
+        for (int u = 0; u < n; u++) if (parent[u] != -1) children[parent[u]].push_back(u);
+
+        // process in reverse BFS order = post-order for tree
+        for (int idx = (int)order.size() - 1; idx >= 0; idx--) {
+            int u = order[idx];
+            if (children[u].empty()) {
+                value[u] = cost[u];
+                fixCount[u] = 0;
+                continue;
+            }
+            unordered_map<long long,int> freq;
+            long long bestVal = -1;
+            int bestCount = -1;
+            long long sumFix = 0;
+            for (int c : children[u]) {
+                sumFix += fixCount[c];
+                int f = ++freq[value[c]];
+                if (f > bestCount) { bestCount = f; bestVal = value[c]; }
+            }
+            int mismatches = (int)children[u].size() - bestCount;
+            fixCount[u] = sumFix + mismatches;
+            value[u] = bestVal + cost[u];
         }
-        long long val = dfs(graph, 0, cost);
-        return ans;
+
+        return (int)fixCount[0];
     }
 };

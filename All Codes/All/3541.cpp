@@ -3,25 +3,18 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-class Solution
-{
+class Solution {
 public:
-    // TC: O(n), SC: O(1)
-    int maxFreqSum(string s)
-    {
-        // count each letter, then take the highest vowel freq + highest consonant freq
-        int cnt[26];
-        memset(cnt, 0, sizeof(cnt));
-        for (char c : s)
-            cnt[c - 'a']++;
-        int maxV = 0, maxC = 0;
-        for (int i = 0; i < 26; ++i)
-        {
-            if (i == 0 || i == 4 || i == 8 || i == 14 || i == 20)
-                maxV = max(maxV, cnt[i]);
-            else
-                maxC = max(maxC, cnt[i]);
+    int maxFreqSum(string s) {
+        int cnt[26] = {0};
+        for (char c : s) cnt[c - 'a']++;
+        string vowels = "aeiou";
+        int maxVowel = 0, maxCons = 0;
+        for (int c = 0; c < 26; c++) {
+            bool isVowel = vowels.find('a' + c) != string::npos;
+            if (isVowel) maxVowel = max(maxVowel, cnt[c]);
+            else maxCons = max(maxCons, cnt[c]);
         }
-        return maxV + maxC;
+        return maxVowel + maxCons;
     }
 };

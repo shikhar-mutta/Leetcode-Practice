@@ -10,7 +10,7 @@ using namespace std;
 // 2. We can then use a priority queue to keep track of the k largest differences between the maximum and minimum values in the subarrays of the input array
 // 3. We can iterate through the input array and for each subarray, we can compute the difference between the maximum and minimum values using the sparse table and add it to the priority queue
 // 4. Finally, we can pop the k largest differences from the priority queue and return their sum as the maximum total value of the subarrays.
-struct SparseTable int p[100000], sz[100000], st[100001], val[100000];
+int p[100000], sz[100000], st[100001], val[100000];
 int speedup = []
 {
     ios::sync_with_stdio(0);

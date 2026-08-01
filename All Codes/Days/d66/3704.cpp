@@ -3,15 +3,15 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-//TC: O(10^2 * 2^3 * len(n)) where len(n) is the number of digits in n.
-//SC: O(len(n) * 2^3) where len(n) is the number of digits in n.
-//Approach:
-//1. We can use dynamic programming to solve this problem.
-//2. We can use a 4D array to store the number of ways to form pairs of numbers that sum to n without any zeros in their digits.
-//3. We can use a recursive function to calculate the number of ways to form pairs of numbers that sum to n without any zeros in their digits.
-//4. We can use memoization to store the results of the recursive function to avoid recalculating the same subproblems.
-//5. We can iterate through the digits of n and for each digit, we can iterate through all possible pairs of digits that sum to the current digit
-//6. We can check if the current pair of digits is valid (i.e., does not contain any zeros) and if it is, we can recursively call the function for the next digit.
+// TC: O(10^2 * 2^3 * len(n)) where len(n) is the number of digits in n.
+// SC: O(len(n) * 2^3) where len(n) is the number of digits in n.
+// Approach:
+// 1. We can use dynamic programming to solve this problem.
+// 2. We can use a 4D array to store the number of ways to form pairs of numbers that sum to n without any zeros in their digits.
+// 3. We can use a recursive function to calculate the number of ways to form pairs of numbers that sum to n without any zeros in their digits.
+// 4. We can use memoization to store the results of the recursive function to avoid recalculating the same subproblems.
+// 5. We can iterate through the digits of n and for each digit, we can iterate through all possible pairs of digits that sum to the current digit
+// 6. We can check if the current pair of digits is valid (i.e., does not contain any zeros) and if it is, we can recursively call the function for the next digit.
 class Solution
 {
     long long memo[20][2][2][2];

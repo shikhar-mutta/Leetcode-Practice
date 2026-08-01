@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "3710.cpp"
+#include "3768.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,9 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto points = _rvvi();
+        auto nums = _rvi();
+        int k = _ri();
         Solution sol;
-        auto res = sol.maxPartitionFactor(points);
+        auto res = sol.minInversionCount(nums, k);
         cout << res << "\n";
     }
     return 0;

@@ -1,0 +1,9 @@
+4
+"baba"
+"abba"
+"baba"
+"bbaa"
+"abc"
+"abb"
+"aac"
+"abb"

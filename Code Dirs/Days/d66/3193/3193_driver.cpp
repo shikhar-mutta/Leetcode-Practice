@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "3161.cpp"
+#include "3193.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,15 +59,11 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto queries = _rvvi();
+        int n = _ri();
+        auto requirements = _rvvi();
         Solution sol;
-        auto res = sol.getResults(queries);
-        cout << "[";
-        for (int i = 0; i < (int)res.size(); i++) {
-            if (i) cout << ",";
-            cout << (res[i] ? "true" : "false");
-        }
-        cout << "]\n";
+        auto res = sol.numberOfPermutations(n, requirements);
+        cout << res << "\n";
     }
     return 0;
 }

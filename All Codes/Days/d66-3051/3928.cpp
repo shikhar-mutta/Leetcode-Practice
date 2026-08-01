@@ -3,8 +3,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(n * (m log m + n log n))  SC: O(n^2)
-// Approach: We can use Dijkstra's algorithm to find the minimum cost to buy apples from each city. We can use a priority queue to keep track of the minimum cost to reach each city. We can use two arrays to keep track of the minimum cost to reach each city using roads and using prices. We can update the minimum cost to reach each city using the prices and the roads. We can return the minimum cost to reach each city.
+//TC: O(n * (m log m + n log n))  SC: O(n^2)
+//Approach: We can use Dijkstra's algorithm to find the minimum cost to buy apples from each city. We can use a priority queue to keep track of the minimum cost to reach each city. We can use two arrays to keep track of the minimum cost to reach each city using roads and using prices. We can update the minimum cost to reach each city using the prices and the roads. We can return the minimum cost to reach each city.  
 class Solution
 {
     using ll = long long;

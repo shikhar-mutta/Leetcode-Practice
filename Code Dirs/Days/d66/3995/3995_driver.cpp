@@ -36,6 +36,30 @@ vector<string> _rvs() {
     if (!cur.empty()) v.push_back(cur);
     return v;
 }
+vector<vector<string>> _rvvs() {
+    string s; getline(cin,s);
+    vector<vector<string>> v;
+    int dep=0; string cur;
+    bool inq=false;
+    vector<string> row;
+    for (char c : s) {
+        if (c=='"') { inq=!inq; continue; }
+        if (inq) { cur+=c; continue; }
+        if (c=='[') { dep++; continue; }
+        if (c==']') {
+            dep--;
+            if (!cur.empty()) { row.push_back(cur); cur=""; }
+            if (dep==1) { v.push_back(row); row.clear(); }
+            continue;
+        }
+        if (c==',') {
+            if (!cur.empty()) { row.push_back(cur); cur=""; }
+            continue;
+        }
+    }
+    return v;
+}
+
 vector<vector<int>> _rvvi() {
     string s; getline(cin,s);
     vector<vector<int>> v;
@@ -61,7 +85,7 @@ int main() {
     while (t--) {
         string source = _rs();
         string target = _rs();
-        // TODO: read vector<vector<string>> rules
+        auto rules = _rvvs();
         auto costs = _rvi();
         Solution sol;
         auto res = sol.minCost(source, target, rules, costs);

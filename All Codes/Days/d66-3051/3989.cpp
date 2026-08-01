@@ -10,8 +10,8 @@ class Solution
 public:
     int maxConsistentColumns(vector<vector<int>> &grid, int limit)
     {
-        int n = grid[0].size(); 
-        vector<int> dp(n, 1);   
+        int n = grid[0].size();
+        vector<int> dp(n, 1);
 
         for (int c = 0; c < n; c++)
         {

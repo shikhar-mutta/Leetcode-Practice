@@ -1,0 +1,4 @@
+3
+["ntgwz","zwntg"]
+["abc","cab","bac","acb","bca","cba"]
+["leet","abb","bab","deed","edde","code","bba"]

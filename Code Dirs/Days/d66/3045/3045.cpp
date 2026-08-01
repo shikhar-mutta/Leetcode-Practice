@@ -3,36 +3,55 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
-// TC: O(sum(len^2)) amortized via trie ~ O(sum(len) * 26^2) worst, but
-// practically O(sum(len)) per insert with map children  SC: O(sum(len))
-// Approach: trie keyed by pairs (word[i], word[len-1-i]) walked
-// simultaneously from front and back. For each word, before inserting,
-// walk the trie following its (front,back) char pairs; each node passed
-// through (that has cnt>0, meaning it was a completed word ending there)
-// contributes to the answer, since that represents a shorter word that is
-// both a prefix and suffix of the current one. Then insert the current
-// word's full pair-path, incrementing cnt at the final node.
-class Solution {
-    struct Node {
-        unordered_map<int, Node*> child;
-        long long cnt = 0;
-    };
-    Node* root = new Node();
-public:
-    long long countPrefixSuffixPairs(vector<string>& words) {
-        long long ans = 0;
-        for (auto& w : words) {
-            int n = w.size();
-            Node* cur = root;
-            for (int i = 0; i < n; i++) {
-                int key = (w[i] - 'a') * 26 + (w[n - 1 - i] - 'a');
-                if (!cur->child.count(key)) cur->child[key] = new Node();
-                cur = cur->child[key];
-                ans += cur->cnt;
-            }
-            cur->cnt++;
+// TC: O(n * m)  SC: O(n)
+//  Approach: Use polynomial rolling hash to compute the hash of all prefixes and suffixes of each word. For each prefix hash, check if it matches any previously seen suffix hash and count the pairs.
+//  Use a hash map to store the count of each prefix hash and suffix hash. For each word, compute the prefix and suffix hashes and update the counts in the hash map. Finally, iterate through the words again and for each prefix hash, check if it exists in the suffix hash map and add the count to the total pairs.
+class Solution
+{
+private:
+    inline static constexpr long long primeBase = 57, mod = 1e9 + 9;
+    inline static long long powerBase[100000] = {1};
+    inline static unordered_map<long long, long long> seen;
+
+    static void initPowerBase()
+    {
+        for (int i = 1; i < 100000; ++i)
+        {
+            powerBase[i] = (powerBase[i - 1] * primeBase) % mod;
         }
-        return ans;
+    }
+
+public:
+    long long countPrefixSuffixPairs(vector<string> &words)
+    {
+        static bool initFunc = ([]()
+                                {
+            initPowerBase();
+            return true; })();
+        seen.clear();
+
+        long long total = 0;
+
+        for (string &word : words)
+        {
+            long long fwdH = 0, bwdH = 0;
+            int wordLen = word.length();
+            for (int i = 0; i < wordLen; ++i)
+            {
+                char c = word[i], bc = word[wordLen - i - 1];
+                long long ord = c - 'a' + 1;
+                fwdH = (fwdH * primeBase + ord) % mod;
+                long long bord = bc - 'a' + 1;
+                long long bordBase = (bord * powerBase[i] + mod) % mod;
+                bwdH = (bordBase + bwdH) % mod;
+                if (fwdH == bwdH)
+                {
+                    if (seen.contains(fwdH))
+                        total += seen[fwdH];
+                }
+            }
+            ++seen[fwdH];
+        }
+        return total;
     }
 };

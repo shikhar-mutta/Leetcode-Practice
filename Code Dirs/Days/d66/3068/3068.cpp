@@ -3,36 +3,34 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
-// TC: O(n log n)  SC: O(n)
-// Approach: since the tree is connected, any pair of nodes can be
-// XOR-flipped via edges along their path (each edge use is optional), so
-// overall any EVEN number of nodes can be freely chosen to flip. Compute
-// gain[i] = (nums[i]^k) - nums[i]; take the base sum plus all positive
-// gains; if an odd number of gains were taken, drop the smallest positive
-// gain or include the least-negative gain, whichever costs less.
-class Solution {
+// TC: O(n)  SC: O(n)
+//  Approach: For each node, we can either take its value as is or take its value XOR k. We want to maximize the sum of the values of the nodes. We can iterate through the nodes and for each node, we can check if taking its value XOR k is greater than taking its value as is. If it is, we take its value XOR k and add it to the sum. If it is not, we take its value as is and add it to the sum.
+class Solution
+{
 public:
-    long long maximumValueSum(vector<int>& nums, int k, vector<vector<int>>& edges) {
-        int n = nums.size();
-        long long base = 0;
-        vector<int> gains;
-        for (int x : nums) {
-            base += x;
-            gains.push_back((x ^ k) - x);
+    long long maximumValueSum(vector<int> &nums, int k,
+                              vector<vector<int>> &edges)
+    {
+        long long sum = 0;
+        int nk = INT_MAX;
+        int pk = INT_MAX;
+        int count = 0;
+        for (int i = 0; i < nums.size(); i++)
+        {
+            if ((nums[i] ^ k) > nums[i])
+            {
+                count++;
+                sum += nums[i] ^ k;
+                pk = min(pk, (nums[i] ^ k) - nums[i]);
+            }
+            else
+            {
+                sum += nums[i];
+                nk = min(nk, nums[i] - (nums[i] ^ k));
+            }
         }
-        sort(gains.begin(), gains.end(), greater<int>());
-        long long total = base;
-        int flips = 0;
-        for (int g : gains) {
-            if (g > 0) { total += g; flips++; }
-        }
-        if (flips % 2 == 1) {
-            long long bestAdjust = LLONG_MIN;
-            if (flips >= 1) bestAdjust = max(bestAdjust, (long long)(-gains[flips - 1])); // undo smallest taken gain
-            if (flips < n) bestAdjust = max(bestAdjust, (long long)gains[flips]); // include next (negative) gain
-            total += bestAdjust;
-        }
-        return total;
+        if (count % 2 == 0)
+            return sum;
+        return max(sum - nk, sum - pk);
     }
 };

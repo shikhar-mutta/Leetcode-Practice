@@ -3,54 +3,73 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
 // TC: O(n log n)  SC: O(n)
-// Approach: coordinate-compress values, use two Fenwick trees (one per
-// array) to count how many existing elements in each array are strictly
-// greater than the current value. Assign to the array with the larger
-// greater-count; on a tie, assign to the shorter array (or arr1 if equal
-// length), then update that array's BIT.
-class Solution {
-    vector<int> bit1, bit2;
-    int sz;
-    void update(vector<int>& bit, int i, int delta) {
-        for (; i <= sz; i += i & (-i)) bit[i] += delta;
+//  Approach: Use a Fenwick tree to count the number of elements not greater than the current element in the first array. If the count is greater than 0, add the current element to the first array and update the Fenwick tree. Otherwise, add the current element to the second array.
+//  The Fenwick tree is used to keep track of the number of elements in the first array that are not greater than the current element. The first array is always kept sorted, so we can use binary search to find the position of the current element in the sorted array. The second array is also kept sorted, but we don't need to keep track of its elements in the Fenwick tree because we only need to know how many elements are in the first array that are not greater than the current element.
+class Fenwick
+{
+    vector<int> tree;
+
+public:
+    Fenwick(int n) : tree(n) {}
+
+    void update(int i, int val)
+    {
+        while (i < tree.size())
+        {
+            tree[i] += val;
+            i += i & -i; // i + lowbit(i)
+        }
     }
-    int query(vector<int>& bit, int i) {
+
+    int pre(int i)
+    {
         int s = 0;
-        for (; i > 0; i -= i & (-i)) s += bit[i];
+        while (i > 0)
+        {
+            s += tree[i];
+            i &= i - 1; // i - lowbit(i);
+        }
         return s;
     }
+};
+
+class Solution
+{
 public:
-    vector<int> resultArray(vector<int>& nums) {
-        vector<int> sorted = nums;
-        sort(sorted.begin(), sorted.end());
+    vector<int> resultArray(vector<int> &nums)
+    {
+        auto sorted = nums;
+        ranges::sort(sorted);
+        // make front unique, move duplicated to back, then erase
         sorted.erase(unique(sorted.begin(), sorted.end()), sorted.end());
-        sz = sorted.size();
-        bit1.assign(sz + 1, 0);
-        bit2.assign(sz + 1, 0);
-        auto rank = [&](int v) {
-            return lower_bound(sorted.begin(), sorted.end(), v) - sorted.begin() + 1;
-        };
-        vector<int> arr1, arr2;
-        int n = nums.size();
-        arr1.push_back(nums[0]);
-        update(bit1, rank(nums[0]), 1);
-        arr2.push_back(nums[1]);
-        update(bit2, rank(nums[1]), 1);
-        for (int i = 2; i < n; i++) {
-            int r = rank(nums[i]);
-            int cnt1 = (int)arr1.size() - query(bit1, r);
-            int cnt2 = (int)arr2.size() - query(bit2, r);
-            bool toArr1;
-            if (cnt1 > cnt2) toArr1 = true;
-            else if (cnt2 > cnt1) toArr1 = false;
-            else if (arr1.size() != arr2.size()) toArr1 = arr1.size() < arr2.size();
-            else toArr1 = true;
-            if (toArr1) { arr1.push_back(nums[i]); update(bit1, r, 1); }
-            else { arr2.push_back(nums[i]); update(bit2, r, 1); }
+        // nums sorted with unique
+        int m = sorted.size();
+
+        // init, fenwick to count not greater
+        Fenwick tr(m + 1);
+        vector<int> a{nums[0]}, b{nums[1]};
+        // add into fenwick tree
+        tr.update(ranges::lower_bound(sorted, nums[0]) - sorted.begin() + 1, 1);
+        tr.update(ranges::lower_bound(sorted, nums[1]) - sorted.begin() + 1,
+                  -1);
+        for (int i = 2; i < nums.size(); i++)
+        {
+            int k = nums[i];
+            int v = ranges::lower_bound(sorted, k) - sorted.begin() + 1;
+            int gc = a.size() - b.size() - tr.pre(v);
+            if (gc > 0 || gc == 0 && a.size() <= b.size())
+            {
+                a.push_back(k);
+                tr.update(v, 1);
+            }
+            else
+            {
+                b.push_back(k);
+                tr.update(v, -1);
+            }
         }
-        for (int x : arr2) arr1.push_back(x);
-        return arr1;
+        a.insert(a.end(), b.begin(), b.end());
+        return a;
     }
 };

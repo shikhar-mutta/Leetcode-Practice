@@ -3,45 +3,98 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
-// TC: O(m log m)  SC: O(n)
-// Approach: binary search on the answer second s. check(s): every index
-// 1..n must have an occurrence within the first s seconds (its LAST
-// occurrence is where it must be marked). Simulate: at non-last
-// occurrences, bank +1 "power" (spare decrement capacity, shared across
-// all indices); at an index's last occurrence, spend power >= nums[idx-1]
-// to mark it (must be affordable at that exact point). Feasible iff every
-// index gets marked this way.
-class Solution {
-    bool check(int s, const vector<int>& nums, const vector<int>& changeIndices) {
-        int n = nums.size();
-        vector<int> lastOcc(n + 1, -1);
-        for (int i = 0; i < s; i++) lastOcc[changeIndices[i]] = i;
-        for (int i = 1; i <= n; i++) if (lastOcc[i] == -1) return false;
-        long long power = 0;
+// TC: O(n + m)  SC: O(n + m)
+//  Approach: Use a queue to keep track of the indices that need to be marked.
+//  For each second, check if the index to be marked is already marked or not. If it is not marked, mark it and increment the count of marked indices. If it is already marked, check if there are any other indices that can be marked. If there are, mark one of them and increment the count of marked indices. If there are no other indices that can be marked, continue to the next second. If all indices are marked, return the current second. If all seconds are processed and not all indices are marked, return -1.
+class Solution
+{
+public:
+    int earliestSecondToMarkIndices(vector<int> &nums,
+                                    vector<int> &changeIndices)
+    {
+        int n = nums.size(), m = changeIndices.size();
+        if (m < n)
+            return -1;
+
         int marked = 0;
-        for (int i = 0; i < s; i++) {
-            int idx = changeIndices[i];
-            if (i == lastOcc[idx]) {
-                if (power < nums[idx - 1]) return false;
-                power -= nums[idx - 1];
+        int zeros = count(nums.begin(), nums.end(), 0);
+
+        vector<int> firstSecond(n, -1);
+        for (int i = m - 1; i >= 0; i--)
+            firstSecond[changeIndices[i] - 1] = i;
+
+        queue<int> q;
+        vector<int> emptySeconds(m, 0);
+        for (int i = 0; i < n; i++)
+        {
+            if (firstSecond[i] == -1 && nums[i])
+                q.push(i);
+        }
+        for (int i = m - 1; i >= 0; i--)
+        {
+            if (firstSecond[changeIndices[i] - 1] == i &&
+                nums[changeIndices[i] - 1])
+            {
+                q.push(changeIndices[i] - 1);
+            }
+            else
+                emptySeconds[i] = 1;
+        }
+
+        int x = 0;
+        for (int i = 0; i < m; i++)
+        {
+            if (emptySeconds[i])
+            {
+                if (x)
+                {
+                    emptySeconds[i] = 0;
+                    x--;
+                }
+            }
+            else
+                x++;
+        }
+
+        for (int i = 1; i < m; i++)
+            emptySeconds[i] += emptySeconds[i - 1];
+
+        for (int s = 0; s < m; s++)
+        {
+            if (nums[changeIndices[s] - 1])
+            {
+                nums[changeIndices[s] - 1] = 0;
+                zeros++;
+            }
+            else if (zeros)
+            {
+                zeros--;
                 marked++;
-            } else {
-                power++;
+                if (marked == n)
+                    return s + 1;
+            }
+            else
+            {
+                while (!q.empty() && ((firstSecond[q.front()] > -1 &&
+                                       emptySeconds[firstSecond[q.front()]] -
+                                               emptySeconds[s] + 1 <
+                                           nums[q.front()]) ||
+                                      !nums[q.front()]))
+                {
+                    q.pop();
+                }
+                if (!q.empty())
+                {
+                    nums[q.front()]--;
+                    if (!nums[q.front()])
+                    {
+                        q.pop();
+                        zeros++;
+                    }
+                }
             }
         }
-        return marked == n;
-    }
 
-public:
-    int earliestSecondToMarkIndices(vector<int>& nums, vector<int>& changeIndices) {
-        int m = changeIndices.size();
-        int lo = 1, hi = m, ans = -1;
-        while (lo <= hi) {
-            int mid = lo + (hi - lo) / 2;
-            if (check(mid, nums, changeIndices)) { ans = mid; hi = mid - 1; }
-            else lo = mid + 1;
-        }
-        return ans;
+        return -1;
     }
 };

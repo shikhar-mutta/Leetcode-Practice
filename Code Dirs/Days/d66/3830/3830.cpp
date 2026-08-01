@@ -3,36 +3,36 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
-// TC: O(n)  SC: O(n)
-// Approach: precompute l1[i]/l2[i] = longest alternating run ending at i
-// whose last step was an increase/decrease, and r1[i]/r2[i] = longest run
-// starting at i whose first step (going right) is an increase/decrease.
-// The no-deletion answer is the max l1/l2 value. For each candidate deleted
-// index i (1..n-2), nums[i-1] and nums[i+1] become adjacent; if that new
-// step is an increase, the merged run is l2[i-1]+r2[i+1] (must have ended
-// in a decrease before, to alternate into an increase), symmetric for a
-// decrease.
-class Solution {
+// TC: O(n)  SC: O(1)
+//  Approach: We can use a two pointer approach to solve this problem. We can use two pointers to keep track of the current subarray and the previous subarray. We can then check if the current subarray can be merged with the previous subarray by checking if the last element of the previous subarray is less than the first element of the current subarray. If it is, we can merge the two subarrays and update the result. If it is not, we can update the result with the length of the current subarray and move the left pointer to the right pointer. We can also check if the current subarray can be merged with the previous subarray by checking if the last element of the previous subarray is greater than the first element of the current subarray. If it is, we can merge the two subarrays and update the result. If it is not, we can update the result with the length of the current subarray and move the left pointer to the right pointer. We can continue this process until we reach the end of the array. The final result will be the maximum length of the alternating subarray that can be obtained by removing at most one element.
+class Solution
+{
 public:
-    int longestAlternating(vector<int>& nums) {
-        int n = nums.size();
-        vector<int> l1(n, 1), l2(n, 1), r1(n, 1), r2(n, 1);
-        int ans = 0;
-
-        for (int i = 1; i < n; i++) {
-            if (nums[i-1] < nums[i]) l1[i] = l2[i-1] + 1;
-            else if (nums[i-1] > nums[i]) l2[i] = l1[i-1] + 1;
-            ans = max({ans, l1[i], l2[i]});
+    int longestAlternating(vector<int> &nums)
+    {
+        int N = size(nums), pl = -2, pr = -2, l = 0, res = 1;
+        while (1)
+        {
+            while (l < N - 1 && nums[l + 1] == nums[l])
+                ++l;
+            if (l + 1 == N)
+                break;
+            int r = l + 1, d = nums[l + 1] - nums[l], d2;
+            while (r < N - 1 && nums[r + 1] != nums[r] &&
+                   ((d2 = nums[r + 1] - nums[r]) ^ d) < 0)
+            {
+                ++r;
+                d = d2;
+            }
+            res = max(res,
+                      l == pr || l == pr + 1 && ((nums[pr - 1] - nums[pr]) ^
+                                                 (nums[l + 1] - nums[l])) >= 0
+                          ? r - pl
+                          : r - l + 1);
+            pl = l;
+            pr = r;
+            l = pr;
         }
-        for (int i = n - 2; i >= 0; i--) {
-            if (nums[i+1] > nums[i]) r1[i] = r2[i+1] + 1;
-            else if (nums[i+1] < nums[i]) r2[i] = r1[i+1] + 1;
-        }
-        for (int i = 1; i < n - 1; i++) {
-            if (nums[i-1] < nums[i+1]) ans = max(ans, l2[i-1] + r2[i+1]);
-            else if (nums[i-1] > nums[i+1]) ans = max(ans, l1[i-1] + r1[i+1]);
-        }
-        return ans;
+        return res;
     }
 };

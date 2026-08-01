@@ -3,82 +3,83 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
-// TC: O(n log maxVal)  SC: O(n log maxVal)
-// Approach: "bounded range" means max(subarray)-min(subarray) <= k.
-// Maintain a sliding window [left,right] with monotonic deques tracking the
-// window's max/min, shrinking left whenever the range exceeds k; every
-// subarray [l,right] with l in [left,right] is automatically also within
-// range k (it's a subset of the window). Maintain a counting binary trie of
-// prefixXor[l] for l in the current window (inserting prefixXor[right] as
-// right expands, removing prefixXor[left] as left advances), and for each
-// right query the trie for the value maximizing XOR with
-// prefixXor[right+1] — the classic max-XOR-subarray trie technique, now
-// restricted to a sliding validity window.
-class Solution {
-    static const int BITS = 30;
-    struct TrieNode { int child[2] = {-1,-1}; int cnt = 0; };
-    vector<TrieNode> trie;
+// TC: O(n*32)  SC: O(n*32)
+//  Approach: for each bit from MSB to LSB, try to set it in the answer. For each bit, we can check if there exists a prefix xor that can be combined with the current prefix xor to set that bit in the answer. We can use a sliding window to maintain the valid prefix xors that are within the range of k. We can use a hash map to store the prefix xors and their positions. If we can find a prefix xor that can be combined with the current prefix xor to set the bit, we can update the answer and move on to the next bit. Otherwise, we can move on to the next bit without updating the answer. We can repeat this process for all bits from MSB to LSB and return the final answer.
+int pos[1 << 15], lp[40000];
+int mn[40000], mx[40000];
+int speedup = []
+{
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    return 0;
+}();
 
-    void insert(int val) {
-        int cur = 0;
-        for (int b = BITS; b >= 0; b--) {
-            int bit = (val >> b) & 1;
-            if (trie[cur].child[bit] == -1) {
-                trie[cur].child[bit] = trie.size();
-                trie.push_back(TrieNode());
-            }
-            cur = trie[cur].child[bit];
-            trie[cur].cnt++;
+void init_lp(const vector<int> &nums, int k)
+{
+    int mnl = 0, mnr = 0, mxl = 0, mxr = 0, l = -1, N = size(nums);
+    for (int i = 0; i < N; ++i)
+    {
+        int v = nums[i];
+        while (mnr > mnl && v <= nums[mn[mnr - 1]])
+            --mnr;
+        mn[mnr++] = i;
+        while (mxr > mxl && v >= nums[mx[mxr - 1]])
+            --mxr;
+        mx[mxr++] = i;
+        if (mnr == mnl + 1)
+        {
+            int lo = nums[mn[mnl]];
+            while (nums[mx[mxl]] - lo > k)
+                l = mx[mxl++];
         }
-    }
-    void remove(int val) {
-        int cur = 0;
-        for (int b = BITS; b >= 0; b--) {
-            int bit = (val >> b) & 1;
-            cur = trie[cur].child[bit];
-            trie[cur].cnt--;
+        else if (mxr == mxl + 1)
+        {
+            int hi = nums[mx[mxl]];
+            while (hi - nums[mn[mnl]] > k)
+                l = mn[mnl++];
         }
+        lp[i] = l;
     }
-    int queryMax(int val) {
-        int cur = 0, res = 0;
-        for (int b = BITS; b >= 0; b--) {
-            int bit = (val >> b) & 1;
-            int want = bit ^ 1;
-            if (trie[cur].child[want] != -1 && trie[trie[cur].child[want]].cnt > 0) {
-                res |= (1 << b);
-                cur = trie[cur].child[want];
-            } else {
-                cur = trie[cur].child[bit];
-            }
-        }
-        return res;
+}
+
+int check(const vector<int> &nums, int tgt, int d, int st)
+{
+    int cur = 0;
+    pos[0] = 0;
+    for (int i = 0; i < st; ++i)
+        pos[cur ^= (nums[i] >> d)] = i + 1;
+    for (int i = st, N = size(nums); i < N; ++i)
+    {
+        pos[cur ^= (nums[i] >> d)] = i + 1;
+        if (pos[cur ^ tgt] > lp[i])
+            return i;
     }
+    return -1;
+}
+
+class Solution
+{
 public:
-    int maxXor(vector<int>& nums, int k) {
-        int n = nums.size();
-        vector<int> prefixXor(n + 1, 0);
-        for (int i = 0; i < n; i++) prefixXor[i+1] = prefixXor[i] ^ nums[i];
+    int maxXor(vector<int> &nums, int k)
+    {
+        init_lp(nums, k);
+        int res = *max_element(begin(nums), end(nums));
+        if (res <= 1)
+            return res;
 
-        trie.push_back(TrieNode());
-        deque<int> maxDq, minDq;
-        int left = 0;
-        int ans = 0;
-        for (int right = 0; right < n; right++) {
-            insert(prefixXor[right]);
-            while (!maxDq.empty() && nums[maxDq.back()] <= nums[right]) maxDq.pop_back();
-            maxDq.push_back(right);
-            while (!minDq.empty() && nums[minDq.back()] >= nums[right]) minDq.pop_back();
-            minDq.push_back(right);
-
-            while (nums[maxDq.front()] - nums[minDq.front()] > k) {
-                remove(prefixXor[left]);
-                if (maxDq.front() == left) maxDq.pop_front();
-                if (minDq.front() == left) minDq.pop_front();
-                left++;
+        int sz = 32 - __builtin_clz(res);
+        for (int d = sz - 2, p = 0, r; d >= 0; --d)
+            if (!((r = res >> d) & 1))
+            {
+                fill(pos, pos + (1 << (sz - d)), -1);
+                int x = check(nums, r | 1, d, p);
+                if (x >= 0)
+                {
+                    int u = 1 << d;
+                    res = (res | u) & ~(u - 1);
+                    p = x;
+                }
             }
-            ans = max(ans, queryMax(prefixXor[right+1]));
-        }
-        return ans;
+        return res;
     }
 };

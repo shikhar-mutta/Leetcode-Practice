@@ -3,40 +3,53 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
-// TC: O(m log m * L)  SC: O(m * L), m=segment count, L=max segment length
-// Approach: each segment i is built from nums1[i] ones and nums0[i] zeros;
-// arranging all ones before all zeros maximizes that segment's own value.
-// Segments are then ordered via the classic "largest concatenation"
-// comparator (a+b > b+a as strings) to maximize the overall concatenated
-// value, same greedy used for arranging numbers into the largest
-// concatenation. The final binary string's value is computed mod 1e9+7 by
-// folding each segment in: value = value*2^len(segment) + segmentValue.
+//TC: O(n * log(n))  SC: O(n)
+//Approach: We can use a greedy approach to solve this problem. We can sort the segments in descending order of their binary value and then concatenate them to get the maximum value.
+// We can use a custom comparator to sort the segments in descending order of their binary value. We can then concatenate the segments to get the maximum value. We can use a modulo operation to avoid overflow.
 class Solution {
-    static const long long MOD = 1000000007;
 public:
     int maxValue(vector<int>& nums1, vector<int>& nums0) {
-        int m = nums1.size();
-        vector<string> segs(m);
-        for (int i = 0; i < m; i++) {
-            segs[i] = string(nums1[i], '1') + string(nums0[i], '0');
-        }
-        sort(segs.begin(), segs.end(), [](const string& a, const string& b) {
-            return a + b > b + a;
-        });
-
-        long long value = 0;
-        for (auto& s : segs) {
-            long long segVal = 0;
-            long long p2 = 1;
-            for (int i = s.size() - 1; i >= 0; i--) {
-                if (s[i] == '1') segVal = (segVal + p2) % MOD;
-                p2 = (p2 * 2) % MOD;
+        // Pack each (n1, n0) pair into one 64-bit key so the default (no
+        // comparator) sort applies: high 32 bits = ~n1 -> n1 descending,
+        // low 32 bits = n0 -> n0 ascending. Matches the original ordering.
+        int n = nums1.size();
+        vector<unsigned long long> x;
+        x.reserve(n);
+        long long num_start1 = 0;
+        for (int i = 0; i < n; ++i) {
+            if (nums0[i] == 0) {
+                num_start1 += nums1[i];
+                continue;
             }
-            long long shift = 1;
-            for (size_t i = 0; i < s.size(); i++) shift = (shift * 2) % MOD;
-            value = (value * shift + segVal) % MOD;
+            unsigned int n1 = (unsigned int)nums1[i];
+            unsigned int n0 = (unsigned int)nums0[i];
+            x.push_back(((unsigned long long)(0xFFFFFFFFu - n1) << 32) | n0);
         }
-        return (int)value;
+        sort(x.begin(), x.end());
+        constexpr long long mod = 1000000007;
+
+        auto pow2 = [](long long e) {
+            long long r = 1, b = 2;
+            for (; e > 0; e >>= 1) {
+                if (e & 1)
+                    r = r * b % mod;
+                b = b * b % mod;
+            }
+            return r;
+        };
+        long long res = 0;
+        auto appendOnes = [&](long long k) {
+            long long p = pow2(k);
+            res = (res * p + (p - 1 + mod)) % mod;
+        };
+        auto appendZeros = [&](long long k) { res = res * pow2(k) % mod; };
+
+        appendOnes(num_start1);
+        for (unsigned long long key : x) {
+            appendOnes(0xFFFFFFFFu - (unsigned int)(key >> 32));
+            appendZeros((unsigned int)(key & 0xFFFFFFFFu));
+        }
+
+        return (int)res;
     }
 };

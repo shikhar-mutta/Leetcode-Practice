@@ -3,34 +3,41 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
 // TC: O(n)  SC: O(n)
-// Approach: want subarrays with exactly k distinct values, each appearing
-// >= m times. Use the "exactly k" = atMost(k) - atMost(k+1) trick, but with
-// "atMost" redefined via f(lim): a sliding window shrunk from the left
-// whenever it has >= lim distinct values AND >= k of them already meet the
-// >= m frequency threshold; after each right-extension, add the current
-// left boundary count (valid starting points for a "not yet violating"
-// window) to the total. f(k) - f(k+1) isolates windows with exactly k
-// qualifying distinct values.
-class Solution {
-    long long f(vector<int>& nums, int k, int m, int lim) {
-        unordered_map<int,int> cnt;
-        long long ans = 0;
-        int l = 0, t = 0;
-        for (int x : nums) {
-            if (++cnt[x] == m) t++;
-            while ((int)cnt.size() >= lim && t >= k) {
-                int y = nums[l++];
-                if (--cnt[y] == m - 1) t--;
-                if (cnt[y] == 0) cnt.erase(y);
-            }
-            ans += l;
+// Approach: We can use a two-pointer technique to find the number of subarrays with exactly k distinct integers. We maintain a count of the occurrences of each integer in the current window and use two pointers to expand and contract the window as needed. We also keep track of the position of the last occurrence of each integer to ensure that we only count subarrays with exactly k distinct integers. The final result is obtained by summing up the counts of valid subarrays for each position in the array.
+int cnts[100001], pos[100000];
+template <class F>
+void compute(const vector<int> &nums, int k, int m, F fn)
+{
+    int N = size(nums), cur = 0, i = 0, j = 0;
+    while (i < N && !(++cnts[nums[i]] == m && ++cur == k))
+        fn(i++, -1);
+    if (i < N)
+    {
+        while (1)
+        {
+            while (cnts[nums[j]] != m)
+                --cnts[nums[j++]];
+            fn(i, j);
+            if (++i == N)
+                break;
+            if (++cnts[nums[i]] == m)
+                --cnts[nums[j++]];
         }
-        return ans;
     }
+    while (j < i)
+        cnts[nums[j++]] = 0;
+}
+class Solution
+{
 public:
-    long long countSubarrays(vector<int>& nums, int k, int m) {
-        return f(nums, k, m, k) - f(nums, k, m, k + 1);
+    long long countSubarrays(vector<int> &nums, int k, int m)
+    {
+        long long res = 0;
+        compute(nums, k + 1, 1, [](int i, int j)
+                { pos[i] = j; });
+        compute(nums, k, m, [&res](int i, int j)
+                { if (j > pos[i]) res += j - pos[i]; });
+        return res;
     }
 };

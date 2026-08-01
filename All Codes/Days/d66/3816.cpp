@@ -3,29 +3,53 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
-// TC: O(n^2)  SC: O(n)
+//TC: O(n^2)  SC: O(n)
 // Approach: if some character occurs more than once, exactly one occurrence
 // of some duplicated character must be removed; try removing each position
 // whose character has count>=2 and keep the lexicographically smallest
-// resulting string. If no character repeats, the string is returned as-is.
-class Solution {
+// resulting string. If no character repeats, the string is returned as-is. 
+class Solution
+{
 public:
-    string lexSmallestAfterDeletion(string s) {
-        int n = s.size();
-        vector<int> cnt(26, 0);
-        for (char c : s) cnt[c - 'a']++;
-        bool hasDup = false;
-        for (int c : cnt) if (c >= 2) hasDup = true;
-        if (!hasDup) return s;
+    static string lexSmallestAfterDeletion(string s)
+    {
+        unsigned int let_cnt_src[26]{};
+        unsigned int let_cnt_res[26]{};
 
-        string best;
-        bool first = true;
-        for (int i = 0; i < n; i++) {
-            if (cnt[s[i] - 'a'] < 2) continue;
-            string candidate = s.substr(0, i) + s.substr(i + 1);
-            if (first || candidate < best) { best = candidate; first = false; }
+        char *s_mn = &s.front();
+        char *s_mx = &s.back();
+        char *s_lo = s_mn - 1u;
+        char *s_hi = s_mn;
+
+        for (; s_hi <= s_mx; ++s_hi)
+        {
+            *s_hi -= 'a';
+            ++let_cnt_src[*s_hi];
         }
-        return best;
+        s_hi = s_mn;
+
+        for (; s_hi <= s_mx; ++s_hi)
+        {
+            --let_cnt_src[*s_hi];
+
+            while (s_lo >= s_mn && *s_lo > *s_hi &&
+                   (let_cnt_src[*s_lo] > 0 || let_cnt_res[*s_lo] > 1))
+            {
+                --let_cnt_res[*s_lo];
+                --s_lo;
+            }
+
+            *(++s_lo) = *s_hi;
+            ++let_cnt_res[*s_hi];
+        }
+        s_hi = s_mn;
+
+        while (s_lo >= s_mn && let_cnt_res[*s_lo] > 1)
+            --let_cnt_res[*(s_lo--)];
+
+        s.resize(s_lo - s_mn + 1u);
+        for (; s_hi <= s_mx; ++s_hi)
+            *s_hi += 'a';
+        return s;
     }
 };

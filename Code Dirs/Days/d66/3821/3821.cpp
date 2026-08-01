@@ -3,33 +3,47 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
-// TC: O(k * log n)  SC: O(1)
-// Approach: numbers with exactly k one-bits, ordered ascending by value,
-// correspond exactly to the combinadic (combinatorial number system)
-// ranking of k-subsets of bit positions. Convert n to a 0-indexed rank and
-// greedily pick, from the most significant chosen bit down, the largest
-// position c such that C(c,i) <= remaining rank (i = bits left to place),
-// subtract C(c,i), and set that bit; repeat for i=k..1.
-class Solution {
-    long long comb(long long a, long long b) {
-        if (b < 0 || a < b) return 0;
-        __int128 res = 1;
-        for (long long i = 0; i < b; i++) {
-            res = res * (a - i) / (i + 1);
-            if (res > (__int128)4e18) return (long long)4e18;
+// TC: O(k^2). SC: O(k^2). DP, combinatorics.
+//  Approach: We can use combinatorics to solve this problem. We can use a bitmask to represent the number of 1s in the binary representation of the number. We can use a DP table to store the number of ways to choose k bits from n bits. We can then use this DP table to find the nth smallest integer with k one bits.
+using ll = long long;
+const int MX = 60;
+ll comb[MX + 1][MX + 1];
+auto init = []()
+{
+    memset(comb, 0, sizeof(comb));
+    for (int i = 0; i <= MX; ++i)
+    {
+        comb[i][0] = 1;
+        for (int j = 1; j <= i; ++j)
+        {
+            comb[i][j] = comb[i - 1][j] + comb[i - 1][j - 1];
         }
-        return (long long)res;
     }
+    return 0;
+}();
+class Solution
+{
 public:
-    long long nthSmallest(long long n, int k) {
-        long long r = n - 1;
-        long long ans = 0;
-        for (int i = k; i >= 1; i--) {
-            long long c = i - 1;
-            while (comb(c + 1, i) <= r) c++;
-            r -= comb(c, i);
-            ans |= (1LL << c);
+    int HI = 49;
+    long long nthSmallest(long long n, int k)
+    {
+        ll ans = 0;
+        int rest = k;
+        int b = HI;
+        while (n > 1 && rest)
+        {
+            ll sum = comb[b][rest];
+            if (n > sum)
+            {
+                n -= sum;
+                rest--;
+                ans |= 1LL << b;
+            }
+            --b;
+        }
+        for (int i = 0; i <= b && rest > 0; ++i, rest--)
+        {
+            ans |= 1LL << i;
         }
         return ans;
     }

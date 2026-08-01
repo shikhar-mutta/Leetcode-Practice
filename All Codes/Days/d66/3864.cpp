@@ -3,34 +3,35 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
-// TC: O(n log n)  SC: O(n)
-// Approach: a segment [l,r) costs (r-l)*X*encCost if it has X>0 sensitive
-// ('1') chars, or flatCost if X==0. If the segment's length is even, it can
-// instead be split at its exact midpoint into two independently-optimal
-// halves, whichever is cheaper. Since the split is always at the fixed
-// midpoint (a segment-tree-like recursive structure, not an arbitrary
-// partition), recurse from the full range using digit-count prefix sums to
-// get each segment's sensitive-char count in O(1).
-class Solution {
-    vector<int> pre;
-    int encCost, flatCost;
-    long long dfs(int l, int r) {
-        int x = pre[r] - pre[l];
-        long long res = x ? (long long)(r - l) * x * encCost : flatCost;
-        if ((r - l) % 2 == 0) {
-            int mid = (l + r) / 2;
-            res = min(res, dfs(l, mid) + dfs(mid, r));
-        }
-        return res;
-    }
+// TC: O(nlogn)  SC: O(n)
+//  Approach: We can use a divide-and-conquer approach to find the minimum cost to partition a binary string. We first calculate the prefix sum of the binary string to get the number of 1's in any substring. Then, we use a recursive function to calculate the minimum cost for each substring. The cost of encoding a substring is calculated based on the number of 1's in the substring and the encoding cost. If the length of the substring is even, we can split it into two equal halves and calculate the minimum cost for each half. The final result is obtained by taking the minimum of the cost of encoding the entire substring and the sum of the costs of encoding the two halves. We repeat this process for all possible substrings and return the minimum cost.
+int cnts[100001], enc, flat;
+
+long long eval(int l, int r)
+{
+    int n = cnts[r] - cnts[l];
+    if (n == 0)
+        return flat;
+
+    int sz = r - l;
+    long long score = (long long)sz * n * enc;
+    if (sz & 1)
+        return score;
+
+    int m = (l + r) / 2;
+    return min(score, eval(l, m) + eval(m, r));
+}
+
+class Solution
+{
 public:
-    long long minCost(string s, int encCost, int flatCost) {
-        int n = s.size();
-        pre.assign(n + 1, 0);
-        for (int i = 1; i <= n; i++) pre[i] = pre[i-1] + (s[i-1] - '0');
-        this->encCost = encCost;
-        this->flatCost = flatCost;
-        return dfs(0, n);
+    long long minCost(string s, int encCost, int flatCost)
+    {
+        int N = size(s);
+        for (int i = 0; i < N; ++i)
+            cnts[i + 1] = cnts[i] + s[i] - '0';
+        enc = encCost;
+        flat = flatCost;
+        return eval(0, N);
     }
 };

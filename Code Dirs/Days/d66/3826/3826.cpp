@@ -3,35 +3,47 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Added
-// TC: O(n^2 * k)  SC: O(n * k)
-// Approach: standard partition DP. dp[i][j] = min score splitting the
-// first i elements into j contiguous subarrays; a subarray's value is the
-// triangular number of its sum, s*(s+1)/2. Transition tries every previous
-// split point: dp[i][j] = min over prev of dp[prev][j-1] + value(prefix[i]
-// - prefix[prev]).
-class Solution {
+// TC: O(N * K). SC: O(N). DP, divide and conquer optimization.
+// Approach: We can use dynamic programming to solve this problem. We can use a DP table to store the minimum partition score for each subarray. We can then use divide and conquer optimization to reduce the time complexity of the DP solution. The idea is to use the fact that the optimal partition point for a subarray is monotonic, which allows us to reduce the number of states we need to consider when computing the DP table.
+int s[1000];
+long long sc1[1000], sc2[1000], *scores, *nsc;
+
+void eval(int l, int r, int pl, int pr)
+{
+    int m = (l + r) / 2, bp = -1;
+    long long bs = LONG_LONG_MAX;
+    for (int p = pl, rr = min(pr, m); p <= rr; ++p)
+    {
+        int sm = s[m] - s[p - 1];
+        long long score = scores[p - 1] + (long long)sm * (sm + 1) / 2;
+        if (score < bs)
+            bs = score, bp = p;
+    }
+    nsc[m] = bs;
+    if (m > l)
+        eval(l, m - 1, pl, bp);
+    if (m < r)
+        eval(m + 1, r, bp, pr);
+}
+
+class Solution
+{
 public:
-    long long minPartitionScore(vector<int>& nums, int k) {
-        int n = nums.size();
-        vector<long long> prefix(n + 1, 0);
-        for (int i = 0; i < n; i++) prefix[i+1] = prefix[i] + nums[i];
-
-        auto value = [](long long s) { return s * (s + 1) / 2; };
-
-        const long long INF = LLONG_MAX / 2;
-        vector<vector<long long>> dp(n + 1, vector<long long>(k + 1, INF));
-        dp[0][0] = 0;
-
-        for (int i = 1; i <= n; i++) {
-            for (int j = 1; j <= min(i, k); j++) {
-                for (int prev = j - 1; prev < i; prev++) {
-                    if (dp[prev][j-1] == INF) continue;
-                    long long s = prefix[i] - prefix[prev];
-                    dp[i][j] = min(dp[i][j], dp[prev][j-1] + value(s));
-                }
-            }
+    long long minPartitionScore(vector<int> &nums, int k)
+    {
+        int N = size(nums);
+        scores = sc1;
+        nsc = sc2;
+        for (int i = 0, pv = 0; i < N; ++i)
+        {
+            s[i] = pv += nums[i];
+            scores[i] = (long long)pv * (pv + 1) / 2;
         }
-        return dp[n][k];
+        for (int i = 1; i < k; ++i)
+        {
+            eval(i, N - 1, i, N - 1);
+            swap(scores, nsc);
+        }
+        return scores[N - 1];
     }
 };

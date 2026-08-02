@@ -3,42 +3,35 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(n) SC: O(n)
-//  Approach: maintain left and right pointers for each position, and update the count of valid substrings as stars are added.
-class Solution
-{
+class Solution {
 public:
-    int minTime(string s, vector<int> &order, int k)
-    {
-        int n = s.length();
-        vector<int> left(n), right(n);
-        for (int i = 0; i < n; ++i)
-        {
-            left[i] = i - 1;
-            right[i] = i + 1;
-        }
-        long long cnt = (long long)n * (n + 1) / 2;
-        if (cnt < k)
-        {
-            return -1;
-        }
-        for (int t = n - 1; t >= 0; --t)
-        {
-            int i = order[t], l = left[i], r = right[i];
-            cnt -= 1LL * (i - l) * (r - i);
-            if (cnt < k)
-            {
-                return t;
+    int minTime(string s, vector<int>& order, int k) {
+        int n = s.size();
+        long long total = (long long)n * (n + 1) / 2;
+
+        auto validCount = [&](int t) -> long long {
+            vector<bool> active(n, false);
+            for (int i = 0; i <= t; i++) active[order[i]] = true;
+            long long gapSum = 0;
+            int i = 0;
+            while (i < n) {
+                if (active[i]) { i++; continue; }
+                int j = i;
+                while (j < n && !active[j]) j++;
+                long long len = j - i;
+                gapSum += len * (len + 1) / 2;
+                i = j;
             }
-            if (l >= 0)
-            {
-                right[l] = r;
-            }
-            if (r < n)
-            {
-                left[r] = l;
-            }
+            return total - gapSum;
+        };
+
+        if (validCount(n - 1) < k) return -1;
+
+        int lo = 0, hi = n - 1;
+        while (lo < hi) {
+            int mid = lo + (hi - lo) / 2;
+            if (validCount(mid) >= k) hi = mid; else lo = mid + 1;
         }
-        return -1;
+        return lo;
     }
 };

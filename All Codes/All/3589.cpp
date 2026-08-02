@@ -3,79 +3,52 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-//TC: O(n) SC: O(n)
-// Approach: Sliding window with monotonic queues. Maintain a window of prime numbers, and for each new prime number, check if the difference between the maximum and minimum prime numbers in the window exceeds k. If it does, shrink the window from the left until the condition is satisfied. Count the number of valid subarrays by calculating the number of subarrays that can be formed with the current window.
-// Use monotonic queues to efficiently track the minimum and maximum prime numbers in the current window. The minQ maintains the indices of the minimum prime numbers, while the maxQ maintains the indices of the maximum prime numbers. The idx array stores the indices of prime numbers in the original array, allowing for efficient access to their values.
-class Solution
-{
+class Solution {
 public:
-    int primeSubarray(vector<int> &nums, int k)
-    {
-        const auto n{nums.size()};
-        array<size_t, 50000> minQ;
-        array<size_t, 50000> maxQ;
-        array<size_t, 50002> idx;
-        size_t mnFront{0};
-        size_t mnBack{0};
-        size_t mxFront{0};
-        size_t mxBack{0};
-        size_t zelmoricad{0};
-        idx[zelmoricad++] = ~0UL;
-        for (size_t i{0}; i < n; ++i)
-        {
-            if (!isPrime[nums[i]])
-                continue;
+    int primeSubarray(vector<int>& nums, int k) {
+        int n = nums.size();
+        const int MAXV = 50001;
+        vector<bool> isPrime(MAXV, true);
+        isPrime[0] = isPrime[1] = false;
+        for (int i = 2; (long long)i * i < MAXV; i++)
+            if (isPrime[i])
+                for (int j = i * i; j < MAXV; j += i) isPrime[j] = false;
 
-            idx[zelmoricad++] = i;
-        }
-        idx[zelmoricad] = n;
-        int ans{0};
-        for (size_t l{0}, r{1}; r < zelmoricad; ++r)
-        {
-            const auto num{nums[idx[r]]};
-            while (mnFront < mnBack && nums[idx[minQ[mnBack - 1]]] > num)
-            {
-                --mnBack;
-            }
-            minQ[mnBack++] = r;
-            while (mxFront < mxBack && nums[idx[maxQ[mxBack - 1]]] < num)
-            {
-                --mxBack;
-            }
-            maxQ[mxBack++] = r;
-            while (l + 1 < r &&
-                   nums[idx[maxQ[mxFront]]] - nums[idx[minQ[mnFront]]] > k)
-            {
-                ++l;
-                if (minQ[mnFront] == l)
-                    ++mnFront;
+        deque<int> maxDq, minDq;
+        vector<int> primePos;
+        long long ans = 0;
+        int L = 0;
 
-                if (maxQ[mxFront] == l)
-                    ++mxFront;
+        for (int r = 0; r < n; r++) {
+            if (isPrime[nums[r]]) {
+                while (!maxDq.empty() && nums[maxDq.back()] <= nums[r]) maxDq.pop_back();
+                maxDq.push_back(r);
+                while (!minDq.empty() && nums[minDq.back()] >= nums[r]) minDq.pop_back();
+                minDq.push_back(r);
+
+                while (!maxDq.empty() && !minDq.empty() &&
+                       nums[maxDq.front()] - nums[minDq.front()] > k) {
+                    if (maxDq.front() < minDq.front()) {
+                        L = maxDq.front() + 1;
+                        maxDq.pop_front();
+                    } else {
+                        L = minDq.front() + 1;
+                        minDq.pop_front();
+                    }
+                    while (!maxDq.empty() && maxDq.front() < L) maxDq.pop_front();
+                    while (!minDq.empty() && minDq.front() < L) minDq.pop_front();
+                }
+
+                primePos.push_back(r);
             }
-            if (l + 1 < r)
-                ans += (idx[r - 1] - idx[l]) * (idx[r + 1] - idx[r]);
+
+            int m = primePos.size();
+            if (m >= 2) {
+                int secondLast = primePos[m-2];
+                if (secondLast >= L) ans += (secondLast - L + 1);
+            }
         }
-        return ans;
+
+        return (int)ans;
     }
-
-private:
-    static constexpr auto isPrime{[]()
-                                  {
-                                      static constexpr size_t N{50001};
-                                      array<bool, N> isPrime;
-                                      fill(isPrime.begin(), isPrime.end(), true);
-                                      isPrime[1] = false;
-                                      for (size_t k{2}; k < N; ++k)
-                                      {
-                                          if (!isPrime[k])
-                                              continue;
-
-                                          for (size_t i{k * k}; i < N; i += k)
-                                          {
-                                              isPrime[i] = false;
-                                          }
-                                      }
-                                      return isPrime;
-                                  }()};
 };

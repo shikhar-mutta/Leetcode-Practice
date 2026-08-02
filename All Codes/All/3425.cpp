@@ -3,61 +3,61 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-class Solution {
+// TC: O(n)  SC: O(n)
+//   Approach: Use a DFS traversal to explore all paths in the tree. Maintain a distance array to keep track of the cumulative distance from the root to each node. Use a last-seen array to track the last occurrence of each number in the path. When visiting a node, check if the number has been seen before and update the left boundary of the path accordingly. Calculate the length and number of nodes in the current path and update the best length and node count if necessary. Backtrack by restoring the last-seen array and left boundary after exploring each child node.
+
+using ll = long long;
+template <typename T>
+using V = vector<T>;
+constexpr int N = 5e4;
+int last[N + 1];
+class Solution
+{
 public:
-    vector<int> longestSpecialPath(vector<vector<int>>& edges, vector<int>& nums) {
-        int n = nums.size();
-        vector<vector<pair<int,int>>> adj(n);
-        for (auto& e : edges) {
-            adj[e[0]].push_back({e[1], e[2]});
-            adj[e[1]].push_back({e[0], e[2]});
+    V<int> longestSpecialPath(V<V<int>> &edges, V<int> &nums)
+    {
+        int n = nums.size(), left = 0;
+        V<V<pair<int, int>>> g(n);
+
+        for (auto &e : edges)
+        {
+            int u = e[0], v = e[1], w = e[2];
+
+            g[u].emplace_back(v, w), g[v].emplace_back(u, w);
         }
 
-        vector<long long> prefDist(n + 1, 0);
-        unordered_map<int,int> lastSeen;
-        int left = 0;
-        long long bestLen = -1;
-        int bestNodes = 0;
+        memset(last, -1, sizeof(last));
+        V<ll> dist;
+        int bestd = 0, bestn = 1e9;
 
-        struct Frame { int node, parent, depth; long long dist; size_t ci; int oldLast; int oldLeft; };
-        vector<Frame> st;
-        st.push_back({0, -1, 0, 0, 0, -2, 0});
+        auto dfs = [&](auto &&self, int u, int p = -1) -> void
+        {
+            int id = dist.size() - 1, q = last[nums[u]], old = left;
 
-        // process entry for root manually inside loop via a flag
-        vector<bool> entered(n, false);
+            if (q != -1)
+                left = max(left, q + 1);
 
-        while (!st.empty()) {
-            Frame& f = st.back();
-            if (f.ci == 0 && !entered[f.node]) {
-                entered[f.node] = true;
-                prefDist[f.depth] = f.dist;
-                int old_last = lastSeen.count(nums[f.node]) ? lastSeen[nums[f.node]] : -1;
-                f.oldLast = old_last;
-                f.oldLeft = left;
-                if (old_last != -1 && old_last >= left) left = old_last + 1;
-                lastSeen[nums[f.node]] = f.depth;
+            last[nums[u]] = id;
 
-                long long length = prefDist[f.depth] - prefDist[left];
-                int nodeCount = f.depth - left + 1;
-                if (length > bestLen || (length == bestLen && nodeCount < bestNodes)) {
-                    bestLen = length;
-                    bestNodes = nodeCount;
-                }
-            }
+            ll len = dist[id] - dist[left];
+            int nodes = id - left + 1;
 
-            if (f.ci < adj[f.node].size()) {
-                auto [child, w] = adj[f.node][f.ci];
-                f.ci++;
-                if (child == f.parent) continue;
-                st.push_back({child, f.node, f.depth + 1, f.dist + w, 0, -2, 0});
-            } else {
-                // restore state on exit
-                lastSeen[nums[f.node]] = f.oldLast;
-                left = f.oldLeft;
-                st.pop_back();
-            }
-        }
+            if (len > bestd)
+                bestd = len, bestn = nodes;
 
-        return {(int)bestLen, bestNodes};
+            else if (len == bestd)
+                bestn = min(bestn, nodes);
+
+            for (auto &[v, w] : g[u])
+                if (v != p)
+                    dist.push_back(dist.back() + w), self(self, v, u),
+                        dist.pop_back();
+
+            last[nums[u]] = q, left = old;
+        };
+
+        dist.push_back(0), dfs(dfs, 0);
+
+        return {bestd, bestn};
     }
 };

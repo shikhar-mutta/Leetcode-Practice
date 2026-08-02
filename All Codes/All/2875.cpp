@@ -1,61 +1,54 @@
 // Link: https://leetcode.com/problems/minimum-size-subarray-in-infinite-array/description/
-/*
-Approach: Since array repeats infinitely, calculate total_sum of array. Using sliding window
-          with prefix sum map: iterate through extended array (enough copies), track cumulative
-          sums in map. For each position, check if (current_sum - target) exists in map.
-          Number of complete cycles + remaining subarray length gives answer.
-TC: O(n) - Single pass through array with HashMap operations O(1)
-SC: O(n) - HashMap stores at most n prefix sums
-*/
 
 #include <bits/stdc++.h>
 using namespace std;
 
+// TC: O(n)
+// SC: O(n) for the doubled array
+// Approach: split target into full = target/sum whole traversals of nums
+// (each costing n elements) plus a remainder rem = target%sum that must be
+// covered by some (possibly wrapping) contiguous subarray. Search for the
+// shortest such subarray via sliding window over nums doubled (covers every
+// possible wraparound start), since all values are positive. Answer is
+// full*n + that window length, or -1 if rem>0 has no matching window.
 class Solution
 {
 public:
     int minSizeSubarray(vector<int> &nums, int target)
     {
-        long long total_sum = 0;
-        for (int num : nums)
-        {
-            total_sum += num;
-        }
-
-        if (target % total_sum == 0)
-        {
-            // Check if we can achieve target using complete cycles
-            long long sum = 0;
-            for (int num : nums)
-            {
-                sum += num;
-                if (sum == target)
-                    return nums.size();
-            }
-            return -1;
-        }
-
+        long long sum = 0;
         int n = nums.size();
-        int result = INT_MAX;
-        long long current_sum = 0;
-        unordered_map<long long, int> sum_map;
-        sum_map[0] = -1;
 
-        // We need at most 2 cycles of the array to find the answer
-        for (int i = 0; i < 2 * n; i++)
+        for (int x : nums)
+            sum += x;
+
+        long long full = target / sum;
+        long long rem = target % sum;
+
+        if (rem == 0)
+            return full * n;
+
+        vector<int> arr = nums;
+        arr.insert(arr.end(), nums.begin(), nums.end());
+
+        long long curr = 0;
+        int left = 0;
+        int ans = INT_MAX;
+
+        for (int right = 0; right < 2 * n; right++)
         {
-            current_sum += nums[i % n];
+            curr += arr[right];
 
-            // Find if there's a previous sum such that current_sum - previous_sum = target
-            if (sum_map.find(current_sum - target) != sum_map.end())
-            {
-                int len = i - sum_map[current_sum - target];
-                result = min(result, len);
-            }
+            while (curr > rem && left <= right)
+                curr -= arr[left++];
 
-            sum_map[current_sum] = i;
+            if (curr == rem)
+                ans = min(ans, right - left + 1);
         }
 
-        return result == INT_MAX ? -1 : result;
+        if (ans == INT_MAX)
+            return -1;
+
+        return full * n + ans;
     }
 };

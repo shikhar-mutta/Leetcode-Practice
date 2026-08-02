@@ -3,30 +3,35 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-class Solution {
+// TC: O(n) SC: O(n)
+// Approach: base profit = sum(strategy[i]*prices[i]). For each window of
+// size k, replacing it changes its contribution to sum(prices in the
+// second half) (first half becomes 0, second half becomes 1). Slide a
+// window computing gain = newContribution - oldContribution via prefix
+// sums, take the best (>=0, since modification is optional) and add to
+// base profit.
+class Solution
+{
 public:
-    long long maxProfit(vector<int>& prices, vector<int>& strategy, int k) {
+    long long maxProfit(vector<int> &prices, vector<int> &strategy, int k)
+    {
         int n = prices.size();
-        long long original = 0;
-        for (int i = 0; i < n; i++) original += (long long)strategy[i] * prices[i];
-
-        vector<long long> prefPrice(n + 1, 0), prefContrib(n + 1, 0);
-        for (int i = 0; i < n; i++) {
-            prefPrice[i+1] = prefPrice[i] + prices[i];
-            prefContrib[i+1] = prefContrib[i] + (long long)strategy[i] * prices[i];
+        vector<long long> prefPrice(n + 1, 0), prefOld(n + 1, 0);
+        for (int i = 0; i < n; i++)
+        {
+            prefPrice[i + 1] = prefPrice[i] + prices[i];
+            prefOld[i + 1] = prefOld[i] + (long long)strategy[i] * prices[i];
         }
 
-        long long bestDelta = 0;
+        long long base = prefOld[n];
+        long long bestGain = 0;
         int half = k / 2;
-        for (int l = 0; l + k <= n; l++) {
-            int mid = l + half;
-            int r = l + k;
-            long long newContrib = prefPrice[r] - prefPrice[mid];
-            long long oldContrib = prefContrib[r] - prefContrib[l];
-            long long delta = newContrib - oldContrib;
-            bestDelta = max(bestDelta, delta);
+        for (int start = 0; start + k <= n; start++)
+        {
+            long long oldContribution = prefOld[start + k] - prefOld[start];
+            long long newContribution = prefPrice[start + k] - prefPrice[start + half];
+            bestGain = max(bestGain, newContribution - oldContribution);
         }
-
-        return original + bestDelta;
+        return base + bestGain;
     }
 };

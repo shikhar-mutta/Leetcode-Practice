@@ -3,40 +3,129 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-class Router {
-    int memoryLimit;
-    deque<tuple<int,int,int>> packets;
-    set<tuple<int,int,int>> seen;
-    unordered_map<int, deque<int>> destTimestamps;
-public:
-    Router(int memoryLimit) : memoryLimit(memoryLimit) {}
+// TC: O(n) SC: O(n)
+// Approach: Use a queue to maintain the order of packets and a hash set to check for duplicates. Use a hash map to maintain a time logger for each destination, which keeps track of the timestamps of packets sent to that destination. When adding a packet, check if it already exists in the hash set. If it does not, add it to the queue and the hash set, and update the time logger for the destination. When forwarding a packet, pop it from the queue and remove it from the hash set, and update the time logger for the destination. To get the count of packets sent to a destination within a time range, use binary search on the timestamps in the time logger.
+class Router
+{
+    struct Packet
+    {
+        struct Hasher
+        {
+            size_t operator()(const Packet &p) const
+            {
+                size_t h1 = hash<int>{}(p.source);
+                size_t h2 = hash<int>{}(p.destination);
+                size_t h3 = hash<int>{}(p.timestamp);
 
-    bool addPacket(int source, int destination, int timestamp) {
-        auto key = make_tuple(source, destination, timestamp);
-        if (seen.count(key)) return false;
-        if ((int)packets.size() >= memoryLimit) {
-            auto old = packets.front(); packets.pop_front();
-            seen.erase(old);
-            destTimestamps[get<1>(old)].pop_front();
+                return (h1 << 2) ^ (h2 << 1) ^ h3;
+            }
+        };
+
+        int source;
+        int destination;
+        int timestamp;
+
+        bool operator==(const Packet &p) const
+        {
+            return make_tuple(source, destination, timestamp) ==
+                   make_tuple(p.source, p.destination, p.timestamp);
         }
-        packets.push_back(key);
-        seen.insert(key);
-        destTimestamps[destination].push_back(timestamp);
+    };
+
+    struct TimeLogger
+    {
+        int timeIdx;
+        vector<int> timestamps;
+
+        TimeLogger() : timeIdx{0}, timestamps{} {}
+
+        int getCount(int startTime, int endTime)
+        {
+            int idxStart = lower_bound(timestamps.begin() + timeIdx,
+                                       timestamps.end(), startTime) -
+                           timestamps.begin();
+            int idxEnd = upper_bound(timestamps.begin() + timeIdx,
+                                     timestamps.end(), endTime) -
+                         timestamps.begin();
+            return idxEnd - idxStart;
+        }
+
+        void addTime(int tm) { timestamps.push_back(tm); }
+
+        void shiftTime() { timeIdx++; }
+    };
+
+    int memoryLimit;
+    unordered_set<Packet, Packet::Hasher> packets;
+    unordered_map<int, TimeLogger> destLoggers;
+    queue<Packet> packetQueue;
+
+    Packet popPacket()
+    {
+        auto packet = packetQueue.front();
+
+        packetQueue.pop();
+
+        packets.erase(packet);
+
+        destLoggers[packet.destination].shiftTime();
+
+        return packet;
+    }
+
+    void pushPacket(const Packet &packet)
+    {
+        while (packetQueue.size() + 1 > memoryLimit)
+        {
+            popPacket();
+        }
+        packets.insert(packet);
+        packetQueue.push(packet);
+        destLoggers[packet.destination].addTime(packet.timestamp);
+    }
+
+    static std::vector<int> serialize(const Packet &packet)
+    {
+        return std::vector<int>{packet.source, packet.destination,
+                                packet.timestamp};
+    }
+
+public:
+    Router(int memoryLimit) : memoryLimit{memoryLimit} {}
+
+    bool addPacket(int source, int destination, int timestamp)
+    {
+        auto packet = Packet{.source = source,
+                             .destination = destination,
+                             .timestamp = timestamp};
+        if (packets.count(packet))
+        {
+            return false;
+        }
+        pushPacket(packet);
         return true;
     }
 
-    vector<int> forwardPacket() {
-        if (packets.empty()) return {};
-        auto p = packets.front(); packets.pop_front();
-        seen.erase(p);
-        destTimestamps[get<1>(p)].pop_front();
-        return {get<0>(p), get<1>(p), get<2>(p)};
+    vector<int> forwardPacket()
+    {
+        if (packetQueue.empty())
+        {
+            return vector<int>{};
+        }
+        return serialize(popPacket());
     }
 
-    int getCount(int destination, int startTime, int endTime) {
-        auto& dq = destTimestamps[destination];
-        auto lo = lower_bound(dq.begin(), dq.end(), startTime);
-        auto hi = upper_bound(dq.begin(), dq.end(), endTime);
-        return (int)(hi - lo);
+    int getCount(int destination, int startTime, int endTime)
+    {
+        auto &logger = destLoggers[destination];
+        return logger.getCount(startTime, endTime);
     }
 };
+
+/**
+ * Your Router object will be instantiated and called as such:
+ * Router* obj = new Router(memoryLimit);
+ * bool param_1 = obj->addPacket(source,destination,timestamp);
+ * vector<int> param_2 = obj->forwardPacket();
+ * int param_3 = obj->getCount(destination,startTime,endTime);
+ */

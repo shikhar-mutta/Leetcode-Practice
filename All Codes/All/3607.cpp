@@ -3,56 +3,89 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-class Solution {
+// TC: O((n + m) * log(n)) SC: O(n + m)
+// Approach: Use Union-Find to manage connected components. For each query, we either mark a component as "off" or find the minimum "on" node in the same component. We process queries in reverse to efficiently update the state of components and maintain the minimum "on" node.
+constexpr int N = 1e5 + 1;
+int root[N], Rank[N];
+class UnionFind
+{
 public:
-    vector<int> par, rnk;
-    vector<set<int>*> onlineSets;
-
-    int find(int x) { return par[x] == x ? x : par[x] = find(par[x]); }
-
-    void unite(int a, int b) {
-        a = find(a); b = find(b);
-        if (a == b) return;
-        if (onlineSets[a]->size() < onlineSets[b]->size()) swap(a, b);
-        for (int v : *onlineSets[b]) onlineSets[a]->insert(v);
-        delete onlineSets[b];
-        onlineSets[b] = nullptr;
-        par[b] = a;
+    UnionFind(int n)
+    {
+        fill(Rank, Rank + (n + 1), 1);
+        iota(root, root + (n + 1), 0);
     }
 
-    vector<int> processQueries(int c, vector<vector<int>>& connections, vector<vector<int>>& queries) {
-        par.assign(c + 1, 0);
-        iota(par.begin(), par.end(), 0);
-        onlineSets.assign(c + 1, nullptr);
-        for (int i = 1; i <= c; i++) {
-            onlineSets[i] = new set<int>();
-            onlineSets[i]->insert(i);
+    int Find(int x)
+    { // Path compression
+        return (x == root[x]) ? x : root[x] = Find(root[x]);
+    }
+
+    bool Union(int x, int y)
+    { // Union by rank
+        x = Find(x), y = Find(y);
+        if (x == y)
+            return 0;
+        if (Rank[x] > Rank[y])
+            swap(x, y);
+        root[x] = y;
+        if (Rank[x] == Rank[y])
+            Rank[y]++;
+        return 1;
+    }
+};
+
+class Solution
+{
+public:
+    static vector<int> processQueries(int c, vector<vector<int>> &connections, vector<vector<int>> &queries)
+    {
+        UnionFind G(c);
+        for (auto &e : connections)
+            G.Union(e[0], e[1]);
+
+        vector<int> cntOff(c + 1, 0), minOn(c + 1, -1);
+        int sz = 0;
+
+        for (auto &q : queries)
+        {
+            const int t = q[0], x = q[1];
+            if (t == 2)
+                cntOff[x]++;
+            else
+                sz++;
         }
 
-        for (auto& e : connections) unite(e[0], e[1]);
+        vector<int> ans(sz);
 
-        vector<bool> online(c + 1, true);
-        vector<int> ans;
-
-        for (auto& q : queries) {
-            int type = q[0], x = q[1];
-            if (type == 2) {
-                if (online[x]) {
-                    online[x] = false;
-                    int r = find(x);
-                    onlineSets[r]->erase(x);
-                }
-            } else {
-                if (online[x]) {
-                    ans.push_back(x);
-                } else {
-                    int r = find(x);
-                    if (onlineSets[r]->empty()) ans.push_back(-1);
-                    else ans.push_back(*onlineSets[r]->begin());
-                }
+        // compute initial minOn per component
+        for (int i = 1; i <= c; i++)
+        {
+            if (cntOff[i] == 0)
+            {
+                int rx = G.Find(i);
+                if (minOn[rx] == -1 || minOn[rx] > i)
+                    minOn[rx] = i;
             }
         }
 
+        for (int i = queries.size() - 1, j = sz - 1; i >= 0; i--)
+        {
+            const int t = queries[i][0], x = queries[i][1], rx = G.Find(x);
+            int minS = minOn[rx];
+
+            if (t == 1)
+                ans[j--] = (cntOff[x] == 0 ? x : minS);
+            else
+            {
+                cntOff[x]--;
+                if (cntOff[x] == 0)
+                {
+                    if (minOn[rx] == -1 || minOn[rx] > x)
+                        minOn[rx] = x;
+                }
+            }
+        }
         return ans;
     }
 };

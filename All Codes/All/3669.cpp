@@ -3,34 +3,42 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// TC: O(divisor-tree size) SC: O(k)
+// Approach: backtracking search choosing k divisors in non-decreasing
+// order whose product is n (pruned so the smallest remaining factor
+// can't exceed remaining^(1/countLeft), keeping the tree small), tracking
+// the combination with the smallest max-min spread.
 class Solution {
-public:
-    int bestDiff = INT_MAX;
-    vector<int> bestCombo;
+    vector<int> best;
+    int bestSpread = INT_MAX;
+    vector<int> path;
 
-    void dfs(int remaining, int k, int startDiv, vector<int>& cur) {
-        if (k == 1) {
-            cur.push_back(remaining);
-            int mn = *min_element(cur.begin(), cur.end());
-            int mx = *max_element(cur.begin(), cur.end());
-            if (mx - mn < bestDiff) {
-                bestDiff = mx - mn;
-                bestCombo = cur;
+    void dfs(int start, long long remaining, int countLeft) {
+        if (countLeft == 1) {
+            if (remaining >= start) {
+                path.push_back((int)remaining);
+                int mx = *max_element(path.begin(), path.end());
+                int mn = *min_element(path.begin(), path.end());
+                if (mx - mn < bestSpread) { bestSpread = mx - mn; best = path; }
+                path.pop_back();
             }
-            cur.pop_back();
             return;
         }
-        for (int d = startDiv; (long long)d * d <= remaining; d++) {
-            if (remaining % d != 0) continue;
-            cur.push_back(d);
-            dfs(remaining / d, k - 1, d, cur);
-            cur.pop_back();
+        for (long long d = start; ; d++) {
+            long long p = 1;
+            bool overflow = false;
+            for (int i = 0; i < countLeft; i++) { p *= d; if (p > remaining) { overflow = true; break; } }
+            if (overflow) break;
+            if (remaining % d == 0) {
+                path.push_back((int)d);
+                dfs((int)d, remaining / d, countLeft - 1);
+                path.pop_back();
+            }
         }
     }
-
+public:
     vector<int> minDifference(int n, int k) {
-        vector<int> cur;
-        dfs(n, k, 1, cur);
-        return bestCombo;
+        dfs(1, n, k);
+        return best;
     }
 };

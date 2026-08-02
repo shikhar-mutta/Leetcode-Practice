@@ -3,25 +3,20 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-class Solution {
+// TC: O(n) SC: O(1)
+//  Approach: Use a sliding window to maintain the maximum and minimum values in the current window. For each position, calculate the maximum product of the first and last elements of a subsequence of length m.
+class Solution
+{
 public:
-    long long maximumProduct(vector<int>& nums, int m) {
-        int n = nums.size();
-        vector<int> suffMax(n), suffMin(n);
-        suffMax[n-1] = suffMin[n-1] = nums[n-1];
-        for (int i = n - 2; i >= 0; i--) {
-            suffMax[i] = max(suffMax[i+1], nums[i]);
-            suffMin[i] = min(suffMin[i+1], nums[i]);
+    long long maximumProduct(vector<int> &A, int m)
+    {
+        long long ma = A[0], mi = A[0], res = 1LL * A[0] * A[m - 1];
+        for (int i = m; i < A.size(); ++i)
+        {
+            ma = fmax(ma, A[i - m + 1]);
+            mi = fmin(mi, A[i - m + 1]);
+            res = max({res, mi * A[i], ma * A[i]});
         }
-
-        long long best = LLONG_MIN;
-        for (int i = 0; i + m - 1 < n; i++) {
-            int j0 = i + m - 1;
-            long long a = (long long)nums[i] * suffMax[j0];
-            long long b = (long long)nums[i] * suffMin[j0];
-            best = max({best, a, b});
-        }
-
-        return best;
+        return res;
     }
 };

@@ -3,6 +3,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// TC: O(1) SC: O(1)
+// Approach: compare absolute distances from z to x and from z to y.
 class Solution {
 public:
     int findClosest(int x, int y, int z) {

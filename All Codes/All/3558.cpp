@@ -3,42 +3,67 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-class Solution {
-public:
-    int assignEdgeWeights(vector<vector<int>>& edges) {
-        const long long MOD = 1e9 + 7;
-        int n = edges.size() + 1;
-        vector<vector<int>> adj(n + 1);
-        for (auto& e : edges) {
-            adj[e[0]].push_back(e[1]);
-            adj[e[1]].push_back(e[0]);
+// TC: O(n) SC: O(n)
+//  Approach: the sum's parity only depends on how many of the L edges on
+//  the path from node 1 to node n get weight 1 (weight 2 is always even).
+//  We need an odd count of 1-weighted edges among L, which has exactly
+//  2^(L-1) solutions (half of all 2^L assignments, by symmetry). Find L
+//  via BFS, then compute 2^(L-1) mod 1e9+7.
+struct Solution
+{
+    static constexpr unsigned
+    assignEdgeWeights(const vector<vector<int>> &edges)
+    {
+        static constexpr unsigned mod = 1000000007;
+
+        unsigned size = edges.size() + 1u;
+        auto arr = make_unique<unsigned[]>(size * 3u);
+
+        unsigned *const cnt = arr.get();
+        unsigned *const sum = cnt + size;
+        unsigned *right = sum + size;
+        const unsigned *left = right;
+
+        for (span<const int> e : edges)
+        {
+            unsigned u = e[0] - 1u;
+            unsigned v = e[1] - 1u;
+
+            ++cnt[u];
+            ++cnt[v];
+
+            sum[u] ^= v;
+            sum[v] ^= u;
         }
 
-        vector<int> depth(n + 1, -1);
-        queue<int> q;
-        q.push(1);
-        depth[1] = 0;
-        int maxDepth = 0;
-        while (!q.empty()) {
-            int u = q.front(); q.pop();
-            for (int v : adj[u]) {
-                if (depth[v] == -1) {
-                    depth[v] = depth[u] + 1;
-                    maxDepth = max(maxDepth, depth[v]);
-                    q.push(v);
+        for (unsigned i = 1; i != size; ++i)
+            if (cnt[i] == 1u)
+                *right++ = i;
+
+        unsigned res = 1;
+
+        while (left != right)
+        {
+            span<const unsigned> curr(left, right);
+            left = right;
+
+            for (unsigned v : curr)
+            {
+                unsigned p = sum[v];
+
+                if (p)
+                {
+                    sum[p] ^= v;
+
+                    if (--cnt[p] == 1u)
+                        *right++ = p;
                 }
             }
+
+            res %= mod;
+            res *= 2u;
         }
 
-        if (maxDepth == 0) return 0;
-        long long result = 1;
-        long long base = 2;
-        int exp = maxDepth - 1;
-        while (exp > 0) {
-            if (exp & 1) result = (result * base) % MOD;
-            base = (base * base) % MOD;
-            exp >>= 1;
-        }
-        return (int)result;
+        return res / 2u;
     }
 };

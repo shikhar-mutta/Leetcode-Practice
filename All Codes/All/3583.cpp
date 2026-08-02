@@ -3,27 +3,27 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-class Solution {
+// TC: O(n) SC: O(1)
+//  Approach: Use a frequency array to count occurrences of each value. For each middle element, calculate the number of valid triplets using the frequency array.
+const int mod = 1e9 + 7;
+class Solution
+{
 public:
-    int specialTriplets(vector<int>& nums) {
-        const long long MOD = 1e9 + 7;
-        int n = nums.size();
-        unordered_map<long long,long long> suffixCount;
-        for (int x : nums) suffixCount[x]++;
-
-        unordered_map<long long,long long> prefixCount;
-        long long ans = 0;
-        for (int j = 0; j < n; j++) {
-            long long target = (long long)nums[j] * 2;
-            suffixCount[nums[j]]--;
-
-            long long left = prefixCount.count(target) ? prefixCount[target] : 0;
-            long long right = suffixCount.count(target) ? suffixCount[target] : 0;
-            ans = (ans + (left * right) % MOD) % MOD;
-
-            prefixCount[nums[j]]++;
+    int specialTriplets(vector<int> &nums)
+    {
+        const int M = 100001, n = nums.size();
+        int freq[M] = {0}, prev[M] = {0};
+        for (int x : nums)
+            freq[x]++;
+        long long cnt = 0;
+        prev[nums[0]]++;
+        for (int i = 1; i < n - 1; i++)
+        {
+            const int x = nums[i], x2 = x << 1;
+            if (x2 < M)
+                cnt += (long long)prev[x2] * (freq[x2] - prev[x2] - (x == 0));
+            prev[x]++;
         }
-
-        return (int)ans;
+        return cnt % mod;
     }
 };

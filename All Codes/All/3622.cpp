@@ -3,15 +3,19 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-class Solution {
+// TC: O(log n) SC: O(1)
+// Approach: compute digit sum and digit product, check n is divisible
+// by their sum.
+class Solution
+{
 public:
-    bool checkDivisibility(int n) {
+    bool checkDivisibility(int n)
+    {
         int sum = 0, prod = 1;
-        int x = n;
-        while (x > 0) {
+        for (int x = n; x > 0; x /= 10)
+        {
             sum += x % 10;
             prod *= x % 10;
-            x /= 10;
         }
         return n % (sum + prod) == 0;
     }

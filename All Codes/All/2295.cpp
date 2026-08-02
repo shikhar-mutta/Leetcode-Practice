@@ -4,24 +4,24 @@
 using namespace std;
 
 // TC: O(n + q), n = nums.size(), q = operations.size()
-// SC: O(max value) for the global lookup array
-// Approach: same idea as a value->index hash map, but implemented as a
-// fixed-size global array indexed directly by value (bounded by
-// constraints, up to 1e6) for O(1) lookups without hashing overhead. For
-// each operation [a, b], find a's index via hsh[a], overwrite nums there
-// with b, then repoint hsh[b] to that index and clear hsh[a].
-vector<int> hsh(1000010, -1);
+// SC: O(n)
+// Approach: maintain a hash map from value -> current index in nums. For
+// each operation [a, b], look up a's index in O(1), overwrite nums at that
+// index with b, then update the map (remove a's entry, point b at that
+// same index) so future operations referencing b find it correctly.
 class Solution {
 public:
-    vector<int> arrayChange(vector<int>& nums,
-                            vector<vector<int>>& operations) {
-        for (int i = 0; i < nums.size(); i++) {
-            hsh[nums[i]] = i;
-        }
-        for (int i = 0; i < operations.size(); i++) {
-            nums[hsh[operations[i][0]]] = operations[i][1];
-            hsh[operations[i][1]] = hsh[operations[i][0]];
-            hsh[operations[i][0]] = -1;
+    vector<int> arrayChange(vector<int>& nums, vector<vector<int>>& operations) {
+        unordered_map<int, int> pos;
+        for (int i = 0; i < nums.size(); ++i)
+            pos[nums[i]] = i;
+
+        for (auto& op : operations) {
+            int a = op[0], b = op[1];
+            int idx = pos[a];      // guaranteed to exist
+            nums[idx] = b;
+            pos.erase(a);
+            pos[b] = idx;
         }
         return nums;
     }

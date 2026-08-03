@@ -3,7 +3,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(log n) for addNum, O(1) for findMedian. SC: O(n) for storing the numbers in the heaps.
 class MedianFinder
 {
 public:

@@ -6,38 +6,28 @@ using namespace std;
 // TC: O(log n) for addNum, O(1) for findMedian. SC: O(n) for storing the numbers in the heaps.
 class MedianFinder
 {
-    std::priority_queue<int> left;
-    std::priority_queue<int, std::vector<int>, std::greater<int>> right;
-
 public:
+    priority_queue<int> lo;                            // max-heap, smaller half
+    priority_queue<int, vector<int>, greater<int>> hi; // min-heap, larger half
+
+    MedianFinder() {}
+
     void addNum(int num)
     {
-        if (left.empty() || num <= left.top())
+        lo.push(num);              // push to max heap
+        hi.push(lo.top());         // balancing step
+        lo.pop();                  // make sure every num in lo is <= every num in hi
+        if (hi.size() > lo.size()) // maintain size property
         {
-            left.push(num);
-        }
-        else
-        {
-            right.push(num);
-        }
-
-        if (left.size() > right.size() + 1)
-        {
-            right.push(left.top());
-            left.pop();
-        }
-        else if (right.size() > left.size() + 1)
-        {
-            left.push(right.top());
-            right.pop();
+            lo.push(hi.top());
+            hi.pop();
         }
     }
+
     double findMedian()
     {
-        if (left.size() == right.size())
-        {
-            return (left.top() + right.top()) / 2.0;
-        }
-        return left.size() > right.size() ? left.top() : right.top();
+        if (lo.size() > hi.size()) // odd case
+            return lo.top();
+        return (lo.top() + hi.top()) / 2.0; // even case
     }
 };

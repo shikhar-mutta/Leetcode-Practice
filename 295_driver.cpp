@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "264.cpp"
+#include "295.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -54,15 +54,33 @@ vector<vector<int>> _rvvi() {
     return v;
 }
 
+string _fmtDouble(double d) {
+    ostringstream oss;
+    if (d == (long long)d) oss << (long long)d << ".0";
+    else oss << d;
+    return oss.str();
+}
+
 int main() {
     int t;
     cin >> t;
     cin.ignore();
     while (t--) {
-        int n = _ri();
-        Solution sol;
-        auto res = sol.nthUglyNumber(n);
-        cout << res << "\n";
+        auto ops = _rvs();
+        auto args = _rvvi();
+        MedianFinder sol;
+        vector<string> out = {"null"};
+        for (int i = 1; i < (int)ops.size(); i++) {
+            if (ops[i] == "addNum") {
+                sol.addNum(args[i][0]);
+                out.push_back("null");
+            } else {
+                out.push_back(_fmtDouble(sol.findMedian()));
+            }
+        }
+        cout << "[";
+        for (int i = 0; i < (int)out.size(); i++) { if (i) cout << ", "; cout << out[i]; }
+        cout << "]\n";
     }
     return 0;
 }

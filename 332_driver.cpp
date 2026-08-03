@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "295.cpp"
+#include "332.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -54,11 +54,27 @@ vector<vector<int>> _rvvi() {
     return v;
 }
 
-string _fmtDouble(double d) {
-    ostringstream oss;
-    if (d == (long long)d) oss << (long long)d << ".0";
-    else oss << d;
-    return oss.str();
+vector<vector<string>> _rvvs() {
+    string s; getline(cin,s);
+    vector<vector<string>> v;
+    int dep=0; bool in=false; string cur;
+    vector<string> row;
+    for (char c : s) {
+        if (c=='"') { in=!in; continue; }
+        if (in) { cur+=c; continue; }
+        if (c=='[') { dep++; continue; }
+        if (c==']') {
+            dep--;
+            if (!cur.empty() || (dep==1 && !row.empty())) { if(!cur.empty()) row.push_back(cur); cur=""; }
+            if (dep==1) { v.push_back(row); row.clear(); }
+            continue;
+        }
+        if (c==',') {
+            if (dep>=2 && !cur.empty()) { row.push_back(cur); cur=""; }
+            continue;
+        }
+    }
+    return v;
 }
 
 int main() {
@@ -66,21 +82,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto ops = _rvs();
-        auto args = _rvvi();
-        MedianFinder sol;
-        vector<string> out = {"null"};
-        for (int i = 1; i < (int)ops.size(); i++) {
-            if (ops[i] == "addNum") {
-                sol.addNum(args[i][0]);
-                out.push_back("null");
-            } else {
-                out.push_back(_fmtDouble(sol.findMedian()));
-            }
-        }
-        cout << "[";
-        for (int i = 0; i < (int)out.size(); i++) { if (i) cout << ", "; cout << out[i]; }
-        cout << "]\n";
+        auto tickets = _rvvs();
+        Solution sol;
+        auto res = sol.findItinerary(tickets);
+        for (int _i=0;_i<(int)res.size();_i++){if(_i)cout<<" ";cout<<res[_i];}cout<<"\n";
     }
     return 0;
 }

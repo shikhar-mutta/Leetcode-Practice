@@ -129,6 +129,16 @@
     - Both approaches are O(n * m) worst case; early-stop makes best case O(n).
     - Replaces a bool flag + inner loop + break — reads exactly like the problem statement.
 
+    // LC 420 — check which char classes are present in a string  |  TC: O(n)
+    int missingType = 3;
+    if (any_of(s.begin(), s.end(), ::islower)) missingType--;
+    if (any_of(s.begin(), s.end(), ::isupper)) missingType--;
+    if (any_of(s.begin(), s.end(), ::isdigit)) missingType--;
+
+    - Clean way to ask "does this string contain at least one lowercase/uppercase/digit char?".
+    - Caution: <cctype> functions (islower/isupper/isdigit/isalpha) are UB on negative char values;
+      cast to unsigned char first for non-ASCII input, e.g. ::islower((unsigned char)c).
+
 ──────────────────────────────────────────────────────────────
 
 12. std::string::find(substr) — substring search
@@ -202,6 +212,23 @@
         maxheap.pop();
     }
     while (!minheap.empty()) { ans.push_back(minheap.top().second); minheap.pop(); }
+
+──────────────────────────────────────────────────────────────
+
+16b. less<T> / greater<T> — the comparator functors behind priority_queue's 3rd template arg
+    - less<T>()(a, b)    == a < b   (this is priority_queue's default comparator → max-heap)
+    - greater<T>()(a, b) == a > b   (flips it → min-heap)
+    - priority_queue<T> is shorthand for priority_queue<T, vector<T>, less<T>> — writing
+      less<T> explicitly changes nothing; it's only meaningful when you swap in greater<T>.
+    - On pair<A,B>, both compare .first first, then .second only to break ties.
+
+    // LC 480 (Sliding Window Median) — lazy-deletion two-heap pattern
+    priority_queue<pair<int,int>, vector<pair<int,int>>, less<pair<int,int>>> leftQ;    // == plain max-heap
+    priority_queue<pair<int,int>, vector<pair<int,int>>, greater<pair<int,int>>> rightQ; // min-heap
+    // elements are {value, index}; index lets a stale (out-of-window) entry be identified and
+    // lazily popped from top() later, since priority_queue has no erase(). leftQ holds the smaller
+    // half (top = largest of the small half), rightQ the larger half (top = smallest of the large half) —
+    // same split as the lo/hi multiset approach, just without true deletion.
 
 ──────────────────────────────────────────────────────────────
 

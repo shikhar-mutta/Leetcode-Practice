@@ -24,6 +24,7 @@ Algorithms
 10. Tarjan's Algorithm for finding bridges in a graph 
 11. Kosaraju algorithm
 12. Palindromic Tree (Eertree) + Dynamic Programming
+13. Hierholzer's algorithm
 
 
 

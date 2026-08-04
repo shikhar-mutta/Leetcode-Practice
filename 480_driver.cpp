@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "332.cpp"
+#include "480.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -54,38 +54,19 @@ vector<vector<int>> _rvvi() {
     return v;
 }
 
-vector<vector<string>> _rvvs() {
-    string s; getline(cin,s);
-    vector<vector<string>> v;
-    int dep=0; bool in=false; string cur;
-    vector<string> row;
-    for (char c : s) {
-        if (c=='"') { in=!in; continue; }
-        if (in) { cur+=c; continue; }
-        if (c=='[') { dep++; continue; }
-        if (c==']') {
-            dep--;
-            if (!cur.empty() || (dep==1 && !row.empty())) { if(!cur.empty()) row.push_back(cur); cur=""; }
-            if (dep==1) { v.push_back(row); row.clear(); }
-            continue;
-        }
-        if (c==',') {
-            if (dep>=2 && !cur.empty()) { row.push_back(cur); cur=""; }
-            continue;
-        }
-    }
-    return v;
-}
-
 int main() {
     int t;
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto tickets = _rvvs();
+        auto nums = _rvi();
+        int k = _ri();
         Solution sol;
-        auto res = sol.findItinerary(tickets);
-        for (int _i=0;_i<(int)res.size();_i++){if(_i)cout<<" ";cout<<res[_i];}cout<<"\n";
+        auto res = sol.medianSlidingWindow(nums, k);
+        cout << fixed << setprecision(5);
+        cout << "[";
+        for (int i = 0; i < (int)res.size(); i++) { if (i) cout << ","; cout << res[i]; }
+        cout << "]\n";
     }
     return 0;
 }

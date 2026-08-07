@@ -1,0 +1,7 @@
+3
+"internationalization"
+"i12iz4n"
+"apple"
+"a2e"
+"substitution"
+"s10n"

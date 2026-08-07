@@ -1,0 +1,1 @@
+[["ball","area","lead","lady"],["wall","area","lead","lady"]]

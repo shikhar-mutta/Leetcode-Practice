@@ -1,0 +1,7 @@
+3
+"abab"
+"redblueredblue"
+"aaaa"
+"asdasdasdasd"
+"aabb"
+"xyzabcxzyabc"

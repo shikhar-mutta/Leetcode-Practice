@@ -1,0 +1,2 @@
+1
+["area","lead","wall","lady","ball"]

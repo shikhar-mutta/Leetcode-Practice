@@ -1,0 +1,4 @@
+3
+"ababccc"
+"aba"
+"aa"

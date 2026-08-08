@@ -1,0 +1,7 @@
+2
+["great","acting","skills"]
+["fine","drama","talent"]
+[["great","fine"],["drama","acting"],["skills","talent"]]
+["great"]
+["great"]
+[]

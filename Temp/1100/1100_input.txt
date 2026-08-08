@@ -1,0 +1,5 @@
+2
+"havefunonleetcode"
+5
+"home"
+5

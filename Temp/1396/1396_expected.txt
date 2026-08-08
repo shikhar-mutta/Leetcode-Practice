@@ -1,0 +1,2 @@
+[null,null,null,null,null,null,null,14.00000,11.00000,null,11.00000,null,12.00000]
+[null,null,null,5.00000,null,null,5.50000,null,null,6.66667]

@@ -1,0 +1,7 @@
+3
+"abc"
+"abcbc"
+"abc"
+"acdbc"
+"xyz"
+"xzyxz"

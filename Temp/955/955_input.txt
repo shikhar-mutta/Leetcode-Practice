@@ -1,0 +1,4 @@
+3
+["ca","bb","ac"]
+["xc","yb","za"]
+["zyx","wvu","tsr"]

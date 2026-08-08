@@ -1,0 +1,5 @@
+2
+"abcdefghijklmnopqrstuvwxyz"
+"cba"
+"pqrstuvwxyzabcdefghijklmno"
+"leetcode"

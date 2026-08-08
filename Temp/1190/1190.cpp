@@ -1,0 +1,25 @@
+// Link: https://leetcode.com/problems/reverse-substrings-between-each-pair-of-parentheses/description/
+
+#include <bits/stdc++.h>
+using namespace std;
+
+class Solution {
+public:
+    string reverseParentheses(string s) {
+        stack<string> st;
+        string cur;
+        for (char c : s) {
+            if (c == '(') {
+                st.push(cur);
+                cur = "";
+            } else if (c == ')') {
+                reverse(cur.begin(), cur.end());
+                cur = st.top() + cur;
+                st.pop();
+            } else {
+                cur += c;
+            }
+        }
+        return cur;
+    }
+};

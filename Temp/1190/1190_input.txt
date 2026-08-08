@@ -1,0 +1,4 @@
+3
+"(abcd)"
+"(u(love)i)"
+"(ed(et(oc))el)"

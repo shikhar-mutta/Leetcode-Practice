@@ -1,0 +1,3 @@
+1
+["BSTIterator","next","next","prev","next","hasNext","next","next","next","hasNext","hasPrev","prev","prev"]
+[[[7,3,15,null,null,9,20]],[],[],[],[],[],[],[],[],[],[],[],[]]

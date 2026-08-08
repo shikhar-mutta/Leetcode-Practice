@@ -1,0 +1,3 @@
+2
+["abcd","acbd","aacd"]
+["ab","cd","yz"]

@@ -1,0 +1,4 @@
+3
+["XXXXXX","X*OOOX","XOO#OX","XXXXXX"]
+["XXXXX","X*XXX","XOOOX","XOOOX","XOOOX","XXX#X","XXXXX"]
+["*X#"]

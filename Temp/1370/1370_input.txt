@@ -1,0 +1,3 @@
+2
+"aaaabbbbcccc"
+"rat"

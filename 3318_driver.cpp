@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "2000.cpp"
+#include "3318.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,12 +59,12 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        string word = _rs();
-        string chStr = _rs();
-        char ch = chStr[0];
+        auto nums = _rvi();
+        int k = _ri();
+        int x = _ri();
         Solution sol;
-        auto res = sol.reversePrefix(word, ch);
-        cout << res << "\n";
+        auto res = sol.findXSum(nums, k, x);
+        for (int _i=0;_i<(int)res.size();_i++){if(_i)cout<<" ";cout<<res[_i];}cout<<"\n";
     }
     return 0;
 }

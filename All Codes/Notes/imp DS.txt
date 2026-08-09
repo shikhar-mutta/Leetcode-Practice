@@ -962,3 +962,16 @@
       unordered_map/set    -> needs std::hash + operator== (HASHING).
           built-ins (int, long long, double, string, pointers) have std::hash;
           pair/tuple/struct DON'T -> must pass a custom hash functor.
+
+──────────────────────────────────────────────────────────────
+
+49. std::iota — fill a range with sequentially increasing values
+
+    iota(v.begin(), v.end(), startValue);   // v[i] = startValue + i
+
+    vector<int> idx(n);
+    iota(idx.begin(), idx.end(), 0);   // idx = {0, 1, ..., n-1}
+    - Replaces: for (int i = 0; i < n; i++) idx[i] = i;   TC: O(n).
+
+    Common use — sort INDICES by another array's values (LC 506):
+        sort(idx.begin(), idx.end(), [&](int a, int b) { return score[a] > score[b]; });

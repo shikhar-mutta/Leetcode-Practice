@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "3318.cpp"
+#include "3507.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -60,11 +60,9 @@ int main() {
     cin.ignore();
     while (t--) {
         auto nums = _rvi();
-        int k = _ri();
-        int x = _ri();
         Solution sol;
-        auto res = sol.findXSum(nums, k, x);
-        for (int _i=0;_i<(int)res.size();_i++){if(_i)cout<<" ";cout<<res[_i];}cout<<"\n";
+        auto res = sol.minimumPairRemoval(nums);
+        cout << res << "\n";
     }
     return 0;
 }

@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "3507.cpp"
+#include "264.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,9 +59,9 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto nums = _rvi();
+        int n = _ri();
         Solution sol;
-        auto res = sol.minimumPairRemoval(nums);
+        auto res = sol.nthUglyNumber(n);
         cout << res << "\n";
     }
     return 0;

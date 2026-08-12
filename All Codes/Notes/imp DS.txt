@@ -975,3 +975,30 @@
 
     Common use — sort INDICES by another array's values (LC 506):
         sort(idx.begin(), idx.end(), [&](int a, int b) { return score[a] > score[b]; });
+
+──────────────────────────────────────────────────────────────
+
+50. std::nth_element — partial sort, average O(n)
+
+    nth_element(first, nth, last, comp);
+
+    - Rearranges [first,last) so the element that WOULD be at `nth` in a fully
+      sorted range (per comp) ends up there for real. Everything before `nth`
+      is <= it, everything after is >= it — but NEITHER side is fully sorted.
+    - Average O(n) (introselect) vs O(n log n) for a full sort — use it when
+      you only need ONE order-statistic (a specific rank), not the whole order.
+    - Default comp (less<>) = ascending, so nums.begin()+k lands the (k+1)-th
+      SMALLEST element (0-indexed) at position k.
+    - Pass greater<int>() to flip it: nums.begin()+k-1 then lands the k-th
+      LARGEST element (1-indexed k) at that position.
+
+    // LC 215 — Kth Largest Element in an Array
+    int findKthLargest(vector<int>& nums, int k) {
+        nth_element(nums.begin(), nums.begin() + k - 1, nums.end(), greater<int>());
+        return nums[k - 1];
+    }
+
+    - Mutates the input in place (like sort) — copy first if the original
+      order must be preserved.
+    - Cousin: std::partial_sort(first, middle, last) fully sorts [first,middle)
+      when you need the top-k elements IN ORDER, not just the k-th one.

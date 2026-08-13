@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "264.cpp"
+#include "419.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,9 +59,9 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        int n = _ri();
+        // TODO: read vector<vector<char>> board
         Solution sol;
-        auto res = sol.nthUglyNumber(n);
+        auto res = sol.countBattleships(board);
         cout << res << "\n";
     }
     return 0;

@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "230.cpp"
+#include "1008.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -36,31 +36,20 @@ vector<string> _rvs() {
     if (!cur.empty()) v.push_back(cur);
     return v;
 }
-vector<string> _rtok() {
-    string s; getline(cin,s);
-    auto body = s.substr(1, s.size()-2);
-    vector<string> v; stringstream ss(body);
-    string t; while(getline(ss,t,',')) v.push_back(t);
-    return v;
-}
-TreeNode* _rtree() {
-    auto toks = _rtok();
-    if (toks.empty() || toks[0]=="null") return nullptr;
-    TreeNode *root = new TreeNode(stoi(toks[0]));
+void _wtree(TreeNode* root) {
+    if (!root) { cout << "[]\n"; return; }
+    vector<string> out;
     queue<TreeNode*> q; q.push(root);
-    size_t i = 1;
-    while (i < toks.size() && !q.empty()) {
+    while (!q.empty()) {
         TreeNode *node = q.front(); q.pop();
-        if (i < toks.size()) {
-            if (toks[i] != "null") { node->left = new TreeNode(stoi(toks[i])); q.push(node->left); }
-            i++;
-        }
-        if (i < toks.size()) {
-            if (toks[i] != "null") { node->right = new TreeNode(stoi(toks[i])); q.push(node->right); }
-            i++;
-        }
+        if (!node) { out.push_back("null"); continue; }
+        out.push_back(to_string(node->val));
+        q.push(node->left); q.push(node->right);
     }
-    return root;
+    while (!out.empty() && out.back()=="null") out.pop_back();
+    cout << "[";
+    for (size_t i=0;i<out.size();i++) { if(i) cout<<","; cout<<out[i]; }
+    cout << "]\n";
 }
 vector<vector<int>> _rvvi() {
     string s; getline(cin,s);
@@ -85,11 +74,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        TreeNode* root = _rtree();
-        int k = _ri();
+        auto preorder = _rvi();
         Solution sol;
-        auto res = sol.kthSmallest(root, k);
-        cout << res << "\n";
+        auto res = sol.bstFromPreorder(preorder);
+        _wtree(res);
     }
     return 0;
 }

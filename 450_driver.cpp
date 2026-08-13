@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "419.cpp"
+#include "450.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,12 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        // TODO: read vector<vector<char>> board
+        // TODO: read TreeNode* root
+        int key = _ri();
         Solution sol;
-        auto res = sol.countBattleships(board);
-        cout << res << "\n";
+        auto res = sol.deleteNode(root, key);
+        // TODO: print result
+cout << "TODO\n";
     }
     return 0;
 }

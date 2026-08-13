@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "450.cpp"
+#include "230.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -36,6 +36,32 @@ vector<string> _rvs() {
     if (!cur.empty()) v.push_back(cur);
     return v;
 }
+vector<string> _rtok() {
+    string s; getline(cin,s);
+    auto body = s.substr(1, s.size()-2);
+    vector<string> v; stringstream ss(body);
+    string t; while(getline(ss,t,',')) v.push_back(t);
+    return v;
+}
+TreeNode* _rtree() {
+    auto toks = _rtok();
+    if (toks.empty() || toks[0]=="null") return nullptr;
+    TreeNode *root = new TreeNode(stoi(toks[0]));
+    queue<TreeNode*> q; q.push(root);
+    size_t i = 1;
+    while (i < toks.size() && !q.empty()) {
+        TreeNode *node = q.front(); q.pop();
+        if (i < toks.size()) {
+            if (toks[i] != "null") { node->left = new TreeNode(stoi(toks[i])); q.push(node->left); }
+            i++;
+        }
+        if (i < toks.size()) {
+            if (toks[i] != "null") { node->right = new TreeNode(stoi(toks[i])); q.push(node->right); }
+            i++;
+        }
+    }
+    return root;
+}
 vector<vector<int>> _rvvi() {
     string s; getline(cin,s);
     vector<vector<int>> v;
@@ -59,12 +85,11 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        // TODO: read TreeNode* root
-        int key = _ri();
+        TreeNode* root = _rtree();
+        int k = _ri();
         Solution sol;
-        auto res = sol.deleteNode(root, key);
-        // TODO: print result
-cout << "TODO\n";
+        auto res = sol.kthSmallest(root, k);
+        cout << res << "\n";
     }
     return 0;
 }

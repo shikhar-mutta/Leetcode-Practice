@@ -1,0 +1,3 @@
+2
+["cab","ad","bad","c"]
+["abc","bcd","abcd"]

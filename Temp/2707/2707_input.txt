@@ -1,0 +1,5 @@
+2
+"leetscode"
+["leet","code","leetcode"]
+"sayhelloworld"
+["hello","world"]

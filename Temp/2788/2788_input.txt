@@ -1,0 +1,7 @@
+3
+["one.two.three","four.five","six"]
+"."
+["$easy$","$problem$"]
+"$"
+["|||"]
+"|"

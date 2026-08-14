@@ -1,0 +1,5 @@
+4
+"cbabc"
+"aa"
+"acbbc"
+"leetcode"

@@ -1,0 +1,7 @@
+3
+["hello wor","ld hello"]
+["hello","world","wor"]
+["a-b a--b ","a-","b"]
+["a-b","a","b"]
+["-cat dog- mouse"]
+["cat","dog","mouse","cat-dog"]

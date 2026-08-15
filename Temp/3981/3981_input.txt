@@ -1,0 +1,13 @@
+4
+"abc"
+"bac"
+"abc"
+"cd"
+"cd"
+"ccd"
+"xy"
+"xy"
+"xyxy"
+"ab"
+"cde"
+"ace"

@@ -1,7 +1,0 @@
-3
-"ac"
-"b"
-"abcc"
-"aab"
-"abcde"
-"fghij"

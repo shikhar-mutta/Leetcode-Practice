@@ -1,5 +1,0 @@
-2
-["EventManager","pollHighest","updatePriority","pollHighest","pollHighest"]
-[[[[5,7],[2,7],[9,4]]],[],[9,7],[],[]]
-["EventManager","pollHighest","pollHighest","pollHighest"]
-[[[[4,1],[7,2]]],[],[],[]]

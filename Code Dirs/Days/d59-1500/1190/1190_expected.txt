@@ -1,3 +1,0 @@
-dcba
-iloveu
-leetcode

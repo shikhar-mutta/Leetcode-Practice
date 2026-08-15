@@ -1,3 +1,0 @@
-2
-["jump","run","run","jump","run"]
-["dog","racer","car"]

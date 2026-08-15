@@ -1,7 +1,0 @@
-3
-"aabcaba"
-0
-"dabdcbdcdcd"
-2
-"aaabaaa"
-2

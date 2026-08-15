@@ -1,4 +1,0 @@
-3
-"dcab"
-"abba"
-"zxy"

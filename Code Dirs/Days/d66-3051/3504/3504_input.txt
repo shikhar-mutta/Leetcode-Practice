@@ -1,9 +1,0 @@
-4
-"a"
-"a"
-"abc"
-"def"
-"b"
-"aaaa"
-"abcde"
-"ecdba"

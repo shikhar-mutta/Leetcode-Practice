@@ -1,4 +1,0 @@
-3
-"Hello"
-"here"
-"LOVELY"

@@ -1,7 +1,0 @@
-2
-"abcd"
-"cdab"
-2
-"ababab"
-"ababab"
-1

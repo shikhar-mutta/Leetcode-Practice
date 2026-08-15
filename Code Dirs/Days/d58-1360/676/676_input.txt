@@ -1,3 +1,0 @@
-2
-["MagicDictionary", "buildDict", "search", "search", "search", "search"]
-[[], [["hello","leetcode"]], ["hello"], ["hhllo"], ["hell"], ["leetcoded"]]

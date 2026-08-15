@@ -1,4 +1,0 @@
-3
-["un","iq","ue"]
-["cha","r","act","ers"]
-["abcdefghijklmnopqrstuvwxyz"]

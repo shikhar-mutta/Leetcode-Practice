@@ -1,5 +1,0 @@
-2
-["SQL","ins","sel","ins","exp","rmv","sel","exp"]
-[[["one","two","three"],[2,3,1]],["two",["first","second","third"]],["two",1,3],["two",["fourth","fifth","sixth"]],["two"],["two",1],["two",2,2],["two"]]
-["SQL","ins","sel","rmv","sel","ins","ins"]
-[[["one","two","three"],[2,3,1]],["two",["first","second","third"]],["two",1,3],["two",1],["two",1,2],["two",["fourth","fifth"]],["two",["fourth","fifth","sixth"]]]

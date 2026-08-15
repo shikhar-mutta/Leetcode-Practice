@@ -1,4 +1,0 @@
-3
-["Hello","Alaska","Dad","Peace"]
-["omk"]
-["adsdf","sfd"]

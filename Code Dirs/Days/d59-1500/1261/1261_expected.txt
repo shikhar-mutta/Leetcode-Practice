@@ -1,3 +1,0 @@
-[null,false,true]
-[null,true,true,false]
-[null,true,false,false,true]

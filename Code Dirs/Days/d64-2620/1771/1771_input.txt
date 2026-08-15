@@ -1,7 +1,0 @@
-3
-"cacb"
-"cbba"
-"ab"
-"ab"
-"aa"
-"bb"

@@ -1,9 +1,0 @@
-4
-"abaacbaecebce"
-"ba*c*ce"
-"baccbaadbc"
-"cc*baa*adb"
-"a"
-"**"
-"madlogic"
-"*adlogi*"

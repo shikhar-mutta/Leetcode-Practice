@@ -1,5 +1,0 @@
-2
-"cabaa"
-"bcaaa"
-"abcabc"
-"abdcaba"

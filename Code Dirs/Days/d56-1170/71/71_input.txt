@@ -1,6 +1,0 @@
-5
-"/home/"
-"/home//foo/"
-"/home/user/Documents/../Pictures"
-"/../"
-"/.../a/../b/c/../d/./"

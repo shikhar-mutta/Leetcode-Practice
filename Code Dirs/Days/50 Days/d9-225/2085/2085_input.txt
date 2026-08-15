@@ -1,7 +1,0 @@
-3
-["leetcode","is","amazing","as","is"]
-["amazing","leetcode","is"]
-["b","bb","bbb"]
-["a","aa","aaa"]
-["a","ab"]
-["a","a","a","ab"]

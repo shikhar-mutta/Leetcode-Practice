@@ -1,4 +1,0 @@
-3
-["abc","car","ada","racecar","cool"]
-["notapalindrome","racecar"]
-["def","ghi"]

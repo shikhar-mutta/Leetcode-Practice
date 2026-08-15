@@ -1,4 +1,0 @@
-3
-["mass","as","hero","superhero"]
-["leetcode","et","code"]
-["blue","green","bu"]

@@ -1,7 +1,0 @@
-3
-"egg"
-"add"
-"foo"
-"bar"
-"paper"
-"title"

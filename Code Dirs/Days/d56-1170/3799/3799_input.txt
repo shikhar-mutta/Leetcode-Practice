@@ -1,3 +1,0 @@
-2
-["able","area","echo","also"]
-["code","cafe","eden","edge"]

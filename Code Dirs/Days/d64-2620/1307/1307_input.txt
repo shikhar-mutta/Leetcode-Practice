@@ -1,7 +1,0 @@
-3
-["SEND","MORE"]
-"MONEY"
-["SIX","SEVEN","SEVEN"]
-"TWENTY"
-["LEET","CODE"]
-"POINT"

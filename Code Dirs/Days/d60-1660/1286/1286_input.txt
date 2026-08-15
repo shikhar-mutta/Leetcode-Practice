@@ -1,3 +1,0 @@
-1
-["CombinationIterator","next","hasNext","next","hasNext","next","hasNext"]
-[["abc",2],[],[],[],[],[],[]]

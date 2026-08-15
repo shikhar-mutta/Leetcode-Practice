@@ -1,5 +1,0 @@
-2
-2
-["RIGHT","DOWN"]
-3
-["DOWN","RIGHT","UP"]

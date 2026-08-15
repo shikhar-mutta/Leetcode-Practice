@@ -1,3 +1,0 @@
-2
-["alex","loves","leetcode"]
-["catg","ctaagt","gcta","ttca","atgcatc"]

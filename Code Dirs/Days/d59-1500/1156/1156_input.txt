@@ -1,4 +1,0 @@
-3
-"bbaababbba"
-"bbabbbbbaaba"
-"abaaaaabbbbbaa"

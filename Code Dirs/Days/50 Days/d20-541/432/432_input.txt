@@ -1,3 +1,0 @@
-1
-["AllOne","inc","inc","getMaxKey","getMinKey","inc","getMaxKey","getMinKey"]
-[[],["hello"],["hello"],[],[],["leet"],[],[]]

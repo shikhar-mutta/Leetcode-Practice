@@ -1,7 +1,0 @@
-3
-"abcdf"
-"dacbe"
-"abceded"
-"baecfef"
-"abcdef"
-"fedabc"

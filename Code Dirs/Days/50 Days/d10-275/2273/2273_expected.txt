@@ -1,2 +1,0 @@
-abba cd
-a b c d e

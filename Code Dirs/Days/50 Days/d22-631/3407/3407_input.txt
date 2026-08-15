@@ -1,7 +1,0 @@
-3
-"leetcode"
-"ee*e"
-"car"
-"c*v"
-"luck"
-"u*"

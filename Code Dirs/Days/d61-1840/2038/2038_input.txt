@@ -1,4 +1,0 @@
-3
-"AAABABB"
-"AA"
-"ABBBBBBBAAA"

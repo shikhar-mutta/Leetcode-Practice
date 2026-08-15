@@ -1,5 +1,0 @@
-2
-"abac"
-"cab"
-"aaaaaaaa"
-"aaaaaaaa"

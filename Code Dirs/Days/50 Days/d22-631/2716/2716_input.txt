@@ -1,4 +1,0 @@
-3
-"aaabc"
-"cbbd"
-"baadccab"

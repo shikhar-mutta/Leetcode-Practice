@@ -1,3 +1,0 @@
-2
-"  this   is  a sentence "
-" practice   makes   perfect"

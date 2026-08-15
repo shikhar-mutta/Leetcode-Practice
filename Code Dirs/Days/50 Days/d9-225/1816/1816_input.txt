@@ -1,7 +1,0 @@
-3
-"Hello how are you Contestant"
-4
-"What is the solution to this problem"
-4
-"chopper is not a tanuki"
-5

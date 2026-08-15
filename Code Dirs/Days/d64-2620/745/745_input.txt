@@ -1,3 +1,0 @@
-1
-["WordFilter","f"]
-[[["apple"]],["a","e"]]

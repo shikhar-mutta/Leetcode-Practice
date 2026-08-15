@@ -1,7 +1,0 @@
-3
-"accca"
-2
-"aabaab"
-3
-"xxyz"
-1

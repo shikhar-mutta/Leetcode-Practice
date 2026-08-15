@@ -1,5 +1,0 @@
-2
-["pay","attention","practice","attend"]
-"at"
-["leetcode","win","loops","success"]
-"code"

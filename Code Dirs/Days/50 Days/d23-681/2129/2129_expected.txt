@@ -1,3 +1,0 @@
-Capitalize The Title
-First Letter of Each Word
-i Love Leetcode

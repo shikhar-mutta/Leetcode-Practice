@@ -1,3 +1,0 @@
-cat dna mice
-book is ecin
-banana healthy

@@ -1,9 +1,0 @@
-4
-"abcdefg"
-"bcdffg"
-"ababbababa"
-"bacaba"
-"abcd"
-"dba"
-"dde"
-"d"

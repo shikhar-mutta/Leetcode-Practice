@@ -1,3 +1,0 @@
-1
-["Solution","getRandom","getRandom","getRandom","getRandom","getRandom"]
-[[[1,2,3]],[],[],[],[],[]]

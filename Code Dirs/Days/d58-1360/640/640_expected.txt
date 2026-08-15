@@ -1,3 +1,0 @@
-x=2
-Infinite solutions
-x=0

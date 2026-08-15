@@ -1,5 +1,0 @@
-2
-"abdcdbc"
-"ac"
-"aabb"
-"ab"

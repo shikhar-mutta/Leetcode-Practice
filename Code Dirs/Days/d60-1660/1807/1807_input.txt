@@ -1,7 +1,0 @@
-3
-"(name)is(age)yearsold"
-[["name","bob"],["age","two"]]
-"hi(name)"
-[["a","b"]]
-"(a)(a)(a)aaa"
-[["a","yes"]]

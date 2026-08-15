@@ -1,9 +1,0 @@
-4
-"vbcca"
-"abc"
-"bacdc"
-"abc"
-"aaaaaa"
-"aaabc"
-"abc"
-"ab"

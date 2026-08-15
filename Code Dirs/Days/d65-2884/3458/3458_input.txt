@@ -1,7 +1,0 @@
-3
-"abcdbaefab"
-2
-"cdefdc"
-3
-"abeabe"
-0

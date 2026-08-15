@@ -1,4 +1,0 @@
-3
-"capiTalIze tHe titLe"
-"First leTTeR of EACH Word"
-"i lOve leetcode"

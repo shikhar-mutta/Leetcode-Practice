@@ -1,5 +1,0 @@
-2
-"iloveleetcode"
-["i","love","leetcode","apples"]
-"iloveleetcode"
-["apples","i","love","leetcode"]

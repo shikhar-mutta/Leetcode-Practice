@@ -1,7 +1,0 @@
-2
-["SAVE20","","PHARMA5","SAVE@20"]
-["restaurant","grocery","pharmacy","restaurant"]
-[true,true,true,true]
-["GROCERY15","ELECTRONICS_50","DISCOUNT10"]
-["grocery","electronics","invalid"]
-[false,true,true]

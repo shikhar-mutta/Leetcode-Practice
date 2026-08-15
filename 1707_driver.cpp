@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "208.cpp"
+#include "1707.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -54,54 +54,16 @@ vector<vector<int>> _rvvi() {
     return v;
 }
 
-string _rs_from(const string &raw) {
-    string s = raw;
-    if (s.size()>=2 && s.front()=='"' && s.back()=='"') s = s.substr(1, s.size()-2);
-    return s;
-}
-
-// each op's arg-list as a raw bracketed string, e.g. [] or ["apple"]
-vector<string> _rvvs() {
-    string s; getline(cin,s);
-    vector<string> v;
-    int dep=0; string cur;
-    for (char c : s) {
-        if (c=='[') { dep++; if(dep>2) cur+=c; }
-        else if (c==']') {
-            dep--;
-            if (dep==1) { v.push_back(cur); cur=""; }
-            else if (dep>0) cur+=c;
-        } else if (dep>1) cur+=c;
-    }
-    return v;
-}
-
 int main() {
     int t;
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto ops = _rvs();
-        auto args = _rvvs();
-        Trie sol;
-        string out;
-        for (size_t i = 0; i < ops.size(); i++) {
-            if (i) out += ", ";
-            if (ops[i] == "Trie") {
-                out += "null";
-            } else if (ops[i] == "insert") {
-                auto a = _rs_from(args[i]);
-                sol.insert(a);
-                out += "null";
-            } else if (ops[i] == "search") {
-                auto a = _rs_from(args[i]);
-                out += sol.search(a) ? "true" : "false";
-            } else if (ops[i] == "startsWith") {
-                auto a = _rs_from(args[i]);
-                out += sol.startsWith(a) ? "true" : "false";
-            }
-        }
-        cout << "[" << out << "]\n";
+        auto nums = _rvi();
+        auto queries = _rvvi();
+        Solution sol;
+        auto res = sol.maximizeXor(nums, queries);
+        for (int _i=0;_i<(int)res.size();_i++){if(_i)cout<<" ";cout<<res[_i];}cout<<"\n";
     }
     return 0;
 }

@@ -54,15 +54,54 @@ vector<vector<int>> _rvvi() {
     return v;
 }
 
+string _rs_from(const string &raw) {
+    string s = raw;
+    if (s.size()>=2 && s.front()=='"' && s.back()=='"') s = s.substr(1, s.size()-2);
+    return s;
+}
+
+// each op's arg-list as a raw bracketed string, e.g. [] or ["apple"]
+vector<string> _rvvs() {
+    string s; getline(cin,s);
+    vector<string> v;
+    int dep=0; string cur;
+    for (char c : s) {
+        if (c=='[') { dep++; if(dep>2) cur+=c; }
+        else if (c==']') {
+            dep--;
+            if (dep==1) { v.push_back(cur); cur=""; }
+            else if (dep>0) cur+=c;
+        } else if (dep>1) cur+=c;
+    }
+    return v;
+}
+
 int main() {
     int t;
     cin >> t;
     cin.ignore();
     while (t--) {
-        string word = _rs();
-        Solution sol;
-        sol.insert(word);
-
+        auto ops = _rvs();
+        auto args = _rvvs();
+        Trie sol;
+        string out;
+        for (size_t i = 0; i < ops.size(); i++) {
+            if (i) out += ", ";
+            if (ops[i] == "Trie") {
+                out += "null";
+            } else if (ops[i] == "insert") {
+                auto a = _rs_from(args[i]);
+                sol.insert(a);
+                out += "null";
+            } else if (ops[i] == "search") {
+                auto a = _rs_from(args[i]);
+                out += sol.search(a) ? "true" : "false";
+            } else if (ops[i] == "startsWith") {
+                auto a = _rs_from(args[i]);
+                out += sol.startsWith(a) ? "true" : "false";
+            }
+        }
+        cout << "[" << out << "]\n";
     }
     return 0;
 }

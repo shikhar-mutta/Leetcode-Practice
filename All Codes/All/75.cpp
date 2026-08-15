@@ -9,8 +9,12 @@ public:
     void sortColors(vector<int> &nums)
     {
         // approach1: doutch national flag algorithm
+        // [0, low)   → all 0s
+        // [low, mid) → all 1s   ← low is the start of this region
+        // [mid, high]→ unsorted
+        // (high, n-1]→ all 2s
+
         int n = nums.size();
-        // low-mid->0, mid-high->1, high-end->2
         int low = 0, mid = 0, high = n - 1;
         while (mid <= high)
         {

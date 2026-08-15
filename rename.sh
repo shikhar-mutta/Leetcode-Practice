@@ -13,41 +13,40 @@ NEW="$1"
 
 DRIVER=$(ls *_driver.cpp 2>/dev/null | head -1)
 if [ -z "$DRIVER" ]; then
-    echo "ERROR: No *_driver.cpp found"
-    exit 1
-fi
+    echo "No *_driver.cpp found, creating new scaffold for ${NEW}..."
+else
+    OLD="${DRIVER%_driver.cpp}"
 
-OLD="${DRIVER%_driver.cpp}"
+    REQUIRED=("${OLD}.cpp" "${OLD}_driver.cpp" "${OLD}_input.txt" "${OLD}_expected.txt")
+    OPTIONAL=("${OLD}_debug.txt")
 
-REQUIRED=("${OLD}.cpp" "${OLD}_driver.cpp" "${OLD}_input.txt" "${OLD}_expected.txt")
-OPTIONAL=("${OLD}_debug.txt")
+    for f in "${REQUIRED[@]}"; do
+        if [ ! -f "$f" ]; then
+            echo "ERROR: $f not found"
+            exit 1
+        fi
+    done
 
-for f in "${REQUIRED[@]}"; do
-    if [ ! -f "$f" ]; then
-        echo "ERROR: $f not found"
-        exit 1
-    fi
-done
-
-for f in "${REQUIRED[@]}"; do
-    newname="${f/$OLD/$NEW}"
-    mv "$f" "$newname"
-    echo "Renamed: $f -> $newname"
-done
-
-for f in "${OPTIONAL[@]}"; do
-    if [ -f "$f" ]; then
+    for f in "${REQUIRED[@]}"; do
         newname="${f/$OLD/$NEW}"
         mv "$f" "$newname"
         echo "Renamed: $f -> $newname"
-    fi
-done
+    done
 
-# Fix stale #include inside driver.cpp
-NEWDRIVER="${NEW}_driver.cpp"
-if [ -f "$NEWDRIVER" ]; then
-    sed -i "s|#include \"${OLD}.cpp\"|#include \"${NEW}.cpp\"|g" "$NEWDRIVER"
-    echo "Updated: #include in $NEWDRIVER"
+    for f in "${OPTIONAL[@]}"; do
+        if [ -f "$f" ]; then
+            newname="${f/$OLD/$NEW}"
+            mv "$f" "$newname"
+            echo "Renamed: $f -> $newname"
+        fi
+    done
+
+    # Fix stale #include inside driver.cpp
+    NEWDRIVER="${NEW}_driver.cpp"
+    if [ -f "$NEWDRIVER" ]; then
+        sed -i "s|#include \"${OLD}.cpp\"|#include \"${NEW}.cpp\"|g" "$NEWDRIVER"
+        echo "Updated: #include in $NEWDRIVER"
+    fi
 fi
 
 # Fetch LeetCode data and regenerate test files for the new problem

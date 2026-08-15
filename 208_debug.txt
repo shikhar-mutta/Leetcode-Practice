@@ -1,0 +1,2 @@
+1
+["Trie","insert","search","search","startsWith","insert","search"]

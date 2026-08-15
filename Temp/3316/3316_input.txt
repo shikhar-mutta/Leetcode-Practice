@@ -1,0 +1,13 @@
+4
+"abbaa"
+"aba"
+[0,1,2]
+"bcda"
+"d"
+[0,3]
+"dda"
+"dda"
+[0,1,2]
+"yeyeykyded"
+"yeyyd"
+[0,2,3,4]

@@ -1,0 +1,7 @@
+3
+["abc","aaaaa","bcdef"]
+"aabcdabc"
+["abababab","ab"]
+"ababaababa"
+["abcdef"]
+"xyz"

@@ -1,0 +1,7 @@
+3
+"aeioqq"
+1
+"aeiou"
+0
+"ieaouqqieaouqq"
+1

@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "208.cpp"
+#include "3.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -54,64 +54,15 @@ vector<vector<int>> _rvvi() {
     return v;
 }
 
-// splits an args line like [[],["apple"],["app"]] into raw bracketed groups: "[]", "[\"apple\"]", ...
-vector<string> _rargs() {
-    string s; getline(cin, s);
-    vector<string> v;
-    int dep = 0; string cur;
-    for (char c : s) {
-        if (c == '[') {
-            dep++;
-            if (dep > 1) cur += c;
-        } else if (c == ']') {
-            dep--;
-            if (dep >= 1) cur += c;
-            if (dep == 1) { v.push_back(cur); cur = ""; }
-        } else if (dep > 1) {
-            cur += c;
-        }
-    }
-    return v;
-}
-
 int main() {
     int t;
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto ops = _rvs();
-        auto rawArgs = _rargs();
-
-        Trie* trie = nullptr;
-        vector<string> out;
-        for (size_t i = 0; i < ops.size(); i++) {
-            string op = ops[i];
-            string raw = rawArgs[i];
-            // strip surrounding [ ]
-            string inner = raw.size() >= 2 ? raw.substr(1, raw.size() - 2) : "";
-            string arg;
-            if (inner.size() >= 2 && inner.front() == '"' && inner.back() == '"')
-                arg = inner.substr(1, inner.size() - 2);
-
-            if (op == "Trie") {
-                trie = new Trie();
-                out.push_back("null");
-            } else if (op == "insert") {
-                trie->insert(arg);
-                out.push_back("null");
-            } else if (op == "search") {
-                out.push_back(trie->search(arg) ? "true" : "false");
-            } else if (op == "startsWith") {
-                out.push_back(trie->startsWith(arg) ? "true" : "false");
-            }
-        }
-
-        cout << "[";
-        for (size_t i = 0; i < out.size(); i++) {
-            if (i) cout << ", ";
-            cout << out[i];
-        }
-        cout << "]\n";
+        string s = _rs();
+        Solution sol;
+        auto res = sol.lengthOfLongestSubstring(s);
+        cout << res << "\n";
     }
     return 0;
 }

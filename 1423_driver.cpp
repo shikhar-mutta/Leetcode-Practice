@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "424.cpp"
+#include "1423.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        string s = _rs();
+        auto cardPoints = _rvi();
         int k = _ri();
         Solution sol;
-        auto res = sol.characterReplacement(s, k);
+        auto res = sol.maxScore(cardPoints, k);
         cout << res << "\n";
     }
     return 0;

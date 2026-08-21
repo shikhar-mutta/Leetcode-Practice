@@ -3,32 +3,83 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// TC: O(n+m)  SC: O(charset)
-// Approach: sliding window; expand right until all of t's chars are covered, then shrink left while still valid
-class Solution {
+class Solution
+{
 public:
-    string minWindow(string s, string t) {
-        unordered_map<char,int> need;
-        for (char c : t) need[c]++;
-        int required = need.size();
-        unordered_map<char,int> window;
-        int formed = 0;
-        int left = 0, bestLen = INT_MAX, bestStart = 0;
-        for (int right = 0; right < (int)s.size(); right++) {
-            char c = s[right];
-            window[c]++;
-            if (need.count(c) && window[c] == need[c]) formed++;
-            while (formed == required) {
-                if (right - left + 1 < bestLen) {
+    // TC: O(n), SC: O(1)
+    string minWindow(string s, string t)
+    {
+        if (s.size() < t.size() || t.empty())
+            return "";
+
+        int need[128] = {0};
+        for (char c : t)
+            need[(int)c]++;
+        int missing = t.size(); // chars still to be matched in the window
+
+        int bestLen = INT_MAX, bestStart = 0;
+        int left = 0;
+        for (int right = 0; right < (int)s.size(); right++)
+        {
+            // Extend window; if this char was needed, we covered one more.
+            if (need[(int)s[right]]-- > 0)
+                missing--;
+
+            // Once all chars are covered, shrink from the left as far as possible.
+            while (missing == 0)
+            {
+                if (right - left + 1 < bestLen)
+                {
                     bestLen = right - left + 1;
                     bestStart = left;
                 }
-                char lc = s[left];
-                window[lc]--;
-                if (need.count(lc) && window[lc] < need[lc]) formed--;
+                if (++need[(int)s[left]] > 0)
+                    missing++;
                 left++;
             }
         }
         return bestLen == INT_MAX ? "" : s.substr(bestStart, bestLen);
     }
+    // TC: O(n+m), SC: O(charset)
+    // string minWindow(string s, string t)
+    // {
+    //     vector<int> freq(256, 0);
+
+    //     for (auto ch : t)
+    //         freq[ch]++;
+
+    //     int l = 0;
+    //     int r = 0;
+
+    //     string res = "";
+    //     int min_len = INT_MAX;
+
+    //     int start = 0;
+    //     int count = 0;
+
+    //     for (auto ch : s)
+    //     {
+    //         if (freq[ch] > 0)
+    //             count++;
+
+    //         freq[ch]--;
+
+    //         while (count == t.length())
+    //         {
+    //             int curr = r - l + 1;
+    //             if (curr < min_len)
+    //             {
+    //                 min_len = curr;
+    //                 start = l;
+    //             }
+    //             if (freq[s[l]] == 0)
+    //                 count--;
+    //             freq[s[l]]++;
+    //             l++;
+    //         }
+    //         r++;
+    //     }
+
+    //     return min_len == INT_MAX ? "" : s.substr(start, min_len);
+    // }
 };

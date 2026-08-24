@@ -383,6 +383,16 @@
         bitset<100001> dp; dp[0] = 1;
         for (int x : nums) dp |= dp << x;
 
+        // Partition Equal Subset Sum (LC 416): can nums be split into two
+        // equal-sum halves? Reduces to "is target = total/2 reachable?"
+        bool canPartition(vector<int>& nums) {
+            int total = accumulate(nums.begin(), nums.end(), 0);
+            if (total % 2) return false;
+            bitset<10001> dp; dp[0] = 1;
+            for (int x : nums) dp |= dp << x;
+            return dp[total / 2];
+        }
+
 ──────────────────────────────────────────────────────────────
 
 22. std::count_if

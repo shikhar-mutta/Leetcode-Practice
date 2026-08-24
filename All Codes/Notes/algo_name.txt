@@ -25,6 +25,8 @@ Algorithms
 11. Kosaraju algorithm
 12. Palindromic Tree (Eertree) + Dynamic Programming
 13. Hierholzer's algorithm
+14. Rabin Karp string matching algorithm
+15. meet-in-the-middle
 
 
 

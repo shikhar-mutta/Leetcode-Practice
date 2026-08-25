@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "721.cpp"
+#include "455.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -54,49 +54,16 @@ vector<vector<int>> _rvvi() {
     return v;
 }
 
-vector<vector<string>> _rvvs() {
-    string s; getline(cin,s);
-    vector<vector<string>> v;
-    int dep=0; string cur;
-    for (char c : s) {
-        if (c=='[') { dep++; if(dep>2) cur+=c; }
-        else if (c==']') {
-            dep--;
-            if (dep==1) {
-                vector<string> row;
-                bool in=false; string tok;
-                for (char rc : cur) {
-                    if (rc=='"') { in=!in; continue; }
-                    if (rc==',' && !in) { row.push_back(tok); tok=""; continue; }
-                    tok += rc;
-                }
-                if (!tok.empty()) row.push_back(tok);
-                v.push_back(row); cur="";
-            } else if (dep>0) cur+=c;
-        } else if (dep>1) cur+=c;
-    }
-    return v;
-}
-
 int main() {
     int t;
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto accounts = _rvvs();
+        auto g = _rvi();
+        auto s = _rvi();
         Solution sol;
-        auto res = sol.accountsMerge(accounts);
-        cout << "[";
-        for (size_t i=0;i<res.size();i++) {
-            if (i) cout << ",";
-            cout << "[";
-            for (size_t j=0;j<res[i].size();j++) {
-                if (j) cout << ",";
-                cout << "\"" << res[i][j] << "\"";
-            }
-            cout << "]";
-        }
-        cout << "]\n";
+        auto res = sol.findContentChildren(g, s);
+        cout << res << "\n";
     }
     return 0;
 }

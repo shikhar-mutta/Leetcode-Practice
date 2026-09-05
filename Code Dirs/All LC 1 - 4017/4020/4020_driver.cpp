@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "455.cpp"
+#include "4020.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -59,10 +59,10 @@ int main() {
     cin >> t;
     cin.ignore();
     while (t--) {
-        auto g = _rvi();
-        auto s = _rvi();
+        int n = _ri();
+        auto requests = _rvi();
         Solution sol;
-        auto res = sol.findContentChildren(g, s);
+        auto res = sol.elevatorRequests(n, requests);
         cout << res << "\n";
     }
     return 0;

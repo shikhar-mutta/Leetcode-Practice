@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "3945.cpp"
+#include "202.cpp"
 
 // ── read helpers ──────────────────────────────────────────────────
 int           _ri()  { string s; getline(cin,s); return stoi(s); }
@@ -61,8 +61,8 @@ int main() {
     while (t--) {
         int n = _ri();
         Solution sol;
-        auto res = sol.digitFrequencyScore(n);
-        cout << res << "\n";
+        auto res = sol.isHappy(n);
+        cout << (res ? "true" : "false") << "\n";
     }
     return 0;
 }

@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "892.cpp"
+#include "1748.cpp"
 
 // ── token utils ───────────────────────────────────────────────────
 static string _trim(const string& s) {
@@ -91,9 +91,9 @@ int main() {
     string _t; getline(cin, _t);
     int _T = stoi(_trim(_t));
     while (_T--) {
-        vector<vector<int>> grid = _rvvi();
+        vector<int> nums = _rvi();
         Solution sol;
-        auto _res = sol.surfaceArea(grid);
+        auto _res = sol.sumOfUnique(nums);
         cout << _res << "\n";
         _endCase();
     }

@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "1748.cpp"
+#include "2859.cpp"
 
 // ── token utils ───────────────────────────────────────────────────
 static string _trim(const string& s) {
@@ -92,8 +92,9 @@ int main() {
     int _T = stoi(_trim(_t));
     while (_T--) {
         vector<int> nums = _rvi();
+        int k = _ri();
         Solution sol;
-        auto _res = sol.sumOfUnique(nums);
+        auto _res = sol.sumIndicesWithKSetBits(nums, k);
         cout << _res << "\n";
         _endCase();
     }

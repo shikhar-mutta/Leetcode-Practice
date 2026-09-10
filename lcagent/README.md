@@ -58,8 +58,8 @@ the practice repo.
 | **3** | Providers (free-first) + Scorer — rubric, benchmark, reference diff | partial | ✅ done |
 | **3.5** | Improver — write, verify and install the better solution | yes | ✅ done |
 | **4** | DriverRepair / Solver / Debugger | yes | ✅ done |
-| **5** | Archiver + Tracker + Classifier + Committer | no | ⬜ next |
-| **6** | Notes + reporting | partial | ⬜ |
+| **5** | Archiver + Tracker + Classifier + Committer | no | ✅ done |
+| **6** | Notes agent + Reporter | partial | ✅ done |
 
 ---
 
@@ -467,6 +467,160 @@ missing neighbour link rather than rewriting the approach.
 
 ---
 
+### Phase 5 — Classifier, Archiver, Tracker, Committer (2026-09-11) ✅
+
+Closing the loop: a solved problem gets classified, archived, recorded and
+committed. One command — `finish`.
+
+| File | Role |
+|:--|:--|
+| `core/tracker_io.py` | Read/write `LC Tracker.xlsx`, backups, stats |
+| `agents/classifier.py` | Pick the topic from the sheet's own vocabulary |
+| `agents/archiver.py` | Copy into `Code Dirs/` and `All Codes/` |
+| `agents/tracker.py` | Mark solved + record the topic |
+| `agents/committer.py` | Commit as the next `U<n>` |
+
+**The sheet's layout**, established by inspection and verified against known
+rows: five side-by-side blocks of 1000, starting at columns **A, E, I, M, Q**;
+within a block the columns are *number, mark, mark, topic*; the row is
+`id % 1000 + 1`. Checked against 2859 → row 860 block I-L, and 4 → row 5 block
+A-D. The number column is a text label in block 1, a formula (`=A5 +1000`) in
+blocks 2-4 and a plain integer in block 5 — it is never written to.
+
+**Decisions**
+
+1. **Every tracker write is preceded by a timestamped backup**, no exceptions.
+   The sheet is months of work and the only record of what has been solved.
+   Confirmed safe to round-trip first: the file has no charts, images,
+   conditional formatting, merged cells or defined names, so openpyxl cannot
+   silently drop anything.
+2. **Existing annotation is never destroyed.** A ⭐ is never overwritten with
+   ✅ — it is the user's own mark and carries meaning this system does not know
+   — and an existing topic is kept unless `--overwrite` is passed.
+3. **The classifier picks from the sheet's vocabulary**, not free text. There
+   are already 95 distinct topics with a 59-item long tail of one-offs; a model
+   inventing another spelling of "Binary Search" would make the column useless
+   for reporting. It falls back to the LeetCode tag when no model is available.
+4. **Archiving and tracking are gated on passing tests.** The archive doubles
+   as the scorer's reference corpus, so a broken solution in it poisons future
+   comparisons.
+5. **Committing is opt-in.** `finish` shows the message it *would* use;
+   `finish --commit` actually commits, `-m` overrides the message.
+
+**Three bugs found and fixed during testing**
+
+- **`ok()` kwarg collision.** `CommitterAgent` passed `message=msg` into
+  `**data`, colliding with `Agent.ok(message, **data)` — a `TypeError` that only
+  fired on the dry-run path. An audit of every `self.ok(...)` call found no
+  others.
+- **A quadratic tracker read.** `stats()` used `ws.cell(r, c)` on a
+  `read_only=True` worksheet. Those stream rows, so random access rescans from
+  the top every call — the first run hung past 120 s. Rewritten as one
+  `iter_rows` pass: **190 ms**.
+- **`_next_number` produced duplicates.** It scanned only the last 200 commits,
+  but `U15`–`U17` exist further back, and the history reuses numbers heavily
+  (21 commits titled `U11`, spread over a week). Taking the global maximum gave
+  `U18`, which is arithmetically right and wrong for this convention; it now
+  derives from the *most recent* U commit, giving `U15` after `U14`.
+
+**A design gap fixed too:** the archiver refused any problem that was partly
+archived. But the bulk import left entries with one side missing — `Code Dirs/448`
+has no `All Codes/448.cpp`, and problem 4 was the reverse. A half-present
+archive is a gap to fill, not a reason to refuse; it now reports "completed".
+
+**Verified** on problem 4: classifier chose `Binary_Search` (matching what was
+already in the sheet), archiver **completed** the partial entry with 5 files,
+tracker reported `A5 — already up to date` and still took a backup. The write
+path was then proven on a genuinely unmarked problem (3600): both marks set to
+✅ and topic written, then restored byte-for-byte from the backup.
+
+### Phase 6 — Notes and reporting (2026-09-11) ✅
+
+The last phase, and the only one that writes into files the system did not
+create. Two agents that answer "what did I learn?" and "where am I?".
+
+| File | Role |
+|:--|:--|
+| `core/notes_io.py` | Append to the three notes files, each in its own format |
+| `agents/notes.py` | Decide whether a problem taught anything worth keeping |
+| `agents/reporter.py` | Progress across the tracker: blocks, topics, ⭐, gaps |
+
+**The three notes formats**, taken from the files as they stand — no format was
+invented, and each one is written back the way the file already does it:
+
+| File | Entry | Separator | Where a new entry goes |
+|:--|:--|:--|:--|
+| `Notes/imp DS.txt` | `51. std::nth_element — ...` | `─` × 62 | appended at the end |
+| `Math formula/formula.txt` | `[17] Digital Root (LC 258)` | `-` × 40 | **above** the trailing `=` × 40 footer |
+| `Notes/algo_name.txt` | `16. Mo's algorithm - ...` | none | **after item 15**, above the loose notes below |
+
+Two of the three are insertions, not appends — writing to the end of
+`formula.txt` would land below its footer, and the end of `algo_name.txt` is
+unrelated loose text, not the algorithm list.
+
+**Decisions**
+
+1. **`NONE` is the expected answer.** The three files hold 50, 16 and 15
+   entries across ~935 solved problems — about one note per twenty problems.
+   An agent that appends after every problem would bury the signal within a
+   month, so the model is told most problems deserve nothing, and the prompt
+   lists the techniques that are never worth an entry.
+2. **Naming a file does not force an entry.** `notes ds` restricts *which*
+   file may be written, not *whether* one is. The first version said "you MUST
+   produce an entry" and the model duly invented one — for problem 4 it wrote
+   up the naive merge-and-sort it had rejected, and then advised against using
+   it. An invented note is worse than no note.
+3. **Duplicates are blocked before the write**, on three checks: the problem is
+   already cited, the title matches, or the titles share ≥60% of their
+   meaningful words. `--force` overrides. Near-duplicates in a hand-curated
+   file are worse than a missed entry, so the check errs toward refusing.
+4. **The file is copied to `data/notes_backups/` before every write** — the
+   same rule as the tracker, for the same reason.
+5. **Prose is reflowed; code is never touched.** Indentation is the signal: a
+   line the model indented is code and passes through byte-for-byte, anything
+   at column 0 is prose and gets reflowed to the files' own 74-column style.
+   The first version wrapped line by line and left orphan fragments
+   ("temporary copy," alone on a line), because the model brings its own line
+   breaks at whatever column it likes.
+6. **The reporter never writes.** It reads the sheet once (~0.8 s) and reports
+   only what the tracker already knows.
+7. **Notes do not run automatically on `finish`.** The answer is usually
+   `NONE`, and a wasted model call per finish adds up on a free tier. `finish`
+   prints a one-line reminder instead.
+
+**Three data problems found in the process**
+
+- **A solved problem 0.** Row 1 of block A is labelled `0000` and carries
+  ⭐ ✅, but LeetCode numbering starts at 1 — `stats()` was counting a problem
+  that does not exist. Solved count corrected 936 → **935**.
+- **⭐ was folded into solved.** `stats()` treated ⭐ and ✅ identically, so the
+  revision queue could not be built at all. ⭐ now has its own set: **12
+  problems** flagged.
+- **Thin topics were all typos.** Ranking topics by fewest-solved surfaced
+  `OUT`, `pushAll→push left`, `Binary_Search, In, Pre` — data-entry noise, not
+  practice targets. Labels used only once are now excluded, which turns the
+  list into real categories: `DFS (2)`, `Heap (3)`, `Trie (3)`, `Set (3)`.
+
+**Titles without the network.** The ⭐ queue needs problem titles, but the
+cache only holds what this system has fetched. Every archived solution carries
+a `// Link:` line, and the slug in it reconstructs the title. That surfaced
+another quirk: **105 archive files carry a `*` in the filename** (`1009*.cpp`,
+`1157**ST.cpp`) — the user's own revisit marker — so an exact `<id>.cpp`
+lookup misses them. The lookup globs `<id>*` and checks the digit boundary, so
+asking for `448` cannot match `4480`. *(`*` is illegal in a Windows filename —
+noted under Known gaps.)*
+
+**Verified.** Reporter: 935 solved, per-block bars, 95 topics, all 12 ⭐
+resolved to real titles offline, largest unsolved run 2615–2638. Notes: nine
+branches exercised against a stub provider — `NONE`, fenced `NONE`, duplicate
+refused, `--force` override, algo entry with no body, an invalid `FILE:` value
+falling back to the named target, an unknown target rejected before any model
+call, an empty reply, and `--dry-run` writing nothing. All three formats were
+written to copies and diffed: byte-exact, and the real notes files were never
+opened for writing.
+
+---
+
 ## Architecture
 
 ### Principle: two tiers, split by whether a model is needed
@@ -529,6 +683,8 @@ watch       ┌─► poll mtime ─► debounce ─► Verifier ─┐   (until
 score       Verifier ─► Scorer ◄─ reference solution     [Phase 3]
 solve <id>  Fetcher ─► DriverRepair ─► Solver ─► ⟲(Verifier ⇄ Debugger) [Phase 4]
 archive     Classifier ─► Archiver ─► Tracker ─► Committer               [Phase 5]
+notes       Notes ─► duplicate check ─► backup ─► append                   [Phase 6]
+report      Reporter ◄─ LC Tracker.xlsx  (read-only, one pass)             [Phase 6]
 ```
 
 The only cycle in the system is `Verifier ⇄ Debugger`, and it is retry-capped.
@@ -560,6 +716,8 @@ lcagent/
 │   ├── testcase.py        verify() → TestReport
 │   ├── leetcode.py        GraphQL + cache
 │   ├── state.py           Context (blackboard)
+│   ├── tracker_io.py      LC Tracker.xlsx read/write + backups
+│   ├── notes_io.py        append to the notes files, in their own formats
 │   └── ui.py              colour, Windows-safe
 ├── config.toml            provider, models, rubric weights
 ├── providers/
@@ -573,20 +731,30 @@ lcagent/
 │   ├── codegen.py         generate → verify → retry, shared
 │   ├── fetcher.py  statement.py  verifier.py  scorer.py  improve.py
 │   ├── driver_repair.py  solver.py  debugger.py
-│   └── (phases 5-6: classifier, archiver, tracker, notes, committer)
+│   ├── classifier.py  archiver.py  tracker.py  committer.py
+│   └── notes.py  reporter.py
 ├── data/                  ← agent by-products only
 │   ├── cache/             LeetCode responses (gitignored)
 │   ├── scores/            score cards
 │   ├── replaced/          solutions rescued before a problem swap
 │   ├── logs/              session logs (gitignored)
+│   ├── tracker_backups/   pre-write copies of the sheet (gitignored)
+│   ├── notes_backups/     pre-write copies of the notes files (gitignored)
 │   └── session.json       resume state (gitignored)
 └── README.md
 ```
 
 ### Cross-platform contract
 
+> **Status: written for Windows, never run there.** Every item below is a
+> deliberate choice made to avoid a known Windows failure, and none of it has
+> been executed on Windows — there is no Windows machine in this setup. Treat
+> the table as "the traps that were designed around", not as a test result.
+> The most likely first failure is the compiler hunt in `core/compiler.py`.
+
 | Concern | How it is handled |
 |:--|:--|
+| Third-party packages | exactly one, `openpyxl`, and only for the tracker |
 | No bash on Windows | `run.sh` logic ported to Python; `.sh` scripts left for manual use |
 | Compiler location | `shutil.which`, then MSYS2 / TDM-GCC / WinLibs paths, then `CXX` |
 | `bits/stdc++.h` | MinGW-w64 required; MSVC explicitly unsupported |
@@ -605,5 +773,50 @@ lcagent/
 | 2. Score my submission, suggest a better solution | `agents/scorer.py` ✅ (measured half works with no key; verdict needs a free key) |
 | 3. One master agent looping until stopped | `agents/master.py` — REPL + watcher ✅ |
 | 4. Runs from the command prompt | `python -m lcagent`, `lc.bat`, `lc` ✅ |
-| 5. Windows and Linux | Cross-platform contract above ✅ |
+| 5. Windows and Linux | Cross-platform contract above — **written for both, exercised only on Linux** ⚠️ |
 | *(added)* Must cost nothing to run | Free-first provider order; deterministic agents need no model at all ✅ |
+| *(added)* All agent data in a separate folder | `lcagent/data/` — nothing scattered through the practice repo ✅ |
+| *(added)* Menu, like a switch-case | `MENU` in `agents/master.py`; every key maps to an existing command ✅ |
+| *(added)* A failed fetch must not modify old files or delete partial ones | `agents/fetcher.py` — snapshot → verify → rollback, restoring pre-existing files byte-for-byte and keeping the failed attempt's files ✅ |
+| *(added)* A new fetch replaces the previous problem at the root | `_replace_previous()`, rescuing anything unarchived to `data/replaced/` ✅ |
+| *(added)* "Better code" writes straight into the file | `agents/improve.py` — verified first, backed up, then installed ✅ |
+| *(added)* README with a phase-by-phase log and the architecture | This file ✅ |
+
+### Dependencies
+
+Standard library only, with **one exception**: `openpyxl`, needed to read and
+write `LC Tracker.xlsx`.
+
+```
+python3 -m pip install openpyxl        # Linux / macOS
+py -m pip install openpyxl             # Windows
+```
+
+Without it, `finish` and `report` report what to install and everything else
+keeps working — the classifier falls back to LeetCode tags, and fetching,
+testing, scoring, solving, improving and note-taking never touch the sheet.
+
+### Known gaps
+
+Honest list of what is not solved, kept here rather than left implied:
+
+1. **No stress-test generator.** The scorer's `efficiency` component measures
+   against the example tests, which are tiny — an O(n²) brute force runs them
+   instantly and scores full marks on that component. `complexity` still
+   catches it by reading the code (brute force 5/25 vs optimal 25/25), so the
+   grades come out right, but for the wrong reason on one axis. A generator
+   producing worst-case inputs would fix that and would also let the improver
+   claim "verified" against more than the examples.
+2. **`Tags: —` on very recent problems.** LeetCode returns an empty
+   `topicTags` for the newest ids, so the classifier falls back to the model
+   with no tag hint. Harmless, but it shows in the statement file.
+3. **105 archive filenames contain `*`** (`1009*.cpp`, `1157**ST.cpp`). That
+   character is legal on Linux and **illegal on Windows**, so those files
+   cannot be checked out there at all. They are the user's own revisit
+   markers, so renaming them is a decision for the user, not the system.
+4. **Never executed on Windows.** See the caveat above the cross-platform
+   table. The code avoids every Windows trap that was identified, but
+   "avoids the known traps" is not "verified".
+5. **186 of ~3400 problems are premium** and return empty content. They are
+   reported as locked; the paywall is not worked around. Setting
+   `LEETCODE_SESSION` to your own logged-in cookie is the supported route.

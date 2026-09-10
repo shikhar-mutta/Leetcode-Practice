@@ -27,3 +27,8 @@ dbg_*
 lcagent/data/cache/
 lcagent/data/logs/
 lcagent/data/session.json
+
+# Pre-write safety copies of the tracker and the notes files. Local undo only —
+# git already versions the originals, so committing these just bloats history.
+lcagent/data/tracker_backups/
+lcagent/data/notes_backups/

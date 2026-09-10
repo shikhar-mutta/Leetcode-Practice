@@ -22,15 +22,23 @@ import sys
 import time
 from pathlib import Path
 
-from ..core import paths, ui
+from ..core import notes_io, paths, ui
 from ..core.state import Context
 from ..core.testcase import Status
 from .base import Agent, AgentResult
 from .fetcher import FetcherAgent
+from .archiver import ArchiverAgent
+from .classifier import ClassifierAgent
+from .committer import CommitterAgent
 from .debugger import DebuggerAgent
 from .driver_repair import DriverRepairAgent
 from .improve import ImproverAgent
+from .notes import NotesAgent
+from .notes import render as render_note
+from .reporter import ReporterAgent
+from .reporter import render as render_progress
 from .solver import SolverAgent
+from .tracker import TrackerAgent
 from .scorer import ScorerAgent
 from .scorer import render as render_score
 from .statement import StatementAgent
@@ -55,6 +63,12 @@ class MasterAgent(Agent):
         self.repairer = DriverRepairAgent()
         self.solver = SolverAgent()
         self.debugger = DebuggerAgent()
+        self.classifier = ClassifierAgent()
+        self.archiver = ArchiverAgent()
+        self.tracker = TrackerAgent()
+        self.committer = CommitterAgent()
+        self.notes = NotesAgent()
+        self.reporter = ReporterAgent()
         self.running = True
 
     # ── the Agent contract, for uniformity ──
@@ -321,6 +335,86 @@ class MasterAgent(Agent):
         self.verifier.run(self.ctx)
         self._print_report()
 
+    def cmd_finish(self, args: list[str]) -> None:
+        """Classify, archive, update the tracker, and optionally commit."""
+        if not self._need_ctx(args):
+            return
+        if self.ctx.report is None:
+            print(ui.info("running the tests first ..."))
+            self.verifier.run(self.ctx)
+            self._print_report()
+            print()
+        if not self.ctx.report.all_passed:
+            print(ui.bad("tests are not passing — nothing was archived or recorded"))
+            return
+
+        overwrite = "--overwrite" in args
+        print(ui.banner(f"finishing problem {self.ctx.pid}"))
+
+        c = self.classifier.run(self.ctx)
+        print(ui.ok(f"topic: {c.message}") if c.ok else ui.warn(c.message))
+
+        a = self.archiver.run(self.ctx, overwrite=overwrite)
+        print(ui.ok(a.message) if a.ok else ui.warn(a.message))
+
+        t = self.tracker.run(self.ctx, overwrite_topic=overwrite)
+        if t.ok:
+            print(ui.ok(f"tracker {t.data['cell']} — {t.message.split('—', 1)[-1].strip()}"))
+            print(ui.dim(f"     backup: {t.data['backup']}"))
+        else:
+            print(ui.bad(t.message))
+
+        if "--commit" in args:
+            custom = None
+            if "-m" in args:
+                i = args.index("-m")
+                custom = " ".join(args[i + 1:]).strip() or None
+            g = self.committer.run(self.ctx, message=custom)
+            print(ui.ok(g.message) if g.ok else ui.bad(g.message))
+        else:
+            g = self.committer.run(self.ctx, dry_run=True)
+            if g.ok and g.data.get("commit_message"):
+                print(ui.info(f"{g.message}"))
+                print(ui.dim("     run `finish --commit` to actually commit"))
+        # Notes are not run automatically: the answer is "nothing new" for most
+        # problems, and a wasted model call per finish adds up on a free tier.
+        print(ui.dim("     `notes` records anything reusable this one taught you"))
+
+    def cmd_notes(self, args: list[str]) -> None:
+        """Add what this problem taught you to your own notes files."""
+        if not self._need_ctx(args):
+            return
+        target = next((a for a in args if a in notes_io.TARGETS), None)
+        r = self.notes.run(
+            self.ctx, target=target,
+            dry_run="--dry-run" in args or "--preview" in args,
+            force="--force" in args)
+
+        if not r.ok:
+            print(ui.warn(r.message) if r.data.get("duplicate") else ui.bad(r.message))
+            if r.data.get("duplicate"):
+                print(ui.dim("     `notes --force` adds it anyway; "
+                             "`notes ds|formula|algo` picks the file"))
+            return
+
+        print(ui.ok(r.message))
+        body = render_note(r)
+        if body:
+            print(body)
+        if r.data.get("backup"):
+            print(ui.dim(f"     backup: {r.data['backup']}"))
+        elif not r.data.get("wrote") and r.data.get("preview"):
+            print(ui.dim("     nothing was written — drop --dry-run to add it"))
+
+    def cmd_report(self, args: list[str]) -> None:
+        """Progress across the whole tracker — no problem needs to be loaded."""
+        print(ui.dim("  reading the tracker ..."))
+        r = self.reporter.run(self.ctx)
+        if not r.ok:
+            print(ui.bad(r.message))
+            return
+        print(render_progress(r.data))
+
     def cmd_provider(self, args: list[str]) -> None:
         from ..providers import describe_all, get_provider
         if args and args[0].lower() in ("models", "list"):
@@ -428,13 +522,14 @@ class MasterAgent(Agent):
         print(ui.dim(f"  provider: {prov.name if usable else 'none configured'}"
                      f"{'  (free tier — nothing here costs money)' if usable else ''}"))
         built = [self.fetcher, self.statement, self.repairer, self.verifier,
-                 self.solver, self.debugger, self.scorer, self.improver, self]
+                 self.solver, self.debugger, self.scorer, self.improver,
+                 self.classifier, self.archiver, self.tracker, self.committer,
+                 self.notes, self.reporter, self]
         for a in built:
             # The distinction is whether the agent needs a model provider at
             # all — not cost. On a free tier every agent here is free to run.
             tag = ui.yellow("model  ") if a.requires_llm else ui.green("offline")
             print(f"  {tag}  {ui.bold(a.name):<12} {a.role}")
-        print(ui.dim("  pending: classifier, archiver, tracker, notes, committer"))
 
 
     def _render_menu(self) -> str:
@@ -547,8 +642,13 @@ MENU: list[tuple[str, list[tuple[str, str, str, str]]]] = [
         ("8", "Score",         "grade + better-approach check",            "score"),
         ("9", "Better code",   "verify the suggestion, then write it in",  "better"),
     ]),
+    ("FINISH", [
+        ("f", "Finish",        "classify, archive, update the tracker",    "finish"),
+        ("l", "Notes",         "add the reusable trick to your notes",     "notes"),
+    ]),
     ("SESSION", [
         ("s", "Status",        "what is loaded, which files exist",        "status"),
+        ("g", "Progress",      "solved counts, thin topics, \u2b50 queue",     "report"),
         ("a", "Agents",        "the agent roster",                         "roster"),
         ("p", "Providers",     "model backends, and which are usable",     "provider"),
         ("h", "Help",          "every command and alias",                  "help"),
@@ -568,6 +668,9 @@ _ALIASES = {
     "repair": "cmd_repair", "driver": "cmd_repair",
     "solve": "cmd_solve",
     "fix": "cmd_fix", "debug": "cmd_fix",
+    "finish": "cmd_finish", "f": "cmd_finish", "archive": "cmd_finish",
+    "notes": "cmd_notes", "note": "cmd_notes",
+    "report": "cmd_report", "progress": "cmd_report", "stats": "cmd_report",
     "provider": "cmd_provider", "providers": "cmd_provider",
     "watch": "cmd_watch", "w": "cmd_watch",
     "status": "cmd_status", "st": "cmd_status",
@@ -588,6 +691,13 @@ _HELP = [
     ("repair    (driver)", "fill the driver's TODO scaffolding, then retest"),
     ("solve     [--force]", "write the solution from the statement"),
     ("fix       (debug)", "patch the solution until the failing cases pass"),
+    ("finish    (f, archive)", "classify, archive, update LC Tracker.xlsx"),
+    ("    --commit [-m msg]", "also commit as the next U<n>, or your own message"),
+    ("    --overwrite", "replace an existing archive entry / tracker topic"),
+    ("notes     [ds|formula|algo]", "append a reusable technique to your notes files"),
+    ("    --dry-run", "show the entry without writing it"),
+    ("    --force", "add it even if it looks like a duplicate"),
+    ("report    (progress, stats)", "solved counts, thin topics, \u2b50 queue, unsolved runs"),
     ("watch     (w)", "re-run on every save and score when green, until Ctrl-C"),
     ("provider [models]", "which model providers are usable; free ones first"),
     ("show      (s, p)", "print the problem statement + test cases"),

@@ -1,7 +1,7 @@
 {
   "pid": "4",
-  "total": 93.5,
-  "grade": "A",
+  "total": 77.0,
+  "grade": "C",
   "components": [
     {
       "name": "correctness",
@@ -12,28 +12,32 @@
     },
     {
       "name": "efficiency",
-      "points": 10.5,
+      "points": 15,
       "max_points": 15,
-      "note": "2.9 ms \u2014 no reference to compare against",
+      "note": "4.1 ms vs 3.6 ms reference \u2014 both below the 8 ms noise floor, example tests are too small to differentiate",
       "judged_by": "measured"
     },
     {
       "name": "complexity",
-      "points": 25.0,
+      "points": 5.0,
       "max_points": 25,
-      "note": "O(log min(m, n)) time, O(1) space (optimal O(log (m+n)))",
+      "note": "O((m+n) log(m+n)) time, O(m+n) space (optimal O(log(min(m, n))))",
       "judged_by": "openai/gpt-oss-120b"
     },
     {
       "name": "readability",
-      "points": 8.0,
+      "points": 7.0,
       "max_points": 10,
-      "note": "Clear variable names and straightforward partition logic.",
+      "note": "Code is straightforward but uses unnecessary extra array and sort.",
       "judged_by": "openai/gpt-oss-120b"
     }
   ],
-  "verdict": "The solution is optimal in time and space with good readability.",
-  "better": null,
+  "verdict": "The solution works but is not optimal; a binary\u2011search partition method is needed for O(log\u202f(m+n)) time.",
+  "better": {
+    "approach": "Binary search partition",
+    "time": "O(log(min(m, n)))",
+    "why": "It finds the median by partitioning the two arrays without merging, achieving the required logarithmic time."
+  },
   "model": "openai/gpt-oss-120b",
   "degraded": false
 }

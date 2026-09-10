@@ -1,69 +1,655 @@
 # lcagent — LeetCode Practice Multi-Agent System
 
-A command-line multi-agent system for this practice repo. A **master agent runs
-in a loop** dispatching to specialist agents that fetch problems, render
-readable question files, verify solutions, score them, and archive the result.
+A command-line **multi-agent system** for this practice repo. One master agent
+runs in a loop and dispatches to 14 specialists that fetch problems from
+LeetCode, render readable question files, repair drivers, write and debug
+solutions, verify them against the real test cases, score them, suggest and
+install better approaches, archive the result, update `LC Tracker.xlsx`, append
+to your notes files, and commit.
 
-Runs on **Windows and Linux**, from `cmd.exe` or any POSIX shell, and is
-**free to run end to end** — no subscription, and no paid API. Roughly half the
-agents are deterministic Python that always work offline; the rest run on a
-free tier (Groq, Gemini, Cerebras, OpenRouter) or a fully local Ollama model.
+**Runs on Windows and Linux.** **Free end to end** — no subscription, no paid
+API. Ten of the fifteen agents are deterministic Python that need no model at
+all; the other five run on a free tier (Groq, Gemini, Cerebras, OpenRouter) or a
+fully local Ollama model.
+
+```
+                      ┌──────────────────────────┐
+   you  ──────────────►      MasterAgent         ├──────────► menu / REPL
+                      │  owns one Context        │
+                      └────────────┬─────────────┘
+                                   │  hands the Context down ordered pipelines
+   ┌───────────────┬───────────────┼───────────────┬────────────────┐
+   ▼               ▼               ▼               ▼                ▼
+ PROBLEM         SOLVE          REVIEW          FINISH           SESSION
+ fetcher       driver-repair    scorer         classifier        reporter
+ statement     solver           improver       archiver          master
+ verifier      debugger         notes          tracker
+                                               committer
+```
+
+---
+
+## Contents
+
+| | |
+|:--|:--|
+| [1. Install and run](#1-install-and-run) | setup script, Windows + Linux, first session |
+| [2. Requirements](#2-requirements) | what must be present, and what is optional |
+| [3. The menu](#3-the-menu) | every command, key and alias |
+| [4. Architecture](#4-architecture) | the two tiers, the blackboard, the pipelines |
+| [5. The agents](#5-the-agents) | all fifteen, with inputs, outputs and failure modes |
+| [6. Files and data](#6-files-and-data) | what is written where, and what is safe to delete |
+| [7. Providers and cost](#7-providers-and-cost) | free tiers, limits, and how to add a key |
+| [8. Cross-platform](#8-cross-platform) | what was designed for Windows, and what is untested |
+| [9. Troubleshooting](#9-troubleshooting) | the errors you are most likely to hit |
+| [10. Development log](#10-development-log) | phase by phase, with the reasoning |
+| [11. Known gaps](#11-known-gaps) | what is not solved |
+
+---
+
+## 1. Install and run
+
+### 1.1 One command
+
+The setup script checks everything, installs what is missing, and tells you the
+exact command for anything it cannot install itself. **It never changes anything
+without asking**, and `--check` changes nothing at all.
+
+**Windows** — double-click `setup.bat`, or from `cmd.exe` / PowerShell:
+
+```bat
+cd "path\to\Leetcode-Practice"
+setup.bat                :: install what is missing, ask before each step
+setup.bat --check        :: diagnose only, change nothing
+setup.bat --yes          :: install everything, ask nothing
+```
+
+**Linux / macOS** — from any shell:
 
 ```bash
-./lc                       # Linux            \
-lc.bat                     # Windows           }  the menu-driven loop
-python -m lcagent          # either            /
-python -m lcagent run 2859 # one-shot, scriptable, real exit codes
+cd "path/to/Leetcode-Practice"
+./setup.sh               # install what is missing, ask before each step
+./setup.sh --check       # diagnose only, change nothing
+./setup.sh --yes         # install everything, ask nothing
 ```
 
-The loop opens on a numbered menu and redisplays it after every action.
-Pick a number, or type any command name — both go down the same path, so the
-menu is a front end and never a second implementation.
+Already have Python? These are equivalent and work identically on both systems:
+
+```bash
+python -m lcagent setup       # same as setup.sh / setup.bat
+python -m lcagent doctor      # same as --check
+```
+
+### 1.2 What setup actually does
+
+| Step | Checks | Fixes automatically |
+|:--|:--|:--|
+| **1. Python** | 3.11+ (needed for `tomllib`) | no — prints the install command |
+| **2. C++ compiler** | `g++` on PATH, MSYS2/MinGW/TDM paths, `$CXX`; then **compiles a real `<bits/stdc++.h>` program** | Linux: apt/dnf/pacman/zypper/apk · Windows: winget → MSYS2 → pacman · macOS: brew |
+| **3. openpyxl** | importable | yes — `pip install`, falling back to `--break-system-packages` then `--user` |
+| **4. Launchers** | `lc` and `lc.bat` exist with the **right line endings** | yes — rewrites them, `chmod +x` on POSIX |
+| **5. Optional** | `git`, a model provider key, `ollama` | no — prints exactly how to set a key |
+
+The compiler step deliberately does more than `which g++`: it compiles a program
+that includes `<bits/stdc++.h>`, because that header is a libstdc++ extension.
+A machine can have a perfectly good compiler and still be unable to build a
+single solution in this repo — Apple clang and MSVC both fail that test.
+
+Sample output:
 
 ```
+  lcagent setup — Linux 7.0.0-31-generic (checking only, nothing will be changed)
+
+1. Python
+─────────
+[  ok  ] Python 3.14.4
+         /usr/bin/python3
+
+2. C++ compiler
+───────────────
+[  ok  ] found g++
+         /usr/bin/g++
+         g++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0
+[  ok  ] <bits/stdc++.h> compiles
+
+Summary
+───────
+[  ok  ] Python          3.14.4
+[  ok  ] C++ compiler    g++ 15.2.0
+[  ok  ] openpyxl        3.1.5
+[  ok  ] Launchers       lc + lc.bat
+[ warn ] Model provider  offline agents still work
+
+  Ready. Start the system with:
+     ./lc        or   python -m lcagent
+```
+
+### 1.3 Running it
+
+Four equivalent ways to start the loop:
+
+```bash
+./lc                          # Linux / macOS
+lc.bat                        # Windows
+python -m lcagent             # either — works from the repo root
+python lcagent/__main__.py    # either — no package import needed
+```
+
+One-shot mode takes the same commands, prints the same output, and returns a
+**real exit code** (0 = tests passed, 1 = failed), so it scripts and works in CI:
+
+```bash
+python -m lcagent new 2859        # fetch and scaffold problem 2859
+python -m lcagent run             # compile, run the tests, exit 0/1
+python -m lcagent score 4         # grade problem 4
+python -m lcagent report          # progress across the whole tracker
+python -m lcagent finish --commit # classify, archive, track, commit
+```
+
+### 1.4 A first session, end to end
+
+```
+$ ./lc
+
+  lcagent  LeetCode practice multi-agent system
+  repo: /home/shikhar/Sem 2/Coding Practice/Leetcode-Practice
+
 ┌────────────────────────────────────────────────────────────┐
-│ lcagent · 2859                                        groq │
+│ lcagent · no problem                                  groq │
 └────────────────────────────────────────────────────────────┘
   PROBLEM
    1  New problem     fetch, scaffold, write the question file
    2  Show question   statement, constraints, test cases
+   3  Repair driver   fill the driver's TODO scaffolding
   SOLVE
-   3  Run tests       compile, run, per-case results
-   4  Watch           auto test + score on every save
-   5  Score           grade + better-approach check
+   4  Run tests       compile, run, per-case results
+   5  Watch           auto test + score on every save
+   6  Solve for me    write the solution from the statement
+   7  Fix failures    debug until the failing cases pass
+  REVIEW
+   8  Score           grade + better-approach check
+   9  Better code     verify the suggestion, then write it in
+  FINISH
+   f  Finish          classify, archive, update the tracker
+   l  Notes           add the reusable trick to your notes
   SESSION
-   6  Status          what is loaded, which files exist
-   7  Agents          the agent roster
-   8  Providers       model backends, and which are usable
-   9  Help            every command and alias
+   s  Status          what is loaded, which files exist
+   g  Progress        solved counts, thin topics, ⭐ queue
+   a  Agents          the agent roster
+   p  Providers       model backends, and which are usable
+   h  Help            every command and alias
    0  Quit            save the session and exit
-  choose [0-9] or type a command >
+
+  choose or type a command > 1
+         problem id > 2859
+
+· fetching 2859 ...
+✓ scaffolded 2859: solution, driver, input, expected
+✓ wrote 2859_problem.txt
+· statement: 2859_problem.txt
+· edit 2859.cpp, then `run` (or `watch`)
+
+  choose or type a command > 5          ← watch: retests on every save
+· watching 2859.cpp — Ctrl-C to stop
+Test 1: PASS  (output: 1)
+Test 2: PASS  (output: 8)
+Result: 2 / 2 passed  (4 ms)
+
+  choose or type a command > 8          ← score
+score — problem 2859
+  94/100   grade A
+  correctness  ██████████████████  50.0/50.0  2/2 test cases
+  complexity   ██████████████████  25.0/25.0  O(n) time, O(1) space
+
+  choose or type a command > f          ← finish
+✓ topic: Bit_man
+✓ archived 5 files to Code Dirs/ and All Codes/
+✓ tracker I860 — marked solved, topic → Bit_man
+     backup: lcagent/data/tracker_backups/LC Tracker 2026-09-11_014233.xlsx
 ```
 
 Bare **Enter** redisplays the menu. The header shows the loaded problem and
-whether a model provider is live.
-
-All agent-produced data lives under `lcagent/data/` — nothing is scattered into
-the practice repo.
+whether a model provider is live. The session is saved to
+`lcagent/data/session.json`, so restarting resumes on the same problem.
 
 ---
 
-## Phase status
+## 2. Requirements
 
-| Phase | Scope | LLM | Status |
+| | Needed for | Version | Absent? |
+|:--|:--|:--|:--|
+| **Python** | everything | **3.11+** (`tomllib`) | hard stop |
+| **g++ / MinGW-w64** | compiling and running tests | any with `<bits/stdc++.h>` | no testing, scoring, solving or archiving |
+| **openpyxl** | `finish`, `report` | any | those two commands report how to install it; everything else works |
+| **git** | `finish --commit` | any | only committing is unavailable |
+| **A provider key** | 5 of 15 agents | free tier | the other 10 agents work normally |
+
+**MSVC will not work.** The solutions in this repo `#include <bits/stdc++.h>`,
+which is a libstdc++ extension. On Windows the requirement is MinGW-w64 (MSYS2,
+WinLibs or TDM-GCC), not the Visual Studio toolchain.
+
+---
+
+## 3. The menu
+
+Every key maps to an existing command, so typing `4` and typing `run` go down
+exactly the same path — the menu is a front end, never a second implementation.
+
+| Key | Command | Aliases | What it does |
+|:--:|:--|:--|:--|
+| `1` | `new <id>` | `n` | fetch, scaffold, write `<id>_problem.txt` |
+| `2` | `show` | `problem` | print the statement, constraints and test cases |
+| `3` | `repair` | `driver` | fill the driver's `// TODO` scaffolding, then retest |
+| `4` | `run [id]` | `r`, `test`, `t` | compile, run, per-case results |
+| `5` | `watch` | `w` | retest and score on every save, until Ctrl-C |
+| `6` | `solve` | | write the solution from the statement |
+| `7` | `fix` | `debug` | patch the solution until the failing cases pass |
+| `8` | `score` | `sc`, `grade` | grade it, and say whether a better approach exists |
+| `9` | `better` | `improve`, `b` | verify that better solution, then write it into `<id>.cpp` |
+| `f` | `finish` | `archive` | classify, archive, update the tracker |
+| `l` | `notes` | `note` | append a reusable technique to your notes files |
+| `s` | `status` | `st` | what is loaded, which files exist |
+| `g` | `report` | `progress`, `stats` | solved counts, thin topics, ⭐ queue, unsolved runs |
+| `a` | `roster` | `agents` | the agent roster and which need a model |
+| `p` | `provider` | `providers` | model backends, and which are usable |
+| `h` | `help` | `?` | every command and alias |
+| `0` | `quit` | `q`, `exit` | save the session and exit |
+
+**Flags**
+
+```
+new <id> --live        fetch from LeetCode only, never fall back to the archive
+         --offline     use the local archive only, no network
+         --force       refetch even if files already exist
+solve    --force       overwrite a solution that already has real work in it
+finish   --commit      also commit as the next U<n>
+         -m "msg"      use your own commit message
+         --overwrite   replace an existing archive entry / tracker topic
+notes    ds|formula|algo   restrict which notes file may be written
+         --dry-run     show the entry without writing it
+         --force       add it even if it looks like a duplicate
+```
+---
+
+## 4. Architecture
+
+### 4.1 The organising principle: two tiers
+
+`Agent.requires_llm` is the single field the whole design turns on. It splits
+the roster into agents that always work — offline, free, no key — and agents
+that need a configured provider. The master reads it to degrade gracefully
+instead of failing.
+
+```
+                        Agent (ABC)
+                   name · role · requires_llm
+                        run(ctx) → AgentResult
+                              │
+              ┌───────────────┴────────────────┐
+              ▼                                ▼
+     requires_llm = False               requires_llm = True
+     ── 10 agents ──                    ── 5 agents ──
+     fetcher    archiver                driver-repair
+     statement  tracker                 solver
+     verifier   committer               debugger
+     scorer     reporter                improver
+     classifier master                  notes
+              │                                │
+     always available              needs GROQ_API_KEY or similar
+     no key, no network*           free tier is sufficient
+```
+
+\* except `fetcher`, which needs the network unless the problem is cached or in
+the local archive.
+
+This is why the system is genuinely usable with no key at all: fetching,
+rendering the question, compiling, running tests, scoring, archiving, updating
+the tracker, reporting progress and committing are **all** in the offline tier.
+
+### 4.2 The blackboard
+
+Agents never talk to each other. The master owns one `Context` per problem,
+passes it down an explicit ordered pipeline, and each agent enriches it in
+place. Ordering stays explicit, every run is reproducible, and no model call is
+ever spent on agents negotiating with each other — the characteristic failure
+of chat-style multi-agent designs.
+
+```
+                         ┌─────────────────────────┐
+                         │        Context          │   ← the blackboard
+                         ├─────────────────────────┤
+   Fetcher    ─ writes → │ pid      problem id     │
+   Statement  ─ writes → │ problem  LeetCode meta  │ → read by Scorer, Solver,
+   (paths)              →│ paths    every filename │   Classifier, Notes
+   Verifier   ─ writes → │ report   TestReport     │ → read by Scorer, Debugger,
+   Scorer     ─ writes → │ score    score card     │   Archiver, Tracker
+   Classifier ─ writes → │ topic    tracker topic  │ → read by Tracker
+   every agent────────── │ history  audit trail    │ → shown by `status`
+                         └─────────────────────────┘
+```
+
+Because every agent takes the same `Context` and returns the same
+`AgentResult`, the master's dispatch does not care which agent it is calling,
+and a new agent is one file plus one line in the roster.
+
+```python
+@dataclass
+class AgentResult:
+    agent: str          # who produced this
+    ok: bool            # did the job succeed
+    message: str        # one line, shown to the user
+    data: dict          # structured detail for the caller
+    artifacts: list     # files written, for the caller to report
+```
+
+### 4.3 Pipelines
+
+Each command is one fixed, ordered pipeline. There is no planner and no
+negotiation — the sequence is code, which is why every run is reproducible.
+
+```
+new <id>    Fetcher ──► Statement                      scaffold + question file
+run [id]    Verifier                                    compile · run · diff
+watch       ┌─► poll mtime ─► debounce ─► Verifier ─┐   until Ctrl-C
+            └───────────────────────────────────────┘
+repair      DriverRepair ──► Verifier                   fill the TODO scaffolding
+solve       Fetcher ─► DriverRepair ─► Solver ─► ⟲(Verifier ⇄ Debugger)
+score       Verifier ──► Scorer ◄── reference solution from the archive
+better      Scorer ─► Improver ─► Verifier ─► install (only if it passes)
+finish      Classifier ─► Archiver ─► Tracker ─► Committer
+notes       Notes ─► duplicate check ─► backup ─► append
+report      Reporter ◄── LC Tracker.xlsx  (read-only, one streaming pass)
+```
+
+**The only cycle in the entire system is `Verifier ⇄ Debugger`, and it is
+retry-capped at 3.** Everything else is a straight line. That is a deliberate
+constraint: a system whose control flow is acyclic can be reasoned about, and
+its cost has an upper bound you can state.
+
+### 4.4 The generate → verify → retry loop
+
+The three model-backed code agents (`driver-repair`, `solver`, `debugger`)
+share one mechanism in `agents/codegen.py`. A model proposes code; a
+**deterministic** verifier compiles and runs it; on failure the exact error is
+fed back into the next attempt.
+
+```
+   ┌──────────┐   code    ┌───────────┐   pass   ┌──────────┐
+   │  model   ├──────────►│ compile + ├─────────►│ install  │
+   │ proposes │           │ run tests │          │  it      │
+   └────▲─────┘           └─────┬─────┘          └──────────┘
+        │                       │ fail
+        │  previous attempt +   │
+        │  exact compiler /     ▼
+        │  test failure    ┌──────────┐   3 attempts
+        └──────────────────┤  retry   ├──────────────► give up, report why
+                           └──────────┘
+```
+
+This is the most important reliability pattern in the system: **the judge is
+deterministic**. The model is allowed to be wrong, because nothing it produces
+is accepted until `g++` and the real test cases agree. That is what makes a
+free, small model usable for code generation here.
+
+### 4.5 Directory layout
+
+```
+lcagent/
+├── __main__.py            entry: python -m lcagent [command | setup | doctor]
+├── bootstrap.py           the setup script — checks and installs prerequisites
+├── config.toml            provider order, model tiers, rubric weights
+├── core/                  ── no agent logic, all reusable ──
+│   ├── paths.py           repo-root discovery, data root, ProblemPaths
+│   ├── compiler.py        g++ discovery (PATH → MinGW hints → $CXX), PCH cache
+│   ├── runner.py          run a binary with a timeout, capture stdout/stderr
+│   ├── testcase.py        verify() → TestReport, per-case diffing
+│   ├── leetcode.py        GraphQL client + on-disk cache
+│   ├── state.py           Context — the blackboard
+│   ├── tracker_io.py      LC Tracker.xlsx read/write, backups, stats
+│   ├── notes_io.py        append to the three notes files, in their own formats
+│   └── ui.py              colour, Windows-safe, auto-off when piped
+├── providers/             ── model backends, free first ──
+│   ├── base.py            Provider contract, Completion, NullProvider
+│   ├── openai_compat.py   groq / gemini / cerebras / openrouter
+│   ├── ollama_p.py        local, no key
+│   └── anthropic_p.py     paid, opt-in only
+├── agents/                ── one file per agent ──
+│   ├── base.py            Agent ABC + AgentResult
+│   ├── master.py          the loop, the menu, dispatch, the watcher
+│   ├── codegen.py         generate → verify → retry, shared by three agents
+│   ├── fetcher.py  statement.py  verifier.py  scorer.py  improve.py
+│   ├── driver_repair.py  solver.py  debugger.py
+│   ├── classifier.py  archiver.py  tracker.py  committer.py
+│   └── notes.py  reporter.py
+├── data/                  ── agent by-products only, never your work ──
+│   ├── cache/             LeetCode responses          (gitignored)
+│   ├── problems/          rendered statements
+│   ├── scores/            score cards
+│   ├── improved/          candidate better solutions
+│   ├── replaced/          solutions rescued before a swap
+│   ├── tracker_backups/   pre-write copies of the sheet (gitignored)
+│   ├── notes_backups/     pre-write copies of the notes (gitignored)
+│   ├── logs/              session logs               (gitignored)
+│   └── session.json       resume state               (gitignored)
+└── README.md
+```
+
+The `core/` ⁄ `agents/` split is enforced: **nothing in `core/` imports an
+agent**, so every primitive is testable on its own and an agent is only
+orchestration plus a prompt.
+
+---
+
+## 5. The agents
+
+Fifteen agents. `offline` needs no model provider at all; `model` needs one.
+
+### 5.1 Offline tier — always available
+
+| Agent | Role | Reads | Writes | Fails when |
+|:--|:--|:--|:--|:--|
+| **master** | owns the session loop, the menu and dispatch | `session.json` | `session.json` | never — it is the loop |
+| **fetcher** | fetch a problem and scaffold its files | LeetCode API, cache, archive | `<id>.cpp`, `_driver.cpp`, `_input.txt`, `_expected.txt` | network down **and** not cached or archived |
+| **statement** | render the question, constraints and test cases | `ctx.problem` | `<id>_problem.txt` at the **repo root** | the problem is premium (empty content) |
+| **verifier** | compile the driver, run the cases, diff per case | the four scaffold files | `ctx.report` | no compiler; missing files |
+| **scorer** | grade the solution, say if a better approach exists | code, `ctx.report`, archive reference | `ctx.score`, `data/scores/<id>_score.json` | never — degrades to the measured half with no model |
+| **classifier** | pick the tracker topic from the sheet's own vocabulary | `LC Tracker.xlsx`, LeetCode tags | `ctx.topic` | no tags **and** no model |
+| **archiver** | copy the solved problem into the two archives | the scaffold files | `Code Dirs/<id>/`, `All Codes/<id>.cpp` | tests are not passing |
+| **tracker** | mark solved and record the topic | `LC Tracker.xlsx` | the sheet + a timestamped backup | `openpyxl` missing; file open in Excel |
+| **committer** | stage and commit as the next `U<n>` | `git log` | a commit | not a git repo; nothing staged |
+| **reporter** | progress: blocks, topics, ⭐ queue, unsolved runs | `LC Tracker.xlsx` (read-only) | nothing | `openpyxl` missing |
+
+### 5.2 Model tier — needs a provider
+
+| Agent | Role | Verified by | Retries | Refuses to |
+|:--|:--|:--|:--|:--|
+| **driver-repair** | fill the driver's `// TODO` scaffolding | compile (solution may be a stub) | 3 | — |
+| **solver** | write the solution from the statement | compile + run the real tests | 3 | overwrite real work without `--force` |
+| **debugger** | patch a failing solution using the exact failures | compile + run | 3 | — |
+| **improver** | write and verify the better solution the scorer named | compile + run | 3 | install anything that does not pass |
+| **notes** | append a genuinely new technique to your notes files | duplicate check + backup | 1 | write a near-duplicate without `--force` |
+
+Every model-tier agent is gated by a **deterministic** check. Nothing a model
+writes reaches your files until `g++` and the test cases agree — which is why a
+free model is good enough here.
+
+### 5.3 Adding an agent
+
+Three steps, no framework:
+
+```python
+# 1. lcagent/agents/mine.py
+from .base import Agent, AgentResult
+from ..core.state import Context
+
+class MyAgent(Agent):
+    name = "mine"
+    role = "One line — this shows up in the roster"
+    requires_llm = False
+
+    def run(self, ctx: Context, **kwargs) -> AgentResult:
+        if not ctx.paths.solution.is_file():
+            return self.fail("no solution to work on")
+        return self.ok("did the thing", detail=42, artifacts=[ctx.paths.solution])
+
+# 2. in master.py: import it, construct it in __init__, add cmd_mine
+# 3. add a row to MENU and an entry to _ALIASES
+```
+---
+
+## 6. Files and data
+
+### 6.1 What lands where
+
+```
+Leetcode-Practice/
+├── 2859.cpp                 ← your solution — the only file you edit
+├── 2859_driver.cpp          ← generated: reads input, calls Solution, prints
+├── 2859_input.txt           ← the example test cases
+├── 2859_expected.txt        ← the expected outputs
+├── 2859_problem.txt         ← the question, constraints and cases  ← at the ROOT
+├── lc  lc.bat               ← launchers
+├── setup.sh  setup.bat      ← environment setup
+├── LC Tracker.xlsx          ← your sheet — only ever appended to, always backed up
+├── All Codes/               ← your archive and notes — the system appends, never rewrites
+└── lcagent/data/            ← everything the agents produce
+```
+
+Only **five files** ever sit at the repo root for a problem, and a new `new <id>`
+clears the previous problem's files before scaffolding the next — matching the
+`rename.sh` workflow this replaced. Anything not yet archived is rescued to
+`lcagent/data/replaced/` first, never deleted.
+
+### 6.2 Safe to delete
+
+| Path | Regenerates? | Cost of deleting |
+|:--|:--|:--|
+| `lcagent/data/cache/` | yes, on next fetch | one API call per problem |
+| `lcagent/data/logs/` | yes | nothing |
+| `lcagent/data/session.json` | yes | you start with no problem loaded |
+| `lcagent/data/problems/` | yes, `fetch` re-renders | nothing |
+| `lcagent/data/scores/` | yes, `score` recomputes | `report`'s recent-scores list |
+| `lcagent/data/*_backups/` | **no** | your undo history for the sheet and notes |
+| `lcagent/data/replaced/` | **no** | rescued solutions that were never archived |
+
+### 6.3 The write-safety rules
+
+Three rules the system never breaks, because these files are months of your work:
+
+1. **Every write to `LC Tracker.xlsx` or a notes file is preceded by a
+   timestamped backup.** No exceptions, not even when the write turns out to be
+   a no-op.
+2. **Existing annotation is never destroyed.** A ⭐ is never overwritten with a
+   ✅ — it is your mark and carries meaning the system does not know. An
+   existing topic is kept unless `--overwrite` is passed.
+3. **A failed fetch modifies nothing and deletes nothing.** The fetcher
+   snapshots every file it is about to own, and on failure restores
+   pre-existing files byte-for-byte while *keeping* the partial files from the
+   failed attempt for inspection. It then reports exactly which is which.
+
+---
+
+## 7. Providers and cost
+
+| Provider | Cost | Needs | Notes |
+|:--|:--|:--|:--|
+| **groq** | free | `GROQ_API_KEY` | fastest free tier; per-minute token limits. **In use.** |
+| **gemini** | free | `GEMINI_API_KEY` | generous daily limits |
+| **cerebras** | free | `CEREBRAS_API_KEY` | free tier |
+| **openrouter** | free | `OPENROUTER_API_KEY` | `:free` model ids |
+| **ollama** | free | nothing | fully local and offline; needs a small model pulled |
+| **anthropic** | **paid** | `ANTHROPIC_API_KEY` | last in the order, opt-in only |
+
+`provider = "auto"` walks that list and takes the first usable one, so a
+machine with a free key never silently starts spending money. Agents ask for a
+**tier** (`fast` / `smart`), never a model id, so switching provider is one line
+in `config.toml`.
+
+**Setting a key**
+
+```bash
+# Linux / macOS — then reopen the terminal
+echo 'export GROQ_API_KEY="gsk_..."' >> ~/.bashrc
+
+# Windows — then reopen cmd.exe
+setx GROQ_API_KEY "gsk_..."
+```
+
+Get a free Groq key at <https://console.groq.com> — no card required.
+
+**Measured free-tier limits** (Groq, `openai/gpt-oss-120b`): 8,000 tokens/minute
+and 1,000 requests/day. A score costs about 1,322 tokens, so roughly **6 scores
+per minute** and far more per day than a practice session needs.
+
+```
+p            which providers are usable, free ones first
+provider models    ask the live endpoint what it actually serves
+```
+
+---
+
+## 8. Cross-platform
+
+> **Status: written for Windows, exercised only on Linux.** Every row below is
+> a deliberate choice made to avoid a known Windows failure, and none of it has
+> been executed on Windows — there is no Windows machine in this setup. Treat
+> the table as *the traps that were designed around*, not as a test result.
+> `setup.bat --check` is the fastest way to find out, and the most likely first
+> failure is the compiler hunt in `core/compiler.py`.
+
+| Concern | How it is handled |
+|:--|:--|
+| Third-party packages | exactly one, `openpyxl`, and only for the tracker |
+| No bash on Windows | `run.sh` logic ported to Python; `.sh` scripts left for manual use |
+| Compiler location | `shutil.which`, then MSYS2 / TDM-GCC / WinLibs paths, then `$CXX` |
+| `bits/stdc++.h` | MinGW-w64 required; **MSVC explicitly unsupported** |
+| Executable suffix | `paths.EXE_SUFFIX` |
+| Paths with spaces | `pathlib` throughout; no string concatenation |
+| Process timeout | `subprocess(timeout=)`, never `signal.alarm` |
+| ANSI colour | opt-in `SetConsoleMode` on Windows; auto-off when piped |
+| Interpreter name | `sys.executable`, never a literal `python3` |
+| Line endings | `lc.bat` and `setup.bat` written CRLF, `lc` and `setup.sh` written LF |
+| Build artefacts | compiled to a temp dir, never the repo root |
+
+---
+
+## 9. Troubleshooting
+
+| Symptom | Cause | Fix |
+|:--|:--|:--|
+| `No C++ compiler found` | g++ not on PATH | `setup.sh` / `setup.bat`, or set `CXX=/path/to/g++` |
+| `bits/stdc++.h: No such file` | clang or MSVC, not libstdc++ | install MinGW-w64 (Windows) or `brew install gcc` (macOS) |
+| `reading LC Tracker.xlsx needs openpyxl` | the one dependency is missing | `python -m pip install openpyxl` |
+| `could not write the tracker … is it open in Excel?` | the file is locked | close it in Excel/LibreOffice and retry |
+| `needs a model provider` | no key set | set `GROQ_API_KEY` (§7), or use the 10 offline agents |
+| Fetch fails with HTTP 403 | Cloudflare | already handled with a browser User-Agent; retry, or use `--offline` |
+| A problem fetches with empty content | it is **premium** | 186 of ~3,400 are; set `LEETCODE_SESSION` to your own cookie |
+| `Tags: —` in the question file | LeetCode returns no tags for very new problems | cosmetic; the classifier falls back to the model |
+| `./lc: bad interpreter` | CRLF line endings on `lc` | `./setup.sh` rewrites it with LF |
+| Tests pass but `finish` refuses | `ctx.report` is stale | run `4` again, then `f` |
+| Menu boxes look broken | terminal is not UTF-8 | `chcp 65001` on Windows, or set `NO_COLOR=1` |
+
+**Diagnose everything at once:** `python -m lcagent doctor`
+
+---
+
+## 10. Development log
+
+Built in seven phases, each one landing a working subset. Every phase below
+records what was built, the decisions taken, and the bugs found in testing —
+including the ones that were embarrassing.
+
+| Phase | Scope | Needs a model | Status |
 |:--|:--|:--:|:--|
 | **0** | `core/` — paths, compiler discovery, run, per-case diff | no | ✅ done |
 | **1** | Statement agent → `<id>_problem.txt` | no | ✅ done |
-| **2** | Fetcher + Verifier agents, Master loop (REPL + watcher) | no | ✅ done |
+| **2** | Fetcher + Verifier, Master loop (REPL + watcher) | no | ✅ done |
 | **3** | Providers (free-first) + Scorer — rubric, benchmark, reference diff | partial | ✅ done |
 | **3.5** | Improver — write, verify and install the better solution | yes | ✅ done |
 | **4** | DriverRepair / Solver / Debugger | yes | ✅ done |
 | **5** | Archiver + Tracker + Classifier + Committer | no | ✅ done |
 | **6** | Notes agent + Reporter | partial | ✅ done |
-
----
-
-## Development log
+| **&mdash;** | `bootstrap.py` + `setup.sh` / `setup.bat` | no | ✅ done |
 
 ### Phase 0 — Portable execution core (2026-09-10) ✅
 
@@ -621,202 +1207,47 @@ opened for writing.
 
 ---
 
-## Architecture
-
-### Principle: two tiers, split by whether a model is needed
-
-`Agent.requires_llm` is the field the whole design turns on. It splits the
-roster into agents that always work — offline, free, no key — and agents that
-need a configured provider. The master loop reads it to degrade gracefully
-instead of failing when no provider is set up.
-
-```
-┌──────────────────────────────────────────────────────────────────────┐
-│                   MASTER AGENT — runs until you stop it              │
-│      REPL  ·  file watcher  ·  session state  ·  dispatch table      │
-└───────────────────────────────┬──────────────────────────────────────┘
-                                │  owns one Context (the blackboard)
-        ┌───────────────────────┴────────────────────────┐
-        │                                                │
-   ═════╪══ TIER 1: no model ══════╗          ╔══════════╪══ TIER 2: model ══
-        │                          ║          ║          │
-   ┌────▼─────┐  ┌───────────┐  ┌──▼───────┐  ║  ┌───────▼──────┐  ┌────────┐
-   │ Fetcher  │  │ Statement │  │ Verifier │  ║  │ DriverRepair │  │ Solver │
-   └────┬─────┘  └─────┬─────┘  └────┬─────┘  ║  └──────┬───────┘  └───┬────┘
-        │              │             │        ║         │              │
-   ┌────▼─────┐  ┌─────▼─────┐  ┌────▼─────┐  ║  ┌──────▼───────┐  ┌───▼────┐
-   │ Archiver │  │  Tracker  │  │  Scorer  │  ║  │   Debugger   │  │ Scorer │
-   │          │  │           │  │(measured)│  ║  │              │  │(review)│
-   └──────────┘  └───────────┘  └──────────┘  ║  └──────────────┘  └────────┘
-                                              ║  ┌──────────────┐  ┌────────┐
-        always available, offline, free       ║  │  Classifier  │  │ Notes  │
-                                              ║  └──────────────┘  └────────┘
-                                              ╚══ needs a Provider ══════════
-```
-
-### The blackboard
-
-Agents never talk to each other. The master owns one `Context` per problem,
-passes it down an explicit ordered pipeline, and each agent enriches it in
-place. Ordering stays explicit, every run is reproducible, and there is no
-model call spent on agents negotiating — the failure mode of chat-style
-multi-agent designs.
-
-```python
-Context(pid, paths, problem, report, score, topic, history)
-         │     │      │        │       │      │
-         │     │      │        │       │      └─ Classifier → tracker topic
-         │     │      │        │       └──────── Scorer     → score card
-         │     │      │        └──────────────── Verifier   → TestReport
-         │     │      └───────────────────────── Fetcher/Statement → metadata
-         │     └──────────────────────────────── ProblemPaths (all file paths)
-         └────────────────────────────────────── problem id
-```
-
-### Pipelines
-
-```
-new <id>    Fetcher ──► Statement                      (scaffold + question file)
-run [id]    Verifier                                    (compile · run · diff)
-watch       ┌─► poll mtime ─► debounce ─► Verifier ─┐   (until Ctrl-C)
-            └───────────────────────────────────────┘
-score       Verifier ─► Scorer ◄─ reference solution     [Phase 3]
-solve <id>  Fetcher ─► DriverRepair ─► Solver ─► ⟲(Verifier ⇄ Debugger) [Phase 4]
-archive     Classifier ─► Archiver ─► Tracker ─► Committer               [Phase 5]
-notes       Notes ─► duplicate check ─► backup ─► append                   [Phase 6]
-report      Reporter ◄─ LC Tracker.xlsx  (read-only, one pass)             [Phase 6]
-```
-
-The only cycle in the system is `Verifier ⇄ Debugger`, and it is retry-capped.
-
-### Providers — free first
-
-| Provider | Cost | Needs | Notes |
-|:--|:--|:--|:--|
-| **groq** | free | `GROQ_API_KEY` | fastest free tier; per-minute limits. **In use.** |
-| **gemini** | free | `GEMINI_API_KEY` | generous daily limits |
-| **cerebras** | free | `CEREBRAS_API_KEY` | free tier |
-| **openrouter** | free | `OPENROUTER_API_KEY` | `:free` model ids |
-| **ollama** | free | nothing | fully local and offline; needs a small model |
-| **anthropic** | **paid** | `ANTHROPIC_API_KEY` | last resort, opt-in only |
-
-Agents ask for a *tier* (`fast` / `smart`), never a model id, so switching
-provider changes one config line. `provider` in the REPL shows what is usable;
-`provider models` asks the active endpoint what it actually serves.
-
-### Layout
-
-```
-lcagent/
-├── __main__.py            entry: python -m lcagent
-├── core/
-│   ├── paths.py           repo root, data root, ProblemPaths
-│   ├── compiler.py        g++ discovery, compile, PCH cache
-│   ├── runner.py          execute with timeout
-│   ├── testcase.py        verify() → TestReport
-│   ├── leetcode.py        GraphQL + cache
-│   ├── state.py           Context (blackboard)
-│   ├── tracker_io.py      LC Tracker.xlsx read/write + backups
-│   ├── notes_io.py        append to the notes files, in their own formats
-│   └── ui.py              colour, Windows-safe
-├── config.toml            provider, models, rubric weights
-├── providers/
-│   ├── base.py            Provider contract, NullProvider
-│   ├── openai_compat.py   groq / gemini / cerebras / openrouter
-│   ├── ollama_p.py        local, no key
-│   └── anthropic_p.py     paid, opt-in
-├── agents/
-│   ├── base.py            Agent contract
-│   ├── master.py          the loop
-│   ├── codegen.py         generate → verify → retry, shared
-│   ├── fetcher.py  statement.py  verifier.py  scorer.py  improve.py
-│   ├── driver_repair.py  solver.py  debugger.py
-│   ├── classifier.py  archiver.py  tracker.py  committer.py
-│   └── notes.py  reporter.py
-├── data/                  ← agent by-products only
-│   ├── cache/             LeetCode responses (gitignored)
-│   ├── scores/            score cards
-│   ├── replaced/          solutions rescued before a problem swap
-│   ├── logs/              session logs (gitignored)
-│   ├── tracker_backups/   pre-write copies of the sheet (gitignored)
-│   ├── notes_backups/     pre-write copies of the notes files (gitignored)
-│   └── session.json       resume state (gitignored)
-└── README.md
-```
-
-### Cross-platform contract
-
-> **Status: written for Windows, never run there.** Every item below is a
-> deliberate choice made to avoid a known Windows failure, and none of it has
-> been executed on Windows — there is no Windows machine in this setup. Treat
-> the table as "the traps that were designed around", not as a test result.
-> The most likely first failure is the compiler hunt in `core/compiler.py`.
-
-| Concern | How it is handled |
-|:--|:--|
-| Third-party packages | exactly one, `openpyxl`, and only for the tracker |
-| No bash on Windows | `run.sh` logic ported to Python; `.sh` scripts left for manual use |
-| Compiler location | `shutil.which`, then MSYS2 / TDM-GCC / WinLibs paths, then `CXX` |
-| `bits/stdc++.h` | MinGW-w64 required; MSVC explicitly unsupported |
-| Executable suffix | `paths.EXE_SUFFIX` |
-| Paths with spaces | `pathlib` throughout; no string concatenation |
-| Process timeout | `subprocess(timeout=)`, never `signal.alarm` |
-| ANSI colour | Opt-in `SetConsoleMode` on Windows; auto-off when piped |
-| Interpreter name | `sys.executable`, never a literal `python3` |
-| Line endings | `lc.bat` written CRLF, `lc` written LF |
-
-### Requirements traceability
-
-| Your requirement | Where it lands |
-|:--|:--|
-| 1. Text file with question, constraints, test cases + results | `agents/statement.py` → `<id>_problem.txt` at the repo root, written at fetch time ✅ |
-| 2. Score my submission, suggest a better solution | `agents/scorer.py` ✅ (measured half works with no key; verdict needs a free key) |
-| 3. One master agent looping until stopped | `agents/master.py` — REPL + watcher ✅ |
-| 4. Runs from the command prompt | `python -m lcagent`, `lc.bat`, `lc` ✅ |
-| 5. Windows and Linux | Cross-platform contract above — **written for both, exercised only on Linux** ⚠️ |
-| *(added)* Must cost nothing to run | Free-first provider order; deterministic agents need no model at all ✅ |
-| *(added)* All agent data in a separate folder | `lcagent/data/` — nothing scattered through the practice repo ✅ |
-| *(added)* Menu, like a switch-case | `MENU` in `agents/master.py`; every key maps to an existing command ✅ |
-| *(added)* A failed fetch must not modify old files or delete partial ones | `agents/fetcher.py` — snapshot → verify → rollback, restoring pre-existing files byte-for-byte and keeping the failed attempt's files ✅ |
-| *(added)* A new fetch replaces the previous problem at the root | `_replace_previous()`, rescuing anything unarchived to `data/replaced/` ✅ |
-| *(added)* "Better code" writes straight into the file | `agents/improve.py` — verified first, backed up, then installed ✅ |
-| *(added)* README with a phase-by-phase log and the architecture | This file ✅ |
-
-### Dependencies
-
-Standard library only, with **one exception**: `openpyxl`, needed to read and
-write `LC Tracker.xlsx`.
-
-```
-python3 -m pip install openpyxl        # Linux / macOS
-py -m pip install openpyxl             # Windows
-```
-
-Without it, `finish` and `report` report what to install and everything else
-keeps working — the classifier falls back to LeetCode tags, and fetching,
-testing, scoring, solving, improving and note-taking never touch the sheet.
-
-### Known gaps
+## 11. Known gaps
 
 Honest list of what is not solved, kept here rather than left implied:
 
 1. **No stress-test generator.** The scorer's `efficiency` component measures
    against the example tests, which are tiny — an O(n²) brute force runs them
-   instantly and scores full marks on that component. `complexity` still
-   catches it by reading the code (brute force 5/25 vs optimal 25/25), so the
-   grades come out right, but for the wrong reason on one axis. A generator
-   producing worst-case inputs would fix that and would also let the improver
-   claim "verified" against more than the examples.
-2. **`Tags: —` on very recent problems.** LeetCode returns an empty
-   `topicTags` for the newest ids, so the classifier falls back to the model
-   with no tag hint. Harmless, but it shows in the statement file.
+   instantly and scores full marks on that component. `complexity` still catches
+   it by reading the code (brute force 5/25 vs optimal 25/25), so the grades come
+   out right, but for the wrong reason on one axis. A generator producing
+   worst-case inputs would fix that and would also let the improver claim
+   "verified" against more than the examples. **This is the only gap worth
+   building.**
+2. **`Tags: —` on very recent problems.** LeetCode returns an empty `topicTags`
+   for the newest ids, so the classifier falls back to the model with no tag
+   hint. Harmless, but it shows in the statement file.
 3. **105 archive filenames contain `*`** (`1009*.cpp`, `1157**ST.cpp`). That
-   character is legal on Linux and **illegal on Windows**, so those files
-   cannot be checked out there at all. They are the user's own revisit
-   markers, so renaming them is a decision for the user, not the system.
-4. **Never executed on Windows.** See the caveat above the cross-platform
-   table. The code avoids every Windows trap that was identified, but
-   "avoids the known traps" is not "verified".
-5. **186 of ~3400 problems are premium** and return empty content. They are
+   character is legal on Linux and **illegal on Windows**, so those files cannot
+   be checked out there at all. They are your own revisit markers, so renaming
+   them is your decision, not the system's.
+4. **Never executed on Windows.** See §8. The code avoids every Windows trap
+   that was identified, but "avoids the known traps" is not "verified".
+5. **186 of ~3,400 problems are premium** and return empty content. They are
    reported as locked; the paywall is not worked around. Setting
    `LEETCODE_SESSION` to your own logged-in cookie is the supported route.
+
+---
+
+## Requirements traceability
+
+| Requirement | Where it lands |
+|:--|:--|
+| 1. Text file with question, constraints, test cases + results | `agents/statement.py` → `<id>_problem.txt` at the repo root, written at fetch time ✅ |
+| 2. Score my submission, suggest a better solution | `agents/scorer.py` + `agents/improve.py` ✅ |
+| 3. One master agent looping until stopped | `agents/master.py` — REPL + watcher ✅ |
+| 4. Runs from the command prompt | `python -m lcagent`, `lc.bat`, `lc` ✅ |
+| 5. Windows and Linux | §8 — written for both, exercised only on Linux ⚠️ |
+| *(added)* Must cost nothing to run | free-first provider order; 10 of 15 agents need no model ✅ |
+| *(added)* All agent data in a separate folder | `lcagent/data/` ✅ |
+| *(added)* Menu, like a switch-case | `MENU` in `agents/master.py` ✅ |
+| *(added)* A failed fetch must not modify old files or delete partial ones | `agents/fetcher.py` — snapshot → verify → rollback ✅ |
+| *(added)* A new fetch replaces the previous problem at the root | `_replace_previous()`, rescuing unarchived work ✅ |
+| *(added)* "Better code" writes straight into the file | `agents/improve.py` — verified first, backed up, then installed ✅ |
+| *(added)* A setup script that installs the prerequisites on both systems | `bootstrap.py` + `setup.sh` + `setup.bat` ✅ (Windows path untested) |
+| *(added)* README with a phase-by-phase log and the architecture | this file ✅ |

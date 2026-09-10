@@ -27,6 +27,10 @@ from ..core.state import Context
 from ..core.testcase import Status
 from .base import Agent, AgentResult
 from .fetcher import FetcherAgent
+from .debugger import DebuggerAgent
+from .driver_repair import DriverRepairAgent
+from .improve import ImproverAgent
+from .solver import SolverAgent
 from .scorer import ScorerAgent
 from .scorer import render as render_score
 from .statement import StatementAgent
@@ -47,6 +51,10 @@ class MasterAgent(Agent):
         self.statement = StatementAgent()
         self.verifier = VerifierAgent()
         self.scorer = ScorerAgent()
+        self.improver = ImproverAgent()
+        self.repairer = DriverRepairAgent()
+        self.solver = SolverAgent()
+        self.debugger = DebuggerAgent()
         self.running = True
 
     # ── the Agent contract, for uniformity ──
@@ -135,7 +143,7 @@ class MasterAgent(Agent):
         cmd = NUMBERS.get(cmd, cmd)          # menu number -> command
         handler = _ALIASES.get(cmd)
         if handler is None:
-            print(ui.bad(f"unknown command {cmd!r} — pick a number 0-9, "
+            print(ui.bad(f"unknown command {cmd!r} — pick a menu option, "
                          f"press Enter for the menu, or type `help`"))
             return
         getattr(self, handler)(args)
@@ -219,6 +227,99 @@ class MasterAgent(Agent):
             print(ui.bad(r.message))
             return
         print(render_score(self.ctx.score))
+
+    def cmd_better(self, args: list[str]) -> None:
+        """Write the better solution the scorer identified, and verify it."""
+        if not self._need_ctx(args):
+            return
+        if not (self.ctx.score or {}).get("better"):
+            if self.ctx.score is None:
+                print(ui.info("scoring first ..."))
+                if self.ctx.report is None:
+                    self.verifier.run(self.ctx)
+                self.scorer.run(self.ctx)
+            if not (self.ctx.score or {}).get("better"):
+                print(ui.green("no better approach was found — nothing to write"))
+                return
+
+        b = self.ctx.score["better"]
+        print(ui.info(f"writing the {b.get('approach')} solution ..."))
+        r = self.improver.run(self.ctx)
+        if not r.ok:
+            print(ui.bad(r.message))
+            return
+
+        installed = r.data.get("installed")
+        print(ui.ok(r.message) if installed or r.data.get("passed") else ui.warn(r.message))
+        if installed:
+            print(ui.info(f"your previous solution was saved to "
+                          f"lcagent/data/replaced/{self.ctx.pid}_before_improve.cpp"))
+            print(ui.warn("if this file is open in your editor, reload it before typing — "
+                          "a stale buffer will overwrite what was just written"))
+        else:
+            print(ui.info(f"kept in lcagent/data/improved/{self.ctx.pid}_better.cpp; "
+                          f"{self.ctx.paths.solution.name} was not modified"))
+        print()
+        print(ui.rule())
+        print(r.artifacts[0].read_text(encoding="utf-8"))
+        print(ui.rule())
+        if installed:
+            print(ui.green(f"verified {r.data['passed']}/{r.data['total']} on the same "
+                           f"tests, then written to {self.ctx.paths.solution.name}"))
+
+    def cmd_repair(self, args: list[str]) -> None:
+        if not self._need_ctx(args):
+            return
+        n = FetcherAgent.count_todos(self.ctx)
+        print(ui.info(f"repairing {self.ctx.paths.driver.name}"
+                      f" ({n} TODO{'s' if n != 1 else ''}) ..."))
+        r = self.repairer.run(self.ctx, force="--force" in args)
+        print(ui.ok(r.message) if r.ok else ui.bad(r.message))
+        if r.ok and r.data.get("changed"):
+            print(ui.info("driver changed — re-running the tests"))
+            self.verifier.run(self.ctx)
+            self._print_report()
+
+    def cmd_solve(self, args: list[str]) -> None:
+        if not self._need_ctx(args):
+            return
+        print(ui.info("writing a solution ..."))
+        r = self.solver.run(self.ctx, force="--force" in args)
+        if not r.ok:
+            print(ui.bad(r.message))
+            return
+        print(ui.ok(r.message))
+        if r.data.get("backup"):
+            print(ui.info(f"previous solution saved to "
+                          f"lcagent/data/replaced/{self.ctx.pid}_before_solve.cpp"))
+        print(ui.warn("reload the file in your editor before typing"))
+        print()
+        print(ui.rule())
+        print(self.ctx.paths.solution.read_text(encoding="utf-8"))
+        print(ui.rule())
+
+    def cmd_fix(self, args: list[str]) -> None:
+        if not self._need_ctx(args):
+            return
+        if self.ctx.report is None:
+            print(ui.info("running the tests first ..."))
+            self.verifier.run(self.ctx)
+            self._print_report()
+            print()
+        if self.ctx.report.all_passed:
+            print(ui.green("all tests already pass — nothing to fix"))
+            return
+        print(ui.info("debugging ..."))
+        r = self.debugger.run(self.ctx)
+        if not r.ok:
+            print(ui.bad(r.message))
+            return
+        print(ui.ok(r.message))
+        print(ui.info(f"previous version saved to "
+                      f"lcagent/data/replaced/{self.ctx.pid}_before_debug.cpp"))
+        print(ui.warn("reload the file in your editor before typing"))
+        self.verifier.run(self.ctx)
+        self._print_report()
 
     def cmd_provider(self, args: list[str]) -> None:
         from ..providers import describe_all, get_provider
@@ -319,13 +420,21 @@ class MasterAgent(Agent):
                   f"({self.ctx.report.passed}/{self.ctx.report.total})")
 
     def cmd_roster(self, args: list[str]) -> None:
+        from ..providers import get_provider
+        prov = get_provider()
+        usable, _ = prov.available()
         print(ui.banner("agent roster"))
-        built = [self.fetcher, self.statement, self.verifier, self.scorer, self]
+        print(ui.dim("  offline = needs no model at all · model = needs a provider"))
+        print(ui.dim(f"  provider: {prov.name if usable else 'none configured'}"
+                     f"{'  (free tier — nothing here costs money)' if usable else ''}"))
+        built = [self.fetcher, self.statement, self.repairer, self.verifier,
+                 self.solver, self.debugger, self.scorer, self.improver, self]
         for a in built:
-            tag = ui.yellow("LLM") if a.requires_llm else ui.green("free")
-            print(f"  {tag}  {ui.bold(a.name):<22} {a.role}")
-        print(ui.dim("  pending: driver-repair, solver, debugger,"))
-        print(ui.dim("           classifier, archiver, tracker, notes, committer"))
+            # The distinction is whether the agent needs a model provider at
+            # all — not cost. On a free tier every agent here is free to run.
+            tag = ui.yellow("model  ") if a.requires_llm else ui.green("offline")
+            print(f"  {tag}  {ui.bold(a.name):<12} {a.role}")
+        print(ui.dim("  pending: classifier, archiver, tracker, notes, committer"))
 
 
     def _render_menu(self) -> str:
@@ -407,8 +516,8 @@ class MasterAgent(Agent):
                     print(ui.dim(line))
 
     def _prompt(self) -> str:
-        return ui.cyan("  choose [0-9] or type a command > ") if ui.COLOR \
-            else "  choose [0-9] or type a command > "
+        return ui.cyan("  choose or type a command > ") if ui.COLOR \
+            else "  choose or type a command > "
 
     def _greet(self) -> None:
         print(ui.banner("lcagent") + ui.dim("  LeetCode practice multi-agent system"))
@@ -426,17 +535,23 @@ MENU: list[tuple[str, list[tuple[str, str, str, str]]]] = [
     ("PROBLEM", [
         ("1", "New problem",   "fetch, scaffold, write the question file", "new"),
         ("2", "Show question", "statement, constraints, test cases",       "show"),
+        ("3", "Repair driver", "fill the driver's TODO scaffolding",       "repair"),
     ]),
     ("SOLVE", [
-        ("3", "Run tests",     "compile, run, per-case results",           "run"),
-        ("4", "Watch",         "auto test + score on every save",          "watch"),
-        ("5", "Score",         "grade + better-approach check",            "score"),
+        ("4", "Run tests",     "compile, run, per-case results",           "run"),
+        ("5", "Watch",         "auto test + score on every save",          "watch"),
+        ("6", "Solve for me",  "write the solution from the statement",    "solve"),
+        ("7", "Fix failures",  "debug until the failing cases pass",       "fix"),
+    ]),
+    ("REVIEW", [
+        ("8", "Score",         "grade + better-approach check",            "score"),
+        ("9", "Better code",   "verify the suggestion, then write it in",  "better"),
     ]),
     ("SESSION", [
-        ("6", "Status",        "what is loaded, which files exist",        "status"),
-        ("7", "Agents",        "the agent roster",                         "roster"),
-        ("8", "Providers",     "model backends, and which are usable",     "provider"),
-        ("9", "Help",          "every command and alias",                  "help"),
+        ("s", "Status",        "what is loaded, which files exist",        "status"),
+        ("a", "Agents",        "the agent roster",                         "roster"),
+        ("p", "Providers",     "model backends, and which are usable",     "provider"),
+        ("h", "Help",          "every command and alias",                  "help"),
         ("0", "Quit",          "save the session and exit",                "quit"),
     ]),
 ]
@@ -449,6 +564,10 @@ _ALIASES = {
     "show": "cmd_show", "s": "cmd_show", "problem": "cmd_show", "p": "cmd_show",
     "fetch": "cmd_fetch",
     "score": "cmd_score", "sc": "cmd_score", "grade": "cmd_score",
+    "better": "cmd_better", "improve": "cmd_better", "b": "cmd_better",
+    "repair": "cmd_repair", "driver": "cmd_repair",
+    "solve": "cmd_solve",
+    "fix": "cmd_fix", "debug": "cmd_fix",
     "provider": "cmd_provider", "providers": "cmd_provider",
     "watch": "cmd_watch", "w": "cmd_watch",
     "status": "cmd_status", "st": "cmd_status",
@@ -465,6 +584,10 @@ _HELP = [
     ("    --force", "refetch even if files already exist"),
     ("run [id]  (r, test)", "compile, run the test cases, show per-case results"),
     ("score     (sc)", "grade the solution and say if a better approach exists"),
+    ("better    (improve)", "verify the suggested solution, then write it into <id>.cpp"),
+    ("repair    (driver)", "fill the driver's TODO scaffolding, then retest"),
+    ("solve     [--force]", "write the solution from the statement"),
+    ("fix       (debug)", "patch the solution until the failing cases pass"),
     ("watch     (w)", "re-run on every save and score when green, until Ctrl-C"),
     ("provider [models]", "which model providers are usable; free ones first"),
     ("show      (s, p)", "print the problem statement + test cases"),

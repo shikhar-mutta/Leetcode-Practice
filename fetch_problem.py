@@ -452,9 +452,16 @@ def print_call(return_type, var="_res"):
         return f'cout << {NODE_SERIALIZERS[t]}({var}) << "\\n";'
     if t == "bool":
         return f'cout << ({var} ? "true" : "false") << "\\n";'
-    if t in ("int", "longlong", "int64_t", "double", "float", "string", "char"):
+    if t in ("double", "float"):
+        # LeetCode prints doubles with five fixed decimals ("2.00000"), which is
+        # what the fetched _expected.txt contains; default precision gives "2".
+        return f'cout << fixed << setprecision(5) << {var} << "\\n";'
+    if t in ("int", "longlong", "int64_t", "string", "char"):
         return f'cout << {var} << "\\n";'
-    if t in ("vector<int>", "vector<longlong>", "vector<int64_t>", "vector<double>",
+    if t == "vector<double>":
+        return (f'cout << fixed << setprecision(5);'
+                f'for (int _i=0;_i<(int){var}.size();_i++){{if(_i)cout<<" ";cout<<{var}[_i];}}cout<<"\\n";')
+    if t in ("vector<int>", "vector<longlong>", "vector<int64_t>",
              "vector<string>", "vector<char>"):
         return (f'for (int _i=0;_i<(int){var}.size();_i++){{if(_i)cout<<" ";cout<<{var}[_i];}}cout<<"\\n";')
     if t in ("vector<vector<int>>", "vector<vector<char>>", "vector<vector<string>>"):

@@ -78,6 +78,7 @@ class OpenAICompatProvider(Provider):
         # affordable on a rate-limited free tier; the endpoint ignores the
         # field for non-reasoning models.
         self.reasoning_effort = reasoning_effort or spec.get("reasoning_effort")
+        self._last_limits: dict = {}
         self.name = preset
 
     # ── transport ──
@@ -96,9 +97,26 @@ class OpenAICompatProvider(Provider):
         )
         try:
             with urllib.request.urlopen(req, timeout=timeout) as r:
+                self._last_limits = {
+                    k.replace("x-ratelimit-", ""): v
+                    for k, v in r.headers.items() if k.lower().startswith("x-ratelimit-")
+                }
                 return json.loads(r.read().decode("utf-8", "replace"))
         except urllib.error.HTTPError as e:
             body = e.read().decode("utf-8", "replace")[:400]
+            if e.code == 429:
+                # Free tiers meter tokens per minute. Surface the wait plainly:
+                # the agents treat this as "no model right now" and fall back to
+                # their deterministic half rather than failing the whole command.
+                retry = e.headers.get("retry-after") or ""
+                left = e.headers.get("x-ratelimit-remaining-tokens")
+                detail = f" — retry in {retry}s" if retry else ""
+                if left is not None:
+                    detail += f" ({left} tokens left this window)"
+                raise ProviderError(f"{self.preset} rate limit reached{detail}") from e
+            if e.code in (401, 403):
+                raise ProviderError(f"{self.preset} rejected the key "
+                                    f"(HTTP {e.code}) — check {self.env_var}") from e
             raise ProviderError(f"{self.preset} HTTP {e.code}: {body}") from e
         except (urllib.error.URLError, OSError, TimeoutError, json.JSONDecodeError) as e:
             raise ProviderError(f"{self.preset}: {e}") from e
@@ -112,6 +130,10 @@ class OpenAICompatProvider(Provider):
             return False, f"{self.env_var} is not set{hint}"
         return True, (f"{self.preset} (free tier) — "
                       f"fast={self.models.get('fast')}, smart={self.models.get('smart')}")
+
+    def budget(self) -> dict:
+        """Live rate-limit budget from the last response headers, if any."""
+        return dict(self._last_limits)
 
     def list_models(self) -> list[str]:
         """Ask the endpoint what it serves — free-tier catalogues change often."""

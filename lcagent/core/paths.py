@@ -192,6 +192,11 @@ class ProblemPaths:
         Mirrors run.sh: prefer `<id>_*.cpp` (the driver, which #includes the
         solution) over a bare `<id>.cpp`. Returns None when neither exists.
         """
+        # run.sh takes the first sorted match of `<id>_*.cpp`, which breaks the
+        # moment another file shares that shape (`<id>_better.cpp` sorts first
+        # and has no main()). The driver is named explicitly here instead.
+        if self.driver.is_file():
+            return self.driver
         matches = sorted(self.root.glob(f"{self.pid}_*.cpp"))
         if matches:
             return matches[0]

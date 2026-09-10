@@ -56,8 +56,9 @@ the practice repo.
 | **1** | Statement agent → `<id>_problem.txt` | no | ✅ done |
 | **2** | Fetcher + Verifier agents, Master loop (REPL + watcher) | no | ✅ done |
 | **3** | Providers (free-first) + Scorer — rubric, benchmark, reference diff | partial | ✅ done |
-| **4** | DriverRepair / Solver / Debugger | yes | ⬜ next |
-| **5** | Archiver + Tracker + Classifier + Committer | no | ⬜ |
+| **3.5** | Improver — write, verify and install the better solution | yes | ✅ done |
+| **4** | DriverRepair / Solver / Debugger | yes | ✅ done |
+| **5** | Archiver + Tracker + Classifier + Committer | no | ⬜ next |
 | **6** | Notes + reporting | partial | ⬜ |
 
 ---
@@ -368,6 +369,104 @@ would have silently degraded the system:
 
 ---
 
+### Phase 3.5 — Improver (2026-09-11) ✅
+
+Unplanned, added on request: the scorer's verdict ("use a binary search
+partition, O(log(min(m,n)))") named an approach but left the work undone.
+
+| File | Role |
+|:--|:--|
+| `agents/improve.py` | Generate the suggested solution, verify it, install it |
+
+**Decisions**
+
+1. **Verify before overwriting.** The candidate is compiled and run against the
+   real driver *first*; only a clean pass earns the right to touch `<id>.cpp`.
+   Tested with a deliberately non-compiling suggestion: `installed: False`,
+   solution byte-identical afterwards. A suggestion that fails stays in
+   `data/improved/` and says so.
+2. **The previous solution is always backed up** to
+   `data/replaced/<id>_before_improve.cpp` before the write.
+3. **The candidate never lands at the repo root.** `run.sh` picks its compile
+   target with the glob `<id>_*.cpp` and takes the first sorted match, so a
+   root-level `<id>_better.cpp` sorts *ahead of* `<id>_driver.cpp` and would
+   make `./run.sh <id>` compile a file with no `main()`. It goes to
+   `data/improved/` instead, and `ProblemPaths.compile_target()` now names the
+   driver explicitly rather than trusting sort order. **`run.sh` still has this
+   fragility** if any other `<id>_*.cpp` ever lands at root.
+4. **The cached report and score are cleared after installing**, so a stale
+   verdict cannot be shown against a file that just changed.
+
+**Verified** end to end on problem 4: brute force 74/C → improver wrote a
+commented binary-search partition, verified 2/2, installed it → re-score
+94/A with complexity 25/25 and "no better approach found".
+
+**A limit worth stating:** "verified" means *passes the example test cases* —
+two of them for problem 4. For partition binary search that is weak; its real
+failure modes are empty arrays and boundary partitions, which those cases never
+touch. A stress-test generator would make the badge mean much more.
+
+**Naming corrected** — the roster labelled agents `free` / `LLM`, implying the
+model-backed ones cost money. On a free tier nothing here does. The tags are now
+`offline` (needs no model at all) and `model` (needs a provider), with the
+active provider shown alongside.
+
+**Rate limits handled** — measured on Groq's free tier: 8,000 tokens/minute and
+1,000 requests/day, against ~1,322 tokens per score (≈6 scores/minute). A 429
+now degrades to "rate limit reached — retry in Ns" and the scorer falls back to
+its measured half rather than failing the command.
+
+---
+
+### Phase 4 — DriverRepair, Solver, Debugger (2026-09-11) ✅
+
+The agents that write C++. All three share one generate → verify → retry loop.
+
+| File | Role |
+|:--|:--|
+| `agents/codegen.py` | Extract code from a reply, verify it in a scratch dir, retry on failure |
+| `agents/driver_repair.py` | Fill the driver's `// TODO` scaffolding |
+| `agents/solver.py` | Write the solution from the statement |
+| `agents/debugger.py` | Patch a failing solution from the verifier's report |
+
+**Decisions**
+
+1. **One retry loop, shared.** Free-tier models are weaker at C++ than frontier
+   ones, so a first attempt often does not compile — but the compiler error is
+   an excellent correction signal. Each retry appends the previous attempt *and
+   its failure output*, which converges far faster than restating the request.
+   Capped at 3 attempts so a model that cannot converge fails fast instead of
+   burning the token budget.
+2. **Nothing is written until it passes.** Candidates are compiled and run in a
+   scratch directory against the *real* counterpart file — a candidate driver is
+   tested against the real solution and vice versa. The working tree is only
+   touched after a clean run.
+3. **`compile_only` for stub solutions.** DriverRepair usually runs while
+   `<id>.cpp` is still an empty stub, where no output could match the expected
+   file however good the driver is. The driver is then held only to compiling
+   against the real type definitions. Without this the repair loop would retry
+   a correct driver three times and give up.
+4. **Solver refuses to overwrite your work** unless `--force`, and backs up
+   first either way. The point of the repo is that you solve the problems.
+5. **Debugger is the only cycle** in the system (Verifier ⇄ Debugger), capped,
+   and it feeds back the actual failing case — input, expected, got.
+
+**Verified** end to end on **133 Clone Graph**, chosen because its `Node*` type
+is outside `fetch_problem.py`'s type table and so produces real TODOs:
+
+| Step | Result |
+|:--|:--|
+| Fetch 133 | 2 TODOs: `// TODO: parse Node* node`, `// TODO: print result` |
+| **DriverRepair** | wrote `buildGraph()` + `graphToString()`, compiles, 1 attempt |
+| **Solver** | BFS + `unordered_map` clone — **3/3, 1 attempt** |
+| **Debugger** | with `mp[cur]->neighbors.push_back(...)` disabled → 2/3 failing; diagnosed and fixed → **3/3, 1 attempt** |
+
+Note the debugger's input: case 1 failed with `expected [[2,4],[1,3],[2,4],[1,3]]`
+got `[[]]` — the clone had the right nodes and no edges. It identified the
+missing neighbour link rather than rewriting the approach.
+
+---
+
 ## Architecture
 
 ### Principle: two tiers, split by whether a model is needed
@@ -471,9 +570,10 @@ lcagent/
 ├── agents/
 │   ├── base.py            Agent contract
 │   ├── master.py          the loop
-│   ├── fetcher.py  statement.py  verifier.py  scorer.py
-│   └── (phases 4-6: driver_repair, solver, debugger,
-│        classifier, archiver, tracker, notes, committer)
+│   ├── codegen.py         generate → verify → retry, shared
+│   ├── fetcher.py  statement.py  verifier.py  scorer.py  improve.py
+│   ├── driver_repair.py  solver.py  debugger.py
+│   └── (phases 5-6: classifier, archiver, tracker, notes, committer)
 ├── data/                  ← agent by-products only
 │   ├── cache/             LeetCode responses (gitignored)
 │   ├── scores/            score cards

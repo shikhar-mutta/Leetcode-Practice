@@ -707,4 +707,7 @@ _HELP = [
     ("menu      (m, Enter)", "redisplay the numbered menu"),
     ("help      (h, ?)", "this list"),
     ("quit      (q, exit)", "leave the loop"),
+    ("", ""),
+    ("python -m lcagent setup", "check/install compiler, openpyxl, launchers, keys"),
+    ("python -m lcagent doctor", "the same checks, changing nothing"),
 ]

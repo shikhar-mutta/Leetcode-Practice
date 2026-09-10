@@ -19,6 +19,11 @@ from lcagent.core import ui  # noqa: E402
 
 def main(argv: list[str] | None = None) -> int:
     argv = sys.argv[1:] if argv is None else argv
+    # Setup runs before anything else is imported, so it can still report a
+    # missing dependency that would otherwise crash the import itself.
+    if argv and argv[0] in ("setup", "doctor", "install"):
+        from lcagent.bootstrap import main as setup_main
+        return setup_main(argv[1:] if argv[0] != "doctor" else ["--check", *argv[1:]])
     master = MasterAgent()
     if argv:
         return master.one_shot(argv)

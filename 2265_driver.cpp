@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "2859.cpp"
+#include "2265.cpp"
 
 // ── token utils ───────────────────────────────────────────────────
 static string _trim(const string& s) {
@@ -87,14 +87,53 @@ static void _endCase() {
 #endif
 }
 
+// ── TreeNode ↔ [3,9,20,null,null,15,7] ────────────────────────────
+static TreeNode* _toTree(const string& s) {
+    vector<string> t = _splitTop(_unwrap(s));
+    if (t.empty() || _trim(t[0]) == "null" || _trim(t[0]).empty()) return nullptr;
+    TreeNode* root = new TreeNode(_toI(t[0]));
+    queue<TreeNode*> q; q.push(root);
+    size_t i = 1;
+    while (!q.empty() && i < t.size()) {
+        TreeNode* n = q.front(); q.pop();
+        if (i < t.size()) { string v = _trim(t[i++]); if (v != "null") q.push(n->left  = new TreeNode(_toI(v))); }
+        if (i < t.size()) { string v = _trim(t[i++]); if (v != "null") q.push(n->right = new TreeNode(_toI(v))); }
+    }
+    return root;
+}
+static string _sTree(TreeNode* root) {            // trailing nulls trimmed, like LeetCode
+    vector<string> out; queue<TreeNode*> q;
+    if (root) q.push(root);
+    while (!q.empty()) {
+        TreeNode* n = q.front(); q.pop();
+        if (!n) { out.push_back("null"); continue; }
+        out.push_back(to_string(n->val)); q.push(n->left); q.push(n->right);
+    }
+    while (!out.empty() && out.back() == "null") out.pop_back();
+    string r = "[";
+    for (size_t i = 0; i < out.size(); i++) { if (i) r += ", "; r += out[i]; }
+    return r + "]";
+}
+static vector<TreeNode*> _toVTree(const string& s) {
+    vector<TreeNode*> v;
+    for (const string& t : _splitTop(_unwrap(s))) v.push_back(_toTree(t));
+    return v;
+}
+static string _sVTree(const vector<TreeNode*>& v) {
+    string r = "[";
+    for (size_t i = 0; i < v.size(); i++) { if (i) r += ", "; r += _sTree(v[i]); }
+    return r + "]";
+}
+static TreeNode*         _rtree()  { return _toTree (_line()); }
+static vector<TreeNode*> _rvtree() { return _toVTree(_line()); }
+
 int main() {
     string _t; getline(cin, _t);
     int _T = stoi(_trim(_t));
     while (_T--) {
-        vector<int> nums = _rvi();
-        int k = _ri();
+        TreeNode* root = _rtree();
         Solution sol;
-        auto _res = sol.sumIndicesWithKSetBits(nums, k);
+        auto _res = sol.averageOfSubtree(root);
         cout << _res << "\n";
         _endCase();
     }

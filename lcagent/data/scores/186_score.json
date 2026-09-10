@@ -1,0 +1,39 @@
+{
+  "pid": "186",
+  "total": 98.0,
+  "grade": "A",
+  "components": [
+    {
+      "name": "correctness",
+      "points": 50.0,
+      "max_points": 50,
+      "note": "2/2 test cases",
+      "judged_by": "measured"
+    },
+    {
+      "name": "efficiency",
+      "points": 15,
+      "max_points": 15,
+      "note": "5.4 ms vs 2.8 ms reference \u2014 both below the 8 ms noise floor, example tests are too small to differentiate",
+      "judged_by": "measured"
+    },
+    {
+      "name": "complexity",
+      "points": 25.0,
+      "max_points": 25,
+      "note": "O(n) time, O(1) space (optimal O(n))",
+      "judged_by": "openai/gpt-oss-120b"
+    },
+    {
+      "name": "readability",
+      "points": 8.0,
+      "max_points": 10,
+      "note": "Clear use of std::reverse and simple loop.",
+      "judged_by": "openai/gpt-oss-120b"
+    }
+  ],
+  "verdict": "The solution is optimal and well\u2011written.",
+  "better": null,
+  "model": "openai/gpt-oss-120b",
+  "degraded": false
+}

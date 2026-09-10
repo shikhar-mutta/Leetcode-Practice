@@ -1,0 +1,43 @@
+{
+  "pid": "70",
+  "total": 77.0,
+  "grade": "C",
+  "components": [
+    {
+      "name": "correctness",
+      "points": 50.0,
+      "max_points": 50,
+      "note": "2/2 test cases",
+      "judged_by": "measured"
+    },
+    {
+      "name": "efficiency",
+      "points": 15,
+      "max_points": 15,
+      "note": "3.2 ms vs 3.2 ms reference \u2014 both below the 8 ms noise floor, example tests are too small to differentiate",
+      "judged_by": "measured"
+    },
+    {
+      "name": "complexity",
+      "points": 5.0,
+      "max_points": 25,
+      "note": "O(2^n) time, O(n) space (optimal O(n))",
+      "judged_by": "openai/gpt-oss-120b"
+    },
+    {
+      "name": "readability",
+      "points": 7.0,
+      "max_points": 10,
+      "note": "Code is short but recursion without memo makes intent unclear.",
+      "judged_by": "openai/gpt-oss-120b"
+    }
+  ],
+  "verdict": "The solution is correct but far from optimal; an O(n) iterative DP is preferred.",
+  "better": {
+    "approach": "Iterative DP / Fibonacci",
+    "time": "O(n)",
+    "why": "A simple loop computes the same recurrence in linear time and constant space, avoiding exponential blow\u2011up."
+  },
+  "model": "openai/gpt-oss-120b",
+  "degraded": false
+}

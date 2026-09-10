@@ -1,0 +1,57 @@
+# lcagent configuration.
+#
+# provider = "auto" tries free providers first, local next, paid last:
+#   groq -> gemini -> cerebras -> openrouter -> ollama -> anthropic
+# With none of them configured the system still runs; the model-backed agents
+# degrade and say so. Nothing here ever spends money unless you set a paid key.
+#
+# Override for one run:  LCAGENT_PROVIDER=ollama python -m lcagent
+provider = "auto"
+
+# ─── FREE: hosted, needs a free key, no card ────────────────────────────────
+# Groq — fastest free tier.        key: GROQ_API_KEY      https://console.groq.com/keys
+# Verified against the live catalogue on 2026-09-10 via `provider models`.
+# The llama-3.x ids that used to be here have been retired by Groq.
+[groq.models]
+fast  = "openai/gpt-oss-20b"
+smart = "openai/gpt-oss-120b"
+
+# Google Gemini.                   key: GEMINI_API_KEY    https://aistudio.google.com/apikey
+[gemini.models]
+fast  = "gemini-2.0-flash"
+smart = "gemini-2.5-flash"
+
+# Cerebras.                        key: CEREBRAS_API_KEY  https://cloud.cerebras.ai
+[cerebras.models]
+fast  = "llama3.1-8b"
+smart = "llama-3.3-70b"
+
+# OpenRouter — has :free models.   key: OPENROUTER_API_KEY  https://openrouter.ai/keys
+[openrouter.models]
+fast  = "qwen/qwen-2.5-coder-32b-instruct:free"
+smart = "qwen/qwen-2.5-coder-32b-instruct:free"
+
+# Free-tier model catalogues change often. Run `provider models` in the REPL to
+# ask the endpoint what it actually serves, then paste the ids above.
+
+# ─── FREE: fully local, no key, works offline ───────────────────────────────
+# Sized for a 4-core CPU with no usable GPU: 3b is ~2 GB on disk and generates
+# at a workable rate; do not reach for 7b+ on this machine.
+#   ollama pull qwen2.5-coder:3b
+[ollama]
+# host = "http://127.0.0.1:11434"
+[ollama.models]
+fast  = "qwen2.5-coder:1.5b"
+smart = "qwen2.5-coder:3b"
+
+# ─── PAID: only used if you deliberately set a key ──────────────────────────
+[anthropic.models]
+fast  = "claude-haiku-4-5-20251001"
+smart = "claude-sonnet-5"
+
+[scoring]
+# Rubric weights, must total 100.
+correctness = 50   # deterministic — from the verifier
+complexity  = 25   # model-judged against the optimal approach
+efficiency  = 15   # measured runtime vs the reference solution
+readability = 10   # model-judged

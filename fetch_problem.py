@@ -704,7 +704,9 @@ def main():
         sys.exit(1)
     print(f"      {data['title']}")
 
-    cpp = next((s["code"] for s in data.get("codeSnippets", []) if s["langSlug"] == "cpp"), "")
+    # `.get(k, default)` does not apply the default when the key exists with a
+    # null value, which is what LeetCode returns for premium problems.
+    cpp = next((s["code"] for s in (data.get("codeSnippets") or []) if s["langSlug"] == "cpp"), "")
     design_cls, members = parse_snippet(cpp)
     if not members:
         print("ERROR: Could not parse C++ signature")

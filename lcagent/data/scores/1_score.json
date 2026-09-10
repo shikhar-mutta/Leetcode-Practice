@@ -1,0 +1,43 @@
+{
+  "pid": "1",
+  "total": 77.0,
+  "grade": "C",
+  "components": [
+    {
+      "name": "correctness",
+      "points": 50.0,
+      "max_points": 50,
+      "note": "3/3 test cases",
+      "judged_by": "measured"
+    },
+    {
+      "name": "efficiency",
+      "points": 15,
+      "max_points": 15,
+      "note": "2.8 ms vs 2.5 ms reference \u2014 both below the 8 ms noise floor, example tests are too small to differentiate",
+      "judged_by": "measured"
+    },
+    {
+      "name": "complexity",
+      "points": 5.0,
+      "max_points": 25,
+      "note": "O(n^2) time, O(1) space (optimal O(n))",
+      "judged_by": "openai/gpt-oss-120b"
+    },
+    {
+      "name": "readability",
+      "points": 7.0,
+      "max_points": 10,
+      "note": "Straightforward nested loops, easy to follow.",
+      "judged_by": "openai/gpt-oss-120b"
+    }
+  ],
+  "verdict": "The submitted solution is correct but suboptimal; a linear\u2011time hash\u2011map approach is preferable.",
+  "better": {
+    "approach": "hash map (one-pass)",
+    "time": "O(n)",
+    "why": "A single pass with an unordered_map finds the complement in constant average time, reducing quadratic work to linear."
+  },
+  "model": "openai/gpt-oss-120b",
+  "degraded": false
+}

@@ -1,0 +1,25 @@
+{
+  "pid": "2859",
+  "total": 0.0,
+  "grade": "F",
+  "components": [
+    {
+      "name": "correctness",
+      "points": 0.0,
+      "max_points": 76.9,
+      "note": "0/2 test cases",
+      "judged_by": "measured"
+    },
+    {
+      "name": "efficiency",
+      "points": 0.0,
+      "max_points": 23.1,
+      "note": "not measured (tests not passing)",
+      "judged_by": "measured"
+    }
+  ],
+  "verdict": "model review skipped \u2014 solve the problem first",
+  "better": null,
+  "model": null,
+  "degraded": true
+}

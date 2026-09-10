@@ -13,3 +13,17 @@ run_test
 
 # Output directory (optional - comment out if you want to track test results)
 # Output/
+
+# Python
+__pycache__/
+*.pyc
+
+# Compiled solution binaries
+sol_*
+dbg_*
+!sol_*.cpp
+
+# Agent regenerables (statements + scores are kept)
+lcagent/data/cache/
+lcagent/data/logs/
+lcagent/data/session.json

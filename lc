@@ -1,0 +1,4 @@
+#!/bin/sh
+# lcagent launcher — cd so the package is importable, paths resolve absolutely
+cd "$(dirname "$0")" || exit 1
+exec python3 -m lcagent "$@"

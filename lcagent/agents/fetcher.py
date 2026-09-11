@@ -2,15 +2,16 @@
 """
 FetcherAgent — get a problem's scaffold onto the repo root.
 
-Delegates to the existing fetch_problem.py rather than reimplementing its
-snippet parsing and driver generation, which are the hard-won parts. It is
-invoked through sys.executable so the right interpreter is used on Windows,
-where `python3` frequently is not on PATH.
+The local archive under `Code Dirs/All LC 1 - 4017/<id>/` comes first: it needs
+no network, and its drivers and expected files carry hand repairs that a fresh
+fetch would regenerate broken. Its `<id>.cpp` is the finished solution, though,
+so that file is never copied — core/stub.py rebuilds it as the empty stub a
+fresh fetch would give, and a re-fetch is a re-solve.
 
-When LeetCode is unreachable the pre-fetched archive under
-`Code Dirs/All LC 1 - 4017/<id>/` is used instead — 3356 problems already have
-their driver, input and expected files sitting there, which makes the whole
-system usable with no network at all.
+LeetCode is the fallback, for problems the archive does not have. That path
+delegates to the existing fetch_problem.py rather than reimplementing its
+snippet parsing and driver generation, invoked through sys.executable so the
+right interpreter is used on Windows, where `python3` is frequently not on PATH.
 """
 
 from __future__ import annotations
@@ -20,7 +21,7 @@ import shutil
 import subprocess
 import sys
 
-from ..core import paths
+from ..core import paths, stub
 from ..core.paths import all_codes
 from ..core.state import Context
 from .base import Agent, AgentResult
@@ -43,6 +44,10 @@ class FetcherAgent(Agent):
         """
         Scaffold a problem, or change nothing at all.
 
+        Order: the local archive, then LeetCode. `allow_archive=False` (`new
+        <id> --live`) goes straight to LeetCode; `offline` never leaves the
+        archive.
+
         The guarantee this method makes: if the problem cannot be fetched, every
         file at the repo root is left exactly as it was. fetch_problem.py writes
         directly into the working tree and can die part-way through (a premium
@@ -60,33 +65,26 @@ class FetcherAgent(Agent):
         snapshot = self._snapshot(ctx)
         reasons: list[str] = []
 
-        if not offline:
-            r = self._fetch_online(ctx)
-            if r.ok:
-                if replace_previous:
-                    r.data.update(self._replace_previous(ctx))
-                return r
-            reasons.append(f"LeetCode: {r.message}")
-            restored, kept = self._rollback(snapshot)
-            if restored:
-                ctx.note(self.name, f"restored {len(restored)} pre-existing file(s)")
-        else:
-            reasons.append("offline mode requested")
-
-        # The archive is a safe fallback only when it cannot destroy anything.
-        # Overwriting a solution the user is part-way through is worse than
-        # failing, so it is skipped unless the slot is empty or force is given.
-        if allow_archive and (force or not existing):
+        if allow_archive:
             r = self._from_archive(ctx)
             if r.ok:
-                r.message += f"   [{'; '.join(reasons)}]"
                 if replace_previous:
                     r.data.update(self._replace_previous(ctx))
                 return r
             reasons.append(f"archive: {r.message}")
-        elif existing:
-            reasons.append("archive fallback skipped — refusing to overwrite the "
-                           "existing files at root")
+            self._rollback(snapshot)
+
+        if not offline:
+            r = self._fetch_online(ctx)
+            if r.ok:
+                if reasons:
+                    r.message += f"   [{'; '.join(reasons)}]"
+                if replace_previous:
+                    r.data.update(self._replace_previous(ctx))
+                return r
+            reasons.append(f"LeetCode: {r.message}")
+        else:
+            reasons.append("offline mode — LeetCode not tried")
 
         restored, kept = self._rollback(snapshot)
         return self.fail(f"could not fetch problem {pp.pid}",
@@ -119,7 +117,8 @@ class FetcherAgent(Agent):
         for pid, files in victims.items():
             solution = root / f"{pid}.cpp"
             archived = (all_codes() / f"{pid}.cpp")
-            if solution.is_file() and not self._is_archived(solution, archived):
+            if (solution.is_file() and not self._is_archived(solution, archived)
+                    and not self._is_blank(solution, root / f"{pid}_driver.cpp")):
                 backup_dir = paths.agent_data_dir() / "replaced"
                 backup_dir.mkdir(parents=True, exist_ok=True)
                 try:
@@ -144,6 +143,20 @@ class FetcherAgent(Agent):
             return False
         try:
             return solution.read_bytes() == archived.read_bytes()
+        except OSError:
+            return False
+
+    @staticmethod
+    def _is_blank(solution, driver) -> bool:
+        """
+        True when the solution is still the untouched empty stub.
+
+        Re-solving archived problems makes this the common case, and rescuing
+        an empty stub would overwrite a real rescued copy of the same id.
+        """
+        try:
+            drv = driver.read_text(encoding="utf-8", errors="replace") if driver.is_file() else ""
+            return stub.is_untouched(solution.read_text(encoding="utf-8", errors="replace"), drv)
         except OSError:
             return False
 
@@ -224,21 +237,46 @@ class FetcherAgent(Agent):
                                                 ctx.paths.input, ctx.paths.expected)])
 
     def _from_archive(self, ctx: Context) -> AgentResult:
-        src = ctx.paths.archive_dir
+        """
+        The archived driver, tests and question file as they are, and an empty
+        stub in place of the archived (solved) `<id>.cpp`.
+        """
+        pp, src = ctx.paths, ctx.paths.archive_dir
         if not src.is_dir():
             return self.fail(f"no archive copy at {src.name}/")
-        copied = []
-        for name in (f"{ctx.pid}.cpp", f"{ctx.pid}_driver.cpp",
-                     f"{ctx.pid}_input.txt", f"{ctx.pid}_expected.txt"):
-            s = src / name
-            if s.is_file():
-                shutil.copy2(s, paths.repo_root() / name)
-                copied.append(name)
-        if not copied:
-            return self.fail(f"archive folder {src.name}/ is empty")
-        ctx.note(self.name, f"restored {ctx.pid} from archive")
-        return self.ok(f"restored {ctx.pid} from archive ({len(copied)} files)",
-                       todos=self.count_todos(ctx), from_archive=True)
+        copies = [(src / f.name, f) for f in (pp.driver, pp.input, pp.expected)]
+        empty = [s.name for s, _ in copies if not s.is_file() or s.stat().st_size == 0]
+        if empty:
+            return self.fail(f"archive copy is incomplete (missing or empty: {', '.join(empty)})")
+
+        solved = src / pp.solution.name
+        try:
+            driver = copies[0][0].read_text(encoding="utf-8", errors="replace")
+            text = stub.make_stub(solved.read_text(encoding="utf-8", errors="replace"), driver) \
+                if solved.is_file() else None
+        except OSError as e:
+            return self.fail(f"could not read the archive: {e}")
+        if text is None:
+            return self.fail(f"could not build an empty stub from the archived {solved.name}")
+
+        statement = src / pp.problem.name
+        if statement.is_file():
+            copies.append((statement, pp.problem))
+        try:
+            pp.solution.write_text(text, encoding="utf-8")
+            for s, d in copies:
+                shutil.copy2(s, d)
+            pp.debug.write_text(_first_case(pp.input.read_text(encoding="utf-8", errors="replace")),
+                                encoding="utf-8")
+        except OSError as e:
+            return self.fail(f"copy failed: {e}")
+
+        ctx.note(self.name, f"scaffolded {ctx.pid} from the local archive")
+        return self.ok(f"scaffolded {ctx.pid} from the local archive — empty {pp.solution.name}, "
+                       f"archived driver and tests",
+                       todos=self.count_todos(ctx), from_archive=True,
+                       statement=statement.is_file(),
+                       artifacts=[pp.solution, pp.driver, pp.input, pp.expected])
 
     # ── inspection ──
     @staticmethod
@@ -248,3 +286,20 @@ class FetcherAgent(Agent):
             return 0
         text = ctx.paths.driver.read_text(encoding="utf-8", errors="replace")
         return len(TODO_RE.findall(text))
+
+
+def _first_case(input_text: str) -> str:
+    """
+    `_debug.txt` for debug.sh: the first test case of `_input.txt`, the way
+    fetch_problem.py writes it. The archive never keeps one. When the cases do
+    not split evenly the whole input is used — it still runs.
+    """
+    lines = [ln for ln in input_text.splitlines() if ln.strip()]
+    try:
+        count = int(lines[0].strip())
+    except (IndexError, ValueError):
+        return input_text
+    rest = lines[1:]
+    if count <= 0 or not rest or len(rest) % count:
+        return input_text
+    return "1\n" + "\n".join(rest[:len(rest) // count]) + "\n"

@@ -1,0 +1,54 @@
+══════════════════════════════════════════════════════════════════════════
+ 155. Min Stack
+ Medium  |  Tags: Stack, Design
+ https://leetcode.com/problems/min-stack/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Design a stack that supports push, pop, top, and retrieving the minimum
+  element in constant time.
+
+  Implement the MinStack class:
+
+  - MinStack() initializes the stack object.
+
+  - void push(int value) pushes the element value onto the stack.
+
+  - void pop() removes the element on the top of the stack.
+
+  - int top() gets the top element of the stack.
+
+  - int getMin() retrieves the minimum element in the stack.
+
+  You must implement a solution with O(1) time complexity for each
+  function.
+
+CONSTRAINTS
+  -2^31 <= val <= 2^31 - 1
+  Methods pop, top and getMin operations will always be called on non-empty stacks.
+  At most 3 * 10^4 calls will be made to push, pop, top, and getMin.
+
+TEST CASES
+  [1] Input    : ["MinStack","push","push","push","getMin","pop","top","getMin"]
+[[],[-2],[0],[-3],[],[],[],[]]
+      Expected : [null,null,null,null,-3,null,0,-2]
+      Why      : MinStack minStack = new MinStack();
+                 minStack.push(-2);
+                 minStack.push(0);
+                 … (5 more)
+
+CODE TYPE
+  design · MinStack
+    driver: replays ["MinStack","op",...] / [[args],...] and prints [null,...]
+
+SIGNATURE
+  MinStack();
+  void push(int value);
+  void pop();
+  int top();
+  int getMin();
+
+FILES
+  edit : 155.cpp
+  test : lc run 155
+══════════════════════════════════════════════════════════════════════════

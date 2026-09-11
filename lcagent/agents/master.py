@@ -22,7 +22,7 @@ import sys
 import time
 from pathlib import Path
 
-from ..core import notes_io, paths, ui
+from ..core import codetype, notes_io, paths, ui
 from ..core.state import Context
 from ..core.testcase import Status
 from .base import Agent, AgentResult
@@ -165,8 +165,8 @@ class MasterAgent(Agent):
     # ── commands ──
     def cmd_new(self, args: list[str]) -> None:
         if not args:
-            try:
-                args = [input(ui.cyan("  problem id > ")).strip()]
+            try:                                  # `2859 --live` works at the prompt too
+                args = input(ui.cyan("  problem id > ")).split()
             except (EOFError, KeyboardInterrupt):
                 print()
                 return
@@ -208,16 +208,39 @@ class MasterAgent(Agent):
                           f"lcagent/data/replaced/{pid}.cpp"))
         if r.data.get("todos"):
             print(ui.warn(f"{r.data['todos']} unfilled TODO(s) in the driver "
-                          f"— the driver-repair agent lands in Phase 4"))
+                          f"— `repair` (menu 3) fills them"))
         for w in r.data.get("warnings", []):
             print(ui.warn(w))
 
-        s = self.statement.run(self.ctx)
-        print(ui.ok(s.message) if s.ok else ui.warn(s.message))
-        if s.ok:
-            print(ui.info(f"statement: {s.artifacts[0].relative_to(paths.repo_root())}"))
+        if r.data.get("statement"):              # the archive had the question: no network
+            print(ui.ok(f"question: {self.ctx.paths.problem.name} (from the local archive)"))
+        else:
+            s = self.statement.run(self.ctx)
+            print(ui.ok(s.message) if s.ok else ui.warn(s.message))
+            if s.ok:
+                print(ui.info(f"statement: {s.artifacts[0].relative_to(paths.repo_root())}"))
+        ct = codetype.for_problem(self.ctx)
+        if ct:
+            print(ui.info(f"type: {ct.label}"))
         print(ui.info(f"edit {self.ctx.paths.solution.name}, then `run` (or `watch`)"))
         self._save()
+
+    def cmd_statements(self, args: list[str]) -> None:
+        """Write <id>_problem.txt into every archived problem folder."""
+        from .statement import backfill_archive
+        pids = [a for a in args if a.isdigit()] or None
+        print(ui.info("writing question files into Code Dirs/ — Ctrl-C stops, "
+                      "running it again resumes"))
+        try:
+            r = backfill_archive(pids, refresh="--refresh" in args, offline="--offline" in args,
+                                 log=lambda m: print(ui.dim(f"     {m}")))
+        except KeyboardInterrupt:
+            print("\n" + ui.info("stopped — run `statements` again to resume"))
+            return
+        print(ui.ok(f"{r['written']} written, {r['skipped']} already there, "
+                    f"{len(r['failures'])} failed"))
+        for pid, why in r["failures"][:15]:
+            print(ui.dim(f"      · {pid}: {why}"))
 
     def cmd_run(self, args: list[str]) -> None:
         if not self._need_ctx(args):
@@ -628,7 +651,7 @@ class MasterAgent(Agent):
 #: end, never a second implementation.
 MENU: list[tuple[str, list[tuple[str, str, str, str]]]] = [
     ("PROBLEM", [
-        ("1", "New problem",   "fetch, scaffold, write the question file", "new"),
+        ("1", "New problem",   "local archive first, else LeetCode",       "new"),
         ("2", "Show question", "statement, constraints, test cases",       "show"),
         ("3", "Repair driver", "fill the driver's TODO scaffolding",       "repair"),
     ]),
@@ -663,6 +686,7 @@ _ALIASES = {
     "run": "cmd_run", "r": "cmd_run", "test": "cmd_run", "t": "cmd_run",
     "show": "cmd_show", "s": "cmd_show", "problem": "cmd_show", "p": "cmd_show",
     "fetch": "cmd_fetch",
+    "statements": "cmd_statements", "questions": "cmd_statements",
     "score": "cmd_score", "sc": "cmd_score", "grade": "cmd_score",
     "better": "cmd_better", "improve": "cmd_better", "b": "cmd_better",
     "repair": "cmd_repair", "driver": "cmd_repair",
@@ -681,8 +705,8 @@ _ALIASES = {
 }
 
 _HELP = [
-    ("new <id> [--live]", "fetch a problem, scaffold it, render the statement"),
-    ("    --live", "fetch from LeetCode only, never fall back to the archive"),
+    ("new <id> [--live]", "scaffold from the local archive (empty stub), else LeetCode"),
+    ("    --live", "skip the archive, fetch a fresh scaffold from LeetCode"),
     ("    --offline", "use the local archive only, no network"),
     ("    --force", "refetch even if files already exist"),
     ("run [id]  (r, test)", "compile, run the test cases, show per-case results"),
@@ -702,6 +726,7 @@ _HELP = [
     ("provider [models]", "which model providers are usable; free ones first"),
     ("show      (s, p)", "print the problem statement + test cases"),
     ("fetch", "re-render the statement from LeetCode"),
+    ("statements [ids] [--refresh]", "write <id>_problem.txt into every Code Dirs/ folder"),
     ("status    (st)", "what is loaded and which files exist"),
     ("roster    (agents)", "list the agents and which ones need a model"),
     ("menu      (m, Enter)", "redisplay the numbered menu"),

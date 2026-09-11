@@ -1,0 +1,35 @@
+══════════════════════════════════════════════════════════════════════════
+ 104. Maximum Depth of Binary Tree
+ Easy  |  Tags: Tree, Depth-First Search, Breadth-First Search, Binary Tree
+ https://leetcode.com/problems/maximum-depth-of-binary-tree/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given the root of a binary tree, return its maximum depth.
+
+  A binary tree's maximum depth is the number of nodes along the longest
+  path from the root node down to the farthest leaf node.
+
+CONSTRAINTS
+  The number of nodes in the tree is in the range [0, 10^4].
+  -100 <= Node.val <= 100
+
+TEST CASES
+  [1] Input    : root = [3,9,20,null,null,15,7]
+      Expected : 3
+
+  [2] Input    : root = [1,null,2]
+      Expected : 2
+
+CODE TYPE
+  function · tree
+    driver: one Solution call per test case
+    tree: TreeNode* — level order, e.g. [3,9,20,null,null,15,7]
+
+SIGNATURE
+  int maxDepth(TreeNode* root);
+
+FILES
+  edit : 104.cpp
+  test : lc run 104
+══════════════════════════════════════════════════════════════════════════

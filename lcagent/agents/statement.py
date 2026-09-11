@@ -17,8 +17,9 @@ from __future__ import annotations
 import html as _html
 import re
 import textwrap
+import time
 
-from ..core import leetcode
+from ..core import codetype, leetcode, paths
 from ..core.state import Context
 from .base import Agent, AgentResult
 
@@ -115,7 +116,8 @@ def parse_sections(content_html: str) -> dict:
     m = re.search(r"Constraints:?\s*</strong>\s*</p>(.*?)(?:</ul>|$)", body, flags=re.DOTALL | re.I)
     if m:
         constraints = [_text(li) for li in re.findall(r"<li>(.*?)</li>", m.group(1), flags=re.DOTALL | re.I)]
-    constraints = [c.lstrip("- ").strip() for c in constraints if c.strip()]
+    # Only a bullet marker is stripped — "-100 <= Node.val" keeps its sign.
+    constraints = [re.sub(r"^\s*-\s+", "", c).strip() for c in constraints if c.strip()]
 
     # Follow-up, when present.
     follow = ""
@@ -278,7 +280,16 @@ class StatementAgent(Agent):
                                        break_long_words=False))
             L.append("")
 
-        sigs = extract_signatures(d.get("cpp_snippet", ""))
+        ct = codetype.for_problem(ctx, d.get("cpp_snippet") or "")
+        if ct:
+            L.append("CODE TYPE")
+            L.append(f"  {ct.label}")
+            for line in ct.environment():
+                L.append(f"    {line}")
+            L.append("")
+
+        # Premium problems ship no snippet; the archived stub still knows the API.
+        sigs = extract_signatures(d.get("cpp_snippet", "")) or [m + ";" for m in (ct.methods if ct else [])]
         if sigs:
             L.append("SIGNATURE")
             for s in sigs:
@@ -309,3 +320,70 @@ class StatementAgent(Agent):
             out.append(f"      Expected : {exp[i] if i < len(exp) else '?'}")
             out.append("")
         return out
+
+
+# ─── the archive's question files ────────────────────────────────────────────
+
+def backfill_archive(pids: list[str] | None = None, *, refresh: bool = False,
+                     offline: bool = False, delay: float = 0.25, log=print) -> dict:
+    """
+    Write `<id>_problem.txt` into archived problem folders (all of them by
+    default), so `new <id>` can scaffold an archived problem with no network.
+
+    One request per uncached problem — the slug comes from the solution's
+    `// Link:` line — and cached metadata costs nothing, so an interrupted run
+    resumes where it stopped. `refresh` re-renders files that already exist.
+    """
+    root = paths.code_dirs()
+    if pids is None:
+        pids = sorted((p.name for p in root.iterdir() if p.is_dir() and p.name.isdigit()), key=int)
+    agent = StatementAgent()
+    written = skipped = streak = 0
+    failures: list[tuple[str, str]] = []
+    for n, pid in enumerate(pids, 1):
+        if not (root / pid).is_dir():
+            failures.append((pid, "not in the archive"))
+            continue
+        ctx = Context.for_problem(pid, root=root / pid)
+        if ctx.paths.problem.is_file() and not refresh:
+            skipped += 1
+            continue
+        data = leetcode.cached_only(pid)
+        if data is None:
+            if offline:
+                failures.append((pid, "offline and not cached"))
+                continue
+            try:
+                data = leetcode.fetch_question(pid, slug=_link_slug(ctx.paths.solution))
+            except leetcode.OfflineError as e:
+                failures.append((pid, str(e)))
+                streak += 1
+                if streak >= 5:
+                    log("LeetCode unreachable 5 times running — stopping; run again to resume")
+                    break
+                continue
+            except RuntimeError as e:
+                failures.append((pid, str(e)))
+                continue
+            streak = 0
+            time.sleep(delay)                   # one problem at a time, politely
+        ctx.problem = data
+        r = agent.run(ctx)
+        if r.ok:
+            written += 1
+        else:
+            failures.append((pid, r.message))
+        if n % 250 == 0:
+            log(f"[{n}/{len(pids)}] {written} written, {skipped} already there, "
+                f"{len(failures)} failed")
+    return {"written": written, "skipped": skipped, "failures": failures}
+
+
+def _link_slug(solution) -> str | None:
+    """`two-sum` from the `// Link: https://leetcode.com/problems/two-sum/...` line."""
+    try:
+        m = re.search(r"leetcode\.com/problems/([\w-]+)",
+                      solution.read_text(encoding="utf-8", errors="replace"))
+    except OSError:
+        return None
+    return m.group(1) if m else None

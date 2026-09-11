@@ -103,9 +103,13 @@ def _resolve_slug(num: int | str) -> tuple[str, str]:
 
 # ─── public API ──────────────────────────────────────────────────────────────
 
-def fetch_question(num: int | str, *, refresh: bool = False, allow_cache: bool = True) -> dict:
+def fetch_question(num: int | str, *, refresh: bool = False, allow_cache: bool = True,
+                   slug: str | None = None) -> dict:
     """
     Full metadata for one problem.
+
+    `slug`, when known (the `// Link:` line of an archived solution), saves the
+    search request that resolves a number to a slug.
 
     Returns keys: id, title, slug, difficulty, tags, content (HTML),
     example_testcases, hints, cpp_snippet, locked.
@@ -117,8 +121,16 @@ def fetch_question(num: int | str, *, refresh: bool = False, allow_cache: bool =
         except (json.JSONDecodeError, OSError):
             pass  # corrupt entry, re-fetch
 
-    slug, title = _resolve_slug(num)
-    d = post_json(_Q_DETAIL, {"s": slug})["data"]["question"]
+    d, title = None, ""
+    if slug:
+        d = (post_json(_Q_DETAIL, {"s": slug}).get("data") or {}).get("question")
+        # A Link line can be stale — a mis-filed scaffold once carried the
+        # previous problem's link — so the slug is trusted only if the ids agree.
+        if not d or str(d.get("questionFrontendId")) != str(num):
+            d = None
+    if d is None:
+        slug, title = _resolve_slug(num)
+        d = post_json(_Q_DETAIL, {"s": slug})["data"]["question"]
     if not d:
         raise RuntimeError(f"LeetCode returned no data for {slug}")
 

@@ -2,11 +2,13 @@
 """
 ArchiverAgent — copy a solved problem into the two archives.
 
-  Code Dirs/All LC 1 - 4017/<id>/   the scaffold: solution, driver, input, expected
+  Code Dirs/All LC 1 - 4017/<id>/   the scaffold: solution, driver, input, expected,
+                                    and the question file when there is one
   All Codes/All LC 1 - 4017/<id>.cpp  the flat solution corpus
 
 `_debug.txt` is deliberately excluded — the archived folders never keep it,
-checked against the existing entries. Archiving is gated on passing tests: the
+checked against the existing entries. `_problem.txt` is kept, so a later `new`
+can scaffold the problem with no network at all. Archiving is gated on passing tests: the
 archive doubles as the scorer's reference corpus, so a broken solution in it
 would poison future comparisons.
 """
@@ -50,8 +52,10 @@ class ArchiverAgent(Agent):
         copied = []
         try:
             dest_dir.mkdir(parents=True, exist_ok=True)
-            for f in (pp.solution, pp.driver, pp.input, pp.expected):
-                shutil.copy2(f, dest_dir / f.name)      # never _debug.txt
+            for f in (pp.solution, pp.driver, pp.input, pp.expected, pp.problem):
+                if f is pp.problem and not f.is_file():
+                    continue                            # optional; never _debug.txt
+                shutil.copy2(f, dest_dir / f.name)
                 copied.append(f.name)
             flat.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(pp.solution, flat)

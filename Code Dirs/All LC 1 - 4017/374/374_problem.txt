@@ -1,0 +1,52 @@
+══════════════════════════════════════════════════════════════════════════
+ 374. Guess Number Higher or Lower
+ Easy  |  Tags: Binary Search, Interactive
+ https://leetcode.com/problems/guess-number-higher-or-lower/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  We are playing the Guess Game. The game is as follows:
+
+  I pick a number from 1 to n. You have to guess which number I picked
+  (the number I picked stays the same throughout the game).
+
+  Every time you guess wrong, I will tell you whether the number I picked
+  is higher or lower than your guess.
+
+  You call a pre-defined API int guess(int num), which returns three
+  possible results:
+
+  - -1: Your guess is higher than the number I picked (i.e. num > pick).
+
+  - 1: Your guess is lower than the number I picked (i.e. num < pick).
+
+  - 0: your guess is equal to the number I picked (i.e. num == pick).
+
+  Return the number that I picked.
+
+CONSTRAINTS
+  1 <= n <= 2^31 - 1
+  1 <= pick <= n
+
+TEST CASES
+  [1] Input    : n = 10, pick = 6
+      Expected : 6
+
+  [2] Input    : n = 1, pick = 1
+      Expected : 1
+
+  [3] Input    : n = 2, pick = 1
+      Expected : 1
+
+CODE TYPE
+  interactive · API guess()
+    driver: mocks what the judge supplies, backed by each case's data
+    hidden API: guess() — declared in the solution, defined by the driver
+
+SIGNATURE
+  int guessNumber(int n);
+
+FILES
+  edit : 374.cpp
+  test : lc run 374
+══════════════════════════════════════════════════════════════════════════

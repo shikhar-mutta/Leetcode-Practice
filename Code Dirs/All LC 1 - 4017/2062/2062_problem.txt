@@ -1,0 +1,48 @@
+══════════════════════════════════════════════════════════════════════════
+ 2062. Count Vowel Substrings of a String
+ Easy  |  Tags: Hash Table, String
+ https://leetcode.com/problems/count-vowel-substrings-of-a-string/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  A substring is a contiguous (non-empty) sequence of characters within a
+  string.
+
+  A vowel substring is a substring that only consists of vowels ('a', 'e',
+  'i', 'o', and 'u') and has all five vowels present in it.
+
+  Given a string word, return the number of vowel substrings in word.
+
+CONSTRAINTS
+  1 <= word.length <= 100
+  word consists of lowercase English letters only.
+
+TEST CASES
+  [1] Input    : word = "aeiouu"
+      Expected : 2
+      Why      : The vowel substrings of word are as follows (underlined):
+                 - "aeiouu"
+                 - "aeiouu"
+
+  [2] Input    : word = "unicornarihan"
+      Expected : 0
+      Why      : Not all 5 vowels are present, so there are no vowel substrings.
+
+  [3] Input    : word = "cuaieuouac"
+      Expected : 7
+      Why      : The vowel substrings of word are as follows (underlined):
+                 - "cuaieuouac"
+                 - "cuaieuouac"
+                 … (5 more)
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int countVowelSubstrings(string word);
+
+FILES
+  edit : 2062.cpp
+  test : lc run 2062
+══════════════════════════════════════════════════════════════════════════

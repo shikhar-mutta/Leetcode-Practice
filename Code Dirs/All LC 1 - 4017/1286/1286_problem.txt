@@ -1,0 +1,46 @@
+══════════════════════════════════════════════════════════════════════════
+ 1286. Iterator for Combination
+ Medium  |  Tags: String, Backtracking, Design, Iterator
+ https://leetcode.com/problems/iterator-for-combination/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Design the CombinationIterator class:
+
+  - CombinationIterator(string characters, int combinationLength)
+    Initializes the object with a string characters of sorted distinct
+    lowercase English letters and a number combinationLength as arguments.
+
+  - next() Returns the next combination of length combinationLength in
+    lexicographical order.
+
+  - hasNext() Returns true if and only if there exists a next combination.
+
+CONSTRAINTS
+  1 <= combinationLength <= characters.length <= 15
+  All the characters of characters are unique.
+  At most 10^4 calls will be made to next and hasNext.
+  It is guaranteed that all calls of the function next are valid.
+
+TEST CASES
+  [1] Input    : ["CombinationIterator", "next", "hasNext", "next", "hasNext", "next", "hasNext"]
+[["abc", 2], [], [], [], [], [], []]
+      Expected : [null, "ab", true, "ac", true, "bc", false]
+      Why      : CombinationIterator itr = new CombinationIterator("abc", 2);
+                 itr.next(); // return "ab"
+                 itr.hasNext(); // return True
+                 … (4 more)
+
+CODE TYPE
+  design · CombinationIterator
+    driver: replays ["CombinationIterator","op",...] / [[args],...] and prints [null,...]
+
+SIGNATURE
+  CombinationIterator(string characters, int combinationLength);
+  string next();
+  bool hasNext();
+
+FILES
+  edit : 1286.cpp
+  test : lc run 1286
+══════════════════════════════════════════════════════════════════════════

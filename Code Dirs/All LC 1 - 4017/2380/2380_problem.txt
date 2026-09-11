@@ -1,0 +1,41 @@
+══════════════════════════════════════════════════════════════════════════
+ 2380. Time Needed to Rearrange a Binary String
+ Medium  |  Tags: String, Dynamic Programming, Simulation
+ https://leetcode.com/problems/time-needed-to-rearrange-a-binary-string/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a binary string s. In one second, all occurrences of "01"
+  are simultaneously replaced with "10". This process repeats until no
+  occurrences of "01" exist.
+
+  Return the number of seconds needed to complete this process.
+
+CONSTRAINTS
+  1 <= s.length <= 1000
+  s[i] is either '0' or '1'.
+
+TEST CASES
+  [1] Input    : s = "0110101"
+      Expected : 4
+      Why      : After one second, s becomes "1011010".
+                 After another second, s becomes "1101100".
+                 After the third second, s becomes "1110100".
+                 … (3 more)
+
+  [2] Input    : s = "11100"
+      Expected : 0
+      Why      : No occurrence of "01" exists in s, and the processes needed 0 seconds to complete,
+                 so we return 0.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int secondsToRemoveOccurrences(string s);
+
+FILES
+  edit : 2380.cpp
+  test : lc run 2380
+══════════════════════════════════════════════════════════════════════════

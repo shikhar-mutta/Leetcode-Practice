@@ -1,0 +1,57 @@
+══════════════════════════════════════════════════════════════════════════
+ 2944. Minimum Number of Coins for Fruits
+ Medium  |  Tags: Array, Dynamic Programming, Queue, Heap (Priority Queue), Monotonic Queue
+ https://leetcode.com/problems/minimum-number-of-coins-for-fruits/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given an 0-indexed integer array prices where prices[i] denotes
+  the number of coins needed to purchase the (i + 1)^th fruit.
+
+  The fruit market has the following reward for each fruit:
+
+  - If you purchase the (i + 1)^th fruit at prices[i] coins, you can get
+    any number of the next i fruits for free.
+
+  Note that even if you can take fruit j for free, you can still purchase
+  it for prices[j - 1] coins to receive its reward.
+
+  Return the minimum number of coins needed to acquire all the fruits.
+
+CONSTRAINTS
+  1 <= prices.length <= 1000
+  1 <= prices[i] <= 10^5
+
+TEST CASES
+  [1] Input    : prices = [3,1,2]
+      Expected : 4
+      Why      : - Purchase the 1^st fruit with prices[0] = 3 coins, you are allowed to take the 2^nd fruit for free.
+                 - Purchase the 2^nd fruit with prices[1] = 1 coin, you are allowed to take the 3^rd fruit for free.
+                 - Take the 3^rd fruit for free.
+                 … (1 more)
+
+  [2] Input    : prices = [1,10,1,1]
+      Expected : 2
+      Why      : - Purchase the 1^st fruit with prices[0] = 1 coin, you are allowed to take the 2^nd fruit for free.
+                 - Take the 2^nd fruit for free.
+                 - Purchase the 3^rd fruit for prices[2] = 1 coin, you are allowed to take the 4^th fruit for free.
+                 … (1 more)
+
+  [3] Input    : prices = [26,18,6,12,49,7,45,45]
+      Expected : 39
+      Why      : - Purchase the 1^st fruit with prices[0] = 26 coin, you are allowed to take the 2^nd fruit for free.
+                 - Take the 2^nd fruit for free.
+                 - Purchase the 3^rd fruit for prices[2] = 6 coin, you are allowed to take the 4^th, 5^th and 6^th (the next three) fruits for free.
+                 … (6 more)
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int minimumCoins(vector<int>& prices);
+
+FILES
+  edit : 2944.cpp
+  test : lc run 2944
+══════════════════════════════════════════════════════════════════════════

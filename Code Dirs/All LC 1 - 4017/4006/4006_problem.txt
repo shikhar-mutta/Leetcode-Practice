@@ -1,0 +1,44 @@
+══════════════════════════════════════════════════════════════════════════
+ 4006. Count Valid Prefixes
+ Easy  |  Tags: String, Counting
+ https://leetcode.com/problems/count-valid-prefixes/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a binary string s.
+
+  A prefix of s is considered valid if its characters can be rearranged to
+  form an alternating string.
+
+  Return the number of valid prefixes of s.
+
+  A string is considered alternating if no two adjacent characters are
+  equal.
+
+CONSTRAINTS
+  1 <= s.length <= 100
+  s consists only of '0' and '1'.
+
+TEST CASES
+  [1] Input    : s = "00101"
+      Expected : 3
+      Why      : The valid prefixes are:
+                 - "0": It is already an alternating string.
+                 - "001": It can be rearranged into "010", which is an alternating string.
+                 … (2 more)
+
+  [2] Input    : s = "101"
+      Expected : 3
+      Why      : All prefixes of s = "101" are already alternating strings. Thus, the answer is 3.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int countValidPrefixes(string s);
+
+FILES
+  edit : 4006.cpp
+  test : lc run 4006
+══════════════════════════════════════════════════════════════════════════

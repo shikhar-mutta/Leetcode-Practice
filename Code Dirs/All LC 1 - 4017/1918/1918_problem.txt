@@ -1,0 +1,31 @@
+══════════════════════════════════════════════════════════════════════════
+ 1918. Kth Smallest Subarray Sum
+ Medium  |  Tags: Array, Binary Search, Sliding Window
+ https://leetcode.com/problems/kth-smallest-subarray-sum/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : [2,1,3] | 4
+      Expected : 3
+
+  [2] Input    : [3,3,5,5] | 7
+      Expected : 10
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int kthSmallestSubarraySum(vector<int>& nums, int k);
+
+FILES
+  edit : 1918.cpp
+  test : lc run 1918
+══════════════════════════════════════════════════════════════════════════

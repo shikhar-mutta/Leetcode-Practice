@@ -1,0 +1,37 @@
+══════════════════════════════════════════════════════════════════════════
+ 1056. Confusing Number
+ Easy  |  Tags: Math
+ https://leetcode.com/problems/confusing-number/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : 6
+      Expected : true
+
+  [2] Input    : 89
+      Expected : true
+
+  [3] Input    : 11
+      Expected : false
+
+  [4] Input    : 25
+      Expected : false
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  bool confusingNumber(int n);
+
+FILES
+  edit : 1056.cpp
+  test : lc run 1056
+══════════════════════════════════════════════════════════════════════════

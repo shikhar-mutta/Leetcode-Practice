@@ -1,0 +1,53 @@
+══════════════════════════════════════════════════════════════════════════
+ 1656. Design an Ordered Stream
+ Easy  |  Tags: Array, Hash Table, Design, Data Stream
+ https://leetcode.com/problems/design-an-ordered-stream/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  There is a stream of n (idKey, value) pairs arriving in an arbitrary
+  order, where idKey is an integer between 1 and n and value is a string.
+  No two pairs have the same id.
+
+  Design a stream that returns the values in increasing order of their IDs
+  by returning a chunk (list) of values after each insertion. The
+  concatenation of all the chunks should result in a list of the sorted
+  values.
+
+  Implement the OrderedStream class:
+
+  - OrderedStream(int n) Constructs the stream to take n values.
+
+  - String[] insert(int idKey, String value) Inserts the pair (idKey,
+    value) into the stream, then returns the largest possible chunk of
+    currently inserted values that appear next in the order.
+
+CONSTRAINTS
+  1 <= n <= 1000
+  1 <= id <= n
+  value.length == 5
+  value consists only of lowercase letters.
+  Each call to insert will have a unique id.
+  Exactly n calls will be made to insert.
+
+TEST CASES
+  [1] Input    : ["OrderedStream", "insert", "insert", "insert", "insert", "insert"]
+[[5], [3, "ccccc"], [1, "aaaaa"], [2, "bbbbb"], [5, "eeeee"], [4, "ddddd"]]
+      Expected : [null, [], ["aaaaa"], ["bbbbb", "ccccc"], [], ["ddddd", "eeeee"]]
+      Why      : // Note that the values ordered by ID is ["aaaaa", "bbbbb", "ccccc", "ddddd", "eeeee"].
+                 OrderedStream os = new OrderedStream(5);
+                 os.insert(3, "ccccc"); // Inserts (3, "ccccc"), returns [].
+                 … (7 more)
+
+CODE TYPE
+  design · OrderedStream
+    driver: replays ["OrderedStream","op",...] / [[args],...] and prints [null,...]
+
+SIGNATURE
+  OrderedStream(int n);
+  vector<string> insert(int idKey, string value);
+
+FILES
+  edit : 1656.cpp
+  test : lc run 1656
+══════════════════════════════════════════════════════════════════════════

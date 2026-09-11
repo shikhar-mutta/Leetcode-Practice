@@ -1,0 +1,56 @@
+══════════════════════════════════════════════════════════════════════════
+ 2588. Count the Number of Beautiful Subarrays
+ Medium  |  Tags: Array, Hash Table, Bit Manipulation, Prefix Sum
+ https://leetcode.com/problems/count-the-number-of-beautiful-subarrays/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a 0-indexed integer array nums. In one operation, you can:
+
+  - Choose two different indices i and j such that 0 <= i, j <
+    nums.length.
+
+  - Choose a non-negative integer k such that the k^th bit (0-indexed) in
+    the binary representation of nums[i] and nums[j] is 1.
+
+  - Subtract 2^k from nums[i] and nums[j].
+
+  A subarray is beautiful if it is possible to make all of its elements
+  equal to 0 after applying the above operation any number of times
+  (including zero).
+
+  Return the number of beautiful subarrays in the array nums.
+
+  A subarray is a contiguous non-empty sequence of elements within an
+  array.
+
+  Note: Subarrays where all elements are initially 0 are considered
+  beautiful, as no operation is needed.
+
+CONSTRAINTS
+  1 <= nums.length <= 10^5
+  0 <= nums[i] <= 10^6
+
+TEST CASES
+  [1] Input    : nums = [4,3,1,2,4]
+      Expected : 2
+      Why      : There are 2 beautiful subarrays in nums: [4,3,1,2,4] and [4,3,1,2,4].
+                 - We can make all elements in the subarray [3,1,2] equal to 0 in the following way:
+                 - Choose [3, 1, 2] and k = 1. Subtract 2^1 from both numbers. The subarray becomes [1, 1, 0].
+                 … (5 more)
+
+  [2] Input    : nums = [1,10,4]
+      Expected : 0
+      Why      : There are no beautiful subarrays in nums.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  long long beautifulSubarrays(vector<int>& nums);
+
+FILES
+  edit : 2588.cpp
+  test : lc run 2588
+══════════════════════════════════════════════════════════════════════════

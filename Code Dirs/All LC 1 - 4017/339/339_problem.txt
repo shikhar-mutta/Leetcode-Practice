@@ -1,0 +1,32 @@
+══════════════════════════════════════════════════════════════════════════
+ 339. Nested List Weight Sum
+ Medium  |  Tags: Depth-First Search, Breadth-First Search
+ https://leetcode.com/problems/nested-list-weight-sum/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : [[1,1],2,[1,1]]
+      Expected : 10
+
+  [2] Input    : [1,[4,[6]]]
+      Expected : 27
+
+CODE TYPE
+  function · nested list
+    driver: one Solution call per test case
+    nested list: NestedInteger — nested brackets, e.g. [1,[4,[6]]]
+
+SIGNATURE
+  int depthSum(vector<NestedInteger>& nestedList);
+
+FILES
+  edit : 339.cpp
+  test : lc run 339
+══════════════════════════════════════════════════════════════════════════

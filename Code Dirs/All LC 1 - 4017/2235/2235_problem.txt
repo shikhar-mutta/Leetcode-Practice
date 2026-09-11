@@ -1,0 +1,32 @@
+══════════════════════════════════════════════════════════════════════════
+ 2235. Add Two Integers
+ Easy  |  Tags: Math
+ https://leetcode.com/problems/add-two-integers/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given two integers num1 and num2, return the sum of the two integers.
+
+CONSTRAINTS
+  -100 <= num1, num2 <= 100
+
+TEST CASES
+  [1] Input    : num1 = 12, num2 = 5
+      Expected : 17
+      Why      : num1 is 12, num2 is 5, and their sum is 12 + 5 = 17, so 17 is returned.
+
+  [2] Input    : num1 = -10, num2 = 4
+      Expected : -6
+      Why      : num1 + num2 = -6, so -6 is returned.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int sum(int num1, int num2);
+
+FILES
+  edit : 2235.cpp
+  test : lc run 2235
+══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,48 @@
+══════════════════════════════════════════════════════════════════════════
+ 3258. Count Substrings That Satisfy K-Constraint I
+ Easy  |  Tags: String, Sliding Window
+ https://leetcode.com/problems/count-substrings-that-satisfy-k-constraint-i/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a binary string s and an integer k.
+
+  A binary string satisfies the k-constraint if either of the following
+  conditions holds:
+
+  - The number of 0's in the string is at most k.
+
+  - The number of 1's in the string is at most k.
+
+  Return an integer denoting the number of substrings of s that satisfy
+  the k-constraint.
+
+CONSTRAINTS
+  1 <= s.length <= 50
+  1 <= k <= s.length
+  s[i] is either '0' or '1'.
+
+TEST CASES
+  [1] Input    : s = "10101", k = 1
+      Expected : 12
+      Why      : Every substring of s except the substrings "1010", "10101", and "0101" satisfies the k-constraint.
+
+  [2] Input    : s = "1010101", k = 2
+      Expected : 25
+      Why      : Every substring of s except the substrings with a length greater than 5 satisfies the k-constraint.
+
+  [3] Input    : s = "11111", k = 1
+      Expected : 15
+      Why      : All substrings of s satisfy the k-constraint.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int countKConstraintSubstrings(string s, int k);
+
+FILES
+  edit : 3258.cpp
+  test : lc run 3258
+══════════════════════════════════════════════════════════════════════════

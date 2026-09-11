@@ -1,0 +1,43 @@
+══════════════════════════════════════════════════════════════════════════
+ 1312. Minimum Insertion Steps to Make a String Palindrome
+ Hard  |  Tags: String, Dynamic Programming
+ https://leetcode.com/problems/minimum-insertion-steps-to-make-a-string-palindrome/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given a string s. In one step you can insert any character at any index
+  of the string.
+
+  Return the minimum number of steps to make s palindrome.
+
+  A Palindrome String is one that reads the same backward as well as
+  forward.
+
+CONSTRAINTS
+  1 <= s.length <= 500
+  s consists of lowercase English letters.
+
+TEST CASES
+  [1] Input    : s = "zzazz"
+      Expected : 0
+      Why      : The string "zzazz" is already palindrome we do not need any insertions.
+
+  [2] Input    : s = "mbadm"
+      Expected : 2
+      Why      : String can be "mbdadbm" or "mdbabdm".
+
+  [3] Input    : s = "leetcode"
+      Expected : 5
+      Why      : Inserting 5 characters the string becomes "leetcodocteel".
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int minInsertions(string s);
+
+FILES
+  edit : 1312.cpp
+  test : lc run 1312
+══════════════════════════════════════════════════════════════════════════

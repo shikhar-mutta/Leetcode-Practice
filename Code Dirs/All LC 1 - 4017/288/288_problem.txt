@@ -1,0 +1,29 @@
+══════════════════════════════════════════════════════════════════════════
+ 288. Unique Word Abbreviation
+ Medium  |  Tags: Array, Hash Table, String, Design
+ https://leetcode.com/problems/unique-word-abbreviation/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : ["deer","door","cake","card"] | ["dear","cart","cane","make"]
+      Expected : [false,true,false,true]
+
+CODE TYPE
+  design · ValidWordAbbr
+    driver: replays ["ValidWordAbbr","op",...] / [[args],...] and prints [null,...]
+
+SIGNATURE
+  ValidWordAbbr(vector<string>& dictionary);
+  bool isUnique(string word);
+
+FILES
+  edit : 288.cpp
+  test : lc run 288
+══════════════════════════════════════════════════════════════════════════

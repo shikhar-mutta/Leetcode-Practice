@@ -1,0 +1,49 @@
+══════════════════════════════════════════════════════════════════════════
+ 414. Third Maximum Number
+ Easy  |  Tags: Array, Sorting
+ https://leetcode.com/problems/third-maximum-number/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given an integer array nums.
+
+  Return the third distinct maximum number in this array. If the third
+  maximum does not exist, return the maximum number.
+
+CONSTRAINTS
+  1 <= nums.length <= 10^4
+  -2^31 <= nums[i] <= 2^31 - 1
+
+TEST CASES
+  [1] Input    : nums = [3,2,1]
+      Expected : 1
+      Why      : The first distinct maximum is 3.
+                 The second distinct maximum is 2.
+                 The third distinct maximum is 1.
+
+  [2] Input    : nums = [1,2]
+      Expected : 2
+      Why      : The first distinct maximum is 2.
+                 The second distinct maximum is 1.
+                 The third distinct maximum does not exist, so the maximum (2) is returned instead.
+
+  [3] Input    : nums = [2,2,3,1]
+      Expected : 1
+      Why      : The first distinct maximum is 3.
+                 The second distinct maximum is 2 (both 2's are counted together since they have the same value).
+                 The third distinct maximum is 1.
+
+FOLLOW UP
+  Can you find an O(n) solution?
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int thirdMax(vector<int>& nums);
+
+FILES
+  edit : 414.cpp
+  test : lc run 414
+══════════════════════════════════════════════════════════════════════════

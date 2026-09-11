@@ -1,0 +1,32 @@
+══════════════════════════════════════════════════════════════════════════
+ 588. Design In-Memory File System
+ Hard  |  Tags: Hash Table, String, Design, Trie, Sorting
+ https://leetcode.com/problems/design-in-memory-file-system/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : ["FileSystem","ls","mkdir","addContentToFile","ls","readContentFromFile"] | [] | ["/"] | ["/a/b/c"] | ["/a/b/c/d","hello"] | ["/"] | ["/a/b/c/d"]
+      Expected : [null,[],null,null,[a],hello]
+
+CODE TYPE
+  design · FileSystem
+    driver: replays ["FileSystem","op",...] / [[args],...] and prints [null,...]
+
+SIGNATURE
+  FileSystem();
+  vector<string> ls(string path);
+  void mkdir(string path);
+  void addContentToFile(string filePath, string content);
+  string readContentFromFile(string filePath);
+
+FILES
+  edit : 588.cpp
+  test : lc run 588
+══════════════════════════════════════════════════════════════════════════

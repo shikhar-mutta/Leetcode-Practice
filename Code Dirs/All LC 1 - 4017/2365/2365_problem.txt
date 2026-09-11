@@ -1,0 +1,54 @@
+══════════════════════════════════════════════════════════════════════════
+ 2365. Task Scheduler II
+ Medium  |  Tags: Array, Hash Table, Simulation
+ https://leetcode.com/problems/task-scheduler-ii/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a 0-indexed array of positive integers tasks, representing
+  tasks that need to be completed in order, where tasks[i] represents the
+  type of the i^th task.
+
+  You are also given a positive integer space, which represents the
+  minimum number of days that must pass after the completion of a task
+  before another task of the same type can be performed.
+
+  Each day, until all tasks have been completed, you must either:
+
+  - Complete the next task from tasks, or
+
+  - Take a break.
+
+  Return the minimum number of days needed to complete all tasks.
+
+CONSTRAINTS
+  1 <= tasks.length <= 10^5
+  1 <= tasks[i] <= 10^9
+  1 <= space <= tasks.length
+
+TEST CASES
+  [1] Input    : tasks = [1,2,1,2,3,1], space = 3
+      Expected : 9
+      Why      : One way to complete all tasks in 9 days is as follows:
+                 Day 1: Complete the 0th task.
+                 Day 2: Complete the 1st task.
+                 … (8 more)
+
+  [2] Input    : tasks = [5,8,8,5], space = 2
+      Expected : 6
+      Why      : One way to complete all tasks in 6 days is as follows:
+                 Day 1: Complete the 0th task.
+                 Day 2: Complete the 1st task.
+                 … (5 more)
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  long long taskSchedulerII(vector<int>& tasks, int space);
+
+FILES
+  edit : 2365.cpp
+  test : lc run 2365
+══════════════════════════════════════════════════════════════════════════

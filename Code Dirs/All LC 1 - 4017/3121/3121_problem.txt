@@ -1,0 +1,41 @@
+══════════════════════════════════════════════════════════════════════════
+ 3121. Count the Number of Special Characters II
+ Medium  |  Tags: Hash Table, String
+ https://leetcode.com/problems/count-the-number-of-special-characters-ii/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a string word. A letter c is called special if it appears
+  both in lowercase and uppercase in word, and every lowercase occurrence
+  of c appears before the first uppercase occurrence of c.
+
+  Return the number of special letters in word.
+
+CONSTRAINTS
+  1 <= word.length <= 2 * 10^5
+  word consists of only lowercase and uppercase English letters.
+
+TEST CASES
+  [1] Input    : word = "aaAbcBC"
+      Expected : 3
+      Why      : The special characters are 'a', 'b', and 'c'.
+
+  [2] Input    : word = "abc"
+      Expected : 0
+      Why      : There are no special characters in word.
+
+  [3] Input    : word = "AbBCab"
+      Expected : 0
+      Why      : There are no special characters in word.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int numberOfSpecialChars(string word);
+
+FILES
+  edit : 3121.cpp
+  test : lc run 3121
+══════════════════════════════════════════════════════════════════════════

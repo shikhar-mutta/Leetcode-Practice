@@ -1,0 +1,31 @@
+══════════════════════════════════════════════════════════════════════════
+ 1820. Maximum Number of Accepted Invitations
+ Medium  |  Tags: Array, Depth-First Search, Graph Theory, Matrix, Maximum Flow, Maximum Matching, Bipartite Graph, Edmonds–Karp Algorithm, MPM Algorithm, Push-Relabel Algorithm, Matching (Graph), Flow Network, Dinic's Algorithm
+ https://leetcode.com/problems/maximum-number-of-accepted-invitations/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : [[1,1,1],[1,0,1],[0,0,1]]
+      Expected : 3
+
+  [2] Input    : [[1,0,1,0],[1,0,0,0],[0,0,1,0],[1,1,1,0]]
+      Expected : 3
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int maximumInvitations(vector<vector<int>>& grid);
+
+FILES
+  edit : 1820.cpp
+  test : lc run 1820
+══════════════════════════════════════════════════════════════════════════

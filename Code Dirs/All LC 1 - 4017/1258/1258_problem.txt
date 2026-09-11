@@ -1,0 +1,28 @@
+══════════════════════════════════════════════════════════════════════════
+ 1258. Synonymous Sentences
+ Medium  |  Tags: Array, Hash Table, String, Backtracking, Sort, Union-Find
+ https://leetcode.com/problems/synonymous-sentences/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : [["happy","joy"],["sad","sorrow"],["joy","cheerful"]] | "I am happy today but was sad yesterday"
+      Expected : I am cheerful today but was sad yesterday | I am cheerful today but was sorrow yesterday | I am happy today but was sad yesterday | I am happy today but was sorrow yesterday | I am joy today but was sad yesterday | I am joy today but was sorrow yesterday
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  vector<string> generateSentences(vector<vector<string>>& synonyms, string text);
+
+FILES
+  edit : 1258.cpp
+  test : lc run 1258
+══════════════════════════════════════════════════════════════════════════

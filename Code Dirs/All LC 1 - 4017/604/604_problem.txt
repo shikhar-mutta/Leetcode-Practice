@@ -1,0 +1,30 @@
+══════════════════════════════════════════════════════════════════════════
+ 604. Design Compressed String Iterator
+ Easy  |  Tags: Array, String, Design, Iterator
+ https://leetcode.com/problems/design-compressed-string-iterator/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : ["StringIterator","next","next","next","next","next","next","hasNext","next","hasNext"] | ["L1e2t1C1o1d1e1"] | [] | [] | [] | [] | [] | [] | [] | [] | []
+      Expected : [null,"L","e","e","t","C","o",true,"d",true]
+
+CODE TYPE
+  design · StringIterator
+    driver: replays ["StringIterator","op",...] / [[args],...] and prints [null,...]
+
+SIGNATURE
+  StringIterator(string compressedString);
+  char next();
+  bool hasNext();
+
+FILES
+  edit : 604.cpp
+  test : lc run 604
+══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,44 @@
+══════════════════════════════════════════════════════════════════════════
+ 3427. Sum of Variable Length Subarrays
+ Easy  |  Tags: Array, Prefix Sum
+ https://leetcode.com/problems/sum-of-variable-length-subarrays/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given an integer array nums of size n. For each index i where 0
+  <= i < n, define a subarray nums[start ... i] where start = max(0, i -
+  nums[i]).
+
+  Return the total sum of all elements from the subarray defined for each
+  index in the array.
+
+CONSTRAINTS
+  1 <= n == nums.length <= 100
+  1 <= nums[i] <= 1000
+
+TEST CASES
+  [1] Input    : nums = [2,3,1]
+      Expected : 11
+      Why      : i
+                 Subarray
+                 Sum
+                 … (12 more)
+
+  [2] Input    : nums = [3,1,1,2]
+      Expected : 13
+      Why      : i
+                 Subarray
+                 Sum
+                 … (15 more)
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int subarraySum(vector<int>& nums);
+
+FILES
+  edit : 3427.cpp
+  test : lc run 3427
+══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,40 @@
+══════════════════════════════════════════════════════════════════════════
+ 846. Hand of Straights
+ Medium  |  Tags: Array, Hash Table, Greedy, Sorting
+ https://leetcode.com/problems/hand-of-straights/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Alice has some number of cards and she wants to rearrange the cards into
+  groups so that each group is of size groupSize, and consists of
+  groupSize consecutive cards.
+
+  Given an integer array hand where hand[i] is the value written on the
+  i^th card and an integer groupSize, return true if she can rearrange the
+  cards, or false otherwise.
+
+CONSTRAINTS
+  1 <= hand.length <= 10^4
+  0 <= hand[i] <= 10^9
+  1 <= groupSize <= hand.length
+
+TEST CASES
+  [1] Input    : hand = [1,2,3,6,2,3,4,7,8], groupSize = 3
+      Expected : true
+      Why      : Alice's hand can be rearranged as [1,2,3],[2,3,4],[6,7,8]
+
+  [2] Input    : hand = [1,2,3,4,5], groupSize = 4
+      Expected : false
+      Why      : Alice's hand can not be rearranged into groups of 4.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  bool isNStraightHand(vector<int>& hand, int groupSize);
+
+FILES
+  edit : 846.cpp
+  test : lc run 846
+══════════════════════════════════════════════════════════════════════════

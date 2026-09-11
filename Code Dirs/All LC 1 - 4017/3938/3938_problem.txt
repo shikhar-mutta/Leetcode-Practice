@@ -1,0 +1,58 @@
+══════════════════════════════════════════════════════════════════════════
+ 3938. Maximum Path Intersection Sum in a Grid
+ Medium  |  Tags: Array, Dynamic Programming, Matrix, Prefix Sum
+ https://leetcode.com/problems/maximum-path-intersection-sum-in-a-grid/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given an m x n integer matrix grid.
+
+  Two players move across the grid:
+
+  - Player 1 starts at the top-left cell (0, 0) and can move only right or
+    down. Their destination is the bottom-right cell (m - 1, n - 1).
+
+  - Player 2 starts at the bottom-left cell (m - 1, 0) and can move only
+    right or up. Their destination is the top-right cell (0, n - 1).
+
+  Each player must choose a valid path from their respective starting cell
+  to their destination.
+
+  A cell is called shared if it belongs to both chosen paths.
+
+  Return an integer denoting the maximum possible sum of values of all
+  shared cells.
+
+CONSTRAINTS
+  m == grid.length
+  n == grid[i].length
+  2 <= m, n <= 1000
+  4 <= m * n <= 5 * 10^5
+  -100 <= grid[i][j] <= 100
+
+TEST CASES
+  [1] Input    : grid = [[1,2,0,-3],[1,-2,1,0],[-4,2,-1,3],[3,-3,3,-2],[-1,-5,0,1]]
+      Expected : 4
+      Why      : The diagram shows one optimal choice of paths.
+                 - Player 1 follows the red/purple path from the top-left cell to the bottom-right cell:
+                 - (0, 0) → (1, 0) → (2, 0) → (2, 1) → (2, 2) → (2, 3) → (3, 3) → (4, 3)
+                 … (4 more)
+
+  [2] Input    : grid = [[4,-2,-3],[-1,-3,-1],[-4,2,-1]]
+      Expected : 3
+      Why      : One optimal pair of paths is shown in the diagram.
+                 - Player 1 follows the red/purple path:
+                 - (0, 0) → (1, 0) → (1, 1) → (1, 2) → (2, 2)
+                 … (4 more)
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int maxScore(vector<vector<int>>& grid);
+
+FILES
+  edit : 3938.cpp
+  test : lc run 3938
+══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,49 @@
+══════════════════════════════════════════════════════════════════════════
+ 845. Longest Mountain in Array
+ Medium  |  Tags: Array, Two Pointers, Dynamic Programming, Enumeration
+ https://leetcode.com/problems/longest-mountain-in-array/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You may recall that an array arr is a mountain array if and only if:
+
+  - arr.length >= 3
+
+  - There exists some index i (0-indexed) with 0 < i < arr.length - 1 such
+    that:
+
+  - arr[0] < arr[1] < ... < arr[i - 1] < arr[i]
+
+  - arr[i] > arr[i + 1] > ... > arr[arr.length - 1]
+
+
+
+
+
+  Given an integer array arr, return the length of the longest subarray,
+  which is a mountain. Return 0 if there is no mountain subarray.
+
+CONSTRAINTS
+  1 <= arr.length <= 10^4
+  0 <= arr[i] <= 10^4
+
+TEST CASES
+  [1] Input    : arr = [2,1,4,7,3,2,5]
+      Expected : 5
+      Why      : The largest mountain is [1,4,7,3,2] which has length 5.
+
+  [2] Input    : arr = [2,2,2]
+      Expected : 0
+      Why      : There is no mountain.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int longestMountain(vector<int>& arr);
+
+FILES
+  edit : 845.cpp
+  test : lc run 845
+══════════════════════════════════════════════════════════════════════════

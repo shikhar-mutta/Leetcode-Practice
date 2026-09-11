@@ -1,0 +1,44 @@
+══════════════════════════════════════════════════════════════════════════
+ 3997. Count Dominant Nodes in a Binary Tree
+ Medium  |  Tags: Tree, Depth-First Search, Binary Tree
+ https://leetcode.com/problems/count-dominant-nodes-in-a-binary-tree/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given the root of a complete binary tree.
+
+  A node x is called dominant if its value is equal to the maximum value
+  among all nodes in the subtree rooted at x.
+
+  Return the number of dominant nodes in the tree.
+
+CONSTRAINTS
+  The number of nodes in the tree is in the range [1, 10^5].
+  1 <= Node.val <= 10^9
+  The tree is guaranteed to be a complete binary tree.
+
+TEST CASES
+  [1] Input    : root = [5,3,8,2,4,7,1]
+      Expected : 5
+      Why      : - The leaf nodes with values 2, 4, 7, and 1 are dominant.
+                 - The node with value 8 is dominant because its value is the maximum value in its subtree [8, 7, 1].
+                 - Thus, the answer is 5.
+
+  [2] Input    : root = [1,2,3,1,2]
+      Expected : 4
+      Why      : - The leaf nodes with values 1, 2, and 3 are dominant.
+                 - The node with value 2 whose subtree is [2, 1, 2] is dominant because its value is the maximum value in its subtree.
+                 - Thus, the answer is 4.
+
+CODE TYPE
+  function · tree
+    driver: one Solution call per test case
+    tree: TreeNode* — level order, e.g. [3,9,20,null,null,15,7]
+
+SIGNATURE
+  int countDominantNodes(TreeNode* root);
+
+FILES
+  edit : 3997.cpp
+  test : lc run 3997
+══════════════════════════════════════════════════════════════════════════

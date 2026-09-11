@@ -1,0 +1,28 @@
+══════════════════════════════════════════════════════════════════════════
+ 1181. Before and After Puzzle
+ Medium  |  Tags: Array, Hash Table, String, Sorting
+ https://leetcode.com/problems/before-and-after-puzzle/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : ["writing code","code rocks"]
+      Expected : writing code rocks
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  vector<string> beforeAndAfterPuzzles(vector<string>& phrases);
+
+FILES
+  edit : 1181.cpp
+  test : lc run 1181
+══════════════════════════════════════════════════════════════════════════

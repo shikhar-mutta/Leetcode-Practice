@@ -1,0 +1,69 @@
+══════════════════════════════════════════════════════════════════════════
+ 1041. Robot Bounded In Circle
+ Medium  |  Tags: Math, String, Simulation
+ https://leetcode.com/problems/robot-bounded-in-circle/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  On an infinite plane, a robot initially stands at (0, 0) and faces
+  north. Note that:
+
+  - The north direction is the positive direction of the y-axis.
+
+  - The south direction is the negative direction of the y-axis.
+
+  - The east direction is the positive direction of the x-axis.
+
+  - The west direction is the negative direction of the x-axis.
+
+  The robot can receive one of three instructions:
+
+  - "G": go straight 1 unit.
+
+  - "L": turn 90 degrees to the left (i.e., anti-clockwise direction).
+
+  - "R": turn 90 degrees to the right (i.e., clockwise direction).
+
+  The robot performs the instructions given in order, and repeats them
+  forever.
+
+  Return true if and only if there exists a circle in the plane such that
+  the robot never leaves the circle.
+
+CONSTRAINTS
+  1 <= instructions.length <= 100
+  instructions[i] is 'G', 'L' or, 'R'.
+
+TEST CASES
+  [1] Input    : instructions = "GGLLGG"
+      Expected : true
+      Why      : The robot is initially at (0, 0) facing the north direction.
+                 "G": move one step. Position: (0, 1). Direction: North.
+                 "G": move one step. Position: (0, 2). Direction: North.
+                 … (6 more)
+
+  [2] Input    : instructions = "GG"
+      Expected : false
+      Why      : The robot is initially at (0, 0) facing the north direction.
+                 "G": move one step. Position: (0, 1). Direction: North.
+                 "G": move one step. Position: (0, 2). Direction: North.
+                 … (2 more)
+
+  [3] Input    : instructions = "GL"
+      Expected : true
+      Why      : The robot is initially at (0, 0) facing the north direction.
+                 "G": move one step. Position: (0, 1). Direction: North.
+                 "L": turn 90 degrees anti-clockwise. Position: (0, 1). Direction: West.
+                 … (8 more)
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  bool isRobotBounded(string instructions);
+
+FILES
+  edit : 1041.cpp
+  test : lc run 1041
+══════════════════════════════════════════════════════════════════════════

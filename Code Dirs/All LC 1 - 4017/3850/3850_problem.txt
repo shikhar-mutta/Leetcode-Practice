@@ -1,0 +1,65 @@
+══════════════════════════════════════════════════════════════════════════
+ 3850. Count Sequences to K
+ Hard  |  Tags: Array, Math, Dynamic Programming, Memoization, Number Theory
+ https://leetcode.com/problems/count-sequences-to-k/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given an integer array nums, and an integer k.
+
+  Start with an initial value val = 1 and process nums from left to right.
+  At each index i, you must choose exactly one of the following actions:
+
+  - Multiply val by nums[i].
+
+  - Divide val by nums[i].
+
+  - Leave val unchanged.
+
+  After processing all elements, val is considered equal to k only if its
+  final rational value exactly equals k.
+
+  Return the count of distinct sequences of choices that result in val ==
+  k.
+
+  Note: Division is rational (exact), not integer division. For example, 2
+  / 4 = 1 / 2.
+
+CONSTRAINTS
+  1 <= nums.length <= 19
+  1 <= nums[i] <= 6
+  1 <= k <= 10^15
+
+TEST CASES
+  [1] Input    : nums = [2,3,2], k = 6
+      Expected : 2
+      Why      : The following 2 distinct sequences of choices result in val == k:
+                 Sequence
+                 Operation on nums[0]
+                 … (13 more)
+
+  [2] Input    : nums = [4,6,3], k = 2
+      Expected : 2
+      Why      : The following 2 distinct sequences of choices result in val == k:
+                 Sequence
+                 Operation on nums[0]
+                 … (13 more)
+
+  [3] Input    : nums = [1,5], k = 1
+      Expected : 3
+      Why      : The following 3 distinct sequences of choices result in val == k:
+                 Sequence
+                 Operation on nums[0]
+                 … (14 more)
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int countSequences(vector<int>& nums, long long k);
+
+FILES
+  edit : 3850.cpp
+  test : lc run 3850
+══════════════════════════════════════════════════════════════════════════

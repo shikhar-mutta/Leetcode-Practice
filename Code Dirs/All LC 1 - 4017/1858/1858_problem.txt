@@ -1,0 +1,31 @@
+══════════════════════════════════════════════════════════════════════════
+ 1858. Longest Word With All Prefixes
+ Medium  |  Tags: Array, String, Depth-First Search, Trie
+ https://leetcode.com/problems/longest-word-with-all-prefixes/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : ["k","ki","kir","kira","kiran"]
+      Expected : "kiran"
+
+  [2] Input    : ["a","banana","app","appl","ap","apply","apple"]
+      Expected : "apple"
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  string longestWord(vector<string>& words);
+
+FILES
+  edit : 1858.cpp
+  test : lc run 1858
+══════════════════════════════════════════════════════════════════════════

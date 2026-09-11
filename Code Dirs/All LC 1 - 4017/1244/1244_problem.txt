@@ -1,0 +1,31 @@
+══════════════════════════════════════════════════════════════════════════
+ 1244. Design A Leaderboard
+ Medium  |  Tags: Hash Table, Design, Sorting
+ https://leetcode.com/problems/design-a-leaderboard/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : ["Leaderboard","addScore","addScore","addScore","addScore","addScore","top","reset","reset","addScore","top"] | [[],[1,73],[2,56],[3,39],[4,51],[5,4],[1],[1],[2],[2,51],[3]]
+      Expected : [null, null, null, null, null, null, 73, null, null, null, 141]
+
+CODE TYPE
+  design · Leaderboard
+    driver: replays ["Leaderboard","op",...] / [[args],...] and prints [null,...]
+
+SIGNATURE
+  Leaderboard();
+  void addScore(int playerId, int score);
+  int top(int K);
+  void reset(int playerId);
+
+FILES
+  edit : 1244.cpp
+  test : lc run 1244
+══════════════════════════════════════════════════════════════════════════

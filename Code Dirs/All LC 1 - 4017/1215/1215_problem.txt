@@ -1,0 +1,31 @@
+══════════════════════════════════════════════════════════════════════════
+ 1215. Stepping Numbers
+ Medium  |  Tags: Math, Backtracking, Breadth-First Search
+ https://leetcode.com/problems/stepping-numbers/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : 0 | 21
+      Expected : 0 1 2 3 4 5 6 7 8 9 10 12 21
+
+  [2] Input    : 10 | 15
+      Expected : 10 12
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  vector<int> countSteppingNumbers(int low, int high);
+
+FILES
+  edit : 1215.cpp
+  test : lc run 1215
+══════════════════════════════════════════════════════════════════════════

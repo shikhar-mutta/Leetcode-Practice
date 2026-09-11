@@ -1,0 +1,57 @@
+══════════════════════════════════════════════════════════════════════════
+ 3194. Minimum Average of Smallest and Largest Elements
+ Easy  |  Tags: Array, Two Pointers, Sorting
+ https://leetcode.com/problems/minimum-average-of-smallest-and-largest-elements/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You have an array of floating point numbers averages which is initially
+  empty. You are given an array nums of n integers where n is even.
+
+  You repeat the following procedure n / 2 times:
+
+  - Remove the smallest element, minElement, and the largest element
+    maxElement, from nums.
+
+  - Add (minElement + maxElement) / 2 to averages.
+
+  Return the minimum element in averages.
+
+CONSTRAINTS
+  2 <= n == nums.length <= 50
+  n is even.
+  1 <= nums[i] <= 50
+
+TEST CASES
+  [1] Input    : nums = [7,8,3,4,15,13,4,1]
+      Expected : 5.5
+      Why      : step
+                 nums
+                 averages
+                 … (16 more)
+
+  [2] Input    : nums = [1,9,8,3,10,5]
+      Expected : 5.5
+      Why      : step
+                 nums
+                 averages
+                 … (12 more)
+
+  [3] Input    : nums = [1,2,3,7,8,9]
+      Expected : 5.0
+      Why      : step
+                 nums
+                 averages
+                 … (12 more)
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  double minimumAverage(vector<int>& nums);
+
+FILES
+  edit : 3194.cpp
+  test : lc run 3194
+══════════════════════════════════════════════════════════════════════════

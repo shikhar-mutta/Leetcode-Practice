@@ -1,0 +1,40 @@
+══════════════════════════════════════════════════════════════════════════
+ 483. Smallest Good Base
+ Hard  |  Tags: Math, Binary Search
+ https://leetcode.com/problems/smallest-good-base/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given an integer n represented as a string, return the smallest good
+  base of n.
+
+  We call k >= 2 a good base of n, if all digits of n base k are 1's.
+
+CONSTRAINTS
+  n is an integer in the range [3, 10^18].
+  n does not contain any leading zeros.
+
+TEST CASES
+  [1] Input    : n = "13"
+      Expected : "3"
+      Why      : 13 base 3 is 111.
+
+  [2] Input    : n = "4681"
+      Expected : "8"
+      Why      : 4681 base 8 is 11111.
+
+  [3] Input    : n = "1000000000000000000"
+      Expected : "999999999999999999"
+      Why      : 1000000000000000000 base 999999999999999999 is 11.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  string smallestGoodBase(string n);
+
+FILES
+  edit : 483.cpp
+  test : lc run 483
+══════════════════════════════════════════════════════════════════════════

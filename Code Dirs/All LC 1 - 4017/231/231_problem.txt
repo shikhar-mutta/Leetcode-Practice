@@ -1,0 +1,42 @@
+══════════════════════════════════════════════════════════════════════════
+ 231. Power of Two
+ Easy  |  Tags: Math, Bit Manipulation, Recursion
+ https://leetcode.com/problems/power-of-two/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given an integer n, return true if it is a power of two. Otherwise,
+  return false.
+
+  An integer n is a power of two, if there exists an integer x such that n
+  == 2^x.
+
+CONSTRAINTS
+  -2^31 <= n <= 2^31 - 1
+
+TEST CASES
+  [1] Input    : n = 1
+      Expected : true
+      Why      : 2^0 = 1
+
+  [2] Input    : n = 16
+      Expected : true
+      Why      : 2^4 = 16
+
+  [3] Input    : n = 3
+      Expected : false
+
+FOLLOW UP
+  Could you solve it without loops/recursion?
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  bool isPowerOfTwo(int n);
+
+FILES
+  edit : 231.cpp
+  test : lc run 231
+══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,28 @@
+══════════════════════════════════════════════════════════════════════════
+ 1714. Sum Of Special Evenly-Spaced Elements In Array
+ Hard  |  Tags: Array, Dynamic Programming, Sqrt Decomposition
+ https://leetcode.com/problems/sum-of-special-evenly-spaced-elements-in-array/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : [0,1,2,3,4,5,6,7] | [[0,3],[5,1],[4,2]]
+      Expected : 9 18 10
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  vector<int> solve(vector<int>& nums, vector<vector<int>>& queries);
+
+FILES
+  edit : 1714.cpp
+  test : lc run 1714
+══════════════════════════════════════════════════════════════════════════

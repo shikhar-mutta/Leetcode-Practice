@@ -1,0 +1,44 @@
+══════════════════════════════════════════════════════════════════════════
+ 1864. Minimum Number of Swaps to Make the Binary String Alternating
+ Medium  |  Tags: String, Greedy
+ https://leetcode.com/problems/minimum-number-of-swaps-to-make-the-binary-string-alternating/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given a binary string s, return the minimum number of character swaps to
+  make it alternating, or -1 if it is impossible.
+
+  The string is called alternating if no two adjacent characters are
+  equal. For example, the strings "010" and "1010" are alternating, while
+  the string "0100" is not.
+
+  Any two characters may be swapped, even if they are not adjacent.
+
+CONSTRAINTS
+  1 <= s.length <= 1000
+  s[i] is either '0' or '1'.
+
+TEST CASES
+  [1] Input    : s = "111000"
+      Expected : 1
+      Why      : Swap positions 1 and 4: "111000" -> "101010"
+                 The string is now alternating.
+
+  [2] Input    : s = "010"
+      Expected : 0
+      Why      : The string is already alternating, no swaps are needed.
+
+  [3] Input    : s = "1110"
+      Expected : -1
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int minSwaps(string s);
+
+FILES
+  edit : 1864.cpp
+  test : lc run 1864
+══════════════════════════════════════════════════════════════════════════

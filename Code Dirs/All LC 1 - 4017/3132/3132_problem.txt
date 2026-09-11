@@ -1,0 +1,47 @@
+══════════════════════════════════════════════════════════════════════════
+ 3132. Find the Integer Added to Array II
+ Medium  |  Tags: Array, Two Pointers, Sorting, Enumeration
+ https://leetcode.com/problems/find-the-integer-added-to-array-ii/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given two integer arrays nums1 and nums2.
+
+  We say that nums2 is reachable from nums1 with an integer x if there
+  exist two elements in nums1 that, when removed, and x is added to all
+  the remaining elements of nums1 (or subtracted in the case of a negative
+  x), the resulting array becomes equal to nums2. Two arrays are
+  considered equal when they contain the same integers with the same
+  frequencies.
+
+  Return the minimum possible integer x that makes nums2 reachable from
+  nums1.
+
+  It is guaranteed that nums2 is reachable from nums1 with at least one x.
+
+CONSTRAINTS
+  3 <= nums1.length <= 200
+  nums2.length == nums1.length - 2
+  0 <= nums1[i], nums2[i] <= 1000
+  It is guaranteed that nums2 is reachable from nums1 with at least one x.
+
+TEST CASES
+  [1] Input    : nums1 = [4,20,16,12,8], nums2 = [14,18,10]
+      Expected : -2
+      Why      : After removing elements at indices [0,4] and adding -2, nums1 becomes [18,14,10].
+
+  [2] Input    : nums1 = [3,5,5,3], nums2 = [7,7]
+      Expected : 2
+      Why      : After removing elements at indices [0,3] and adding 2, nums1 becomes [7,7].
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int minimumAddedInteger(vector<int>& nums1, vector<int>& nums2);
+
+FILES
+  edit : 3132.cpp
+  test : lc run 3132
+══════════════════════════════════════════════════════════════════════════

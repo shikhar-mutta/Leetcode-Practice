@@ -1,0 +1,45 @@
+══════════════════════════════════════════════════════════════════════════
+ 1727. Largest Submatrix With Rearrangements
+ Medium  |  Tags: Array, Greedy, Sorting, Matrix
+ https://leetcode.com/problems/largest-submatrix-with-rearrangements/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a binary matrix matrix of size m x n, and you are allowed
+  to rearrange the columns of the matrix in any order.
+
+  Return the area of the largest submatrix within matrix where every
+  element of the submatrix is 1 after reordering the columns optimally.
+
+CONSTRAINTS
+  m == matrix.length
+  n == matrix[i].length
+  1 <= m * n <= 10^5
+  matrix[i][j] is either 0 or 1.
+
+TEST CASES
+  [1] Input    : matrix = [[0,0,1],[1,1,1],[1,0,1]]
+      Expected : 4
+      Why      : You can rearrange the columns as shown above.
+                 The largest submatrix of 1s, in bold, has an area of 4.
+
+  [2] Input    : matrix = [[1,0,1,0,1]]
+      Expected : 3
+      Why      : You can rearrange the columns as shown above.
+                 The largest submatrix of 1s, in bold, has an area of 3.
+
+  [3] Input    : matrix = [[1,1,0],[1,0,1]]
+      Expected : 2
+      Why      : Notice that you must rearrange entire columns, and there is no way to make a submatrix of 1s larger than an area of 2.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int largestSubmatrix(vector<vector<int>>& matrix);
+
+FILES
+  edit : 1727.cpp
+  test : lc run 1727
+══════════════════════════════════════════════════════════════════════════

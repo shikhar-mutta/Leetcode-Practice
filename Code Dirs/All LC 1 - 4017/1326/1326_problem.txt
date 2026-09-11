@@ -1,0 +1,48 @@
+══════════════════════════════════════════════════════════════════════════
+ 1326. Minimum Number of Taps to Open to Water a Garden
+ Hard  |  Tags: Array, Dynamic Programming, Greedy
+ https://leetcode.com/problems/minimum-number-of-taps-to-open-to-water-a-garden/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  There is a one-dimensional garden on the x-axis. The garden starts at
+  the point 0 and ends at the point n. (i.e., the length of the garden is
+  n).
+
+  There are n + 1 taps located at points [0, 1, ..., n] in the garden.
+
+  Given an integer n and an integer array ranges of length n + 1 where
+  ranges[i] (0-indexed) means the i-th tap can water the area [i -
+  ranges[i], i + ranges[i]] if it was open.
+
+  Return the minimum number of taps that should be open to water the whole
+  garden, If the garden cannot be watered return -1.
+
+CONSTRAINTS
+  1 <= n <= 10^4
+  ranges.length == n + 1
+  0 <= ranges[i] <= 100
+
+TEST CASES
+  [1] Input    : n = 5, ranges = [3,4,1,1,0,0]
+      Expected : 1
+      Why      : The tap at point 0 can cover the interval [-3,3]
+                 The tap at point 1 can cover the interval [-3,5]
+                 The tap at point 2 can cover the interval [1,3]
+                 … (4 more)
+
+  [2] Input    : n = 3, ranges = [0,0,0,0]
+      Expected : -1
+      Why      : Even if you activate all the four taps you cannot water the whole garden.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int minTaps(int n, vector<int>& ranges);
+
+FILES
+  edit : 1326.cpp
+  test : lc run 1326
+══════════════════════════════════════════════════════════════════════════

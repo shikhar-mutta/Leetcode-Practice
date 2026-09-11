@@ -1,0 +1,31 @@
+══════════════════════════════════════════════════════════════════════════
+ 253. Meeting Rooms II
+ Medium  |  Tags: Array, Two Pointers, Greedy, Sorting, Heap (Priority Queue), Prefix Sum
+ https://leetcode.com/problems/meeting-rooms-ii/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : [[0,30],[5,10],[15,20]]
+      Expected : 2
+
+  [2] Input    : [[7,10],[2,4]]
+      Expected : 1
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int minMeetingRooms(vector<vector<int>>& intervals);
+
+FILES
+  edit : 253.cpp
+  test : lc run 253
+══════════════════════════════════════════════════════════════════════════

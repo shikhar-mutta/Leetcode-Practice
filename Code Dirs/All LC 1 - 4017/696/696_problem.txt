@@ -1,0 +1,40 @@
+══════════════════════════════════════════════════════════════════════════
+ 696. Count Binary Substrings
+ Easy  |  Tags: Two Pointers, String
+ https://leetcode.com/problems/count-binary-substrings/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given a binary string s, return the number of non-empty substrings that
+  have the same number of 0's and 1's, and all the 0's and all the 1's in
+  these substrings are grouped consecutively.
+
+  Substrings that occur multiple times are counted the number of times
+  they occur.
+
+CONSTRAINTS
+  1 <= s.length <= 10^5
+  s[i] is either '0' or '1'.
+
+TEST CASES
+  [1] Input    : s = "00110011"
+      Expected : 6
+      Why      : There are 6 substrings that have equal number of consecutive 1's and 0's: "0011", "01", "1100", "10", "0011", and "01".
+                 Notice that some of these substrings repeat and are counted the number of times they occur.
+                 Also, "00110011" is not a valid substring because all the 0's (and 1's) are not grouped together.
+
+  [2] Input    : s = "10101"
+      Expected : 4
+      Why      : There are 4 substrings: "10", "01", "10", "01" that have equal number of consecutive 1's and 0's.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int countBinarySubstrings(string s);
+
+FILES
+  edit : 696.cpp
+  test : lc run 696
+══════════════════════════════════════════════════════════════════════════

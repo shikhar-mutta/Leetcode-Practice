@@ -1,0 +1,34 @@
+══════════════════════════════════════════════════════════════════════════
+ 1272. Remove Interval
+ Medium  |  Tags: Array
+ https://leetcode.com/problems/remove-interval/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : [[0,2],[3,4],[5,7]] | [1,6]
+      Expected : [0,1] [6,7]
+
+  [2] Input    : [[0,5]] | [2,3]
+      Expected : [0,2] [3,5]
+
+  [3] Input    : [[-5,-4],[-3,-2],[1,2],[3,5],[8,9]] | [-1,4]
+      Expected : [-5,-4] [-3,-2] [4,5] [8,9]
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  vector<vector<int>> removeInterval(vector<vector<int>>& intervals, vector<int>& toBeRemoved);
+
+FILES
+  edit : 1272.cpp
+  test : lc run 1272
+══════════════════════════════════════════════════════════════════════════

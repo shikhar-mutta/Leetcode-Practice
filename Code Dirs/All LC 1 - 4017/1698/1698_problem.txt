@@ -1,0 +1,31 @@
+══════════════════════════════════════════════════════════════════════════
+ 1698. Number of Distinct Substrings in a String
+ Medium  |  Tags: String, Trie, Rolling Hash, Suffix Array, Hash Function
+ https://leetcode.com/problems/number-of-distinct-substrings-in-a-string/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : "aabbaba"
+      Expected : 21
+
+  [2] Input    : "abcdefg"
+      Expected : 28
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int countDistinct(string s);
+
+FILES
+  edit : 1698.cpp
+  test : lc run 1698
+══════════════════════════════════════════════════════════════════════════

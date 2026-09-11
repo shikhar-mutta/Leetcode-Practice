@@ -1,0 +1,31 @@
+══════════════════════════════════════════════════════════════════════════
+ 471. Encode String with Shortest Length
+ Hard  |  Tags: String, Dynamic Programming
+ https://leetcode.com/problems/encode-string-with-shortest-length/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : "aaa"
+      Expected : "aaa"
+
+  [2] Input    : "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      Expected : "30[a]"
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  string encode(string s);
+
+FILES
+  edit : 471.cpp
+  test : lc run 471
+══════════════════════════════════════════════════════════════════════════

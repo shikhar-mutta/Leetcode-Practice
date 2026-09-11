@@ -1,0 +1,38 @@
+══════════════════════════════════════════════════════════════════════════
+ 1614. Maximum Nesting Depth of the Parentheses
+ Easy  |  Tags: String, Stack, Bracket Sequences
+ https://leetcode.com/problems/maximum-nesting-depth-of-the-parentheses/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given a valid parentheses string s, return the nesting depth of s. The
+  nesting depth is the maximum number of nested parentheses.
+
+CONSTRAINTS
+  1 <= s.length <= 100
+  s consists of digits 0-9 and characters '+', '-', '*', '/', '(', and ')'.
+  It is guaranteed that parentheses expression s is a VPS.
+
+TEST CASES
+  [1] Input    : s = "(1+(2*3)+((8)/4))+1"
+      Expected : 3
+      Why      : Digit 8 is inside of 3 nested parentheses in the string.
+
+  [2] Input    : s = "(1)+((2))+(((3)))"
+      Expected : 3
+      Why      : Digit 3 is inside of 3 nested parentheses in the string.
+
+  [3] Input    : s = "()(())((()()))"
+      Expected : 3
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int maxDepth(string s);
+
+FILES
+  edit : 1614.cpp
+  test : lc run 1614
+══════════════════════════════════════════════════════════════════════════

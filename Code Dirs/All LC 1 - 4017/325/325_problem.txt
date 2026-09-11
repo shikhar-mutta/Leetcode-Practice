@@ -1,0 +1,31 @@
+══════════════════════════════════════════════════════════════════════════
+ 325. Maximum Size Subarray Sum Equals k
+ Medium  |  Tags: Array, Hash Table, Prefix Sum
+ https://leetcode.com/problems/maximum-size-subarray-sum-equals-k/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : [1,-1,5,-2,3] | 3
+      Expected : 4
+
+  [2] Input    : [-2,-1,2,1] | 1
+      Expected : 2
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int maxSubArrayLen(vector<int>& nums, int k);
+
+FILES
+  edit : 325.cpp
+  test : lc run 325
+══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,48 @@
+══════════════════════════════════════════════════════════════════════════
+ 1835. Find XOR Sum of All Pairs Bitwise AND
+ Hard  |  Tags: Array, Math, Bit Manipulation
+ https://leetcode.com/problems/find-xor-sum-of-all-pairs-bitwise-and/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  The XOR sum of a list is the bitwise XOR of all its elements. If the
+  list only contains one element, then its XOR sum will be equal to this
+  element.
+
+  - For example, the XOR sum of [1,2,3,4] is equal to 1 XOR 2 XOR 3 XOR 4
+    = 4, and the XOR sum of [3] is equal to 3.
+
+  You are given two 0-indexed arrays arr1 and arr2 that consist only of
+  non-negative integers.
+
+  Consider the list containing the result of arr1[i] AND arr2[j] (bitwise
+  AND) for every (i, j) pair where 0 <= i < arr1.length and 0 <= j <
+  arr2.length.
+
+  Return the XOR sum of the aforementioned list.
+
+CONSTRAINTS
+  1 <= arr1.length, arr2.length <= 10^5
+  0 <= arr1[i], arr2[j] <= 10^9
+
+TEST CASES
+  [1] Input    : arr1 = [1,2,3], arr2 = [6,5]
+      Expected : 0
+      Why      : The list = [1 AND 6, 1 AND 5, 2 AND 6, 2 AND 5, 3 AND 6, 3 AND 5] = [0,1,2,0,2,1].
+                 The XOR sum = 0 XOR 1 XOR 2 XOR 0 XOR 2 XOR 1 = 0.
+
+  [2] Input    : arr1 = [12], arr2 = [4]
+      Expected : 4
+      Why      : The list = [12 AND 4] = [4]. The XOR sum = 4.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int getXORSum(vector<int>& arr1, vector<int>& arr2);
+
+FILES
+  edit : 1835.cpp
+  test : lc run 1835
+══════════════════════════════════════════════════════════════════════════

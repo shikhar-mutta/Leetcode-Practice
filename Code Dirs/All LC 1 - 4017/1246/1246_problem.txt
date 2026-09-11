@@ -1,0 +1,31 @@
+══════════════════════════════════════════════════════════════════════════
+ 1246. Palindrome Removal
+ Hard  |  Tags: Array, Dynamic Programming
+ https://leetcode.com/problems/palindrome-removal/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : [1,2]
+      Expected : 2
+
+  [2] Input    : [1,3,4,1,5]
+      Expected : 3
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int minimumMoves(vector<int>& arr);
+
+FILES
+  edit : 1246.cpp
+  test : lc run 1246
+══════════════════════════════════════════════════════════════════════════

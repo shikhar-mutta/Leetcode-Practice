@@ -1,0 +1,29 @@
+══════════════════════════════════════════════════════════════════════════
+ 1274. Number of Ships in a Rectangle
+ Hard  |  Tags: Array, Divide and Conquer, Interactive
+ https://leetcode.com/problems/number-of-ships-in-a-rectangle/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : [[1,1],[2,2],[3,3],[5,5]] | [4,4] | [0,0]
+      Expected : 3
+
+CODE TYPE
+  interactive · interface Sea
+    driver: mocks what the judge supplies, backed by each case's data
+    interface: Sea — the judge's class, mocked by the driver
+
+SIGNATURE
+  int countShips(Sea sea, vector<int> topRight, vector<int> bottomLeft);
+
+FILES
+  edit : 1274.cpp
+  test : lc run 1274
+══════════════════════════════════════════════════════════════════════════

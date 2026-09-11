@@ -1,0 +1,34 @@
+══════════════════════════════════════════════════════════════════════════
+ 3084. Count Substrings Starting and Ending with Given Character
+ Medium  |  Tags: Math, String, Counting
+ https://leetcode.com/problems/count-substrings-starting-and-ending-with-given-character/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a string s and a character c. Return the total number of
+  substrings of s that start and end with c.
+
+CONSTRAINTS
+  1 <= s.length <= 10^5
+  s and c consist only of lowercase English letters.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : "abada" | "a"
+      Expected : 6
+
+  [2] Input    : "zzz" | "z"
+      Expected : 6
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  long long countSubstrings(string s, char c);
+
+FILES
+  edit : 3084.cpp
+  test : lc run 3084
+══════════════════════════════════════════════════════════════════════════

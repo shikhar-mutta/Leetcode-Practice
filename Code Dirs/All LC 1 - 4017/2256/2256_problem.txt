@@ -1,0 +1,55 @@
+══════════════════════════════════════════════════════════════════════════
+ 2256. Minimum Average Difference
+ Medium  |  Tags: Array, Prefix Sum
+ https://leetcode.com/problems/minimum-average-difference/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a 0-indexed integer array nums of length n.
+
+  The average difference of the index i is the absolute difference between
+  the average of the first i + 1 elements of nums and the average of the
+  last n - i - 1 elements. Both averages should be rounded down to the
+  nearest integer.
+
+  Return the index with the minimum average difference. If there are
+  multiple such indices, return the smallest one.
+
+  Note:
+
+  - The absolute difference of two numbers is the absolute value of their
+    difference.
+
+  - The average of n elements is the sum of the n elements divided
+    (integer division) by n.
+
+  - The average of 0 elements is considered to be 0.
+
+CONSTRAINTS
+  1 <= nums.length <= 10^5
+  0 <= nums[i] <= 10^5
+
+TEST CASES
+  [1] Input    : nums = [2,5,3,9,5,3]
+      Expected : 3
+      Why      : - The average difference of index 0 is: |2 / 1 - (5 + 3 + 9 + 5 + 3) / 5| = |2 / 1 - 25 / 5| = |2 - 5| = 3.
+                 - The average difference of index 1 is: |(2 + 5) / 2 - (3 + 9 + 5 + 3) / 4| = |7 / 2 - 20 / 4| = |3 - 5| = 2.
+                 - The average difference of index 2 is: |(2 + 5 + 3) / 3 - (9 + 5 + 3) / 3| = |10 / 3 - 17 / 3| = |3 - 5| = 2.
+                 … (4 more)
+
+  [2] Input    : nums = [0]
+      Expected : 0
+      Why      : The only index is 0 so return 0.
+                 The average difference of index 0 is: |0 / 1 - 0| = |0 - 0| = 0.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int minimumAverageDifference(vector<int>& nums);
+
+FILES
+  edit : 2256.cpp
+  test : lc run 2256
+══════════════════════════════════════════════════════════════════════════

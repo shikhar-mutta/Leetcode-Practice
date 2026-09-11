@@ -1,0 +1,31 @@
+══════════════════════════════════════════════════════════════════════════
+ 755. Pour Water
+ Medium  |  Tags: Array, Simulation
+ https://leetcode.com/problems/pour-water/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : [2,1,1,2,1,2,2] | 4 | 3
+      Expected : [2,2,2,3,2,2,2]
+
+  [2] Input    : [1,2,3,4] | 2 | 2
+      Expected : [2,3,3,4]
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  vector<int> pourWater(vector<int>& heights, int volume, int k);
+
+FILES
+  edit : 755.cpp
+  test : lc run 755
+══════════════════════════════════════════════════════════════════════════

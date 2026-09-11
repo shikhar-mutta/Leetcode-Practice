@@ -1,0 +1,44 @@
+══════════════════════════════════════════════════════════════════════════
+ 2309. Greatest English Letter in Upper and Lower Case
+ Easy  |  Tags: Hash Table, String, Enumeration
+ https://leetcode.com/problems/greatest-english-letter-in-upper-and-lower-case/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given a string of English letters s, return the greatest English letter
+  which occurs as both a lowercase and uppercase letter in s. The returned
+  letter should be in uppercase. If no such letter exists, return an empty
+  string.
+
+  An English letter b is greater than another letter a if b appears after
+  a in the English alphabet.
+
+CONSTRAINTS
+  1 <= s.length <= 1000
+  s consists of lowercase and uppercase English letters.
+
+TEST CASES
+  [1] Input    : s = "lEeTcOdE"
+      Expected : "E"
+      Why      : The letter 'E' is the only letter to appear in both lower and upper case.
+
+  [2] Input    : s = "arRAzFif"
+      Expected : "R"
+      Why      : The letter 'R' is the greatest letter to appear in both lower and upper case.
+                 Note that 'A' and 'F' also appear in both lower and upper case, but 'R' is greater than 'F' or 'A'.
+
+  [3] Input    : s = "AbCdEfGhIjK"
+      Expected : ""
+      Why      : There is no letter that appears in both lower and upper case.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  string greatestLetter(string s);
+
+FILES
+  edit : 2309.cpp
+  test : lc run 2309
+══════════════════════════════════════════════════════════════════════════

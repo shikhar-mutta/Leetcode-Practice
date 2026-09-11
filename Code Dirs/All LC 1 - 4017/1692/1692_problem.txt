@@ -1,0 +1,34 @@
+══════════════════════════════════════════════════════════════════════════
+ 1692. Count Ways to Distribute Candies
+ Hard  |  Tags: Dynamic Programming
+ https://leetcode.com/problems/count-ways-to-distribute-candies/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : 3 | 3
+      Expected : 1
+
+  [2] Input    : 4 | 2
+      Expected : 7
+
+  [3] Input    : 20 | 5
+      Expected : 206085257
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int waysToDistribute(int n, int k);
+
+FILES
+  edit : 1692.cpp
+  test : lc run 1692
+══════════════════════════════════════════════════════════════════════════

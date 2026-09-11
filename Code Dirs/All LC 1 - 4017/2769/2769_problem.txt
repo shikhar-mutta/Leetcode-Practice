@@ -1,0 +1,40 @@
+══════════════════════════════════════════════════════════════════════════
+ 2769. Find the Maximum Achievable Number
+ Easy  |  Tags: Math
+ https://leetcode.com/problems/find-the-maximum-achievable-number/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given two integers, num and t. A number x is achievable if it can become
+  equal to num after applying the following operation at most t times:
+
+  - Increase or decrease x by 1, and simultaneously increase or decrease
+    num by 1.
+
+  Return the maximum possible value of x.
+
+CONSTRAINTS
+  1 <= num, t <= 50
+
+TEST CASES
+  [1] Input    : num = 4, t = 1
+      Expected : 6
+      Why      : Apply the following operation once to make the maximum achievable number equal to num:
+                 - Decrease the maximum achievable number by 1, and increase num by 1.
+
+  [2] Input    : num = 3, t = 2
+      Expected : 7
+      Why      : Apply the following operation twice to make the maximum achievable number equal to num:
+                 - Decrease the maximum achievable number by 1, and increase num by 1.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int theMaximumAchievableX(int num, int t);
+
+FILES
+  edit : 2769.cpp
+  test : lc run 2769
+══════════════════════════════════════════════════════════════════════════

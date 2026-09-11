@@ -1,0 +1,39 @@
+══════════════════════════════════════════════════════════════════════════
+ 3083. Existence of a Substring in a String and Its Reverse
+ Easy  |  Tags: Hash Table, String
+ https://leetcode.com/problems/existence-of-a-substring-in-a-string-and-its-reverse/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given a string s, find any substring of length 2 which is also present
+  in the reverse of s.
+
+  Return true if such a substring exists, and false otherwise.
+
+CONSTRAINTS
+  1 <= s.length <= 100
+  s consists only of lowercase English letters.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : "leetcode"
+      Expected : true
+
+  [2] Input    : "abcba"
+      Expected : true
+
+  [3] Input    : "abcd"
+      Expected : false
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  bool isSubstringPresent(string s);
+
+FILES
+  edit : 3083.cpp
+  test : lc run 3083
+══════════════════════════════════════════════════════════════════════════

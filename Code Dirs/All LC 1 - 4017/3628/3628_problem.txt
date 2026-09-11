@@ -1,0 +1,43 @@
+══════════════════════════════════════════════════════════════════════════
+ 3628. Maximum Number of Subsequences After One Inserting
+ Medium  |  Tags: String, Dynamic Programming, Greedy, Prefix Sum
+ https://leetcode.com/problems/maximum-number-of-subsequences-after-one-inserting/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a string s consisting of uppercase English letters.
+
+  You are allowed to insert at most one uppercase English letter at any
+  position (including the beginning or end) of the string.
+
+  Return the maximum number of "LCT" subsequences that can be formed in
+  the resulting string after at most one insertion.
+
+CONSTRAINTS
+  1 <= s.length <= 10^5
+  s consists of uppercase English letters.
+
+TEST CASES
+  [1] Input    : s = "LMCT"
+      Expected : 2
+      Why      : We can insert a "L" at the beginning of the string s to make "LLMCT", which has 2 subsequences, at indices [0, 3, 4] and [1, 3, 4].
+
+  [2] Input    : s = "LCCT"
+      Expected : 4
+      Why      : We can insert a "L" at the beginning of the string s to make "LLCCT", which has 4 subsequences, at indices [0, 2, 4], [0, 3, 4], [1, 2, 4] and [1, 3, 4].
+
+  [3] Input    : s = "L"
+      Expected : 0
+      Why      : Since it is not possible to obtain the subsequence "LCT" by inserting a single letter, the result is 0.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  long long numOfSubsequences(string s);
+
+FILES
+  edit : 3628.cpp
+  test : lc run 3628
+══════════════════════════════════════════════════════════════════════════

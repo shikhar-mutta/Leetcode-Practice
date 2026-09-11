@@ -1,0 +1,28 @@
+══════════════════════════════════════════════════════════════════════════
+ 727. Minimum Window Subsequence
+ Hard  |  Tags: String, Dynamic Programming, Sliding Window
+ https://leetcode.com/problems/minimum-window-subsequence/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : "abcdebdde" | "bde"
+      Expected : bcde
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  string minWindow(string s, string t);
+
+FILES
+  edit : 727.cpp
+  test : lc run 727
+══════════════════════════════════════════════════════════════════════════

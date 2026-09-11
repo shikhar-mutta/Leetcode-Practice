@@ -1,0 +1,63 @@
+══════════════════════════════════════════════════════════════════════════
+ 3815. Design Auction System
+ Medium  |  Tags: Hash Table, Design, Heap (Priority Queue), Ordered Set
+ https://leetcode.com/problems/design-auction-system/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are asked to design an auction system that manages bids from
+  multiple users in real time.
+
+  Each bid is associated with a userId, an itemId, and a bidAmount.
+
+  Implement the AuctionSystem class:
+
+  - AuctionSystem(): Initializes the AuctionSystem object.
+
+  - void addBid(int userId, int itemId, int bidAmount): Adds a new bid for
+    itemId by userId with bidAmount. If the same userId already has a bid
+    on itemId, replace it with the new bidAmount.
+
+  - void updateBid(int userId, int itemId, int newAmount): Updates the
+    existing bid of userId for itemId to newAmount. It is guaranteed that
+    this bid exists.
+
+  - void removeBid(int userId, int itemId): Removes the bid of userId for
+    itemId. It is guaranteed that this bid exists.
+
+  - int getHighestBidder(int itemId): Returns the userId of the highest
+    bidder for itemId. If multiple users have the same highest bidAmount,
+    return the user with the highest userId. If no bids exist for the
+    item, return -1.
+
+CONSTRAINTS
+  1 <= userId, itemId <= 5 * 10^4
+  1 <= bidAmount, newAmount <= 10^9
+  At most 5 * 10^4 total calls to addBid, updateBid, removeBid, and getHighestBidder.
+  The input is generated such that for updateBid and removeBid, the bid from the given userId for the given itemId will be valid.
+
+TEST CASES
+  [1] Input    : ["AuctionSystem", "addBid", "addBid", "getHighestBidder", "updateBid", "getHighestBidder", "removeBid", "getHighestBidder", "getHighestBidder"]
+
+[[], [1, 7, 5], [2, 7, 6], [7], [1, 7, 8], [7], [2, 7], [7], [3]]
+      Expected : [null, null, null, 2, null, 1, null, 1, -1]
+      Why      : AuctionSystem auctionSystem = new AuctionSystem(); // Initialize the Auction system
+                 auctionSystem.addBid(1, 7, 5); // User 1 bids 5 on item 7
+                 auctionSystem.addBid(2, 7, 6); // User 2 bids 6 on item 7
+                 … (6 more)
+
+CODE TYPE
+  design · AuctionSystem
+    driver: replays ["AuctionSystem","op",...] / [[args],...] and prints [null,...]
+
+SIGNATURE
+  AuctionSystem();
+  void addBid(int userId, int itemId, int bidAmount);
+  void updateBid(int userId, int itemId, int newAmount);
+  void removeBid(int userId, int itemId);
+  int getHighestBidder(int itemId);
+
+FILES
+  edit : 3815.cpp
+  test : lc run 3815
+══════════════════════════════════════════════════════════════════════════

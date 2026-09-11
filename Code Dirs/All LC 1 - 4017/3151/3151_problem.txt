@@ -1,0 +1,42 @@
+══════════════════════════════════════════════════════════════════════════
+ 3151. Special Array I
+ Easy  |  Tags: Array
+ https://leetcode.com/problems/special-array-i/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  An array is considered special if the parity of every pair of adjacent
+  elements is different. In other words, one element in each pair must be
+  even, and the other must be odd.
+
+  You are given an array of integers nums. Return true if nums is a
+  special array, otherwise, return false.
+
+CONSTRAINTS
+  1 <= nums.length <= 100
+  1 <= nums[i] <= 100
+
+TEST CASES
+  [1] Input    : nums = [1]
+      Expected : true
+      Why      : There is only one element. So the answer is true.
+
+  [2] Input    : nums = [2,1,4]
+      Expected : true
+      Why      : There is only two pairs: (2,1) and (1,4), and both of them contain numbers with different parity. So the answer is true.
+
+  [3] Input    : nums = [4,3,1,6]
+      Expected : false
+      Why      : nums[1] and nums[2] are both odd. So the answer is false.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  bool isArraySpecial(vector<int>& nums);
+
+FILES
+  edit : 3151.cpp
+  test : lc run 3151
+══════════════════════════════════════════════════════════════════════════

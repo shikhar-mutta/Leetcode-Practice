@@ -1,0 +1,35 @@
+══════════════════════════════════════════════════════════════════════════
+ 1232. Check If It Is a Straight Line
+ Easy  |  Tags: Array, Math, Geometry
+ https://leetcode.com/problems/check-if-it-is-a-straight-line/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given an integer array coordinates, coordinates[i] = [x, y],
+  where [x, y] represents the coordinate of a point. Check if these points
+  make a straight line in the XY plane.
+
+CONSTRAINTS
+  2 <= coordinates.length <= 1000
+  coordinates[i].length == 2
+  -10^4 <= coordinates[i][0], coordinates[i][1] <= 10^4
+  coordinates contains no duplicate point.
+
+TEST CASES
+  [1] Input    : coordinates = [[1,2],[2,3],[3,4],[4,5],[5,6],[6,7]]
+      Expected : true
+
+  [2] Input    : coordinates = [[1,1],[2,2],[3,4],[4,5],[5,6],[7,7]]
+      Expected : false
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  bool checkStraightLine(vector<vector<int>>& coordinates);
+
+FILES
+  edit : 1232.cpp
+  test : lc run 1232
+══════════════════════════════════════════════════════════════════════════

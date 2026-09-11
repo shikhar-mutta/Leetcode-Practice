@@ -1,0 +1,33 @@
+══════════════════════════════════════════════════════════════════════════
+ 783. Minimum Distance Between BST Nodes
+ Easy  |  Tags: Tree, Depth-First Search, Breadth-First Search, Binary Search Tree, Binary Tree
+ https://leetcode.com/problems/minimum-distance-between-bst-nodes/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given the root of a Binary Search Tree (BST), return the minimum
+  difference between the values of any two different nodes in the tree.
+
+CONSTRAINTS
+  The number of nodes in the tree is in the range [2, 100].
+  0 <= Node.val <= 10^5
+
+TEST CASES
+  [1] Input    : root = [4,2,6,1,3]
+      Expected : 1
+
+  [2] Input    : root = [1,0,48,null,null,12,49]
+      Expected : 1
+
+CODE TYPE
+  function · tree
+    driver: one Solution call per test case
+    tree: TreeNode* — level order, e.g. [3,9,20,null,null,15,7]
+
+SIGNATURE
+  int minDiffInBST(TreeNode* root);
+
+FILES
+  edit : 783.cpp
+  test : lc run 783
+══════════════════════════════════════════════════════════════════════════

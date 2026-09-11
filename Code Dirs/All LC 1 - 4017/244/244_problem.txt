@@ -1,0 +1,29 @@
+══════════════════════════════════════════════════════════════════════════
+ 244. Shortest Word Distance II
+ Medium  |  Tags: Array, Hash Table, Two Pointers, String, Design
+ https://leetcode.com/problems/shortest-word-distance-ii/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : ["practice","makes","perfect","coding","makes"] | 2 | "coding" | "practice" | "makes" | "coding"
+      Expected : [3,1]
+
+CODE TYPE
+  design · WordDistance
+    driver: replays ["WordDistance","op",...] / [[args],...] and prints [null,...]
+
+SIGNATURE
+  WordDistance(vector<string>& wordsDict);
+  int shortest(string word1, string word2);
+
+FILES
+  edit : 244.cpp
+  test : lc run 244
+══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,51 @@
+══════════════════════════════════════════════════════════════════════════
+ 3681. Maximum XOR of Subsequences
+ Hard  |  Tags: Array, Math, Greedy, Bit Manipulation
+ https://leetcode.com/problems/maximum-xor-of-subsequences/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given an integer array nums of length n where each element is a
+  non-negative integer.
+
+  Select two subsequences of nums (they may be empty and are allowed to
+  overlap), each preserving the original order of elements, and let:
+
+  - X be the bitwise XOR of all elements in the first subsequence.
+
+  - Y be the bitwise XOR of all elements in the second subsequence.
+
+  Return the maximum possible value of X XOR Y.
+
+  Note: The XOR of an empty subsequence is 0.
+
+CONSTRAINTS
+  2 <= nums.length <= 10^5
+  0 <= nums[i] <= 10^9
+
+TEST CASES
+  [1] Input    : nums = [1,2,3]
+      Expected : 3
+      Why      : Choose subsequences:
+                 - First subsequence [2], whose XOR is 2.
+                 - Second subsequence [2,3], whose XOR is 1.
+                 … (2 more)
+
+  [2] Input    : nums = [5,2]
+      Expected : 7
+      Why      : Choose subsequences:
+                 - First subsequence [5], whose XOR is 5.
+                 - Second subsequence [2], whose XOR is 2.
+                 … (2 more)
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int maxXorSubsequences(vector<int>& nums);
+
+FILES
+  edit : 3681.cpp
+  test : lc run 3681
+══════════════════════════════════════════════════════════════════════════

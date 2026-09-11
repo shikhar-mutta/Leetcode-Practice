@@ -1,0 +1,32 @@
+══════════════════════════════════════════════════════════════════════════
+ 314. Binary Tree Vertical Order Traversal
+ Medium  |  Tags: Hash Table, Tree, Depth-First Search, Breadth-First Search, Sorting, Binary Tree
+ https://leetcode.com/problems/binary-tree-vertical-order-traversal/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : [3,9,20,null,null,15,7]
+      Expected : [[9],[3,15],[20],[7]]
+
+  [2] Input    : [3,9,8,4,0,1,7]
+      Expected : [[4],[9],[3,0,1],[8],[7]]
+
+CODE TYPE
+  function · tree
+    driver: one Solution call per test case
+    tree: TreeNode* — level order, e.g. [3,9,20,null,null,15,7]
+
+SIGNATURE
+  vector<vector<int>> verticalOrder(TreeNode* root);
+
+FILES
+  edit : 314.cpp
+  test : lc run 314
+══════════════════════════════════════════════════════════════════════════

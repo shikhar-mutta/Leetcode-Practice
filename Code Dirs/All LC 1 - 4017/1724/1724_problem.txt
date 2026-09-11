@@ -1,0 +1,26 @@
+══════════════════════════════════════════════════════════════════════════
+ 1724. Checking Existence of Edge Length Limited Paths II
+ Hard  |  Tags: Depth-First Search, Union-Find, Graph Theory, Design, Sorting, Heap (Priority Queue), Minimum Spanning Tree
+ https://leetcode.com/problems/checking-existence-of-edge-length-limited-paths-ii/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (no examples available)
+
+CODE TYPE
+  design · DistanceLimitedPathsExist
+    driver: replays ["DistanceLimitedPathsExist","op",...] / [[args],...] and prints [null,...]
+
+SIGNATURE
+  DistanceLimitedPathsExist(int n_, vector<vector<int>>& edgeList);
+  bool query(int p, int q, int limit);
+
+FILES
+  edit : 1724.cpp
+  test : lc run 1724
+══════════════════════════════════════════════════════════════════════════

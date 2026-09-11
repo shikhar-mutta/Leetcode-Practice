@@ -1,0 +1,55 @@
+══════════════════════════════════════════════════════════════════════════
+ 919. Complete Binary Tree Inserter
+ Medium  |  Tags: Tree, Breadth-First Search, Design, Binary Tree
+ https://leetcode.com/problems/complete-binary-tree-inserter/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  A complete binary tree is a binary tree in which every level, except
+  possibly the last, is completely filled, and all nodes are as far left
+  as possible.
+
+  Design an algorithm to insert a new node to a complete binary tree
+  keeping it complete after the insertion.
+
+  Implement the CBTInserter class:
+
+  - CBTInserter(TreeNode root) Initializes the data structure with the
+    root of the complete binary tree.
+
+  - int insert(int v) Inserts a TreeNode into the tree with value Node.val
+    == val so that the tree remains complete, and returns the value of the
+    parent of the inserted TreeNode.
+
+  - TreeNode get_root() Returns the root node of the tree.
+
+CONSTRAINTS
+  The number of nodes in the tree will be in the range [1, 1000].
+  0 <= Node.val <= 5000
+  root is a complete binary tree.
+  0 <= val <= 5000
+  At most 10^4 calls will be made to insert and get_root.
+
+TEST CASES
+  [1] Input    : ["CBTInserter", "insert", "insert", "get_root"]
+[[[1, 2]], [3], [4], []]
+      Expected : [null, 1, 2, [1, 2, 3, 4]]
+      Why      : CBTInserter cBTInserter = new CBTInserter([1, 2]);
+                 cBTInserter.insert(3); // return 1
+                 cBTInserter.insert(4); // return 2
+                 … (1 more)
+
+CODE TYPE
+  design · CBTInserter · tree
+    driver: replays ["CBTInserter","op",...] / [[args],...] and prints [null,...]
+    tree: TreeNode* — level order, e.g. [3,9,20,null,null,15,7]
+
+SIGNATURE
+  CBTInserter(TreeNode* root);
+  int insert(int val);
+  TreeNode* get_root();
+
+FILES
+  edit : 919.cpp
+  test : lc run 919
+══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,43 @@
+══════════════════════════════════════════════════════════════════════════
+ 1525. Number of Good Ways to Split a String
+ Medium  |  Tags: Hash Table, String, Dynamic Programming, Bit Manipulation, Prefix Sum
+ https://leetcode.com/problems/number-of-good-ways-to-split-a-string/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a string s.
+
+  A split is called good if you can split s into two non-empty strings
+  sleft and sright where their concatenation is equal to s (i.e., sleft +
+  sright = s) and the number of distinct letters in sleft and sright is
+  the same.
+
+  Return the number of good splits you can make in s.
+
+CONSTRAINTS
+  1 <= s.length <= 10^5
+  s consists of only lowercase English letters.
+
+TEST CASES
+  [1] Input    : s = "aacaba"
+      Expected : 2
+      Why      : There are 5 ways to split "aacaba" and 2 of them are good.
+                 ("a", "acaba") Left string and right string contains 1 and 3 different letters respectively.
+                 ("aa", "caba") Left string and right string contains 1 and 3 different letters respectively.
+                 … (3 more)
+
+  [2] Input    : s = "abcd"
+      Expected : 1
+      Why      : Split the string as follows ("ab", "cd").
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int numSplits(string s);
+
+FILES
+  edit : 1525.cpp
+  test : lc run 1525
+══════════════════════════════════════════════════════════════════════════

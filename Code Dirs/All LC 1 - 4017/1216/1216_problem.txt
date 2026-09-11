@@ -1,0 +1,31 @@
+══════════════════════════════════════════════════════════════════════════
+ 1216. Valid Palindrome III
+ Hard  |  Tags: String, Dynamic Programming
+ https://leetcode.com/problems/valid-palindrome-iii/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : "abcdeca" | 2
+      Expected : true
+
+  [2] Input    : "abbababa" | 1
+      Expected : true
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  bool isValidPalindrome(string s, int k);
+
+FILES
+  edit : 1216.cpp
+  test : lc run 1216
+══════════════════════════════════════════════════════════════════════════

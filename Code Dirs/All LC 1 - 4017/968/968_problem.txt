@@ -1,0 +1,39 @@
+══════════════════════════════════════════════════════════════════════════
+ 968. Binary Tree Cameras
+ Hard  |  Tags: Dynamic Programming, Tree, Depth-First Search, Binary Tree, DP on Trees
+ https://leetcode.com/problems/binary-tree-cameras/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given the root of a binary tree. We install cameras on the tree
+  nodes where each camera at a node can monitor its parent, itself, and
+  its immediate children.
+
+  Return the minimum number of cameras needed to monitor all nodes of the
+  tree.
+
+CONSTRAINTS
+  The number of nodes in the tree is in the range [1, 1000].
+  Node.val == 0
+
+TEST CASES
+  [1] Input    : root = [0,0,null,0,0]
+      Expected : 1
+      Why      : One camera is enough to monitor all nodes if placed as shown.
+
+  [2] Input    : root = [0,0,null,0,null,0,null,null,0]
+      Expected : 2
+      Why      : At least two cameras are needed to monitor all nodes of the tree. The above image shows one of the valid configurations of camera placement.
+
+CODE TYPE
+  function · tree
+    driver: one Solution call per test case
+    tree: TreeNode* — level order, e.g. [3,9,20,null,null,15,7]
+
+SIGNATURE
+  int minCameraCover(TreeNode* root);
+
+FILES
+  edit : 968.cpp
+  test : lc run 968
+══════════════════════════════════════════════════════════════════════════

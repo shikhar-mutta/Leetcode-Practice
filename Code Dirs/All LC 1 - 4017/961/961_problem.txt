@@ -1,0 +1,45 @@
+══════════════════════════════════════════════════════════════════════════
+ 961. N-Repeated Element in Size 2N Array
+ Easy  |  Tags: Array, Hash Table, Pigeonhole Principle
+ https://leetcode.com/problems/n-repeated-element-in-size-2n-array/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given an integer array nums with the following properties:
+
+  - nums.length == 2 * n.
+
+  - nums contains n + 1 unique values, n of which occur exactly once in
+    the array.
+
+  - Exactly one element of nums is repeated n times.
+
+  Return the element that is repeated n times.
+
+CONSTRAINTS
+  2 <= n <= 5000
+  nums.length == 2 * n
+  0 <= nums[i] <= 10^4
+  nums contains n + 1 unique elements and one of them is repeated exactly n times.
+
+TEST CASES
+  [1] Input    : nums = [1,2,3,3]
+      Expected : 3
+
+  [2] Input    : nums = [2,1,2,5,3,2]
+      Expected : 2
+
+  [3] Input    : nums = [5,1,5,2,5,3,5,4]
+      Expected : 5
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int repeatedNTimes(vector<int>& nums);
+
+FILES
+  edit : 961.cpp
+  test : lc run 961
+══════════════════════════════════════════════════════════════════════════

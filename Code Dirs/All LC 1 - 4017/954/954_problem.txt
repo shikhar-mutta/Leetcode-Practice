@@ -1,0 +1,38 @@
+══════════════════════════════════════════════════════════════════════════
+ 954. Array of Doubled Pairs
+ Medium  |  Tags: Array, Hash Table, Greedy, Sorting
+ https://leetcode.com/problems/array-of-doubled-pairs/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given an integer array of even length arr, return true if it is possible
+  to reorder arr such that arr[2 * i + 1] = 2 * arr[2 * i] for every 0 <=
+  i < len(arr) / 2, or false otherwise.
+
+CONSTRAINTS
+  2 <= arr.length <= 3 * 10^4
+  arr.length is even.
+  -10^5 <= arr[i] <= 10^5
+
+TEST CASES
+  [1] Input    : arr = [3,1,3,6]
+      Expected : false
+
+  [2] Input    : arr = [2,1,2,6]
+      Expected : false
+
+  [3] Input    : arr = [4,-2,2,-4]
+      Expected : true
+      Why      : We can take two groups, [-2,-4] and [2,4] to form [-2,-4,2,4] or [2,4,-2,-4].
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  bool canReorderDoubled(vector<int>& arr);
+
+FILES
+  edit : 954.cpp
+  test : lc run 954
+══════════════════════════════════════════════════════════════════════════

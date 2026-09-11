@@ -1,0 +1,31 @@
+══════════════════════════════════════════════════════════════════════════
+ 379. Design Phone Directory
+ Medium  |  Tags: Array, Hash Table, Linked List, Design, Queue
+ https://leetcode.com/problems/design-phone-directory/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : ["PhoneDirectory","get","get","check","get","check","release","check"] | [[3],[],[],[2],[],[2],[2],[2]]
+      Expected : [null, 0, 1, true, 2, false, null, true]
+
+CODE TYPE
+  design · PhoneDirectory
+    driver: replays ["PhoneDirectory","op",...] / [[args],...] and prints [null,...]
+
+SIGNATURE
+  PhoneDirectory(int maxNumbers);
+  int get();
+  bool check(int number);
+  void release(int number);
+
+FILES
+  edit : 379.cpp
+  test : lc run 379
+══════════════════════════════════════════════════════════════════════════

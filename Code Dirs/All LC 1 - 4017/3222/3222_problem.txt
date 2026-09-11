@@ -1,0 +1,43 @@
+══════════════════════════════════════════════════════════════════════════
+ 3222. Find the Winning Player in Coin Game
+ Easy  |  Tags: Math, Simulation, Game Theory
+ https://leetcode.com/problems/find-the-winning-player-in-coin-game/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given two positive integers x and y, denoting the number of
+  coins with values 75 and 10 respectively.
+
+  Alice and Bob are playing a game. Each turn, starting with Alice, the
+  player must pick up coins with a total value 115. If the player is
+  unable to do so, they lose the game.
+
+  Return the name of the player who wins the game if both players play
+  optimally.
+
+CONSTRAINTS
+  1 <= x, y <= 100
+
+TEST CASES
+  [1] Input    : x = 2, y = 7
+      Expected : "Alice"
+      Why      : The game ends in a single turn:
+                 - Alice picks 1 coin with a value of 75 and 4 coins with a value of 10.
+
+  [2] Input    : x = 4, y = 11
+      Expected : "Bob"
+      Why      : The game ends in 2 turns:
+                 - Alice picks 1 coin with a value of 75 and 4 coins with a value of 10.
+                 - Bob picks 1 coin with a value of 75 and 4 coins with a value of 10.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  string winningPlayer(int x, int y);
+
+FILES
+  edit : 3222.cpp
+  test : lc run 3222
+══════════════════════════════════════════════════════════════════════════

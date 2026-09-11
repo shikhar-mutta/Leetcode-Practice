@@ -1,0 +1,43 @@
+══════════════════════════════════════════════════════════════════════════
+ 1190. Reverse Substrings Between Each Pair of Parentheses
+ Medium  |  Tags: String, Stack, Bracket Sequences
+ https://leetcode.com/problems/reverse-substrings-between-each-pair-of-parentheses/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a string s that consists of lower case English letters and
+  brackets.
+
+  Reverse the strings in each pair of matching parentheses, starting from
+  the innermost one.
+
+  Your result should not contain any brackets.
+
+CONSTRAINTS
+  1 <= s.length <= 2000
+  s only contains lower case English characters and parentheses.
+  It is guaranteed that all parentheses are balanced.
+
+TEST CASES
+  [1] Input    : s = "(abcd)"
+      Expected : "dcba"
+
+  [2] Input    : s = "(u(love)i)"
+      Expected : "iloveu"
+      Why      : The substring "love" is reversed first, then the whole string is reversed.
+
+  [3] Input    : s = "(ed(et(oc))el)"
+      Expected : "leetcode"
+      Why      : First, we reverse the substring "oc", then "etco", and finally, the whole string.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  string reverseParentheses(string s);
+
+FILES
+  edit : 1190.cpp
+  test : lc run 1190
+══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,42 @@
+══════════════════════════════════════════════════════════════════════════
+ 3780. Maximum Sum of Three Numbers Divisible by Three
+ Medium  |  Tags: Array, Greedy, Sorting, Heap (Priority Queue)
+ https://leetcode.com/problems/maximum-sum-of-three-numbers-divisible-by-three/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given an integer array nums.
+
+  Your task is to choose exactly three integers from nums such that their
+  sum is divisible by three.
+
+  Return the maximum possible sum of such a triplet. If no such triplet
+  exists, return 0.
+
+CONSTRAINTS
+  3 <= nums.length <= 10^5
+  1 <= nums[i] <= 10^5
+
+TEST CASES
+  [1] Input    : nums = [4,2,3,1]
+      Expected : 9
+      Why      : The valid triplets whose sum is divisible by 3 are:
+                 - (4, 2, 3) with a sum of 4 + 2 + 3 = 9.
+                 - (2, 3, 1) with a sum of 2 + 3 + 1 = 6.
+                 … (1 more)
+
+  [2] Input    : nums = [2,1,5]
+      Expected : 0
+      Why      : No triplet forms a sum divisible by 3, so the answer is 0.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int maximumSum(vector<int>& nums);
+
+FILES
+  edit : 3780.cpp
+  test : lc run 3780
+══════════════════════════════════════════════════════════════════════════

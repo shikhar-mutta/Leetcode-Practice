@@ -1,0 +1,48 @@
+══════════════════════════════════════════════════════════════════════════
+ 2053. Kth Distinct String in an Array
+ Easy  |  Tags: Array, Hash Table, String, Counting
+ https://leetcode.com/problems/kth-distinct-string-in-an-array/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  A distinct string is a string that is present only once in an array.
+
+  Given an array of strings arr, and an integer k, return the k^th
+  distinct string present in arr. If there are fewer than k distinct
+  strings, return an empty string "".
+
+  Note that the strings are considered in the order in which they appear
+  in the array.
+
+CONSTRAINTS
+  1 <= k <= arr.length <= 1000
+  1 <= arr[i].length <= 5
+  arr[i] consists of lowercase English letters.
+
+TEST CASES
+  [1] Input    : arr = ["d","b","c","b","c","a"], k = 2
+      Expected : "a"
+      Why      : The only distinct strings in arr are "d" and "a".
+                 "d" appears 1^st, so it is the 1^st distinct string.
+                 "a" appears 2^nd, so it is the 2^nd distinct string.
+                 … (1 more)
+
+  [2] Input    : arr = ["aaa","aa","a"], k = 1
+      Expected : "aaa"
+      Why      : All strings in arr are distinct, so the 1^st string "aaa" is returned.
+
+  [3] Input    : arr = ["a","b","a"], k = 3
+      Expected : ""
+      Why      : The only distinct string is "b". Since there are fewer than 3 distinct strings, we return an empty string "".
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  string kthDistinct(vector<string>& arr, int k);
+
+FILES
+  edit : 2053.cpp
+  test : lc run 2053
+══════════════════════════════════════════════════════════════════════════

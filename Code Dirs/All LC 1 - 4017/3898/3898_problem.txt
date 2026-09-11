@@ -1,0 +1,58 @@
+══════════════════════════════════════════════════════════════════════════
+ 3898. Find the Degree of Each Vertex
+ Easy  |  Tags: Array, Graph Theory, Matrix
+ https://leetcode.com/problems/find-the-degree-of-each-vertex/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a 2D integer array matrix of size n x n representing the
+  adjacency matrix of an undirected graph with n vertices labeled from 0
+  to n - 1.
+
+  - matrix[i][j] = 1 indicates that there is an edge between vertices i
+    and j.
+
+  - matrix[i][j] = 0 indicates that there is no edge between vertices i
+    and j.
+
+  The degree of a vertex is the number of edges connected to it.
+
+  Return an integer array ans of size n where ans[i] represents the degree
+  of vertex i.
+
+CONSTRAINTS
+  1 <= n == matrix.length == matrix[i].length <= 100
+  matrix[i][i] == 0
+  matrix[i][j] is either 0 or 1
+  matrix[i][j] == matrix[j][i]
+
+TEST CASES
+  [1] Input    : matrix = [[0,1,1],[1,0,1],[1,1,0]]
+      Expected : [2,2,2]
+      Why      : - Vertex 0 is connected to vertices 1 and 2, so its degree is 2.
+                 - Vertex 1 is connected to vertices 0 and 2, so its degree is 2.
+                 - Vertex 2 is connected to vertices 0 and 1, so its degree is 2.
+                 … (1 more)
+
+  [2] Input    : matrix = [[0,1,0],[1,0,0],[0,0,0]]
+      Expected : [1,1,0]
+      Why      : - Vertex 0 is connected to vertex 1, so its degree is 1.
+                 - Vertex 1 is connected to vertex 0, so its degree is 1.
+                 - Vertex 2 is not connected to any vertex, so its degree is 0.
+                 … (1 more)
+
+  [3] Input    : matrix = [[0]]
+      Expected : [0]
+      Why      : There is only one vertex and it has no edges connected to it. Thus, the answer is [0].
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  vector<int> findDegrees(vector<vector<int>>& matrix);
+
+FILES
+  edit : 3898.cpp
+  test : lc run 3898
+══════════════════════════════════════════════════════════════════════════

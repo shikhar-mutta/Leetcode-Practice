@@ -1,0 +1,43 @@
+══════════════════════════════════════════════════════════════════════════
+ 3046. Split the Array
+ Easy  |  Tags: Array, Hash Table, Counting
+ https://leetcode.com/problems/split-the-array/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given an integer array nums of even length. You have to split
+  the array into two parts nums1 and nums2 such that:
+
+  - nums1.length == nums2.length == nums.length / 2.
+
+  - nums1 should contain distinct elements.
+
+  - nums2 should also contain distinct elements.
+
+  Return true if it is possible to split the array, and false otherwise.
+
+CONSTRAINTS
+  1 <= nums.length <= 100
+  nums.length % 2 == 0
+  1 <= nums[i] <= 100
+
+TEST CASES
+  [1] Input    : nums = [1,1,2,2,3,4]
+      Expected : true
+      Why      : One of the possible ways to split nums is nums1 = [1,2,3] and nums2 = [1,2,4].
+
+  [2] Input    : nums = [1,1,1,1]
+      Expected : false
+      Why      : The only possible way to split nums is nums1 = [1,1] and nums2 = [1,1]. Both nums1 and nums2 do not contain distinct elements. Therefore, we return false.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  bool isPossibleToSplit(vector<int>& nums);
+
+FILES
+  edit : 3046.cpp
+  test : lc run 3046
+══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,35 @@
+══════════════════════════════════════════════════════════════════════════
+ 110. Balanced Binary Tree
+ Easy  |  Tags: Tree, Depth-First Search, Binary Tree
+ https://leetcode.com/problems/balanced-binary-tree/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given a binary tree, determine if it is height-balanced.
+
+CONSTRAINTS
+  The number of nodes in the tree is in the range [0, 5000].
+  -10^4 <= Node.val <= 10^4
+
+TEST CASES
+  [1] Input    : root = [3,9,20,null,null,15,7]
+      Expected : true
+
+  [2] Input    : root = [1,2,2,3,3,null,null,4,4]
+      Expected : false
+
+  [3] Input    : root = []
+      Expected : true
+
+CODE TYPE
+  function · tree
+    driver: one Solution call per test case
+    tree: TreeNode* — level order, e.g. [3,9,20,null,null,15,7]
+
+SIGNATURE
+  bool isBalanced(TreeNode* root);
+
+FILES
+  edit : 110.cpp
+  test : lc run 110
+══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,39 @@
+══════════════════════════════════════════════════════════════════════════
+ 564. Find the Closest Palindrome
+ Hard  |  Tags: Math, String
+ https://leetcode.com/problems/find-the-closest-palindrome/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given a string n representing an integer, return the closest integer
+  (not including itself), which is a palindrome. If there is a tie, return
+  the smaller one.
+
+  The closest is defined as the absolute difference minimized between two
+  integers.
+
+CONSTRAINTS
+  1 <= n.length <= 18
+  n consists of only digits.
+  n does not have leading zeros.
+  n is representing an integer in the range [1, 10^18 - 1].
+
+TEST CASES
+  [1] Input    : n = "123"
+      Expected : "121"
+
+  [2] Input    : n = "1"
+      Expected : "0"
+      Why      : 0 and 2 are the closest palindromes but we return the smallest which is 0.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  string nearestPalindromic(string n);
+
+FILES
+  edit : 564.cpp
+  test : lc run 564
+══════════════════════════════════════════════════════════════════════════

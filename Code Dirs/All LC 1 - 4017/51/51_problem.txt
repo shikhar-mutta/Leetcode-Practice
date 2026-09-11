@@ -1,0 +1,39 @@
+══════════════════════════════════════════════════════════════════════════
+ 51. N-Queens
+ Hard  |  Tags: Array, Backtracking, Algorithm X
+ https://leetcode.com/problems/n-queens/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  The n-queens puzzle is the problem of placing n queens on an n x n
+  chessboard such that no two queens attack each other.
+
+  Given an integer n, return all distinct solutions to the n-queens
+  puzzle. You may return the answer in any order.
+
+  Each solution contains a distinct board configuration of the n-queens'
+  placement, where 'Q' and '.' both indicate a queen and an empty space,
+  respectively.
+
+CONSTRAINTS
+  1 <= n <= 9
+
+TEST CASES
+  [1] Input    : n = 4
+      Expected : [[".Q..","...Q","Q...","..Q."],["..Q.","Q...","...Q",".Q.."]]
+      Why      : There exist two distinct solutions to the 4-queens puzzle as shown above
+
+  [2] Input    : n = 1
+      Expected : [["Q"]]
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  vector<vector<string>> solveNQueens(int n);
+
+FILES
+  edit : 51.cpp
+  test : lc run 51
+══════════════════════════════════════════════════════════════════════════

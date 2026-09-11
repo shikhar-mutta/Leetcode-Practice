@@ -1,0 +1,38 @@
+══════════════════════════════════════════════════════════════════════════
+ 367. Valid Perfect Square
+ Easy  |  Tags: Math, Binary Search
+ https://leetcode.com/problems/valid-perfect-square/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given a positive integer num, return true if num is a perfect square or
+  false otherwise.
+
+  A perfect square is an integer that is the square of an integer. In
+  other words, it is the product of some integer with itself.
+
+  You must not use any built-in library function, such as sqrt.
+
+CONSTRAINTS
+  1 <= num <= 2^31 - 1
+
+TEST CASES
+  [1] Input    : num = 16
+      Expected : true
+      Why      : We return true because 4 * 4 = 16 and 4 is an integer.
+
+  [2] Input    : num = 14
+      Expected : false
+      Why      : We return false because 3.742 * 3.742 = 14 and 3.742 is not an integer.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  bool isPerfectSquare(int num);
+
+FILES
+  edit : 367.cpp
+  test : lc run 367
+══════════════════════════════════════════════════════════════════════════

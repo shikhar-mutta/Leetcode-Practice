@@ -1,0 +1,41 @@
+══════════════════════════════════════════════════════════════════════════
+ 2405. Optimal Partition of String
+ Medium  |  Tags: Hash Table, String, Greedy
+ https://leetcode.com/problems/optimal-partition-of-string/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given a string s, partition the string into one or more substrings such
+  that the characters in each substring are unique. That is, no letter
+  appears in a single substring more than once.
+
+  Return the minimum number of substrings in such a partition.
+
+  Note that each character should belong to exactly one substring in a
+  partition.
+
+CONSTRAINTS
+  1 <= s.length <= 10^5
+  s consists of only English lowercase letters.
+
+TEST CASES
+  [1] Input    : s = "abacaba"
+      Expected : 4
+      Why      : Two possible partitions are ("a","ba","cab","a") and ("ab","a","ca","ba").
+                 It can be shown that 4 is the minimum number of substrings needed.
+
+  [2] Input    : s = "ssssss"
+      Expected : 6
+      Why      : The only valid partition is ("s","s","s","s","s","s").
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int partitionString(string s);
+
+FILES
+  edit : 2405.cpp
+  test : lc run 2405
+══════════════════════════════════════════════════════════════════════════

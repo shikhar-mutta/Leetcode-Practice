@@ -1,0 +1,43 @@
+══════════════════════════════════════════════════════════════════════════
+ 2864. Maximum Odd Binary Number
+ Easy  |  Tags: Math, String, Greedy
+ https://leetcode.com/problems/maximum-odd-binary-number/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a binary string s that contains at least one '1'.
+
+  You have to rearrange the bits in such a way that the resulting binary
+  number is the maximum odd binary number that can be created from this
+  combination.
+
+  Return a string representing the maximum odd binary number that can be
+  created from the given combination.
+
+  Note that the resulting string can have leading zeros.
+
+CONSTRAINTS
+  1 <= s.length <= 100
+  s consists only of '0' and '1'.
+  s contains at least one '1'.
+
+TEST CASES
+  [1] Input    : s = "010"
+      Expected : "001"
+      Why      : Because there is just one '1', it must be in the last position. So the answer is "001".
+
+  [2] Input    : s = "0101"
+      Expected : "1001"
+      Why      : One of the '1's must be in the last position. The maximum number that can be made with the remaining digits is "100". So the answer is "1001".
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  string maximumOddBinaryNumber(string s);
+
+FILES
+  edit : 2864.cpp
+  test : lc run 2864
+══════════════════════════════════════════════════════════════════════════

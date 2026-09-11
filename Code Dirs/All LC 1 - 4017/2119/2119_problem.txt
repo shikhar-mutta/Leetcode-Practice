@@ -1,0 +1,43 @@
+══════════════════════════════════════════════════════════════════════════
+ 2119. A Number After a Double Reversal
+ Easy  |  Tags: Math
+ https://leetcode.com/problems/a-number-after-a-double-reversal/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Reversing an integer means to reverse all its digits.
+
+  - For example, reversing 2021 gives 1202. Reversing 12300 gives 321 as
+    the leading zeros are not retained.
+
+  Given an integer num, reverse num to get reversed1, then reverse
+  reversed1 to get reversed2. Return true if reversed2 equals num.
+  Otherwise return false.
+
+CONSTRAINTS
+  0 <= num <= 10^6
+
+TEST CASES
+  [1] Input    : num = 526
+      Expected : true
+      Why      : Reverse num to get 625, then reverse 625 to get 526, which equals num.
+
+  [2] Input    : num = 1800
+      Expected : false
+      Why      : Reverse num to get 81, then reverse 81 to get 18, which does not equal num.
+
+  [3] Input    : num = 0
+      Expected : true
+      Why      : Reverse num to get 0, then reverse 0 to get 0, which equals num.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  bool isSameAfterReversals(int num);
+
+FILES
+  edit : 2119.cpp
+  test : lc run 2119
+══════════════════════════════════════════════════════════════════════════

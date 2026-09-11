@@ -1,0 +1,28 @@
+══════════════════════════════════════════════════════════════════════════
+ 311. Sparse Matrix Multiplication
+ Medium  |  Tags: Array, Hash Table, Matrix, Linear Algebra
+ https://leetcode.com/problems/sparse-matrix-multiplication/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : [[1,0,0],[-1,0,3]] | [[7,0,0],[0,0,0],[0,0,1]]
+      Expected : [[7,0,0],[-7,0,3]]
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  vector<vector<int>> multiply(vector<vector<int>>& mat1, vector<vector<int>>& mat2);
+
+FILES
+  edit : 311.cpp
+  test : lc run 311
+══════════════════════════════════════════════════════════════════════════

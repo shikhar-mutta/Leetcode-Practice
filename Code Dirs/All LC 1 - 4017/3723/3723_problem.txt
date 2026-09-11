@@ -1,0 +1,55 @@
+══════════════════════════════════════════════════════════════════════════
+ 3723. Maximize Sum of Squares of Digits
+ Medium  |  Tags: Math, Greedy
+ https://leetcode.com/problems/maximize-sum-of-squares-of-digits/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given two positive integers num and sum.
+
+  A positive integer n is good if it satisfies both of the following:
+
+  - The number of digits in n is exactly num.
+
+  - The sum of digits in n is exactly sum.
+
+  The score of a good integer n is the sum of the squares of digits in n.
+
+  Return a string denoting the good integer n that achieves the maximum
+  score. If there are multiple possible integers, return the maximum one.
+  If no such integer exists, return an empty string.
+
+CONSTRAINTS
+  1 <= num <= 2 * 10^5
+  1 <= sum <= 2 * 10^6
+
+TEST CASES
+  [1] Input    : num = 2, sum = 3
+      Expected : "30"
+      Why      : There are 3 good integers: 12, 21, and 30.
+                 - The score of 12 is 1^2 + 2^2 = 5.
+                 - The score of 21 is 2^2 + 1^2 = 5.
+                 … (2 more)
+
+  [2] Input    : num = 2, sum = 17
+      Expected : "98"
+      Why      : There are 2 good integers: 89 and 98.
+                 - The score of 89 is 8^2 + 9^2 = 145.
+                 - The score of 98 is 9^2 + 8^2 = 145.
+                 … (1 more)
+
+  [3] Input    : num = 1, sum = 10
+      Expected : ""
+      Why      : There are no integers that have exactly 1 digit and whose digits sum to 10. Therefore, the answer is "".
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  string maxSumOfSquares(int num, int sum);
+
+FILES
+  edit : 3723.cpp
+  test : lc run 3723
+══════════════════════════════════════════════════════════════════════════

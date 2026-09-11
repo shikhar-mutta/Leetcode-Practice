@@ -1,0 +1,40 @@
+══════════════════════════════════════════════════════════════════════════
+ 9. Palindrome Number
+ Easy  |  Tags: Math
+ https://leetcode.com/problems/palindrome-number/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given an integer x, return true if x is a palindrome, and false
+  otherwise.
+
+CONSTRAINTS
+  -2^31 <= x <= 2^31 - 1
+
+TEST CASES
+  [1] Input    : x = 121
+      Expected : true
+      Why      : 121 reads as 121 from left to right and from right to left.
+
+  [2] Input    : x = -121
+      Expected : false
+      Why      : From left to right, it reads -121. From right to left, it becomes 121-. Therefore it is not a palindrome.
+
+  [3] Input    : x = 10
+      Expected : false
+      Why      : Reads 01 from right to left. Therefore it is not a palindrome.
+
+FOLLOW UP
+  Could you solve it without converting the integer to a string?
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  bool isPalindrome(int x);
+
+FILES
+  edit : 9.cpp
+  test : lc run 9
+══════════════════════════════════════════════════════════════════════════

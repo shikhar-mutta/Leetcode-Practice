@@ -1,0 +1,31 @@
+══════════════════════════════════════════════════════════════════════════
+ 320. Generalized Abbreviation
+ Medium  |  Tags: String, Backtracking, Bit Manipulation
+ https://leetcode.com/problems/generalized-abbreviation/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : "word"
+      Expected : ["1o1d","1o2","1or1","1ord","2r1","2rd","3d","4","w1r1","w1rd","w2d","w3","wo1d","wo2","wor1","word"]
+
+  [2] Input    : ""
+      Expected : [""]
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  vector<string> generateAbbreviations(string word);
+
+FILES
+  edit : 320.cpp
+  test : lc run 320
+══════════════════════════════════════════════════════════════════════════

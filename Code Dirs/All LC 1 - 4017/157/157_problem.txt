@@ -1,0 +1,32 @@
+══════════════════════════════════════════════════════════════════════════
+ 157. Read N Characters Given Read4
+ Easy  |  Tags: Array, Simulation, Interactive
+ https://leetcode.com/problems/read-n-characters-given-read4/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : "abc" | 4
+      Expected : "abc"
+
+  [2] Input    : "abcde" | 5
+      Expected : "abcde"
+
+CODE TYPE
+  interactive · API read4()
+    driver: mocks what the judge supplies, backed by each case's data
+    hidden API: read4() — declared in the solution, defined by the driver
+
+SIGNATURE
+  int read(char *buf, int n);
+
+FILES
+  edit : 157.cpp
+  test : lc run 157
+══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,32 @@
+══════════════════════════════════════════════════════════════════════════
+ 1804. Implement Trie II (Prefix Tree)
+ Medium  |  Tags: Hash Table, String, Design, Trie
+ https://leetcode.com/problems/implement-trie-ii-prefix-tree/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : ["Trie","insert","insert","countWordsEqualTo","countWordsStartingWith","erase","countWordsEqualTo","countWordsStartingWith","insert","countWordsStartingWith"] | [[],["apple"],["apple"],["apple"],["app"],["apple"],["apple"],["app"],["app"],["app"]]
+      Expected : [null,null,null,2,2,null,1,1,null,2]
+
+CODE TYPE
+  design · Trie
+    driver: replays ["Trie","op",...] / [[args],...] and prints [null,...]
+
+SIGNATURE
+  Trie();
+  void insert(string word);
+  int countWordsEqualTo(string word);
+  int countWordsStartingWith(string prefix);
+  void erase(string word);
+
+FILES
+  edit : 1804.cpp
+  test : lc run 1804
+══════════════════════════════════════════════════════════════════════════

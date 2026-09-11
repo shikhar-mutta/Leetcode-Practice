@@ -1,0 +1,33 @@
+══════════════════════════════════════════════════════════════════════════
+ 423. Reconstruct Original Digits from English
+ Medium  |  Tags: Hash Table, Math, String
+ https://leetcode.com/problems/reconstruct-original-digits-from-english/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given a string s containing an out-of-order English representation of
+  digits 0-9, return the digits in ascending order.
+
+CONSTRAINTS
+  1 <= s.length <= 10^5
+  s[i] is one of the characters ["e","g","f","i","h","o","n","s","r","u","t","w","v","x","z"].
+  s is guaranteed to be valid.
+
+TEST CASES
+  [1] Input    : s = "owoztneoer"
+      Expected : "012"
+
+  [2] Input    : s = "fviefuro"
+      Expected : "45"
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  string originalDigits(string s);
+
+FILES
+  edit : 423.cpp
+  test : lc run 423
+══════════════════════════════════════════════════════════════════════════

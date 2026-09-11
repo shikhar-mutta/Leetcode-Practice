@@ -1,0 +1,43 @@
+══════════════════════════════════════════════════════════════════════════
+ 334. Increasing Triplet Subsequence
+ Medium  |  Tags: Array, Greedy, Longest Increasing Subsequence
+ https://leetcode.com/problems/increasing-triplet-subsequence/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given an integer array nums, return true if there exists a triple of
+  indices (i, j, k) such that i < j < k and nums[i] < nums[j] < nums[k].
+  If no such indices exists, return false.
+
+CONSTRAINTS
+  1 <= nums.length <= 5 * 10^5
+  -2^31 <= nums[i] <= 2^31 - 1
+
+TEST CASES
+  [1] Input    : nums = [1,2,3,4,5]
+      Expected : true
+      Why      : Any triplet where i < j < k is valid.
+
+  [2] Input    : nums = [5,4,3,2,1]
+      Expected : false
+      Why      : No triplet exists.
+
+  [3] Input    : nums = [2,1,5,0,4,6]
+      Expected : true
+      Why      : One of the valid triplet is (1, 4, 5), because nums[1] == 1 < nums[4] == 4 < nums[5] == 6.
+
+FOLLOW UP
+  Could you implement a solution that runs in O(n) time complexity and
+  O(1) space complexity?
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  bool increasingTriplet(vector<int>& nums);
+
+FILES
+  edit : 334.cpp
+  test : lc run 334
+══════════════════════════════════════════════════════════════════════════

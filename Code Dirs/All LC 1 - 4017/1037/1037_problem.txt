@@ -1,0 +1,36 @@
+══════════════════════════════════════════════════════════════════════════
+ 1037. Valid Boomerang
+ Easy  |  Tags: Array, Math, Geometry
+ https://leetcode.com/problems/valid-boomerang/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given an array points where points[i] = [xi, yi] represents a point on
+  the X-Y plane, return true if these points are a boomerang.
+
+  A boomerang is a set of three points that are all distinct and not in a
+  straight line.
+
+CONSTRAINTS
+  points.length == 3
+  points[i].length == 2
+  0 <= xi, yi <= 100
+
+TEST CASES
+  [1] Input    : points = [[1,1],[2,3],[3,2]]
+      Expected : true
+
+  [2] Input    : points = [[1,1],[2,2],[3,3]]
+      Expected : false
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  bool isBoomerang(vector<vector<int>>& points);
+
+FILES
+  edit : 1037.cpp
+  test : lc run 1037
+══════════════════════════════════════════════════════════════════════════

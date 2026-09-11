@@ -1,0 +1,45 @@
+══════════════════════════════════════════════════════════════════════════
+ 827. Making A Large Island
+ Hard  |  Tags: Array, Depth-First Search, Breadth-First Search, Union-Find, Matrix
+ https://leetcode.com/problems/making-a-large-island/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given an n x n binary matrix grid. You are allowed to change at
+  most one 0 to be 1.
+
+  Return the size of the largest island in grid after applying this
+  operation.
+
+  An island is a 4-directionally connected group of 1s.
+
+CONSTRAINTS
+  n == grid.length
+  n == grid[i].length
+  1 <= n <= 500
+  grid[i][j] is either 0 or 1.
+
+TEST CASES
+  [1] Input    : grid = [[1,0],[0,1]]
+      Expected : 3
+      Why      : Change one 0 to 1 and connect two 1s, then we get an island with area = 3.
+
+  [2] Input    : grid = [[1,1],[1,0]]
+      Expected : 4
+      Why      : Change the 0 to 1 and make the island bigger, only one island with area = 4.
+
+  [3] Input    : grid = [[1,1],[1,1]]
+      Expected : 4
+      Why      : Can't change any 0 to 1, only one island with area = 4.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int largestIsland(vector<vector<int>>& grid);
+
+FILES
+  edit : 827.cpp
+  test : lc run 827
+══════════════════════════════════════════════════════════════════════════

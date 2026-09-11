@@ -49,8 +49,8 @@ _NODE_KINDS = (
     ("next", "next pointers"),
 )
 
-#: Capitalised names in a signature that are the standard library, not an interface.
-_STD = frozenset({"Solution"})
+#: Capitalised names in a signature that are never a judge-supplied type.
+_NOT_TYPES = frozenset({"Solution"})
 
 _SIG_LINE = re.compile(r"^    (.+?\))[^()]*\{$", re.M)
 
@@ -80,7 +80,7 @@ class CodeType:
     def environment(self) -> list[str]:
         """What the scaffold has to provide for this shape, one line each."""
         out = {
-            "function": f"driver: one Solution call per test case",
+            "function": "driver: one Solution call per test case",
             "design": f"driver: replays [\"{self.cls}\",\"op\",...] / [[args],...] and prints [null,...]",
             "concurrency": "driver: runs each method on its own thread, checks the combined output",
             "interactive": "driver: mocks what the judge supplies, backed by each case's data",
@@ -110,7 +110,28 @@ def _definition(name: str, text: str) -> str:
 
 
 _CLASS_BLOCK = re.compile(r"\b(?:class|struct)\s+\w+[^;{]*\{.*?\n\s*\};", re.S)
-_PROTOTYPE = re.compile(r"^\s*(?:[\w:<>]+[\s*&]+)+(\w+)\s*\(([^()]*)\)\s*;", re.M)
+#: A C++ type as LeetCode writes one in an API declaration. Anchoring on this
+#: keeps prose in comments ("sum the values (a and b);") from reading as code.
+_CTYPE = r"(?:const\s+)?(?:unsigned\s+)?(?:long\s+long|int|bool|void|char|double|float|long|string|vector<.*?>+|[A-Z]\w*)\s*[*&]*"
+_PROTOTYPE = re.compile(rf"^\s*{_CTYPE}\s*(\w+)\s*\(([^()]*)\)\s*;", re.M)
+_PARAM = re.compile(rf"^\s*{_CTYPE}\s*\w+\s*$")
+
+
+def _sig_types(sig: str) -> str:
+    """Only the types of a signature: `int f(vector<int>& A, int K)` → `int vector<int>& int`."""
+    m = re.match(r"(.*?)\b\w+\s*\((.*)\)", sig)
+    if not m:
+        return sig
+    parts, depth, cur = [m.group(1)], 0, ""
+    for c in m.group(2) + ",":
+        depth += {"<": 1, "(": 1, ">": -1, ")": -1}.get(c, 0)
+        if c == "," and depth == 0:
+            p = cur.strip()
+            parts.append(re.sub(r"\b\w+\s*$", "", p) if len(re.findall(r"\w+", p)) > 1 else p)
+            cur = ""
+        else:
+            cur += c
+    return " ".join(parts)
 
 
 def _hidden_apis(text: str, s: str, methods: set[str]) -> list[str]:
@@ -128,8 +149,7 @@ def _hidden_apis(text: str, s: str, methods: set[str]) -> list[str]:
     found = []
     for m in _PROTOTYPE.finditer(flat):
         name, params = m.group(1), m.group(2).strip()
-        declared = params in ("", "void") or all(
-            len(re.findall(r"\w+", p)) >= 2 for p in params.split(","))
+        declared = params in ("", "void") or all(_PARAM.match(p) for p in params.split(","))
         if declared and name not in methods and name not in found and not name[0].isupper():
             found.append(name)
     return found
@@ -139,10 +159,16 @@ def _has_methods(name: str, body: str) -> bool:
     """
     Whether a type definition declares member functions — an interface like
     MountainArray — or only data, like Employee. Constructors and their
-    initialiser lists (`: val(x), left(NULL) {}`) are not methods.
+    initialiser lists (`: val(x), left(NULL) {}`) are not methods, and nor is
+    anything inside a body, so function bodies are removed first.
     """
+    while True:
+        stripped = re.sub(r"\{[^{}]*\}", ";", body)
+        if stripped == body:
+            break
+        body = stripped
     return any(n != name for n in re.findall(
-        r"[\w>*&]\s+\*?&?(\w+)\s*\([^()]*\)\s*(?:const\s*)?(?:=\s*0\s*)?[;{]", body))
+        r"[\w>*&]\s+\*?&?(\w+)\s*\([^()]*\)\s*(?:const\s*)?(?:=\s*0\s*)?;", body))
 
 
 def analyse(text: str, driver: str = "") -> CodeType | None:
@@ -160,7 +186,7 @@ def analyse(text: str, driver: str = "") -> CodeType | None:
     methods = [m.group(1) for m in _SIG_LINE.finditer(body)]
     names = {re.search(r"(\w+)\s*\(", m).group(1) for m in methods}
 
-    sig_text = " ".join(methods)
+    sig_text = " ".join(_sig_types(m) for m in methods)   # parameter names like `A`, `K` are not types
     ctor_params = any(re.match(rf"{cls}\s*\(\s*[^)\s]", m) for m in methods)
     if "function<" in sig_text:
         shape = "concurrency"
@@ -171,7 +197,7 @@ def analyse(text: str, driver: str = "") -> CodeType | None:
 
     sources = _uncomment(text) + "\n" + _uncomment(driver)
     structures, interfaces = [], []
-    types = set(re.findall(r"\b([A-Z]\w*)\b", sig_text + " " + bases)) - {cls} - _STD
+    types = set(re.findall(r"\b([A-Z]\w*)\b", sig_text + " " + bases)) - {cls} - _NOT_TYPES
     for t in sorted(types, key=lambda t: sig_text.find(t)):
         if t == "TreeNode":
             kind = "tree"

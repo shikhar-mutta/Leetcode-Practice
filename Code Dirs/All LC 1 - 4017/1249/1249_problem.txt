@@ -1,0 +1,49 @@
+══════════════════════════════════════════════════════════════════════════
+ 1249. Minimum Remove to Make Valid Parentheses
+ Medium  |  Tags: String, Stack
+ https://leetcode.com/problems/minimum-remove-to-make-valid-parentheses/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given a string s of '(' , ')' and lowercase English characters.
+
+  Your task is to remove the minimum number of parentheses ( '(' or ')',
+  in any positions ) so that the resulting parentheses string is valid and
+  return any valid string.
+
+  Formally, a parentheses string is valid if and only if:
+
+  - It is the empty string, contains only lowercase characters, or
+
+  - It can be written as AB (A concatenated with B), where A and B are
+    valid strings, or
+
+  - It can be written as (A), where A is a valid string.
+
+CONSTRAINTS
+  1 <= s.length <= 10^5
+  s[i] is either '(' , ')', or lowercase English letter.
+
+TEST CASES
+  [1] Input    : s = "lee(t(c)o)de)"
+      Expected : "lee(t(c)o)de"
+      Why      : "lee(t(co)de)" , "lee(t(c)ode)" would also be accepted.
+
+  [2] Input    : s = "a)b(c)d"
+      Expected : "ab(c)d"
+
+  [3] Input    : s = "))(("
+      Expected : ""
+      Why      : An empty string is also valid.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  string minRemoveToMakeValid(string s);
+
+FILES
+  edit : 1249.cpp
+  test : lc run 1249
+══════════════════════════════════════════════════════════════════════════

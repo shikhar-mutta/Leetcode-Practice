@@ -1,0 +1,47 @@
+══════════════════════════════════════════════════════════════════════════
+ 1005. Maximize Sum Of Array After K Negations
+ Easy  |  Tags: Array, Greedy, Sorting
+ https://leetcode.com/problems/maximize-sum-of-array-after-k-negations/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given an integer array nums and an integer k, modify the array in the
+  following way:
+
+  - choose an index i and replace nums[i] with -nums[i].
+
+  You should apply this process exactly k times. You may choose the same
+  index i multiple times.
+
+  Return the largest possible sum of the array after modifying it in this
+  way.
+
+CONSTRAINTS
+  1 <= nums.length <= 10^4
+  -100 <= nums[i] <= 100
+  1 <= k <= 10^4
+
+TEST CASES
+  [1] Input    : nums = [4,2,3], k = 1
+      Expected : 5
+      Why      : Choose index 1 and nums becomes [4,-2,3].
+
+  [2] Input    : nums = [3,-1,0,2], k = 3
+      Expected : 6
+      Why      : Choose indices (1, 2, 2) and nums becomes [3,1,0,2].
+
+  [3] Input    : nums = [2,-3,-1,5,-4], k = 2
+      Expected : 13
+      Why      : Choose indices (1, 4) and nums becomes [2,3,-1,5,4].
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int largestSumAfterKNegations(vector<int>& nums, int k);
+
+FILES
+  edit : 1005.cpp
+  test : lc run 1005
+══════════════════════════════════════════════════════════════════════════

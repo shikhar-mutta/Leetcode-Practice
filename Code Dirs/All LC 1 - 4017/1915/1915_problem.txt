@@ -1,0 +1,61 @@
+══════════════════════════════════════════════════════════════════════════
+ 1915. Number of Wonderful Substrings
+ Medium  |  Tags: Hash Table, String, Bit Manipulation, Prefix Sum
+ https://leetcode.com/problems/number-of-wonderful-substrings/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  A wonderful string is a string where at most one letter appears an odd
+  number of times.
+
+
+
+  - For example, "ccjjc" and "abab" are wonderful, but "ab" is not.
+
+
+
+
+  Given a string word that consists of the first ten lowercase English
+  letters ('a' through 'j'), return the number of wonderful non-empty
+  substrings in word. If the same substring appears multiple times in
+  word, then count each occurrence separately.
+
+
+  A substring is a contiguous sequence of characters in a string.
+
+CONSTRAINTS
+  1 <= word.length <= 10^5
+  word consists of lowercase English letters from 'a' to 'j'.
+
+TEST CASES
+  [1] Input    : word = "aba"
+      Expected : 4
+      Why      : The four wonderful substrings are underlined below:
+                 - "aba" -> "a"
+                 - "aba" -> "b"
+                 … (2 more)
+
+  [2] Input    : word = "aabb"
+      Expected : 9
+      Why      : The nine wonderful substrings are underlined below:
+                 - "aabb" -> "a"
+                 - "aabb" -> "aa"
+                 … (7 more)
+
+  [3] Input    : word = "he"
+      Expected : 2
+      Why      : The two wonderful substrings are underlined below:
+                 - "he" -> "h"
+                 - "he" -> "e"
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  long long wonderfulSubstrings(string word);
+
+FILES
+  edit : 1915.cpp
+  test : lc run 1915
+══════════════════════════════════════════════════════════════════════════

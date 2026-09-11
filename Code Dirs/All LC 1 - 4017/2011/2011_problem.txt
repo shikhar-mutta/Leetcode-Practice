@@ -1,0 +1,56 @@
+══════════════════════════════════════════════════════════════════════════
+ 2011. Final Value of Variable After Performing Operations
+ Easy  |  Tags: Array, String, Simulation
+ https://leetcode.com/problems/final-value-of-variable-after-performing-operations/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  There is a programming language with only four operations and one
+  variable X:
+
+  - ++X and X++ increments the value of the variable X by 1.
+
+  - --X and X-- decrements the value of the variable X by 1.
+
+  Initially, the value of X is 0.
+
+  Given an array of strings operations containing a list of operations,
+  return the final value of X after performing all the operations.
+
+CONSTRAINTS
+  1 <= operations.length <= 100
+  operations[i] will be either "++X", "X++", "--X", or "X--".
+
+TEST CASES
+  [1] Input    : operations = ["--X","X++","X++"]
+      Expected : 1
+      Why      : The operations are performed as follows:
+                 Initially, X = 0.
+                 --X: X is decremented by 1, X = 0 - 1 = -1.
+                 … (2 more)
+
+  [2] Input    : operations = ["++X","++X","X++"]
+      Expected : 3
+      Why      : The operations are performed as follows:
+                 Initially, X = 0.
+                 ++X: X is incremented by 1, X = 0 + 1 = 1.
+                 … (2 more)
+
+  [3] Input    : operations = ["X++","++X","--X","X--"]
+      Expected : 0
+      Why      : The operations are performed as follows:
+                 Initially, X = 0.
+                 X++: X is incremented by 1, X = 0 + 1 = 1.
+                 … (3 more)
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int finalValueAfterOperations(vector<string>& operations);
+
+FILES
+  edit : 2011.cpp
+  test : lc run 2011
+══════════════════════════════════════════════════════════════════════════

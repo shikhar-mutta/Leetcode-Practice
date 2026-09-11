@@ -1,0 +1,28 @@
+══════════════════════════════════════════════════════════════════════════
+ 1257. Smallest Common Region
+ Medium  |  Tags: Array, Hash Table, String, Tree, Depth-First Search, Breadth-First Search, Binary Lifting, Lowest Common Ancestor
+ https://leetcode.com/problems/smallest-common-region/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : [["Earth","North America","South America"],["North America","United States","Canada"],["United States","New York","Boston"],["Canada","Ontario","Quebec"],["South America","Brazil"]] | "Quebec" | "New York"
+      Expected : North America
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  string findSmallestRegion(vector<vector<string>>& regions, string region1, string region2);
+
+FILES
+  edit : 1257.cpp
+  test : lc run 1257
+══════════════════════════════════════════════════════════════════════════

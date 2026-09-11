@@ -1,0 +1,33 @@
+══════════════════════════════════════════════════════════════════════════
+ 1166. Design File System
+ Medium  |  Tags: Hash Table, String, Design, Trie
+ https://leetcode.com/problems/design-file-system/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : ["FileSystem","createPath","get"] | [[],["/a",1],["/a"]]
+      Expected : [null, true, 1]
+
+  [2] Input    : ["FileSystem","createPath","createPath","get","createPath","get"] | [[],["/leet",1],["/leet/code",2],["/leet/code"],["/c/d",1],["/c"]]
+      Expected : [null, true, true, 2, false, -1]
+
+CODE TYPE
+  design · FileSystem
+    driver: replays ["FileSystem","op",...] / [[args],...] and prints [null,...]
+
+SIGNATURE
+  FileSystem();
+  bool createPath(string path, int value);
+  int get(string path);
+
+FILES
+  edit : 1166.cpp
+  test : lc run 1166
+══════════════════════════════════════════════════════════════════════════

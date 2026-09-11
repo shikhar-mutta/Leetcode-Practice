@@ -1,0 +1,41 @@
+══════════════════════════════════════════════════════════════════════════
+ 766. Toeplitz Matrix
+ Easy  |  Tags: Array, Matrix
+ https://leetcode.com/problems/toeplitz-matrix/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given an m x n matrix, return true if the matrix is Toeplitz. Otherwise,
+  return false.
+
+  A matrix is Toeplitz if every diagonal from top-left to bottom-right has
+  the same elements.
+
+CONSTRAINTS
+  m == matrix.length
+  n == matrix[i].length
+  1 <= m, n <= 20
+  0 <= matrix[i][j] <= 99
+
+TEST CASES
+  [1] Input    : matrix = [[1,2,3,4],[5,1,2,3],[9,5,1,2]]
+      Expected : true
+      Why      : In the above grid, the diagonals are:
+                 "[9]", "[5, 5]", "[1, 1, 1]", "[2, 2, 2]", "[3, 3]", "[4]".
+                 In each diagonal all elements are the same, so the answer is True.
+
+  [2] Input    : matrix = [[1,2],[2,2]]
+      Expected : false
+      Why      : The diagonal "[1, 2]" has different elements.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  bool isToeplitzMatrix(vector<vector<int>>& matrix);
+
+FILES
+  edit : 766.cpp
+  test : lc run 766
+══════════════════════════════════════════════════════════════════════════

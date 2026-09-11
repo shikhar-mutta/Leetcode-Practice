@@ -1,0 +1,31 @@
+══════════════════════════════════════════════════════════════════════════
+ 1554. Strings Differ by One Character
+ Medium  |  Tags: Hash Table, String, Rolling Hash, Hash Function
+ https://leetcode.com/problems/strings-differ-by-one-character/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : ["abcd","acbd","aacd"]
+      Expected : true
+
+  [2] Input    : ["ab","cd","yz"]
+      Expected : false
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  bool differByOne(vector<string>& dict);
+
+FILES
+  edit : 1554.cpp
+  test : lc run 1554
+══════════════════════════════════════════════════════════════════════════

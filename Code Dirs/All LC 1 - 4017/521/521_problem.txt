@@ -1,0 +1,43 @@
+══════════════════════════════════════════════════════════════════════════
+ 521. Longest Uncommon Subsequence I
+ Easy  |  Tags: String
+ https://leetcode.com/problems/longest-uncommon-subsequence-i/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given two strings a and b, return the length of the longest uncommon
+  subsequence between a and b. If no such uncommon subsequence exists,
+  return -1.
+
+  An uncommon subsequence between two strings is a string that is a
+  subsequence of exactly one of them.
+
+CONSTRAINTS
+  1 <= a.length, b.length <= 100
+  a and b consist of lower-case English letters.
+
+TEST CASES
+  [1] Input    : a = "aba", b = "cdc"
+      Expected : 3
+      Why      : One longest uncommon subsequence is "aba" because "aba" is a subsequence of "aba" but not "cdc".
+                 Note that "cdc" is also a longest uncommon subsequence.
+
+  [2] Input    : a = "aaa", b = "bbb"
+      Expected : 3
+      Why      : The longest uncommon subsequences are "aaa" and "bbb".
+
+  [3] Input    : a = "aaa", b = "aaa"
+      Expected : -1
+      Why      : Every subsequence of string a is also a subsequence of string b. Similarly, every subsequence of string b is also a subsequence of string a. So the answer would be -1.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int findLUSlength(string a, string b);
+
+FILES
+  edit : 521.cpp
+  test : lc run 521
+══════════════════════════════════════════════════════════════════════════

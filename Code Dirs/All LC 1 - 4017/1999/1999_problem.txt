@@ -1,0 +1,34 @@
+══════════════════════════════════════════════════════════════════════════
+ 1999. Smallest Greater Multiple Made of Two Digits
+ Medium  |  Tags: Math, Enumeration
+ https://leetcode.com/problems/smallest-greater-multiple-made-of-two-digits/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : 2 | 0 | 2
+      Expected : 2
+
+  [2] Input    : 3 | 4 | 2
+      Expected : 24
+
+  [3] Input    : 2 | 0 | 0
+      Expected : -1
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int findInteger(int k, int digit1, int digit2);
+
+FILES
+  edit : 1999.cpp
+  test : lc run 1999
+══════════════════════════════════════════════════════════════════════════

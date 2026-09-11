@@ -1,0 +1,35 @@
+══════════════════════════════════════════════════════════════════════════
+ 90. Subsets II
+ Medium  |  Tags: Array, Backtracking, Bit Manipulation
+ https://leetcode.com/problems/subsets-ii/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given an integer array nums that may contain duplicates, return all
+  possible subsets (the power set).
+
+  The solution set must not contain duplicate subsets. Return the solution
+  in any order.
+
+CONSTRAINTS
+  1 <= nums.length <= 10
+  -10 <= nums[i] <= 10
+
+TEST CASES
+  [1] Input    : nums = [1,2,2]
+      Expected : [[],[1],[1,2],[1,2,2],[2],[2,2]]
+
+  [2] Input    : nums = [0]
+      Expected : [[],[0]]
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  vector<vector<int>> subsetsWithDup(vector<int>& nums);
+
+FILES
+  edit : 90.cpp
+  test : lc run 90
+══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,39 @@
+══════════════════════════════════════════════════════════════════════════
+ 3370. Smallest Number With All Set Bits
+ Easy  |  Tags: Math, Bit Manipulation
+ https://leetcode.com/problems/smallest-number-with-all-set-bits/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a positive number n.
+
+  Return the smallest number x greater than or equal to n, such that the
+  binary representation of x contains only set bits
+
+CONSTRAINTS
+  1 <= n <= 1000
+
+TEST CASES
+  [1] Input    : n = 5
+      Expected : 7
+      Why      : The binary representation of 7 is "111".
+
+  [2] Input    : n = 10
+      Expected : 15
+      Why      : The binary representation of 15 is "1111".
+
+  [3] Input    : n = 3
+      Expected : 3
+      Why      : The binary representation of 3 is "11".
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int smallestNumber(int n);
+
+FILES
+  edit : 3370.cpp
+  test : lc run 3370
+══════════════════════════════════════════════════════════════════════════

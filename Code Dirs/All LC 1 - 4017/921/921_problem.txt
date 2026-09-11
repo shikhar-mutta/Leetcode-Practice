@@ -1,0 +1,46 @@
+══════════════════════════════════════════════════════════════════════════
+ 921. Minimum Add to Make Parentheses Valid
+ Medium  |  Tags: String, Stack, Greedy, Bracket Sequences
+ https://leetcode.com/problems/minimum-add-to-make-parentheses-valid/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  A parentheses string is valid if and only if:
+
+  - It is the empty string,
+
+  - It can be written as AB (A concatenated with B), where A and B are
+    valid strings, or
+
+  - It can be written as (A), where A is a valid string.
+
+  You are given a parentheses string s. In one move, you can insert a
+  parenthesis at any position of the string.
+
+  - For example, if s = "()))", you can insert an opening parenthesis to
+    be "(()))" or a closing parenthesis to be "())))".
+
+  Return the minimum number of moves required to make s valid.
+
+CONSTRAINTS
+  1 <= s.length <= 1000
+  s[i] is either '(' or ')'.
+
+TEST CASES
+  [1] Input    : s = "())"
+      Expected : 1
+
+  [2] Input    : s = "((("
+      Expected : 3
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int minAddToMakeValid(string s);
+
+FILES
+  edit : 921.cpp
+  test : lc run 921
+══════════════════════════════════════════════════════════════════════════

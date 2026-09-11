@@ -1,0 +1,47 @@
+══════════════════════════════════════════════════════════════════════════
+ 3708. Longest Fibonacci Subarray
+ Medium  |  Tags: Array
+ https://leetcode.com/problems/longest-fibonacci-subarray/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given an array of positive integers nums.
+
+  A Fibonacci array is a contiguous sequence whose third and subsequent
+  terms each equal the sum of the two preceding terms.
+
+  Return the length of the longest Fibonacci subarray in nums.
+
+  Note: Subarrays of length 1 or 2 are always Fibonacci.
+
+CONSTRAINTS
+  3 <= nums.length <= 10^5
+  1 <= nums[i] <= 10^9
+
+TEST CASES
+  [1] Input    : nums = [1,1,1,1,2,3,5,1]
+      Expected : 5
+      Why      : The longest Fibonacci subarray is nums[2..6] = [1, 1, 2, 3, 5].
+                 [1, 1, 2, 3, 5] is Fibonacci because 1 + 1 = 2, 1 + 2 = 3, and 2 + 3 = 5.
+
+  [2] Input    : nums = [5,2,7,9,16]
+      Expected : 5
+      Why      : The longest Fibonacci subarray is nums[0..4] = [5, 2, 7, 9, 16].
+                 [5, 2, 7, 9, 16] is Fibonacci because 5 + 2 = 7, 2 + 7 = 9, and 7 + 9 = 16.
+
+  [3] Input    : nums = [1000000000,1000000000,1000000000]
+      Expected : 2
+      Why      : The longest Fibonacci subarray is nums[1..2] = [1000000000, 1000000000].
+                 [1000000000, 1000000000] is Fibonacci because its length is 2.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int longestSubarray(vector<int>& nums);
+
+FILES
+  edit : 3708.cpp
+  test : lc run 3708
+══════════════════════════════════════════════════════════════════════════

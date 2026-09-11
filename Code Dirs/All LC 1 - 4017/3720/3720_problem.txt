@@ -1,0 +1,50 @@
+══════════════════════════════════════════════════════════════════════════
+ 3720. Lexicographically Smallest Permutation Greater Than Target
+ Medium  |  Tags: Hash Table, String, Greedy, Counting, Enumeration
+ https://leetcode.com/problems/lexicographically-smallest-permutation-greater-than-target/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given two strings s and target, both having length n, consisting
+  of lowercase English letters.
+
+  Return the lexicographically smallest permutation of s that is strictly
+  greater than target. If no permutation of s is lexicographically
+  strictly greater than target, return an empty string.
+
+  A string a is lexicographically strictly greater than a string b (of the
+  same length) if in the first position where a and b differ, string a has
+  a letter that appears later in the alphabet than the corresponding
+  letter in b.
+
+CONSTRAINTS
+  1 <= s.length == target.length <= 300
+  s and target consist of only lowercase English letters.
+
+TEST CASES
+  [1] Input    : s = "abc", target = "bba"
+      Expected : "bca"
+      Why      : - The permutations of s (in lexicographical order) are "abc", "acb", "bac", "bca", "cab", and "cba".
+                 - The lexicographically smallest permutation that is strictly greater than target is "bca".
+
+  [2] Input    : s = "leet", target = "code"
+      Expected : "eelt"
+      Why      : - The permutations of s (in lexicographical order) are "eelt", "eetl", "elet", "elte", "etel", "etle", "leet", "lete", "ltee", "teel", "tele", and "tlee".
+                 - The lexicographically smallest permutation that is strictly greater than target is "eelt".
+
+  [3] Input    : s = "baba", target = "bbaa"
+      Expected : ""
+      Why      : - The permutations of s (in lexicographical order) are "aabb", "abab", "abba", "baab", "baba", and "bbaa".
+                 - None of them is lexicographically strictly greater than target. Therefore, the answer is "".
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  string lexGreaterPermutation(string s, string target);
+
+FILES
+  edit : 3720.cpp
+  test : lc run 3720
+══════════════════════════════════════════════════════════════════════════

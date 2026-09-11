@@ -1,0 +1,48 @@
+══════════════════════════════════════════════════════════════════════════
+ 200. Number of Islands
+ Medium  |  Tags: Array, Depth-First Search, Breadth-First Search, Union-Find, Matrix
+ https://leetcode.com/problems/number-of-islands/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given an m x n 2D binary grid grid which represents a map of '1's (land)
+  and '0's (water), return the number of islands.
+
+  An island is surrounded by water and is formed by connecting adjacent
+  lands horizontally or vertically. You may assume all four edges of the
+  grid are all surrounded by water.
+
+CONSTRAINTS
+  m == grid.length
+  n == grid[i].length
+  1 <= m, n <= 300
+  grid[i][j] is '0' or '1'.
+
+TEST CASES
+  [1] Input    : grid = [
+ ["1","1","1","1","0"],
+ ["1","1","0","1","0"],
+ ["1","1","0","0","0"],
+ ["0","0","0","0","0"]
+]
+      Expected : 1
+
+  [2] Input    : grid = [
+ ["1","1","0","0","0"],
+ ["1","1","0","0","0"],
+ ["0","0","1","0","0"],
+ ["0","0","0","1","1"]
+]
+      Expected : 3
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int numIslands(vector<vector<char>>& grid);
+
+FILES
+  edit : 200.cpp
+  test : lc run 200
+══════════════════════════════════════════════════════════════════════════

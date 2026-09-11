@@ -1,0 +1,55 @@
+══════════════════════════════════════════════════════════════════════════
+ 1930. Unique Length-3 Palindromic Subsequences
+ Medium  |  Tags: Hash Table, String, Bit Manipulation, Prefix Sum
+ https://leetcode.com/problems/unique-length-3-palindromic-subsequences/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given a string s, return the number of unique palindromes of length
+  three that are a subsequence of s.
+
+  Note that even if there are multiple ways to obtain the same
+  subsequence, it is still only counted once.
+
+  A palindrome is a string that reads the same forwards and backwards.
+
+  A subsequence of a string is a new string generated from the original
+  string with some characters (can be none) deleted without changing the
+  relative order of the remaining characters.
+
+  - For example, "ace" is a subsequence of "abcde".
+
+CONSTRAINTS
+  3 <= s.length <= 10^5
+  s consists of only lowercase English letters.
+
+TEST CASES
+  [1] Input    : s = "aabca"
+      Expected : 3
+      Why      : The 3 palindromic subsequences of length 3 are:
+                 - "aba" (subsequence of "aabca")
+                 - "aaa" (subsequence of "aabca")
+                 … (1 more)
+
+  [2] Input    : s = "adc"
+      Expected : 0
+      Why      : There are no palindromic subsequences of length 3 in "adc".
+
+  [3] Input    : s = "bbcbaba"
+      Expected : 4
+      Why      : The 4 palindromic subsequences of length 3 are:
+                 - "bbb" (subsequence of "bbcbaba")
+                 - "bcb" (subsequence of "bbcbaba")
+                 … (2 more)
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int countPalindromicSubsequence(string s);
+
+FILES
+  edit : 1930.cpp
+  test : lc run 1930
+══════════════════════════════════════════════════════════════════════════

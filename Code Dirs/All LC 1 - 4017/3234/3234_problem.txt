@@ -1,0 +1,40 @@
+══════════════════════════════════════════════════════════════════════════
+ 3234. Count the Number of Substrings With Dominant Ones
+ Medium  |  Tags: String, Enumeration
+ https://leetcode.com/problems/count-the-number-of-substrings-with-dominant-ones/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a binary string s.
+
+  Return the number of substrings with dominant ones.
+
+  A string has dominant ones if the number of ones in the string is
+  greater than or equal to the square of the number of zeros in the
+  string.
+
+CONSTRAINTS
+  1 <= s.length <= 4 * 10^4
+  s consists only of characters '0' and '1'.
+
+TEST CASES
+  [1] Input    : s = "00011"
+      Expected : 5
+      Why      : The substrings with dominant ones are shown in the table below.
+
+  [2] Input    : s = "101101"
+      Expected : 16
+      Why      : The substrings with non-dominant ones are shown in the table below.
+                 Since there are 21 substrings total and 5 of them have non-dominant ones, it follows that there are 16 substrings with dominant ones.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int numberOfSubstrings(string s);
+
+FILES
+  edit : 3234.cpp
+  test : lc run 3234
+══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,37 @@
+══════════════════════════════════════════════════════════════════════════
+ 441. Arranging Coins
+ Easy  |  Tags: Math, Binary Search
+ https://leetcode.com/problems/arranging-coins/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You have n coins and you want to build a staircase with these coins. The
+  staircase consists of k rows where the i^th row has exactly i coins. The
+  last row of the staircase may be incomplete.
+
+  Given the integer n, return the number of complete rows of the staircase
+  you will build.
+
+CONSTRAINTS
+  1 <= n <= 2^31 - 1
+
+TEST CASES
+  [1] Input    : n = 5
+      Expected : 2
+      Why      : Because the 3^rd row is incomplete, we return 2.
+
+  [2] Input    : n = 8
+      Expected : 3
+      Why      : Because the 4^th row is incomplete, we return 3.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int arrangeCoins(int n);
+
+FILES
+  edit : 441.cpp
+  test : lc run 441
+══════════════════════════════════════════════════════════════════════════

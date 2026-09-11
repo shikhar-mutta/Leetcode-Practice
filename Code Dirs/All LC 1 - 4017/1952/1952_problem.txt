@@ -1,0 +1,36 @@
+══════════════════════════════════════════════════════════════════════════
+ 1952. Three Divisors
+ Easy  |  Tags: Math, Enumeration, Number Theory, Prime Factorization, Sieve Theory
+ https://leetcode.com/problems/three-divisors/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given an integer n, return true if n has exactly three positive
+  divisors. Otherwise, return false.
+
+  An integer m is a divisor of n if there exists an integer k such that n
+  = k * m.
+
+CONSTRAINTS
+  1 <= n <= 10^4
+
+TEST CASES
+  [1] Input    : n = 2
+      Expected : false
+Explantion: 2 has only two divisors: 1 and 2.
+
+  [2] Input    : n = 4
+      Expected : true
+Explantion: 4 has three divisors: 1, 2, and 4.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  bool isThree(int n);
+
+FILES
+  edit : 1952.cpp
+  test : lc run 1952
+══════════════════════════════════════════════════════════════════════════

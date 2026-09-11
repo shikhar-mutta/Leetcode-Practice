@@ -1,0 +1,45 @@
+══════════════════════════════════════════════════════════════════════════
+ 114. Flatten Binary Tree to Linked List
+ Medium  |  Tags: Linked List, Stack, Tree, Depth-First Search, Binary Tree
+ https://leetcode.com/problems/flatten-binary-tree-to-linked-list/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given the root of a binary tree, flatten the tree into a "linked list":
+
+  - The "linked list" should use the same TreeNode class where the right
+    child pointer points to the next node in the list and the left child
+    pointer is always null.
+
+  - The "linked list" should be in the same order as a pre-order traversal
+    of the binary tree.
+
+CONSTRAINTS
+  The number of nodes in the tree is in the range [0, 2000].
+  -100 <= Node.val <= 100
+
+TEST CASES
+  [1] Input    : root = [1,2,5,3,4,null,6]
+      Expected : [1,null,2,null,3,null,4,null,5,null,6]
+
+  [2] Input    : root = []
+      Expected : []
+
+  [3] Input    : root = [0]
+      Expected : [0]
+
+FOLLOW UP
+  Can you flatten the tree in-place (with O(1) extra space)?
+
+CODE TYPE
+  function · tree
+    driver: one Solution call per test case
+    tree: TreeNode* — level order, e.g. [3,9,20,null,null,15,7]
+
+SIGNATURE
+  void flatten(TreeNode* root);
+
+FILES
+  edit : 114.cpp
+  test : lc run 114
+══════════════════════════════════════════════════════════════════════════

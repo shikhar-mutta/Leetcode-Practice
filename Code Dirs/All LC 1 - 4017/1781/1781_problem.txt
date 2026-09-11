@@ -1,0 +1,37 @@
+══════════════════════════════════════════════════════════════════════════
+ 1781. Sum of Beauty of All Substrings
+ Medium  |  Tags: Hash Table, String, Counting
+ https://leetcode.com/problems/sum-of-beauty-of-all-substrings/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  The beauty of a string is the difference in frequencies between the most
+  frequent and least frequent characters.
+
+  - For example, the beauty of "abaacc" is 3 - 1 = 2.
+
+  Given a string s, return the sum of beauty of all of its substrings.
+
+CONSTRAINTS
+  1 <= s.length <=^500
+  s consists of only lowercase English letters.
+
+TEST CASES
+  [1] Input    : s = "aabcb"
+      Expected : 5
+      Why      : The substrings with non-zero beauty are ["aab","aabc","aabcb","abcb","bcb"], each with beauty equal to 1.
+
+  [2] Input    : s = "aabcbaa"
+      Expected : 17
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int beautySum(string s);
+
+FILES
+  edit : 1781.cpp
+  test : lc run 1781
+══════════════════════════════════════════════════════════════════════════

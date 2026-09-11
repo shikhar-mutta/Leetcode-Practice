@@ -1,0 +1,28 @@
+══════════════════════════════════════════════════════════════════════════
+ 527. Word Abbreviation
+ Hard  |  Tags: Array, String, Greedy, Trie, Sorting
+ https://leetcode.com/problems/word-abbreviation/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : ["like","god","internal","me","internet","interval","intension","face","intrusion"]
+      Expected : ["l2e","god","internal","me","i6t","interval","inte4n","f2e","intr4n"]
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  vector<string> wordsAbbreviation(vector<string>& words);
+
+FILES
+  edit : 527.cpp
+  test : lc run 527
+══════════════════════════════════════════════════════════════════════════

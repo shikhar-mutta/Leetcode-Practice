@@ -1,0 +1,26 @@
+══════════════════════════════════════════════════════════════════════════
+ 1612. Check If Two Expression Trees are Equivalent
+ Medium  |  Tags: Hash Table, Tree, Depth-First Search, Binary Tree, Counting
+ https://leetcode.com/problems/check-if-two-expression-trees-are-equivalent/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (no examples available)
+
+CODE TYPE
+  function · Node
+    driver: one Solution call per test case
+    Node: Node — LeetCode's own notation for it
+
+SIGNATURE
+  bool checkEquivalence(Node* root1, Node* root2);
+
+FILES
+  edit : 1612.cpp
+  test : lc run 1612
+══════════════════════════════════════════════════════════════════════════

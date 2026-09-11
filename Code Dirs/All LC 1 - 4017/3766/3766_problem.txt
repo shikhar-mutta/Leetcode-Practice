@@ -1,0 +1,53 @@
+══════════════════════════════════════════════════════════════════════════
+ 3766. Minimum Operations to Make Binary Palindrome
+ Medium  |  Tags: Array, Two Pointers, Binary Search, Bit Manipulation
+ https://leetcode.com/problems/minimum-operations-to-make-binary-palindrome/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given an integer array nums.
+
+  For each element nums[i], you may perform the following operations any
+  number of times (including zero):
+
+  - Increase nums[i] by 1, or
+
+  - Decrease nums[i] by 1.
+
+  A number is called a binary palindrome if its binary representation
+  without leading zeros reads the same forward and backward.
+
+  Your task is to return an integer array ans, where ans[i] represents the
+  minimum number of operations required to convert nums[i] into a binary
+  palindrome.
+
+CONSTRAINTS
+  1 <= nums.length <= 5000
+  ^1 <= nums[i] <=^5000
+
+TEST CASES
+  [1] Input    : nums = [1,2,4]
+      Expected : [0,1,1]
+      Why      : One optimal set of operations:
+                 nums[i]
+                 Binary(nums[i])
+                 … (25 more)
+
+  [2] Input    : nums = [6,7,12]
+      Expected : [1,0,3]
+      Why      : One optimal set of operations:
+                 nums[i]
+                 Binary(nums[i])
+                 … (25 more)
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  vector<int> minOperations(vector<int>& nums);
+
+FILES
+  edit : 3766.cpp
+  test : lc run 3766
+══════════════════════════════════════════════════════════════════════════

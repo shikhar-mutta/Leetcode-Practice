@@ -1,0 +1,45 @@
+══════════════════════════════════════════════════════════════════════════
+ 1678. Goal Parser Interpretation
+ Easy  |  Tags: String
+ https://leetcode.com/problems/goal-parser-interpretation/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You own a Goal Parser that can interpret a string command. The command
+  consists of an alphabet of "G", "()" and/or "(al)" in some order. The
+  Goal Parser will interpret "G" as the string "G", "()" as the string
+  "o", and "(al)" as the string "al". The interpreted strings are then
+  concatenated in the original order.
+
+  Given the string command, return the Goal Parser's interpretation of
+  command.
+
+CONSTRAINTS
+  1 <= command.length <= 100
+  command consists of "G", "()", and/or "(al)" in some order.
+
+TEST CASES
+  [1] Input    : command = "G()(al)"
+      Expected : "Goal"
+      Why      : The Goal Parser interprets the command as follows:
+                 G -> G
+                 () -> o
+                 … (2 more)
+
+  [2] Input    : command = "G()()()()(al)"
+      Expected : "Gooooal"
+
+  [3] Input    : command = "(al)G(al)()()G"
+      Expected : "alGalooG"
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  string interpret(string command);
+
+FILES
+  edit : 1678.cpp
+  test : lc run 1678
+══════════════════════════════════════════════════════════════════════════

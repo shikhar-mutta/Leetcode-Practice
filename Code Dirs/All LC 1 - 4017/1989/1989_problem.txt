@@ -1,0 +1,31 @@
+══════════════════════════════════════════════════════════════════════════
+ 1989. Maximum Number of People That Can Be Caught in Tag
+ Medium  |  Tags: Array, Two Pointers, Greedy
+ https://leetcode.com/problems/maximum-number-of-people-that-can-be-caught-in-tag/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : [0,1,0,1,0] | 3
+      Expected : 2
+
+  [2] Input    : [1,1,0,0,0] | 3
+      Expected : 2
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int catchMaximumAmountofPeople(vector<int>& team, int dist);
+
+FILES
+  edit : 1989.cpp
+  test : lc run 1989
+══════════════════════════════════════════════════════════════════════════

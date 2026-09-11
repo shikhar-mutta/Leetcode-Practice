@@ -1,0 +1,50 @@
+══════════════════════════════════════════════════════════════════════════
+ 3769. Sort Integers by Binary Reflection
+ Easy  |  Tags: Array, Sorting
+ https://leetcode.com/problems/sort-integers-by-binary-reflection/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given an integer array nums.
+
+  The binary reflection of a positive integer is defined as the number
+  obtained by reversing the order of its binary digits (ignoring any
+  leading zeros) and interpreting the resulting binary number as a
+  decimal.
+
+  Sort the array in ascending order based on the binary reflection of each
+  element. If two different numbers have the same binary reflection, the
+  smaller original number should appear first.
+
+  Return the resulting sorted array.
+
+CONSTRAINTS
+  1 <= nums.length <= 100
+  1 <= nums[i] <= 10^9
+
+TEST CASES
+  [1] Input    : nums = [4,5,4]
+      Expected : [4,4,5]
+      Why      : Binary reflections are:
+                 - 4 -> (binary) 100 -> (reversed) 001 -> 1
+                 - 5 -> (binary) 101 -> (reversed) 101 -> 5
+                 … (2 more)
+
+  [2] Input    : nums = [3,6,5,8]
+      Expected : [8,3,6,5]
+      Why      : Binary reflections are:
+                 - 3 -> (binary) 11 -> (reversed) 11 -> 3
+                 - 6 -> (binary) 110 -> (reversed) 011 -> 3
+                 … (4 more)
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  vector<int> sortByReflection(vector<int>& nums);
+
+FILES
+  edit : 3769.cpp
+  test : lc run 3769
+══════════════════════════════════════════════════════════════════════════

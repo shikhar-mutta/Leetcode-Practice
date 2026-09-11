@@ -1,0 +1,59 @@
+══════════════════════════════════════════════════════════════════════════
+ 1750. Minimum Length of String After Deleting Similar Ends
+ Medium  |  Tags: Two Pointers, String
+ https://leetcode.com/problems/minimum-length-of-string-after-deleting-similar-ends/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given a string s consisting only of characters 'a', 'b', and 'c'. You
+  are asked to apply the following algorithm on the string any number of
+  times:
+
+  - Pick a non-empty prefix from the string s where all the characters in
+    the prefix are equal.
+
+  - Pick a non-empty suffix from the string s where all the characters in
+    this suffix are equal.
+
+  - The prefix and the suffix should not intersect at any index.
+
+  - The characters from the prefix and suffix must be the same.
+
+  - Delete both the prefix and the suffix.
+
+  Return the minimum length of s after performing the above operation any
+  number of times (possibly zero times).
+
+CONSTRAINTS
+  1 <= s.length <= 10^5
+  s only consists of characters 'a', 'b', and 'c'.
+
+TEST CASES
+  [1] Input    : s = "ca"
+      Expected : 2
+      Why      : You can't remove any characters, so the string stays as is.
+
+  [2] Input    : s = "cabaabac"
+      Expected : 0
+      Why      : An optimal sequence of operations is:
+                 - Take prefix = "c" and suffix = "c" and remove them, s = "abaaba".
+                 - Take prefix = "a" and suffix = "a" and remove them, s = "baab".
+                 … (2 more)
+
+  [3] Input    : s = "aabccabba"
+      Expected : 3
+      Why      : An optimal sequence of operations is:
+                 - Take prefix = "aa" and suffix = "a" and remove them, s = "bccabb".
+                 - Take prefix = "b" and suffix = "bb" and remove them, s = "cca".
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int minimumLength(string s);
+
+FILES
+  edit : 1750.cpp
+  test : lc run 1750
+══════════════════════════════════════════════════════════════════════════

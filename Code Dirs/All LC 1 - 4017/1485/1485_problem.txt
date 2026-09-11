@@ -1,0 +1,27 @@
+══════════════════════════════════════════════════════════════════════════
+ 1485. Clone Binary Tree With Random Pointer
+ Medium  |  Tags: Hash Table, Tree, Depth-First Search, Breadth-First Search, Binary Tree
+ https://leetcode.com/problems/clone-binary-tree-with-random-pointer/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (no examples available)
+
+CODE TYPE
+  function · random list · NodeCopy
+    driver: one Solution call per test case
+    random list: Node* {next, random} — [[val, random_index|null], ...]
+    NodeCopy: NodeCopy — LeetCode's own notation for it
+
+SIGNATURE
+  NodeCopy* copyRandomBinaryTree(Node* root);
+
+FILES
+  edit : 1485.cpp
+  test : lc run 1485
+══════════════════════════════════════════════════════════════════════════

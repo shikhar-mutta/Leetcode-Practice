@@ -1,0 +1,41 @@
+══════════════════════════════════════════════════════════════════════════
+ 1456. Maximum Number of Vowels in a Substring of Given Length
+ Medium  |  Tags: String, Sliding Window
+ https://leetcode.com/problems/maximum-number-of-vowels-in-a-substring-of-given-length/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given a string s and an integer k, return the maximum number of vowel
+  letters in any substring of s with length k.
+
+  Vowel letters in English are 'a', 'e', 'i', 'o', and 'u'.
+
+CONSTRAINTS
+  1 <= s.length <= 10^5
+  s consists of lowercase English letters.
+  1 <= k <= s.length
+
+TEST CASES
+  [1] Input    : s = "abciiidef", k = 3
+      Expected : 3
+      Why      : The substring "iii" contains 3 vowel letters.
+
+  [2] Input    : s = "aeiou", k = 2
+      Expected : 2
+      Why      : Any substring of length 2 contains 2 vowels.
+
+  [3] Input    : s = "leetcode", k = 3
+      Expected : 2
+      Why      : "lee", "eet" and "ode" contain 2 vowels.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int maxVowels(string s, int k);
+
+FILES
+  edit : 1456.cpp
+  test : lc run 1456
+══════════════════════════════════════════════════════════════════════════

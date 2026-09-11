@@ -1,0 +1,31 @@
+══════════════════════════════════════════════════════════════════════════
+ 1950. Maximum of Minimum Values in All Subarrays
+ Medium  |  Tags: Array, Stack, Monotonic Stack, Cartesian Tree
+ https://leetcode.com/problems/maximum-of-minimum-values-in-all-subarrays/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : [0,1,2,4]
+      Expected : 4 2 1 0
+
+  [2] Input    : [10,20,50,10]
+      Expected : 50 20 10 10
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  vector<int> findMaximums(vector<int>& nums);
+
+FILES
+  edit : 1950.cpp
+  test : lc run 1950
+══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,58 @@
+══════════════════════════════════════════════════════════════════════════
+ 1823. Find the Winner of the Circular Game
+ Medium  |  Tags: Array, Math, Recursion, Queue, Simulation
+ https://leetcode.com/problems/find-the-winner-of-the-circular-game/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  There are n friends that are playing a game. The friends are sitting in
+  a circle and are numbered from 1 to n in clockwise order. More formally,
+  moving clockwise from the i^th friend brings you to the (i+1)^th friend
+  for 1 <= i < n, and moving clockwise from the n^th friend brings you to
+  the 1^st friend.
+
+  The rules of the game are as follows:
+
+  - Start at the 1^st friend.
+
+  - Count the next k friends in the clockwise direction including the
+    friend you started at. The counting wraps around the circle and may
+    count some friends more than once.
+
+  - The last friend you counted leaves the circle and loses the game.
+
+  - If there is still more than one friend in the circle, go back to step
+    2 starting from the friend immediately clockwise of the friend who
+    just lost and repeat.
+
+  - Else, the last friend in the circle wins the game.
+
+  Given the number of friends, n, and an integer k, return the winner of
+  the game.
+
+CONSTRAINTS
+  1 <= k <= n <= 500
+
+TEST CASES
+  [1] Input    : n = 5, k = 2
+      Expected : 3
+      Why      : Here are the steps of the game:
+                 1) Start at friend 1.
+                 2) Count 2 friends clockwise, which are friends 1 and 2.
+                 … (7 more)
+
+  [2] Input    : n = 6, k = 5
+      Expected : 1
+      Why      : The friends leave in this order: 5, 4, 6, 2, 3. The winner is friend 1.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int findTheWinner(int n, int k);
+
+FILES
+  edit : 1823.cpp
+  test : lc run 1823
+══════════════════════════════════════════════════════════════════════════

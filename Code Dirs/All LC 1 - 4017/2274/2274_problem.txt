@@ -1,0 +1,46 @@
+══════════════════════════════════════════════════════════════════════════
+ 2274. Maximum Consecutive Floors Without Special Floors
+ Medium  |  Tags: Array, Sorting
+ https://leetcode.com/problems/maximum-consecutive-floors-without-special-floors/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Alice manages a company and has rented some floors of a building as
+  office space. Alice has decided some of these floors should be special
+  floors, used for relaxation only.
+
+  You are given two integers bottom and top, which denote that Alice has
+  rented all the floors from bottom to top (inclusive). You are also given
+  the integer array special, where special[i] denotes a special floor that
+  Alice has designated for relaxation.
+
+  Return the maximum number of consecutive floors without a special floor.
+
+CONSTRAINTS
+  1 <= special.length <= 10^5
+  1 <= bottom <= special[i] <= top <= 10^9
+  All the values of special are unique.
+
+TEST CASES
+  [1] Input    : bottom = 2, top = 9, special = [4,6]
+      Expected : 3
+      Why      : The following are the ranges (inclusive) of consecutive floors without a special floor:
+                 - (2, 3) with a total amount of 2 floors.
+                 - (5, 5) with a total amount of 1 floor.
+                 … (2 more)
+
+  [2] Input    : bottom = 6, top = 8, special = [7,6,8]
+      Expected : 0
+      Why      : Every floor rented is a special floor, so we return 0.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int maxConsecutive(int bottom, int top, vector<int>& special);
+
+FILES
+  edit : 2274.cpp
+  test : lc run 2274
+══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,32 @@
+══════════════════════════════════════════════════════════════════════════
+ 1081. Smallest Subsequence of Distinct Characters
+ Medium  |  Tags: String, Stack, Greedy, Monotonic Stack
+ https://leetcode.com/problems/smallest-subsequence-of-distinct-characters/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given a string s, return the lexicographically smallest subsequence of s
+  that contains all the distinct characters of s exactly once.
+
+CONSTRAINTS
+  1 <= s.length <= 1000
+  s consists of lowercase English letters.
+
+TEST CASES
+  [1] Input    : s = "bcabc"
+      Expected : "abc"
+
+  [2] Input    : s = "cbacdcbc"
+      Expected : "acdb"
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  string smallestSubsequence(string s);
+
+FILES
+  edit : 1081.cpp
+  test : lc run 1081
+══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,39 @@
+══════════════════════════════════════════════════════════════════════════
+ 1780. Check if Number is a Sum of Powers of Three
+ Medium  |  Tags: Math
+ https://leetcode.com/problems/check-if-number-is-a-sum-of-powers-of-three/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given an integer n, return true if it is possible to represent n as the
+  sum of distinct powers of three. Otherwise, return false.
+
+  An integer y is a power of three if there exists an integer x such that
+  y == 3^x.
+
+CONSTRAINTS
+  1 <= n <= 10^7
+
+TEST CASES
+  [1] Input    : n = 12
+      Expected : true
+      Why      : 12 = 3^1 + 3^2
+
+  [2] Input    : n = 91
+      Expected : true
+      Why      : 91 = 3^0 + 3^2 + 3^4
+
+  [3] Input    : n = 21
+      Expected : false
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  bool checkPowersOfThree(int n);
+
+FILES
+  edit : 1780.cpp
+  test : lc run 1780
+══════════════════════════════════════════════════════════════════════════

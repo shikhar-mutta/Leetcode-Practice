@@ -1,0 +1,78 @@
+══════════════════════════════════════════════════════════════════════════
+ 3906. Count Good Integers on a Grid Path
+ Hard  |  Tags: Dynamic Programming
+ https://leetcode.com/problems/count-good-integers-on-a-grid-path/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given two integers l and r, and a string directions consisting
+  of exactly three 'D' characters and three 'R' characters.
+
+  For each integer x in the range [l, r] (inclusive), perform the
+  following steps:
+
+  - If x has fewer than 16 digits, pad it on the left with leading zeros
+    to obtain a 16-digit string.
+
+  - Place the 16 digits into a 4 × 4 grid in row-major order (the first 4
+    digits form the first row from left to right, the next 4 digits form
+    the second row, and so on).
+
+  - Starting at the top-left cell (row = 0, column = 0), apply the 6
+    characters of directions in order:
+
+  - 'D' increments the row by 1.
+
+  - 'R' increments the column by 1.
+
+
+
+
+
+  - Record the sequence of digits visited along the path (including the
+    starting cell), producing a sequence of length 7.
+
+  The integer x is considered good if the recorded sequence is non-
+  decreasing.
+
+  Return an integer representing the number of good integers in the range
+  [l, r].
+
+CONSTRAINTS
+  1 <= l <= r <= 9 × 10^15
+  directions.length == 6
+  directions consists of exactly three 'D' characters and three 'R' characters.
+
+TEST CASES
+  [1] Input    : l = 8, r = 10, directions = "DDDRRR"
+      Expected : 2
+      Why      : The grid for x = 8:
+                 0
+                 0
+                 … (56 more)
+
+  [2] Input    : l = 123456789, r = 123456790, directions = "DDRRDR"
+      Expected : 1
+      Why      : The grid for x = 123456789:
+                 0
+                 0
+                 … (37 more)
+
+  [3] Input    : l = 1288561398769758, r = 1288561398769758, directions = "RRRDDD"
+      Expected : 0
+      Why      : The grid for x = 1288561398769758:
+                 1
+                 2
+                 … (18 more)
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  long long countGoodIntegersOnPath(long long l, long long r, string directions);
+
+FILES
+  edit : 3906.cpp
+  test : lc run 3906
+══════════════════════════════════════════════════════════════════════════

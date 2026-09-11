@@ -1,0 +1,34 @@
+══════════════════════════════════════════════════════════════════════════
+ 767. Reorganize String
+ Medium  |  Tags: Hash Table, String, Greedy, Sorting, Heap (Priority Queue), Counting
+ https://leetcode.com/problems/reorganize-string/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given a string s, rearrange the characters of s so that any two adjacent
+  characters are not the same.
+
+  Return any possible rearrangement of s or return "" if not possible.
+
+CONSTRAINTS
+  1 <= s.length <= 500
+  s consists of lowercase English letters.
+
+TEST CASES
+  [1] Input    : s = "aab"
+      Expected : "aba"
+
+  [2] Input    : s = "aaab"
+      Expected : ""
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  string reorganizeString(string s);
+
+FILES
+  edit : 767.cpp
+  test : lc run 767
+══════════════════════════════════════════════════════════════════════════

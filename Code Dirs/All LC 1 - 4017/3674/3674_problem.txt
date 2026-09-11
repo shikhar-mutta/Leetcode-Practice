@@ -1,0 +1,43 @@
+══════════════════════════════════════════════════════════════════════════
+ 3674. Minimum Operations to Equalize Array
+ Easy  |  Tags: Array, Bit Manipulation, Brainteaser
+ https://leetcode.com/problems/minimum-operations-to-equalize-array/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given an integer array nums of length n.
+
+  In one operation, choose any subarray nums[l...r] (0 <= l <= r < n) and
+  replace each element in that subarray with the bitwise AND of all
+  elements.
+
+  Return the minimum number of operations required to make all elements of
+  nums equal.
+
+  A subarray is a contiguous non-empty sequence of elements within an
+  array.
+
+CONSTRAINTS
+  1 <= n == nums.length <= 100
+  1 <= nums[i] <= 10^5
+
+TEST CASES
+  [1] Input    : nums = [1,2]
+      Expected : 1
+      Why      : Choose nums[0...1]: (1 AND 2) = 0, so the array becomes [0, 0] and all elements are equal in 1 operation.
+
+  [2] Input    : nums = [5,5,5]
+      Expected : 0
+      Why      : nums is [5, 5, 5] which already has all elements equal, so 0 operations are required.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int minOperations(vector<int>& nums);
+
+FILES
+  edit : 3674.cpp
+  test : lc run 3674
+══════════════════════════════════════════════════════════════════════════

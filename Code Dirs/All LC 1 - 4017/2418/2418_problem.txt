@@ -1,0 +1,43 @@
+══════════════════════════════════════════════════════════════════════════
+ 2418. Sort the People
+ Easy  |  Tags: Array, Hash Table, String, Sorting
+ https://leetcode.com/problems/sort-the-people/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given an array of strings names, and an array heights that
+  consists of distinct positive integers. Both arrays are of length n.
+
+  For each index i, names[i] and heights[i] denote the name and height of
+  the i^th person.
+
+  Return names sorted in descending order by the people's heights.
+
+CONSTRAINTS
+  n == names.length == heights.length
+  1 <= n <= 10^3
+  1 <= names[i].length <= 20
+  1 <= heights[i] <= 10^5
+  names[i] consists of lower and upper case English letters.
+  All the values of heights are distinct.
+
+TEST CASES
+  [1] Input    : names = ["Mary","John","Emma"], heights = [180,165,170]
+      Expected : ["Mary","Emma","John"]
+      Why      : Mary is the tallest, followed by Emma and John.
+
+  [2] Input    : names = ["Alice","Bob","Bob"], heights = [155,185,150]
+      Expected : ["Bob","Alice","Bob"]
+      Why      : The first Bob is the tallest, followed by Alice and the second Bob.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  vector<string> sortPeople(vector<string>& names, vector<int>& heights);
+
+FILES
+  edit : 2418.cpp
+  test : lc run 2418
+══════════════════════════════════════════════════════════════════════════

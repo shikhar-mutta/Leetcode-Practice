@@ -1,0 +1,47 @@
+══════════════════════════════════════════════════════════════════════════
+ 3752. Lexicographically Smallest Negated Permutation that Sums to Target
+ Medium  |  Tags: Array, Math, Two Pointers, Greedy, Sorting
+ https://leetcode.com/problems/lexicographically-smallest-negated-permutation-that-sums-to-target/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a positive integer n and an integer target.
+
+  Return the lexicographically smallest array of integers of size n such
+  that:
+
+  - The sum of its elements equals target.
+
+  - The absolute values of its elements form a permutation of size n.
+
+  If no such array exists, return an empty array.
+
+  A permutation of size n is a rearrangement of integers 1, 2, ..., n.
+
+CONSTRAINTS
+  1 <= n <= 10^5
+  -10^10 <= target <= 10^10
+
+TEST CASES
+  [1] Input    : n = 3, target = 0
+      Expected : [-3,1,2]
+      Why      : The arrays that sum to 0 and whose absolute values form a permutation of size 3 are:
+                 - [-3, 1, 2]
+                 - [-3, 2, 1]
+                 … (11 more)
+
+  [2] Input    : n = 1, target = 10000000000
+      Expected : []
+      Why      : There are no arrays that sum to 10000000000 and whose absolute values form a permutation of size 1. Therefore, the answer is [].
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  vector<int> lexSmallestNegatedPerm(int n, long long target);
+
+FILES
+  edit : 3752.cpp
+  test : lc run 3752
+══════════════════════════════════════════════════════════════════════════

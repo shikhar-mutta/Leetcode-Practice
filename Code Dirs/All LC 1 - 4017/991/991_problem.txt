@@ -1,0 +1,44 @@
+══════════════════════════════════════════════════════════════════════════
+ 991. Broken Calculator
+ Medium  |  Tags: Math, Greedy
+ https://leetcode.com/problems/broken-calculator/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  There is a broken calculator that has the integer startValue on its
+  display initially. In one operation, you can:
+
+  - multiply the number on display by 2, or
+
+  - subtract 1 from the number on display.
+
+  Given two integers startValue and target, return the minimum number of
+  operations needed to display target on the calculator.
+
+CONSTRAINTS
+  1 <= startValue, target <= 10^9
+
+TEST CASES
+  [1] Input    : startValue = 2, target = 3
+      Expected : 2
+      Why      : Use double operation and then decrement operation {2 -> 4 -> 3}.
+
+  [2] Input    : startValue = 5, target = 8
+      Expected : 2
+      Why      : Use decrement and then double {5 -> 4 -> 8}.
+
+  [3] Input    : startValue = 3, target = 10
+      Expected : 3
+      Why      : Use double, decrement and double {3 -> 6 -> 5 -> 10}.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int brokenCalc(int startValue, int target);
+
+FILES
+  edit : 991.cpp
+  test : lc run 991
+══════════════════════════════════════════════════════════════════════════

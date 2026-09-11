@@ -1,0 +1,42 @@
+══════════════════════════════════════════════════════════════════════════
+ 2108. Find First Palindromic String in the Array
+ Easy  |  Tags: Array, Two Pointers, String
+ https://leetcode.com/problems/find-first-palindromic-string-in-the-array/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given an array of strings words, return the first palindromic string in
+  the array. If there is no such string, return an empty string "".
+
+  A string is palindromic if it reads the same forward and backward.
+
+CONSTRAINTS
+  1 <= words.length <= 100
+  1 <= words[i].length <= 100
+  words[i] consists only of lowercase English letters.
+
+TEST CASES
+  [1] Input    : words = ["abc","car","ada","racecar","cool"]
+      Expected : "ada"
+      Why      : The first string that is palindromic is "ada".
+                 Note that "racecar" is also palindromic, but it is not the first.
+
+  [2] Input    : words = ["notapalindrome","racecar"]
+      Expected : "racecar"
+      Why      : The first and only string that is palindromic is "racecar".
+
+  [3] Input    : words = ["def","ghi"]
+      Expected : ""
+      Why      : There are no palindromic strings, so the empty string is returned.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  string firstPalindrome(vector<string>& words);
+
+FILES
+  edit : 2108.cpp
+  test : lc run 2108
+══════════════════════════════════════════════════════════════════════════

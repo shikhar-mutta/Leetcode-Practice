@@ -1,0 +1,37 @@
+══════════════════════════════════════════════════════════════════════════
+ 1796. Second Largest Digit in a String
+ Easy  |  Tags: Hash Table, String
+ https://leetcode.com/problems/second-largest-digit-in-a-string/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given an alphanumeric string s, return the second largest numerical
+  digit that appears in s, or -1 if it does not exist.
+
+  An alphanumeric string is a string consisting of lowercase English
+  letters and digits.
+
+CONSTRAINTS
+  1 <= s.length <= 500
+  s consists of only lowercase English letters and digits.
+
+TEST CASES
+  [1] Input    : s = "dfa12321afd"
+      Expected : 2
+      Why      : The digits that appear in s are [1, 2, 3]. The second largest digit is 2.
+
+  [2] Input    : s = "abc1111"
+      Expected : -1
+      Why      : The digits that appear in s are [1]. There is no second largest digit.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int secondHighest(string s);
+
+FILES
+  edit : 1796.cpp
+  test : lc run 1796
+══════════════════════════════════════════════════════════════════════════

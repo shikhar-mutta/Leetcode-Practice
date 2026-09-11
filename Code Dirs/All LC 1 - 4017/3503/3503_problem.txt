@@ -1,0 +1,47 @@
+══════════════════════════════════════════════════════════════════════════
+ 3503. Longest Palindrome After Substring Concatenation I
+ Medium  |  Tags: Two Pointers, String, Dynamic Programming, Enumeration
+ https://leetcode.com/problems/longest-palindrome-after-substring-concatenation-i/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given two strings, s and t.
+
+  You can create a new string by selecting a substring from s (possibly
+  empty) and a substring from t (possibly empty), then concatenating them
+  in order.
+
+  Return the length of the longest palindrome that can be formed this way.
+
+CONSTRAINTS
+  1 <= s.length, t.length <= 30
+  s and t consist of lowercase English letters.
+
+TEST CASES
+  [1] Input    : s = "a", t = "a"
+      Expected : 2
+      Why      : Concatenating "a" from s and "a" from t results in "aa", which is a palindrome of length 2.
+
+  [2] Input    : s = "abc", t = "def"
+      Expected : 1
+      Why      : Since all characters are different, the longest palindrome is any single character, so the answer is 1.
+
+  [3] Input    : s = "b", t = "aaaa"
+      Expected : 4
+      Why      : Selecting "aaaa" from t is the longest palindrome, so the answer is 4.
+
+  [4] Input    : s = "abcde", t = "ecdba"
+      Expected : 5
+      Why      : Concatenating "abc" from s and "ba" from t results in "abcba", which is a palindrome of length 5.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int longestPalindrome(string s, string t);
+
+FILES
+  edit : 3503.cpp
+  test : lc run 3503
+══════════════════════════════════════════════════════════════════════════

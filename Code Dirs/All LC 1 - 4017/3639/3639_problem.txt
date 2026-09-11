@@ -1,0 +1,59 @@
+══════════════════════════════════════════════════════════════════════════
+ 3639. Minimum Time to Activate String
+ Medium  |  Tags: Array, Binary Search
+ https://leetcode.com/problems/minimum-time-to-activate-string/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a string s of length n and an integer array order, where
+  order is a permutation of the numbers in the range [0, n - 1].
+
+  Starting from time t = 0, replace the character at index order[t] in s
+  with '*' at each time step.
+
+  A substring is valid if it contains at least one '*'.
+
+  A string is active if the total number of valid substrings is greater
+  than or equal to k.
+
+  Return the minimum time t at which the string s becomes active. If it is
+  impossible, return -1.
+
+CONSTRAINTS
+  1 <= n == s.length <= 10^5
+  order.length == n
+  0 <= order[i] <= n - 1
+  s consists of lowercase English letters.
+  order is a permutation of integers from 0 to n - 1.
+  1 <= k <= 10^9
+
+TEST CASES
+  [1] Input    : s = "abc", order = [1,0,2], k = 2
+      Expected : 0
+      Why      : t
+                 order[t]
+                 Modified s
+                 … (11 more)
+
+  [2] Input    : s = "cat", order = [0,2,1], k = 6
+      Expected : 2
+      Why      : t
+                 order[t]
+                 Modified s
+                 … (23 more)
+
+  [3] Input    : s = "xy", order = [0,1], k = 4
+      Expected : -1
+      Why      : Even after all replacements, it is impossible to obtain k = 4 valid substrings. Thus, the answer is -1.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int minTime(string s, vector<int>& order, int k);
+
+FILES
+  edit : 3639.cpp
+  test : lc run 3639
+══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,36 @@
+══════════════════════════════════════════════════════════════════════════
+ 234. Palindrome Linked List
+ Easy  |  Tags: Linked List, Two Pointers, Stack, Recursion
+ https://leetcode.com/problems/palindrome-linked-list/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given the head of a singly linked list, return true if it is a
+  palindrome or false otherwise.
+
+CONSTRAINTS
+  The number of nodes in the list is in the range [1, 10^5].
+  0 <= Node.val <= 9
+
+TEST CASES
+  [1] Input    : head = [1,2,2,1]
+      Expected : true
+
+  [2] Input    : head = [1,2]
+      Expected : false
+
+FOLLOW UP
+  Could you do it in O(n) time and O(1) space?
+
+CODE TYPE
+  function · linked list
+    driver: one Solution call per test case
+    linked list: ListNode* — values in order, e.g. [1,2,3,4]
+
+SIGNATURE
+  bool isPalindrome(ListNode* head);
+
+FILES
+  edit : 234.cpp
+  test : lc run 234
+══════════════════════════════════════════════════════════════════════════

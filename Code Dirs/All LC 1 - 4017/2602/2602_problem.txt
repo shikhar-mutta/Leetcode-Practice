@@ -1,0 +1,50 @@
+══════════════════════════════════════════════════════════════════════════
+ 2602. Minimum Operations to Make All Array Elements Equal
+ Medium  |  Tags: Array, Binary Search, Sorting, Prefix Sum
+ https://leetcode.com/problems/minimum-operations-to-make-all-array-elements-equal/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given an array nums consisting of positive integers.
+
+  You are also given an integer array queries of size m. For the i^th
+  query, you want to make all of the elements of nums equal to queries[i].
+  You can perform the following operation on the array any number of
+  times:
+
+  - Increase or decrease an element of the array by 1.
+
+  Return an array answer of size m where answer[i] is the minimum number
+  of operations to make all elements of nums equal to queries[i].
+
+  Note that after each query the array is reset to its original state.
+
+CONSTRAINTS
+  n == nums.length
+  m == queries.length
+  1 <= n, m <= 10^5
+  1 <= nums[i], queries[i] <= 10^9
+
+TEST CASES
+  [1] Input    : nums = [3,1,6,8], queries = [1,5]
+      Expected : [14,10]
+      Why      : For the first query we can do the following operations:
+                 - Decrease nums[0] 2 times, so that nums = [1,1,6,8].
+                 - Decrease nums[2] 5 times, so that nums = [1,1,1,8].
+                 … (8 more)
+
+  [2] Input    : nums = [2,9,6,3], queries = [10]
+      Expected : [20]
+      Why      : We can increase each value in the array to 10. The total number of operations will be 8 + 1 + 4 + 7 = 20.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  vector<long long> minOperations(vector<int>& nums, vector<int>& queries);
+
+FILES
+  edit : 2602.cpp
+  test : lc run 2602
+══════════════════════════════════════════════════════════════════════════

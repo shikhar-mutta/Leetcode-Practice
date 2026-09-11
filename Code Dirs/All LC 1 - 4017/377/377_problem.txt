@@ -1,0 +1,46 @@
+══════════════════════════════════════════════════════════════════════════
+ 377. Combination Sum IV
+ Medium  |  Tags: Array, Dynamic Programming
+ https://leetcode.com/problems/combination-sum-iv/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given an array of distinct integers nums and a target integer target,
+  return the number of possible combinations that add up to target.
+
+  The test cases are generated so that the answer can fit in a 32-bit
+  integer.
+
+CONSTRAINTS
+  1 <= nums.length <= 200
+  1 <= nums[i] <= 1000
+  All the elements of nums are unique.
+  1 <= target <= 1000
+
+TEST CASES
+  [1] Input    : nums = [1,2,3], target = 4
+      Expected : 7
+      Why      : The possible combination ways are:
+                 (1, 1, 1, 1)
+                 (1, 1, 2)
+                 … (6 more)
+
+  [2] Input    : nums = [9], target = 3
+      Expected : 0
+
+FOLLOW UP
+  What if negative numbers are allowed in the given array? How does it
+  change the problem? What limitation we need to add to the question to
+  allow negative numbers?
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int combinationSum4(vector<int>& nums, int target);
+
+FILES
+  edit : 377.cpp
+  test : lc run 377
+══════════════════════════════════════════════════════════════════════════

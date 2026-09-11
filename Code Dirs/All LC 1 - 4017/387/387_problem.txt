@@ -1,0 +1,36 @@
+══════════════════════════════════════════════════════════════════════════
+ 387. First Unique Character in a String
+ Easy  |  Tags: Hash Table, String, Queue, Counting
+ https://leetcode.com/problems/first-unique-character-in-a-string/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given a string s, find the first non-repeating character in it and
+  return its index. If it does not exist, return -1.
+
+CONSTRAINTS
+  1 <= s.length <= 10^5
+  s consists of only lowercase English letters.
+
+TEST CASES
+  [1] Input    : s = "leetcode"
+      Expected : 0
+      Why      : The character 'l' at index 0 is the first character that does not occur at any other index.
+
+  [2] Input    : s = "loveleetcode"
+      Expected : 2
+
+  [3] Input    : s = "aabb"
+      Expected : -1
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int firstUniqChar(string s);
+
+FILES
+  edit : 387.cpp
+  test : lc run 387
+══════════════════════════════════════════════════════════════════════════

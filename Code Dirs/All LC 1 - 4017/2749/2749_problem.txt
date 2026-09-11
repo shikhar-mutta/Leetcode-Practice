@@ -1,0 +1,44 @@
+══════════════════════════════════════════════════════════════════════════
+ 2749. Minimum Operations to Make the Integer Zero
+ Medium  |  Tags: Bit Manipulation, Brainteaser, Enumeration
+ https://leetcode.com/problems/minimum-operations-to-make-the-integer-zero/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given two integers num1 and num2.
+
+  In one operation, you can choose integer i in the range [0, 60] and
+  subtract 2^i + num2 from num1.
+
+  Return the integer denoting the minimum number of operations needed to
+  make num1 equal to 0.
+
+  If it is impossible to make num1 equal to 0, return -1.
+
+CONSTRAINTS
+  1 <= num1 <= 10^9
+  -10^9 <= num2 <= 10^9
+
+TEST CASES
+  [1] Input    : num1 = 3, num2 = -2
+      Expected : 3
+      Why      : We can make 3 equal to 0 with the following operations:
+                 - We choose i = 2 and subtract 2^2 + (-2) from 3, 3 - (4 + (-2)) = 1.
+                 - We choose i = 2 and subtract 2^2 + (-2) from 1, 1 - (4 + (-2)) = -1.
+                 … (2 more)
+
+  [2] Input    : num1 = 5, num2 = 7
+      Expected : -1
+      Why      : It can be proven, that it is impossible to make 5 equal to 0 with the given operation.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int makeTheIntegerZero(int num1, int num2);
+
+FILES
+  edit : 2749.cpp
+  test : lc run 2749
+══════════════════════════════════════════════════════════════════════════

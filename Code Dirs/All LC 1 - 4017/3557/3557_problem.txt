@@ -1,0 +1,37 @@
+══════════════════════════════════════════════════════════════════════════
+ 3557. Find Maximum Number of Non Intersecting Substrings
+ Medium  |  Tags: Hash Table, String, Dynamic Programming, Greedy
+ https://leetcode.com/problems/find-maximum-number-of-non-intersecting-substrings/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a string word.
+
+  Return the maximum number of non-intersecting substrings of word that
+  are at least four characters long and start and end with the same
+  letter.
+
+CONSTRAINTS
+  1 <= word.length <= 2 * 10^5
+  word consists only of lowercase English letters.
+
+TEST CASES
+  [1] Input    : word = "abcdeafdef"
+      Expected : 2
+      Why      : The two substrings are "abcdea" and "fdef".
+
+  [2] Input    : word = "bcdaaaab"
+      Expected : 1
+      Why      : The only substring is "aaaa". Note that we cannot also choose "bcdaaaab" since it intersects with the other substring.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int maxSubstrings(string word);
+
+FILES
+  edit : 3557.cpp
+  test : lc run 3557
+══════════════════════════════════════════════════════════════════════════

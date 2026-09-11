@@ -1,0 +1,36 @@
+══════════════════════════════════════════════════════════════════════════
+ 2278. Percentage of Letter in String
+ Easy  |  Tags: String
+ https://leetcode.com/problems/percentage-of-letter-in-string/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given a string s and a character letter, return the percentage of
+  characters in s that equal letter rounded down to the nearest whole
+  percent.
+
+CONSTRAINTS
+  1 <= s.length <= 100
+  s consists of lowercase English letters.
+  letter is a lowercase English letter.
+
+TEST CASES
+  [1] Input    : s = "foobar", letter = "o"
+      Expected : 33
+      Why      : The percentage of characters in s that equal the letter 'o' is 2 / 6 * 100% = 33% when rounded down, so we return 33.
+
+  [2] Input    : s = "jjjj", letter = "k"
+      Expected : 0
+      Why      : The percentage of characters in s that equal the letter 'k' is 0%, so we return 0.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int percentageLetter(string s, char letter);
+
+FILES
+  edit : 2278.cpp
+  test : lc run 2278
+══════════════════════════════════════════════════════════════════════════

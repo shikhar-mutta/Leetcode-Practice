@@ -1,0 +1,43 @@
+══════════════════════════════════════════════════════════════════════════
+ 886. Possible Bipartition
+ Medium  |  Tags: Depth-First Search, Breadth-First Search, Union-Find, Graph Theory, Graph Coloring, Bipartite Graph
+ https://leetcode.com/problems/possible-bipartition/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  We want to split a group of n people (labeled from 1 to n) into two
+  groups of any size. Each person may dislike some other people, and they
+  should not go into the same group.
+
+  Given the integer n and the array dislikes where dislikes[i] = [ai, bi]
+  indicates that the person labeled ai does not like the person labeled
+  bi, return true if it is possible to split everyone into two groups in
+  this way.
+
+CONSTRAINTS
+  1 <= n <= 2000
+  0 <= dislikes.length <= 10^4
+  dislikes[i].length == 2
+  1 <= ai < bi <= n
+  All the pairs of dislikes are unique.
+
+TEST CASES
+  [1] Input    : n = 4, dislikes = [[1,2],[1,3],[2,4]]
+      Expected : true
+      Why      : The first group has [1,4], and the second group has [2,3].
+
+  [2] Input    : n = 3, dislikes = [[1,2],[1,3],[2,3]]
+      Expected : false
+      Why      : We need at least 3 groups to divide them. We cannot put them in two groups.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  bool possibleBipartition(int n, vector<vector<int>>& dislikes);
+
+FILES
+  edit : 886.cpp
+  test : lc run 886
+══════════════════════════════════════════════════════════════════════════

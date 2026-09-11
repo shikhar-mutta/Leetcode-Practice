@@ -1,0 +1,53 @@
+══════════════════════════════════════════════════════════════════════════
+ 1000. Minimum Cost to Merge Stones
+ Hard  |  Tags: Array, Dynamic Programming, Prefix Sum
+ https://leetcode.com/problems/minimum-cost-to-merge-stones/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  There are n piles of stones arranged in a row. The i^th pile has
+  stones[i] stones.
+
+  A move consists of merging exactly k consecutive piles into one pile,
+  and the cost of this move is equal to the total number of stones in
+  these k piles.
+
+  Return the minimum cost to merge all piles of stones into one pile. If
+  it is impossible, return -1.
+
+CONSTRAINTS
+  n == stones.length
+  1 <= n <= 30
+  1 <= stones[i] <= 100
+  2 <= k <= 30
+
+TEST CASES
+  [1] Input    : stones = [3,2,4,1], k = 2
+      Expected : 20
+      Why      : We start with [3, 2, 4, 1].
+                 We merge [3, 2] for a cost of 5, and we are left with [5, 4, 1].
+                 We merge [4, 1] for a cost of 5, and we are left with [5, 5].
+                 … (2 more)
+
+  [2] Input    : stones = [3,2,4,1], k = 3
+      Expected : -1
+      Why      : After any merge operation, there are 2 piles left, and we can't merge anymore. So the task is impossible.
+
+  [3] Input    : stones = [3,5,1,2,6], k = 3
+      Expected : 25
+      Why      : We start with [3, 5, 1, 2, 6].
+                 We merge [5, 1, 2] for a cost of 8, and we are left with [3, 8, 6].
+                 We merge [3, 8, 6] for a cost of 17, and we are left with [17].
+                 … (1 more)
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int mergeStones(vector<int>& stones, int k);
+
+FILES
+  edit : 1000.cpp
+  test : lc run 1000
+══════════════════════════════════════════════════════════════════════════

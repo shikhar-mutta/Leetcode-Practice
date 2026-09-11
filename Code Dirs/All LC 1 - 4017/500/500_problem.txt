@@ -1,0 +1,50 @@
+══════════════════════════════════════════════════════════════════════════
+ 500. Keyboard Row
+ Easy  |  Tags: Array, Hash Table, String
+ https://leetcode.com/problems/keyboard-row/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given an array of strings words, return the words that can be typed
+  using letters of the alphabet on only one row of American keyboard like
+  the image below.
+
+  Note that the strings are case-insensitive, both lowercased and
+  uppercased of the same letter are treated as if they are at the same
+  row.
+
+  In the American keyboard:
+
+  - the first row consists of the characters "qwertyuiop",
+
+  - the second row consists of the characters "asdfghjkl", and
+
+  - the third row consists of the characters "zxcvbnm".
+
+CONSTRAINTS
+  1 <= words.length <= 20
+  1 <= words[i].length <= 100
+  words[i] consists of English letters (both lowercase and uppercase).
+
+TEST CASES
+  [1] Input    : words = ["Hello","Alaska","Dad","Peace"]
+      Expected : ["Alaska","Dad"]
+      Why      : Both "a" and "A" are in the 2nd row of the American keyboard due to case insensitivity.
+
+  [2] Input    : words = ["omk"]
+      Expected : []
+
+  [3] Input    : words = ["adsdf","sfd"]
+      Expected : ["adsdf","sfd"]
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  vector<string> findWords(vector<string>& words);
+
+FILES
+  edit : 500.cpp
+  test : lc run 500
+══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,43 @@
+══════════════════════════════════════════════════════════════════════════
+ 3750. Minimum Number of Flips to Reverse Binary String
+ Easy  |  Tags: Math, Two Pointers, String, Bit Manipulation
+ https://leetcode.com/problems/minimum-number-of-flips-to-reverse-binary-string/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a positive integer n.
+
+  Let s be the binary representation of n without leading zeros.
+
+  The reverse of a binary string s is obtained by writing the characters
+  of s in the opposite order.
+
+  You may flip any bit in s (change 0 → 1 or 1 → 0). Each flip affects
+  exactly one bit.
+
+  Return the minimum number of flips required to make s equal to the
+  reverse of its original form.
+
+CONSTRAINTS
+  1 <= n <= 10^9
+
+TEST CASES
+  [1] Input    : n = 7
+      Expected : 0
+      Why      : The binary representation of 7 is "111". Its reverse is also "111", which is the same. Hence, no flips are needed.
+
+  [2] Input    : n = 10
+      Expected : 4
+      Why      : The binary representation of 10 is "1010". Its reverse is "0101". All four bits must be flipped to make them equal. Thus, the minimum number of flips required is 4.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int minimumFlips(int n);
+
+FILES
+  edit : 3750.cpp
+  test : lc run 3750
+══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,43 @@
+══════════════════════════════════════════════════════════════════════════
+ 3233. Find the Count of Numbers Which Are Not Special
+ Medium  |  Tags: Array, Math, Number Theory
+ https://leetcode.com/problems/find-the-count-of-numbers-which-are-not-special/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given 2 positive integers l and r. For any number x, all
+  positive divisors of x except x are called the proper divisors of x.
+
+  A number is called special if it has exactly 2 proper divisors. For
+  example:
+
+  - The number 4 is special because it has proper divisors 1 and 2.
+
+  - The number 6 is not special because it has proper divisors 1, 2, and
+    3.
+
+  Return the count of numbers in the range [l, r] that are not special.
+
+CONSTRAINTS
+  1 <= l <= r <= 10^9
+
+TEST CASES
+  [1] Input    : l = 5, r = 7
+      Expected : 3
+      Why      : There are no special numbers in the range [5, 7].
+
+  [2] Input    : l = 4, r = 16
+      Expected : 11
+      Why      : The special numbers in the range [4, 16] are 4 and 9.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int nonSpecialCount(int l, int r);
+
+FILES
+  edit : 3233.cpp
+  test : lc run 3233
+══════════════════════════════════════════════════════════════════════════

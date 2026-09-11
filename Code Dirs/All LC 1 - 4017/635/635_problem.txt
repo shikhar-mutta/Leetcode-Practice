@@ -1,0 +1,30 @@
+══════════════════════════════════════════════════════════════════════════
+ 635. Design Log Storage System
+ Medium  |  Tags: Hash Table, String, Design, Ordered Set
+ https://leetcode.com/problems/design-log-storage-system/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : ["LogSystem","put","put","put","retrieve","retrieve"] | [] | [1,"2017:01:01:23:59:59"] | [2,"2017:01:01:22:59:59"] | [3,"2016:01:01:00:00:00"] | ["2016:01:01:01:00:00","2017:01:01:23:00:00","Year"] | ["2016:01:01:01:00:00","2017:01:01:23:00:00","Hour"]
+      Expected : [null,null,null,null,[1,2,3],[1,2]]
+
+CODE TYPE
+  design · LogSystem
+    driver: replays ["LogSystem","op",...] / [[args],...] and prints [null,...]
+
+SIGNATURE
+  LogSystem();
+  void put(int id, string timestamp);
+  vector<int> retrieve(string start, string end, string granularity);
+
+FILES
+  edit : 635.cpp
+  test : lc run 635
+══════════════════════════════════════════════════════════════════════════

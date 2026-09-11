@@ -1,0 +1,31 @@
+══════════════════════════════════════════════════════════════════════════
+ 371. Sum of Two Integers
+ Medium  |  Tags: Math, Bit Manipulation
+ https://leetcode.com/problems/sum-of-two-integers/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given two integers a and b, return the sum of the two integers without
+  using the operators + and -.
+
+CONSTRAINTS
+  -1000 <= a, b <= 1000
+
+TEST CASES
+  [1] Input    : a = 1, b = 2
+      Expected : 3
+
+  [2] Input    : a = 2, b = 3
+      Expected : 5
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int getSum(int a, int b);
+
+FILES
+  edit : 371.cpp
+  test : lc run 371
+══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,46 @@
+══════════════════════════════════════════════════════════════════════════
+ 3917. Count Indices With Opposite Parity
+ Easy  |  Tags: Array
+ https://leetcode.com/problems/count-indices-with-opposite-parity/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given an integer array nums of length n.
+
+  The score of an index i is defined as the number of indices j such that:
+
+  - i < j < n, and
+
+  - nums[i] and nums[j] have different parity (one is even and the other
+    is odd).
+
+  Return an integer array answer of length n, where answer[i] is the score
+  of index i.
+
+CONSTRAINTS
+  1 <= nums.length <= 100
+  1 <= nums[i] <= 100
+
+TEST CASES
+  [1] Input    : nums = [1,2,3,4]
+      Expected : [2,1,1,0]
+      Why      : - nums[0] = 1, which is odd. Thus, the indices j = 1 and j = 3 satisfy the conditions, so the score of index 0 is 2.
+                 - nums[1] = 2, which is even. Thus, the index j = 2 satisfies the conditions, so the score of index 1 is 1.
+                 - nums[2] = 3, which is odd. Thus, the index j = 3 satisfies the conditions, so the score of index 2 is 1.
+                 … (2 more)
+
+  [2] Input    : nums = [1]
+      Expected : [0]
+      Why      : There is only one element in nums. Thus, the score of index 0 is 0.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  vector<int> countOppositeParity(vector<int>& nums);
+
+FILES
+  edit : 3917.cpp
+  test : lc run 3917
+══════════════════════════════════════════════════════════════════════════

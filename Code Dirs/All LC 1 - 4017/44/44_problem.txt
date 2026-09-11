@@ -1,0 +1,45 @@
+══════════════════════════════════════════════════════════════════════════
+ 44. Wildcard Matching
+ Hard  |  Tags: String, Dynamic Programming, Greedy, Recursion
+ https://leetcode.com/problems/wildcard-matching/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given an input string (s) and a pattern (p), implement wildcard pattern
+  matching with support for '?' and '*' where:
+
+  - '?' Matches any single character.
+
+  - '*' Matches any sequence of characters (including the empty sequence).
+
+  The matching should cover the entire input string (not partial).
+
+CONSTRAINTS
+  0 <= s.length, p.length <= 2000
+  s contains only lowercase English letters.
+  p contains only lowercase English letters, '?' or '*'.
+
+TEST CASES
+  [1] Input    : s = "aa", p = "a"
+      Expected : false
+      Why      : "a" does not match the entire string "aa".
+
+  [2] Input    : s = "aa", p = "*"
+      Expected : true
+      Why      : '*' matches any sequence.
+
+  [3] Input    : s = "cb", p = "?a"
+      Expected : false
+      Why      : '?' matches 'c', but the second letter is 'a', which does not match 'b'.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  bool isMatch(string s, string p);
+
+FILES
+  edit : 44.cpp
+  test : lc run 44
+══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,36 @@
+══════════════════════════════════════════════════════════════════════════
+ 434. Number of Segments in a String
+ Easy  |  Tags: String
+ https://leetcode.com/problems/number-of-segments-in-a-string/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given a string s, return the number of segments in the string.
+
+  A segment is defined to be a contiguous sequence of non-space
+  characters.
+
+CONSTRAINTS
+  0 <= s.length <= 300
+  s consists of lowercase and uppercase English letters, digits, or one of the following characters "!@#$%^&*()_+-=',.:".
+  The only space character in s is ' '.
+
+TEST CASES
+  [1] Input    : s = "Hello, my name is John"
+      Expected : 5
+      Why      : The five segments are ["Hello,", "my", "name", "is", "John"]
+
+  [2] Input    : s = "Hello"
+      Expected : 1
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int countSegments(string s);
+
+FILES
+  edit : 434.cpp
+  test : lc run 434
+══════════════════════════════════════════════════════════════════════════

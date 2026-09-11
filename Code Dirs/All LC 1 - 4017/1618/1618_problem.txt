@@ -1,0 +1,26 @@
+══════════════════════════════════════════════════════════════════════════
+ 1618. Maximum Font to Fit a Sentence in a Screen
+ Medium  |  Tags: Array, String, Binary Search, Interactive
+ https://leetcode.com/problems/maximum-font-to-fit-a-sentence-in-a-screen/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (no examples available)
+
+CODE TYPE
+  interactive · interface FontInfo
+    driver: mocks what the judge supplies, backed by each case's data
+    interface: FontInfo — the judge's class, mocked by the driver
+
+SIGNATURE
+  int maxFont(string text, int w, int h, vector<int>& fonts, FontInfo& fontInfo);
+
+FILES
+  edit : 1618.cpp
+  test : lc run 1618
+══════════════════════════════════════════════════════════════════════════

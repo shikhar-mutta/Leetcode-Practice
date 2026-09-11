@@ -1,0 +1,33 @@
+══════════════════════════════════════════════════════════════════════════
+ 716. Max Stack
+ Hard  |  Tags: Linked List, Stack, Design, Doubly-Linked List, Ordered Set
+ https://leetcode.com/problems/max-stack/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : ["MaxStack","push","push","push","top","popMax","top","peekMax","pop","top"] | [[],[5],[1],[5],[],[],[],[],[],[]]
+      Expected : [null, null, null, null, 5, 5, 1, 5, 1, 5]
+
+CODE TYPE
+  design · MaxStack
+    driver: replays ["MaxStack","op",...] / [[args],...] and prints [null,...]
+
+SIGNATURE
+  MaxStack();
+  void push(int x);
+  int pop();
+  int top();
+  int peekMax();
+  int popMax();
+
+FILES
+  edit : 716.cpp
+  test : lc run 716
+══════════════════════════════════════════════════════════════════════════

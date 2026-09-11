@@ -1,0 +1,43 @@
+══════════════════════════════════════════════════════════════════════════
+ 125. Valid Palindrome
+ Easy  |  Tags: Two Pointers, String
+ https://leetcode.com/problems/valid-palindrome/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  A phrase is a palindrome if, after converting all uppercase letters into
+  lowercase letters and removing all non-alphanumeric characters, it reads
+  the same forward and backward. Alphanumeric characters include letters
+  and numbers.
+
+  Given a string s, return true if it is a palindrome, or false otherwise.
+
+CONSTRAINTS
+  1 <= s.length <= 2 * 10^5
+  s consists only of printable ASCII characters.
+
+TEST CASES
+  [1] Input    : s = "A man, a plan, a canal: Panama"
+      Expected : true
+      Why      : "amanaplanacanalpanama" is a palindrome.
+
+  [2] Input    : s = "race a car"
+      Expected : false
+      Why      : "raceacar" is not a palindrome.
+
+  [3] Input    : s = " "
+      Expected : true
+      Why      : s is an empty string "" after removing non-alphanumeric characters.
+                 Since an empty string reads the same forward and backward, it is a palindrome.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  bool isPalindrome(string s);
+
+FILES
+  edit : 125.cpp
+  test : lc run 125
+══════════════════════════════════════════════════════════════════════════

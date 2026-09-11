@@ -1,0 +1,50 @@
+══════════════════════════════════════════════════════════════════════════
+ 3843. First Element with Unique Frequency
+ Medium  |  Tags: Array, Hash Table, Counting
+ https://leetcode.com/problems/first-element-with-unique-frequency/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given an integer array nums.
+
+  Return an integer denoting the first element (scanning from left to
+  right) in nums whose frequency is unique. That is, no other integer
+  appears the same number of times in nums. If there is no such element,
+  return -1.
+
+CONSTRAINTS
+  1 <= nums.length <= 10^5
+  1 <= nums[i] <= 10^5
+
+TEST CASES
+  [1] Input    : nums = [20,10,30,30]
+      Expected : 30
+      Why      : - 20 appears once.
+                 - 10 appears once.
+                 - 30 appears twice.
+                 … (1 more)
+
+  [2] Input    : nums = [20,20,10,30,30,30]
+      Expected : 20
+      Why      : - 20 appears twice.
+                 - 10 appears once.
+                 - 30 appears 3 times.
+                 … (1 more)
+
+  [3] Input    : nums = [10,10,20,20]
+      Expected : -1
+      Why      : - 10 appears twice.
+                 - 20 appears twice.
+                 - No element has a unique frequency.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int firstUniqueFreq(vector<int>& nums);
+
+FILES
+  edit : 3843.cpp
+  test : lc run 3843
+══════════════════════════════════════════════════════════════════════════

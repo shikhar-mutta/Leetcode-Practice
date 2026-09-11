@@ -1,0 +1,38 @@
+══════════════════════════════════════════════════════════════════════════
+ 132. Palindrome Partitioning II
+ Hard  |  Tags: String, Dynamic Programming
+ https://leetcode.com/problems/palindrome-partitioning-ii/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given a string s, partition s such that every substring of the partition
+  is a palindrome.
+
+  Return the minimum cuts needed for a palindrome partitioning of s.
+
+CONSTRAINTS
+  1 <= s.length <= 2000
+  s consists of lowercase English letters only.
+
+TEST CASES
+  [1] Input    : s = "aab"
+      Expected : 1
+      Why      : The palindrome partitioning ["aa","b"] could be produced using 1 cut.
+
+  [2] Input    : s = "a"
+      Expected : 0
+
+  [3] Input    : s = "ab"
+      Expected : 1
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int minCut(string s);
+
+FILES
+  edit : 132.cpp
+  test : lc run 132
+══════════════════════════════════════════════════════════════════════════

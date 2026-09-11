@@ -1,0 +1,43 @@
+══════════════════════════════════════════════════════════════════════════
+ 3798. Largest Even Number
+ Easy  |  Tags: String
+ https://leetcode.com/problems/largest-even-number/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a string s consisting only of the characters '1' and '2'.
+
+  You may delete any number of characters from s without changing the
+  order of the remaining characters.
+
+  Return the largest possible resultant string that represents an even
+  integer. If there is no such string, return the empty string "".
+
+CONSTRAINTS
+  1 <= s.length <= 100
+  s consists only of the characters '1' and '2'.
+
+TEST CASES
+  [1] Input    : s = "1112"
+      Expected : "1112"
+      Why      : The string already represents the largest possible even number, so no deletions are needed.
+
+  [2] Input    : s = "221"
+      Expected : "22"
+      Why      : Deleting '1' results in the largest possible even number which is equal to 22.
+
+  [3] Input    : s = "1"
+      Expected : ""
+      Why      : There is no way to get an even number.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  string largestEven(string s);
+
+FILES
+  edit : 3798.cpp
+  test : lc run 3798
+══════════════════════════════════════════════════════════════════════════

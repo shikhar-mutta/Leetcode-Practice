@@ -1,0 +1,45 @@
+══════════════════════════════════════════════════════════════════════════
+ 989. Add to Array-Form of Integer
+ Easy  |  Tags: Array, Math
+ https://leetcode.com/problems/add-to-array-form-of-integer/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  The array-form of an integer num is an array representing its digits in
+  left to right order.
+
+  - For example, for num = 1321, the array form is [1,3,2,1].
+
+  Given num, the array-form of an integer, and an integer k, return the
+  array-form of the integer num + k.
+
+CONSTRAINTS
+  1 <= num.length <= 10^4
+  0 <= num[i] <= 9
+  num does not contain any leading zeros except for the zero itself.
+  1 <= k <= 10^4
+
+TEST CASES
+  [1] Input    : num = [1,2,0,0], k = 34
+      Expected : [1,2,3,4]
+      Why      : 1200 + 34 = 1234
+
+  [2] Input    : num = [2,7,4], k = 181
+      Expected : [4,5,5]
+      Why      : 274 + 181 = 455
+
+  [3] Input    : num = [2,1,5], k = 806
+      Expected : [1,0,2,1]
+      Why      : 215 + 806 = 1021
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  vector<int> addToArrayForm(vector<int>& num, int k);
+
+FILES
+  edit : 989.cpp
+  test : lc run 989
+══════════════════════════════════════════════════════════════════════════

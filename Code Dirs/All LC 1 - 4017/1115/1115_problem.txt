@@ -1,0 +1,57 @@
+══════════════════════════════════════════════════════════════════════════
+ 1115. Print FooBar Alternately
+ Medium  |  Tags: Concurrency
+ https://leetcode.com/problems/print-foobar-alternately/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Suppose you are given the following code:
+
+  class FooBar {
+  public void foo() {
+  for (int i = 0; i < n; i++) {
+  print("foo");
+  }
+  }
+
+  public void bar() {
+  for (int i = 0; i < n; i++) {
+  print("bar");
+  }
+  }
+  }
+
+  The same instance of FooBar will be passed to two different threads:
+
+  - thread A will call foo(), while
+
+  - thread B will call bar().
+
+  Modify the given program to output "foobar" n times.
+
+CONSTRAINTS
+  1 <= n <= 1000
+
+TEST CASES
+  [1] Input    : n = 1
+      Expected : "foobar"
+      Why      : There are two threads being fired asynchronously. One of them calls foo(), while the other calls bar().
+                 "foobar" is being output 1 time.
+
+  [2] Input    : n = 2
+      Expected : "foobarfoobar"
+      Why      : "foobar" is being output 2 times.
+
+CODE TYPE
+  concurrency · FooBar
+    driver: runs each method on its own thread, checks the combined output
+
+SIGNATURE
+  FooBar(int n);
+  void foo(function<void()> printFoo);
+  void bar(function<void()> printBar);
+
+FILES
+  edit : 1115.cpp
+  test : lc run 1115
+══════════════════════════════════════════════════════════════════════════

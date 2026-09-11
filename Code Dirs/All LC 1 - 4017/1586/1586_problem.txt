@@ -1,0 +1,33 @@
+══════════════════════════════════════════════════════════════════════════
+ 1586. Binary Search Tree Iterator II
+ Medium  |  Tags: Stack, Tree, Design, Binary Search Tree, Binary Tree, Iterator
+ https://leetcode.com/problems/binary-search-tree-iterator-ii/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : ["BSTIterator","next","next","prev","next","hasNext","next","next","next","hasNext","hasPrev","prev","prev"] | [[[7,3,15,null,null,9,20]],[],[],[],[],[],[],[],[],[],[],[],[]]
+      Expected : [null, 3, 7, 3, 7, true, 9, 15, 20, false, true, 15, 9]
+
+CODE TYPE
+  design · BSTIterator · tree
+    driver: replays ["BSTIterator","op",...] / [[args],...] and prints [null,...]
+    tree: TreeNode* — level order, e.g. [3,9,20,null,null,15,7]
+
+SIGNATURE
+  BSTIterator(TreeNode* root);
+  bool hasNext();
+  int next();
+  bool hasPrev();
+  int prev();
+
+FILES
+  edit : 1586.cpp
+  test : lc run 1586
+══════════════════════════════════════════════════════════════════════════

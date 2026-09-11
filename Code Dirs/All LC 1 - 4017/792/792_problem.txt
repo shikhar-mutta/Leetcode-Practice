@@ -1,0 +1,41 @@
+══════════════════════════════════════════════════════════════════════════
+ 792. Number of Matching Subsequences
+ Medium  |  Tags: Array, Hash Table, String, Binary Search, Dynamic Programming, Trie, Sorting
+ https://leetcode.com/problems/number-of-matching-subsequences/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given a string s and an array of strings words, return the number of
+  words[i] that is a subsequence of s.
+
+  A subsequence of a string is a new string generated from the original
+  string with some characters (can be none) deleted without changing the
+  relative order of the remaining characters.
+
+  - For example, "ace" is a subsequence of "abcde".
+
+CONSTRAINTS
+  1 <= s.length <= 5 * 10^4
+  1 <= words.length <= 5000
+  1 <= words[i].length <= 50
+  s and words[i] consist of only lowercase English letters.
+
+TEST CASES
+  [1] Input    : s = "abcde", words = ["a","bb","acd","ace"]
+      Expected : 3
+      Why      : There are three strings in words that are a subsequence of s: "a", "acd", "ace".
+
+  [2] Input    : s = "dsahjpjauf", words = ["ahjpjau","ja","ahbwzgqnuk","tnmlanowax"]
+      Expected : 2
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int numMatchingSubseq(string s, vector<string>& words);
+
+FILES
+  edit : 792.cpp
+  test : lc run 792
+══════════════════════════════════════════════════════════════════════════

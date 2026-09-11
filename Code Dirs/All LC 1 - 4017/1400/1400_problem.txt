@@ -1,0 +1,41 @@
+══════════════════════════════════════════════════════════════════════════
+ 1400. Construct K Palindrome Strings
+ Medium  |  Tags: Hash Table, String, Greedy, Counting
+ https://leetcode.com/problems/construct-k-palindrome-strings/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given a string s and an integer k, return true if you can use all the
+  characters in s to construct non-empty k palindrome strings or false
+  otherwise.
+
+CONSTRAINTS
+  1 <= s.length <= 10^5
+  s consists of lowercase English letters.
+  1 <= k <= 10^5
+
+TEST CASES
+  [1] Input    : s = "annabelle", k = 2
+      Expected : true
+      Why      : You can construct two palindromes using all characters in s.
+                 Some possible constructions "anna" + "elble", "anbna" + "elle", "anellena" + "b"
+
+  [2] Input    : s = "leetcode", k = 3
+      Expected : false
+      Why      : It is impossible to construct 3 palindromes using all the characters of s.
+
+  [3] Input    : s = "true", k = 4
+      Expected : true
+      Why      : The only possible solution is to put each character in a separate string.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  bool canConstruct(string s, int k);
+
+FILES
+  edit : 1400.cpp
+  test : lc run 1400
+══════════════════════════════════════════════════════════════════════════

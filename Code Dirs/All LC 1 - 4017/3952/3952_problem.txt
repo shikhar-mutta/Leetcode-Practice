@@ -1,0 +1,59 @@
+══════════════════════════════════════════════════════════════════════════
+ 3952. Maximum Total Value of Covered Indices
+ Medium  |  Tags: Array, String, Dynamic Programming, Greedy
+ https://leetcode.com/problems/maximum-total-value-of-covered-indices/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given an integer array nums of length n and a binary string s of
+  length n, where s[i] == '1' means index i initially contains a token and
+  s[i] == '0' means it does not.
+
+  You may perform the following operation any number of times:
+
+  - Choose a token currently located at index i, where i > 0, such that
+    this token has not been moved before.
+
+  - Move this token from index i to index i - 1.
+
+  An index is considered covered if it contains a token after all moves.
+
+  Return an integer denoting the maximum total value of nums at the
+  covered indices after optimally performing the operations.
+
+CONSTRAINTS
+  1 <= n == nums.length == s.length <= 10^5
+  1 <= nums[i] <= 10^5
+  s[i] is either '0' or '1'
+
+TEST CASES
+  [1] Input    : nums = [9,2,6,1], s = "0101"
+      Expected : 15
+      Why      : - Initially, indices 1 and 3 contain tokens.
+                 - Move the token from index 3 to index 2.
+                 - Move the token from index 1 to index 0.
+                 … (1 more)
+
+  [2] Input    : nums = [5,1,4], s = "001"
+      Expected : 4
+      Why      : - Initially, only index 2 contains a token.
+                 - It is optimal to leave the token at index 2.
+                 - The covered index is [2], so the total value is nums[2] = 4.
+
+  [3] Input    : nums = [9,3,5], s = "011"
+      Expected : 14
+      Why      : - Initially, indices 1 and 2 contain tokens.
+                 - Move the token from index 1 to index 0.
+                 - The covered indices are [0, 2], so the total value is nums[0] + nums[2] = 9 + 5 = 14.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  long long maxTotal(vector<int>& nums, string s);
+
+FILES
+  edit : 3952.cpp
+  test : lc run 3952
+══════════════════════════════════════════════════════════════════════════

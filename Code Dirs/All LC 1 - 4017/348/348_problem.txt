@@ -1,0 +1,29 @@
+══════════════════════════════════════════════════════════════════════════
+ 348. Design Tic-Tac-Toe
+ Medium  |  Tags: Array, Hash Table, Design, Matrix, Simulation
+ https://leetcode.com/problems/design-tic-tac-toe/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : ["TicTacToe","move","move","move","move","move","move","move"] | [[3],[0,0,1],[0,2,2],[2,2,1],[1,1,2],[2,0,1],[1,0,2],[2,1,1]]
+      Expected : [null, 0, 0, 0, 0, 0, 0, 1]
+
+CODE TYPE
+  design · TicTacToe
+    driver: replays ["TicTacToe","op",...] / [[args],...] and prints [null,...]
+
+SIGNATURE
+  TicTacToe(int n);
+  int move(int row, int col, int player);
+
+FILES
+  edit : 348.cpp
+  test : lc run 348
+══════════════════════════════════════════════════════════════════════════

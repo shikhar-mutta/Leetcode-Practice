@@ -1,0 +1,31 @@
+══════════════════════════════════════════════════════════════════════════
+ 340. Longest Substring with At Most K Distinct Characters
+ Medium  |  Tags: Hash Table, String, Sliding Window
+ https://leetcode.com/problems/longest-substring-with-at-most-k-distinct-characters/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : "eceba" | 2
+      Expected : 3
+
+  [2] Input    : "aa" | 1
+      Expected : 2
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int lengthOfLongestSubstringKDistinct(string s, int k);
+
+FILES
+  edit : 340.cpp
+  test : lc run 340
+══════════════════════════════════════════════════════════════════════════

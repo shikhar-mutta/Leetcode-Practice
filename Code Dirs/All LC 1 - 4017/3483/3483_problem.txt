@@ -1,0 +1,46 @@
+══════════════════════════════════════════════════════════════════════════
+ 3483. Unique 3-Digit Even Numbers
+ Easy  |  Tags: Array, Hash Table, Recursion, Enumeration
+ https://leetcode.com/problems/unique-3-digit-even-numbers/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given an array of digits called digits. Your task is to
+  determine the number of distinct three-digit even numbers that can be
+  formed using these digits.
+
+  Note: Each copy of a digit can only be used once per number, and there
+  may not be leading zeros.
+
+CONSTRAINTS
+  3 <= digits.length <= 10
+  0 <= digits[i] <= 9
+
+TEST CASES
+  [1] Input    : digits = [1,2,3,4]
+      Expected : 12
+      Why      : The 12 distinct 3-digit even numbers that can be formed are 124, 132, 134, 142, 214, 234, 312, 314, 324, 342, 412, and 432. Note that 222 cannot be formed because there is only 1 copy of the digit 2.
+
+  [2] Input    : digits = [0,2,2]
+      Expected : 2
+      Why      : The only 3-digit even numbers that can be formed are 202 and 220. Note that the digit 2 can be used twice because it appears twice in the array.
+
+  [3] Input    : digits = [6,6,6]
+      Expected : 1
+      Why      : Only 666 can be formed.
+
+  [4] Input    : digits = [1,3,5]
+      Expected : 0
+      Why      : No even 3-digit numbers can be formed.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int totalNumbers(vector<int>& digits);
+
+FILES
+  edit : 3483.cpp
+  test : lc run 3483
+══════════════════════════════════════════════════════════════════════════

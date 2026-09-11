@@ -1,0 +1,43 @@
+══════════════════════════════════════════════════════════════════════════
+ 115. Distinct Subsequences
+ Hard  |  Tags: String, Dynamic Programming
+ https://leetcode.com/problems/distinct-subsequences/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given two strings s and t, return the number of distinct subsequences of
+  s which equals t.
+
+  The test cases are generated so that the answer fits on a 32-bit signed
+  integer.
+
+CONSTRAINTS
+  1 <= s.length, t.length <= 1000
+  s and t consist of English letters.
+
+TEST CASES
+  [1] Input    : s = "rabbbit", t = "rabbit"
+      Expected : 3
+      Why      : As shown below, there are 3 ways you can generate "rabbit" from s.
+                 rabbbit
+                 rabbbit
+                 … (1 more)
+
+  [2] Input    : s = "babgbag", t = "bag"
+      Expected : 5
+      Why      : As shown below, there are 5 ways you can generate "bag" from s.
+                 babgbag
+                 babgbag
+                 … (3 more)
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int numDistinct(string s, string t);
+
+FILES
+  edit : 115.cpp
+  test : lc run 115
+══════════════════════════════════════════════════════════════════════════

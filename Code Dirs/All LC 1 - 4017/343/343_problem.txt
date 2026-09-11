@@ -1,0 +1,35 @@
+══════════════════════════════════════════════════════════════════════════
+ 343. Integer Break
+ Medium  |  Tags: Math, Dynamic Programming
+ https://leetcode.com/problems/integer-break/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given an integer n, break it into the sum of k positive integers, where
+  k >= 2, and maximize the product of those integers.
+
+  Return the maximum product you can get.
+
+CONSTRAINTS
+  2 <= n <= 58
+
+TEST CASES
+  [1] Input    : n = 2
+      Expected : 1
+      Why      : 2 = 1 + 1, 1 × 1 = 1.
+
+  [2] Input    : n = 10
+      Expected : 36
+      Why      : 10 = 3 + 3 + 4, 3 × 3 × 4 = 36.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int integerBreak(int n);
+
+FILES
+  edit : 343.cpp
+  test : lc run 343
+══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,50 @@
+══════════════════════════════════════════════════════════════════════════
+ 3676. Count Bowl Subarrays
+ Medium  |  Tags: Array, Stack, Monotonic Stack
+ https://leetcode.com/problems/count-bowl-subarrays/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given an integer array nums with distinct elements.
+
+  A subarray nums[l...r] of nums is called a bowl if:
+
+  - The subarray has length at least 3. That is, r - l + 1 >= 3.
+
+  - The minimum of its two ends is strictly greater than the maximum of
+    all elements in between. That is, min(nums[l], nums[r]) > max(nums[l +
+    1], ..., nums[r - 1]).
+
+  Return the number of bowl subarrays in nums.
+
+CONSTRAINTS
+  3 <= nums.length <= 10^5
+  1 <= nums[i] <= 10^9
+  nums consists of distinct elements.
+
+TEST CASES
+  [1] Input    : nums = [2,5,3,1,4]
+      Expected : 2
+      Why      : The bowl subarrays are [3, 1, 4] and [5, 3, 1, 4].
+                 - [3, 1, 4] is a bowl because min(3, 4) = 3 > max(1) = 1.
+                 - [5, 3, 1, 4] is a bowl because min(5, 4) = 4 > max(3, 1) = 3.
+
+  [2] Input    : nums = [5,1,2,3,4]
+      Expected : 3
+      Why      : The bowl subarrays are [5, 1, 2], [5, 1, 2, 3] and [5, 1, 2, 3, 4].
+
+  [3] Input    : nums = [1000000000,999999999,999999998]
+      Expected : 0
+      Why      : No subarray is a bowl.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  long long bowlSubarrays(vector<int>& nums);
+
+FILES
+  edit : 3676.cpp
+  test : lc run 3676
+══════════════════════════════════════════════════════════════════════════

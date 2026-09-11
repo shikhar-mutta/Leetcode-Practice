@@ -1,0 +1,49 @@
+══════════════════════════════════════════════════════════════════════════
+ 2486. Append Characters to String to Make Subsequence
+ Medium  |  Tags: Two Pointers, String, Greedy
+ https://leetcode.com/problems/append-characters-to-string-to-make-subsequence/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given two strings s and t consisting of only lowercase English
+  letters.
+
+  Return the minimum number of characters that need to be appended to the
+  end of s so that t becomes a subsequence of s.
+
+  A subsequence is a string that can be derived from another string by
+  deleting some or no characters without changing the order of the
+  remaining characters.
+
+CONSTRAINTS
+  1 <= s.length, t.length <= 10^5
+  s and t consist only of lowercase English letters.
+
+TEST CASES
+  [1] Input    : s = "coaching", t = "coding"
+      Expected : 4
+      Why      : Append the characters "ding" to the end of s so that s = "coachingding".
+                 Now, t is a subsequence of s ("coachingding").
+                 It can be shown that appending any 3 characters to the end of s will never make t a subsequence.
+
+  [2] Input    : s = "abcde", t = "a"
+      Expected : 0
+      Why      : t is already a subsequence of s ("abcde").
+
+  [3] Input    : s = "z", t = "abcde"
+      Expected : 5
+      Why      : Append the characters "abcde" to the end of s so that s = "zabcde".
+                 Now, t is a subsequence of s ("zabcde").
+                 It can be shown that appending any 4 characters to the end of s will never make t a subsequence.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int appendCharacters(string s, string t);
+
+FILES
+  edit : 2486.cpp
+  test : lc run 2486
+══════════════════════════════════════════════════════════════════════════

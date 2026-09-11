@@ -1,0 +1,50 @@
+══════════════════════════════════════════════════════════════════════════
+ 2938. Separate Black and White Balls
+ Medium  |  Tags: Two Pointers, String, Greedy
+ https://leetcode.com/problems/separate-black-and-white-balls/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  There are n balls on a table, each ball has a color black or white.
+
+  You are given a 0-indexed binary string s of length n, where 1 and 0
+  represent black and white balls, respectively.
+
+  In each step, you can choose two adjacent balls and swap them.
+
+  Return the minimum number of steps to group all the black balls to the
+  right and all the white balls to the left.
+
+CONSTRAINTS
+  1 <= n == s.length <= 10^5
+  s[i] is either '0' or '1'.
+
+TEST CASES
+  [1] Input    : s = "101"
+      Expected : 1
+      Why      : We can group all the black balls to the right in the following way:
+                 - Swap s[0] and s[1], s = "011".
+                 Initially, 1s are not grouped together, requiring at least 1 step to group them to the right.
+
+  [2] Input    : s = "100"
+      Expected : 2
+      Why      : We can group all the black balls to the right in the following way:
+                 - Swap s[0] and s[1], s = "010".
+                 - Swap s[1] and s[2], s = "001".
+                 … (1 more)
+
+  [3] Input    : s = "0111"
+      Expected : 0
+      Why      : All the black balls are already grouped to the right.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  long long minimumSteps(string s);
+
+FILES
+  edit : 2938.cpp
+  test : lc run 2938
+══════════════════════════════════════════════════════════════════════════

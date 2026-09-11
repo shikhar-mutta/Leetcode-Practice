@@ -1,0 +1,43 @@
+══════════════════════════════════════════════════════════════════════════
+ 2186. Minimum Number of Steps to Make Two Strings Anagram II
+ Medium  |  Tags: Hash Table, String, Counting
+ https://leetcode.com/problems/minimum-number-of-steps-to-make-two-strings-anagram-ii/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given two strings s and t. In one step, you can append any
+  character to either s or t.
+
+  Return the minimum number of steps to make s and t anagrams of each
+  other.
+
+  An anagram of a string is a string that contains the same characters
+  with a different (or the same) ordering.
+
+CONSTRAINTS
+  1 <= s.length, t.length <= 2 * 10^5
+  s and t consist of lowercase English letters.
+
+TEST CASES
+  [1] Input    : s = "leetcode", t = "coats"
+      Expected : 7
+      Why      : - In 2 steps, we can append the letters in "as" onto s = "leetcode", forming s = "leetcodeas".
+                 - In 5 steps, we can append the letters in "leede" onto t = "coats", forming t = "coatsleede".
+                 "leetcodeas" and "coatsleede" are now anagrams of each other.
+                 … (2 more)
+
+  [2] Input    : s = "night", t = "thing"
+      Expected : 0
+      Why      : The given strings are already anagrams of each other. Thus, we do not need any further steps.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int minSteps(string s, string t);
+
+FILES
+  edit : 2186.cpp
+  test : lc run 2186
+══════════════════════════════════════════════════════════════════════════

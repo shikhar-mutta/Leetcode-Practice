@@ -1,0 +1,35 @@
+══════════════════════════════════════════════════════════════════════════
+ 1430. Check If a String Is a Valid Sequence from Root to Leaves Path in a Binary Tree
+ Medium  |  Tags: Tree, Depth-First Search, Breadth-First Search, Binary Tree
+ https://leetcode.com/problems/check-if-a-string-is-a-valid-sequence-from-root-to-leaves-path-in-a-binary-tree/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : [0,1,0,0,1,0,null,null,1,0,0] | [0,1,0,1]
+      Expected : true
+
+  [2] Input    : [0,1,0,0,1,0,null,null,1,0,0] | [0,0,1]
+      Expected : false
+
+  [3] Input    : [0,1,0,0,1,0,null,null,1,0,0] | [0,1,1]
+      Expected : false
+
+CODE TYPE
+  function · tree
+    driver: one Solution call per test case
+    tree: TreeNode* — level order, e.g. [3,9,20,null,null,15,7]
+
+SIGNATURE
+  bool isValidSequence(TreeNode* root, vector<int>& arr);
+
+FILES
+  edit : 1430.cpp
+  test : lc run 1430
+══════════════════════════════════════════════════════════════════════════

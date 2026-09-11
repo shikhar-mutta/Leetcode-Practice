@@ -1,0 +1,38 @@
+══════════════════════════════════════════════════════════════════════════
+ 542. 01 Matrix
+ Medium  |  Tags: Array, Dynamic Programming, Breadth-First Search, Matrix
+ https://leetcode.com/problems/01-matrix/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given an m x n binary matrix mat, return the distance of the nearest 0
+  for each cell.
+
+  The distance between two cells sharing a common edge is 1.
+
+CONSTRAINTS
+  m == mat.length
+  n == mat[i].length
+  1 <= m, n <= 10^4
+  1 <= m * n <= 10^4
+  mat[i][j] is either 0 or 1.
+  There is at least one 0 in mat.
+
+TEST CASES
+  [1] Input    : mat = [[0,0,0],[0,1,0],[0,0,0]]
+      Expected : [[0,0,0],[0,1,0],[0,0,0]]
+
+  [2] Input    : mat = [[0,0,0],[0,1,0],[1,1,1]]
+      Expected : [[0,0,0],[0,1,0],[1,2,1]]
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  vector<vector<int>> updateMatrix(vector<vector<int>>& mat);
+
+FILES
+  edit : 542.cpp
+  test : lc run 542
+══════════════════════════════════════════════════════════════════════════

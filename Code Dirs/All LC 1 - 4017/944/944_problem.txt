@@ -1,0 +1,64 @@
+══════════════════════════════════════════════════════════════════════════
+ 944. Delete Columns to Make Sorted
+ Easy  |  Tags: Array, String, Longest Increasing Subsequence
+ https://leetcode.com/problems/delete-columns-to-make-sorted/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given an array of n strings strs, all of the same length.
+
+  The strings can be arranged such that there is one on each line, making
+  a grid.
+
+  - For example, strs = ["abc", "bce", "cae"] can be arranged as follows:
+
+  abc
+  bce
+  cae
+
+  You want to delete the columns that are not sorted lexicographically. In
+  the above example (0-indexed), columns 0 ('a', 'b', 'c') and 2 ('c',
+  'e', 'e') are sorted, while column 1 ('b', 'c', 'a') is not, so you
+  would delete column 1.
+
+  Return the number of columns that you will delete.
+
+CONSTRAINTS
+  n == strs.length
+  1 <= n <= 100
+  1 <= strs[i].length <= 1000
+  strs[i] consists of lowercase English letters.
+
+TEST CASES
+  [1] Input    : strs = ["cba","daf","ghi"]
+      Expected : 1
+      Why      : The grid looks as follows:
+                 cba
+                 daf
+                 … (2 more)
+
+  [2] Input    : strs = ["a","b"]
+      Expected : 0
+      Why      : The grid looks as follows:
+                 a
+                 b
+                 … (1 more)
+
+  [3] Input    : strs = ["zyx","wvu","tsr"]
+      Expected : 3
+      Why      : The grid looks as follows:
+                 zyx
+                 wvu
+                 … (2 more)
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int minDeletionSize(vector<string>& strs);
+
+FILES
+  edit : 944.cpp
+  test : lc run 944
+══════════════════════════════════════════════════════════════════════════

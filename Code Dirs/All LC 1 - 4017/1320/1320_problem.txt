@@ -1,0 +1,55 @@
+══════════════════════════════════════════════════════════════════════════
+ 1320. Minimum Distance to Type a Word Using Two Fingers
+ Hard  |  Tags: String, Dynamic Programming
+ https://leetcode.com/problems/minimum-distance-to-type-a-word-using-two-fingers/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You have a keyboard layout as shown above in the X-Y plane, where each
+  English uppercase letter is located at some coordinate.
+
+  - For example, the letter 'A' is located at coordinate (0, 0), the
+    letter 'B' is located at coordinate (0, 1), the letter 'P' is located
+    at coordinate (2, 3) and the letter 'Z' is located at coordinate (4,
+    1).
+
+  Given the string word, return the minimum total distance to type such
+  string using only two fingers.
+
+  The distance between coordinates (x1, y1) and (x2, y2) is |x1 - x2| +
+  |y1 - y2|.
+
+  Note that the initial positions of your two fingers are considered free
+  so do not count towards your total distance, also your two fingers do
+  not have to start at the first letter or the first two letters.
+
+CONSTRAINTS
+  2 <= word.length <= 300
+  word consists of uppercase English letters.
+
+TEST CASES
+  [1] Input    : word = "CAKE"
+      Expected : 3
+      Why      : Using two fingers, one optimal way to type "CAKE" is:
+                 Finger 1 on letter 'C' -> cost = 0
+                 Finger 1 on letter 'A' -> cost = Distance from letter 'C' to letter 'A' = 2
+                 … (3 more)
+
+  [2] Input    : word = "HAPPY"
+      Expected : 6
+      Why      : Using two fingers, one optimal way to type "HAPPY" is:
+                 Finger 1 on letter 'H' -> cost = 0
+                 Finger 1 on letter 'A' -> cost = Distance from letter 'H' to letter 'A' = 2
+                 … (4 more)
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int minimumDistance(string word);
+
+FILES
+  edit : 1320.cpp
+  test : lc run 1320
+══════════════════════════════════════════════════════════════════════════

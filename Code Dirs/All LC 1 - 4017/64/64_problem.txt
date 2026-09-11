@@ -1,0 +1,38 @@
+══════════════════════════════════════════════════════════════════════════
+ 64. Minimum Path Sum
+ Medium  |  Tags: Array, Dynamic Programming, Matrix
+ https://leetcode.com/problems/minimum-path-sum/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given a m x n grid filled with non-negative numbers, find a path from
+  top left to bottom right, which minimizes the sum of all numbers along
+  its path.
+
+  Note: You can only move either down or right at any point in time.
+
+CONSTRAINTS
+  m == grid.length
+  n == grid[i].length
+  1 <= m, n <= 200
+  0 <= grid[i][j] <= 200
+
+TEST CASES
+  [1] Input    : grid = [[1,3,1],[1,5,1],[4,2,1]]
+      Expected : 7
+      Why      : Because the path 1 → 3 → 1 → 1 → 1 minimizes the sum.
+
+  [2] Input    : grid = [[1,2,3],[4,5,6]]
+      Expected : 12
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int minPathSum(vector<vector<int>>& grid);
+
+FILES
+  edit : 64.cpp
+  test : lc run 64
+══════════════════════════════════════════════════════════════════════════

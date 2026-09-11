@@ -1,0 +1,31 @@
+══════════════════════════════════════════════════════════════════════════
+ 247. Strobogrammatic Number II
+ Medium  |  Tags: Array, String, Recursion
+ https://leetcode.com/problems/strobogrammatic-number-ii/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : 2
+      Expected : 11 69 88 96
+
+  [2] Input    : 1
+      Expected : 0 1 8
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  vector<string> findStrobogrammatic(int n);
+
+FILES
+  edit : 247.cpp
+  test : lc run 247
+══════════════════════════════════════════════════════════════════════════

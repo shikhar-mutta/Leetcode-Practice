@@ -1,0 +1,39 @@
+══════════════════════════════════════════════════════════════════════════
+ 106. Construct Binary Tree from Inorder and Postorder Traversal
+ Medium  |  Tags: Array, Hash Table, Divide and Conquer, Tree, Binary Tree
+ https://leetcode.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given two integer arrays inorder and postorder where inorder is the
+  inorder traversal of a binary tree and postorder is the postorder
+  traversal of the same tree, construct and return the binary tree.
+
+CONSTRAINTS
+  1 <= inorder.length <= 3000
+  postorder.length == inorder.length
+  -3000 <= inorder[i], postorder[i] <= 3000
+  inorder and postorder consist of unique values.
+  Each value of postorder also appears in inorder.
+  inorder is guaranteed to be the inorder traversal of the tree.
+  postorder is guaranteed to be the postorder traversal of the tree.
+
+TEST CASES
+  [1] Input    : inorder = [9,3,15,20,7], postorder = [9,15,7,20,3]
+      Expected : [3,9,20,null,null,15,7]
+
+  [2] Input    : inorder = [-1], postorder = [-1]
+      Expected : [-1]
+
+CODE TYPE
+  function · tree
+    driver: one Solution call per test case
+    tree: TreeNode* — level order, e.g. [3,9,20,null,null,15,7]
+
+SIGNATURE
+  TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder);
+
+FILES
+  edit : 106.cpp
+  test : lc run 106
+══════════════════════════════════════════════════════════════════════════

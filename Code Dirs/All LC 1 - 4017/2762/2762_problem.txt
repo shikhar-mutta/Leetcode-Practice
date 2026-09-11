@@ -1,0 +1,48 @@
+══════════════════════════════════════════════════════════════════════════
+ 2762. Continuous Subarrays
+ Medium  |  Tags: Array, Queue, Sliding Window, Heap (Priority Queue), Ordered Set, Monotonic Queue
+ https://leetcode.com/problems/continuous-subarrays/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a 0-indexed integer array nums. A subarray of nums is
+  called continuous if:
+
+  - Let i, i + 1, ..., jbe the indices in the subarray. Then, for each
+    pair of indices i <= i1, i2 <= j, 0 <= |nums[i1] - nums[i2]| <= 2.
+
+  Return the total number of continuous subarrays.
+
+  A subarray is a contiguous non-empty sequence of elements within an
+  array.
+
+CONSTRAINTS
+  1 <= nums.length <= 10^5
+  1 <= nums[i] <= 10^9
+
+TEST CASES
+  [1] Input    : nums = [5,4,2,4]
+      Expected : 8
+      Why      : Continuous subarray of size 1: [5], [4], [2], [4].
+                 Continuous subarray of size 2: [5,4], [4,2], [2,4].
+                 Continuous subarray of size 3: [4,2,4].
+                 … (3 more)
+
+  [2] Input    : nums = [1,2,3]
+      Expected : 6
+      Why      : Continuous subarray of size 1: [1], [2], [3].
+                 Continuous subarray of size 2: [1,2], [2,3].
+                 Continuous subarray of size 3: [1,2,3].
+                 … (1 more)
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  long long continuousSubarrays(vector<int>& nums);
+
+FILES
+  edit : 2762.cpp
+  test : lc run 2762
+══════════════════════════════════════════════════════════════════════════

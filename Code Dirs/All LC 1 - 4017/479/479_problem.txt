@@ -1,0 +1,33 @@
+══════════════════════════════════════════════════════════════════════════
+ 479. Largest Palindrome Product
+ Hard  |  Tags: Math, Enumeration
+ https://leetcode.com/problems/largest-palindrome-product/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given an integer n, return the largest palindromic integer that can be
+  represented as the product of two n-digits integers. Since the answer
+  can be very large, return it modulo 1337.
+
+CONSTRAINTS
+  1 <= n <= 8
+
+TEST CASES
+  [1] Input    : n = 2
+      Expected : 987
+      Why      : 99 x 91 = 9009, 9009 % 1337 = 987
+
+  [2] Input    : n = 1
+      Expected : 9
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int largestPalindrome(int n);
+
+FILES
+  edit : 479.cpp
+  test : lc run 479
+══════════════════════════════════════════════════════════════════════════

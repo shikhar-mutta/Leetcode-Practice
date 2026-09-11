@@ -1,0 +1,47 @@
+══════════════════════════════════════════════════════════════════════════
+ 1234. Replace the Substring for Balanced String
+ Medium  |  Tags: String, Sliding Window
+ https://leetcode.com/problems/replace-the-substring-for-balanced-string/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a string s of length n containing only four kinds of
+  characters: 'Q', 'W', 'E', and 'R'.
+
+  A string is said to be balanced if each of its characters appears n / 4
+  times where n is the length of the string.
+
+  Return the minimum length of the substring that can be replaced with any
+  other string of the same length to make s balanced. If s is already
+  balanced, return 0.
+
+CONSTRAINTS
+  n == s.length
+  4 <= n <= 10^5
+  n is a multiple of 4.
+  s contains only 'Q', 'W', 'E', and 'R'.
+
+TEST CASES
+  [1] Input    : s = "QWER"
+      Expected : 0
+      Why      : s is already balanced.
+
+  [2] Input    : s = "QQWE"
+      Expected : 1
+      Why      : We need to replace a 'Q' to 'R', so that "RQWE" (or "QRWE") is balanced.
+
+  [3] Input    : s = "QQQW"
+      Expected : 2
+      Why      : We can replace the first "QQ" to "ER".
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int balancedString(string s);
+
+FILES
+  edit : 1234.cpp
+  test : lc run 1234
+══════════════════════════════════════════════════════════════════════════

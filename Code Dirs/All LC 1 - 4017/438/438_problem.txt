@@ -1,0 +1,37 @@
+══════════════════════════════════════════════════════════════════════════
+ 438. Find All Anagrams in a String
+ Medium  |  Tags: Hash Table, String, Sliding Window
+ https://leetcode.com/problems/find-all-anagrams-in-a-string/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given two strings s and p, return an array of all the start indices of
+  p's anagrams in s. You may return the answer in any order.
+
+CONSTRAINTS
+  1 <= s.length, p.length <= 3 * 10^4
+  s and p consist of lowercase English letters.
+
+TEST CASES
+  [1] Input    : s = "cbaebabacd", p = "abc"
+      Expected : [0,6]
+      Why      : The substring with start index = 0 is "cba", which is an anagram of "abc".
+                 The substring with start index = 6 is "bac", which is an anagram of "abc".
+
+  [2] Input    : s = "abab", p = "ab"
+      Expected : [0,1,2]
+      Why      : The substring with start index = 0 is "ab", which is an anagram of "ab".
+                 The substring with start index = 1 is "ba", which is an anagram of "ab".
+                 The substring with start index = 2 is "ab", which is an anagram of "ab".
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  vector<int> findAnagrams(string s, string p);
+
+FILES
+  edit : 438.cpp
+  test : lc run 438
+══════════════════════════════════════════════════════════════════════════

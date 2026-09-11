@@ -1,0 +1,36 @@
+══════════════════════════════════════════════════════════════════════════
+ 965. Univalued Binary Tree
+ Easy  |  Tags: Tree, Depth-First Search, Breadth-First Search, Binary Tree
+ https://leetcode.com/problems/univalued-binary-tree/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  A binary tree is uni-valued if every node in the tree has the same
+  value.
+
+  Given the root of a binary tree, return true if the given tree is uni-
+  valued, or false otherwise.
+
+CONSTRAINTS
+  The number of nodes in the tree is in the range [1, 100].
+  0 <= Node.val < 100
+
+TEST CASES
+  [1] Input    : root = [1,1,1,1,1,null,1]
+      Expected : true
+
+  [2] Input    : root = [2,2,2,5,2]
+      Expected : false
+
+CODE TYPE
+  function · tree
+    driver: one Solution call per test case
+    tree: TreeNode* — level order, e.g. [3,9,20,null,null,15,7]
+
+SIGNATURE
+  bool isUnivalTree(TreeNode* root);
+
+FILES
+  edit : 965.cpp
+  test : lc run 965
+══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,31 @@
+══════════════════════════════════════════════════════════════════════════
+ 1885. Count Pairs in Two Arrays
+ Medium  |  Tags: Array, Two Pointers, Binary Search, Sorting
+ https://leetcode.com/problems/count-pairs-in-two-arrays/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : [2,1,2,1] | [1,2,1,2]
+      Expected : 1
+
+  [2] Input    : [1,2,4,3] | [1,1,1,1]
+      Expected : 6
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  long long countPairs(vector<int>& nums1, vector<int>& nums2);
+
+FILES
+  edit : 1885.cpp
+  test : lc run 1885
+══════════════════════════════════════════════════════════════════════════

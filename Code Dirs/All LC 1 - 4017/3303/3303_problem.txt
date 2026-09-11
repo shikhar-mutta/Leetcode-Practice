@@ -1,0 +1,52 @@
+══════════════════════════════════════════════════════════════════════════
+ 3303. Find the Occurrence of First Almost Equal Substring
+ Hard  |  Tags: String, String Matching, Knuth–Morris–Pratt Algorithm
+ https://leetcode.com/problems/find-the-occurrence-of-first-almost-equal-substring/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given two strings s and pattern.
+
+  A string x is called almost equal to y if you can change at most one
+  character in x to make it identical to y.
+
+  Return the smallest starting index of a substring in s that is almost
+  equal to pattern. If no such index exists, return -1.
+
+  A substring is a contiguous non-empty sequence of characters within a
+  string.
+
+CONSTRAINTS
+  1 <= pattern.length < s.length <= 10^5
+  s and pattern consist only of lowercase English letters.
+
+TEST CASES
+  [1] Input    : s = "abcdefg", pattern = "bcdffg"
+      Expected : 1
+      Why      : The substring s[1..6] == "bcdefg" can be converted to "bcdffg" by changing s[4] to "f".
+
+  [2] Input    : s = "ababbababa", pattern = "bacaba"
+      Expected : 4
+      Why      : The substring s[4..9] == "bababa" can be converted to "bacaba" by changing s[6] to "c".
+
+  [3] Input    : s = "abcd", pattern = "dba"
+      Expected : -1
+
+  [4] Input    : s = "dde", pattern = "d"
+      Expected : 0
+
+FOLLOW UP
+  Could you solve the problem if at most k consecutive characters can be
+  changed?
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int minStartingIndex(string s, string pattern);
+
+FILES
+  edit : 3303.cpp
+  test : lc run 3303
+══════════════════════════════════════════════════════════════════════════

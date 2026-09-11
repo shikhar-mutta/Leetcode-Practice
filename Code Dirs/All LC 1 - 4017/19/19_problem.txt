@@ -1,0 +1,41 @@
+══════════════════════════════════════════════════════════════════════════
+ 19. Remove Nth Node From End of List
+ Medium  |  Tags: Linked List, Two Pointers
+ https://leetcode.com/problems/remove-nth-node-from-end-of-list/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given the head of a linked list, remove the n^th node from the end of
+  the list and return its head.
+
+CONSTRAINTS
+  The number of nodes in the list is sz.
+  1 <= sz <= 30
+  0 <= Node.val <= 100
+  1 <= n <= sz
+
+TEST CASES
+  [1] Input    : head = [1,2,3,4,5], n = 2
+      Expected : [1,2,3,5]
+
+  [2] Input    : head = [1], n = 1
+      Expected : []
+
+  [3] Input    : head = [1,2], n = 1
+      Expected : [1]
+
+FOLLOW UP
+  Could you do this in one pass?
+
+CODE TYPE
+  function · linked list
+    driver: one Solution call per test case
+    linked list: ListNode* — values in order, e.g. [1,2,3,4]
+
+SIGNATURE
+  ListNode* removeNthFromEnd(ListNode* head, int n);
+
+FILES
+  edit : 19.cpp
+  test : lc run 19
+══════════════════════════════════════════════════════════════════════════

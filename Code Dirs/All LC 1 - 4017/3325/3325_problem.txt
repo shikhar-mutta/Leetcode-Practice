@@ -1,0 +1,38 @@
+══════════════════════════════════════════════════════════════════════════
+ 3325. Count Substrings With K-Frequency Characters I
+ Medium  |  Tags: Hash Table, String, Sliding Window
+ https://leetcode.com/problems/count-substrings-with-k-frequency-characters-i/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given a string s and an integer k, return the total number of substrings
+  of s where at least one character appears at least k times.
+
+CONSTRAINTS
+  1 <= s.length <= 3000
+  1 <= k <= s.length
+  s consists only of lowercase English letters.
+
+TEST CASES
+  [1] Input    : s = "abacb", k = 2
+      Expected : 4
+      Why      : The valid substrings are:
+                 - "aba" (character 'a' appears 2 times).
+                 - "abac" (character 'a' appears 2 times).
+                 … (2 more)
+
+  [2] Input    : s = "abcde", k = 1
+      Expected : 15
+      Why      : All substrings are valid because every character appears at least once.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int numberOfSubstrings(string s, int k);
+
+FILES
+  edit : 3325.cpp
+  test : lc run 3325
+══════════════════════════════════════════════════════════════════════════

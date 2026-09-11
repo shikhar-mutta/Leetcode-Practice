@@ -1,0 +1,44 @@
+══════════════════════════════════════════════════════════════════════════
+ 1759. Count Number of Homogenous Substrings
+ Medium  |  Tags: Math, String
+ https://leetcode.com/problems/count-number-of-homogenous-substrings/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given a string s, return the number of homogenous substrings of s. Since
+  the answer may be too large, return it modulo 10^9 + 7.
+
+  A string is homogenous if all the characters of the string are the same.
+
+  A substring is a contiguous sequence of characters within a string.
+
+CONSTRAINTS
+  1 <= s.length <= 10^5
+  s consists of lowercase letters.
+
+TEST CASES
+  [1] Input    : s = "abbcccaa"
+      Expected : 13
+      Why      : The homogenous substrings are listed as below:
+                 "a" appears 3 times.
+                 "aa" appears 1 time.
+                 … (6 more)
+
+  [2] Input    : s = "xy"
+      Expected : 2
+      Why      : The homogenous substrings are "x" and "y".
+
+  [3] Input    : s = "zzzzz"
+      Expected : 15
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int countHomogenous(string s);
+
+FILES
+  edit : 1759.cpp
+  test : lc run 1759
+══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,45 @@
+══════════════════════════════════════════════════════════════════════════
+ 2571. Minimum Operations to Reduce an Integer to 0
+ Medium  |  Tags: Dynamic Programming, Greedy, Bit Manipulation
+ https://leetcode.com/problems/minimum-operations-to-reduce-an-integer-to-0/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a positive integer n, you can do the following operation
+  any number of times:
+
+  - Add or subtract a power of 2 from n.
+
+  Return the minimum number of operations to make n equal to 0.
+
+  A number x is power of 2 if x == 2^i where i >= 0.
+
+CONSTRAINTS
+  1 <= n <= 10^5
+
+TEST CASES
+  [1] Input    : n = 39
+      Expected : 3
+      Why      : We can do the following operations:
+                 - Add 2^0 = 1 to n, so now n = 40.
+                 - Subtract 2^3 = 8 from n, so now n = 32.
+                 … (2 more)
+
+  [2] Input    : n = 54
+      Expected : 3
+      Why      : We can do the following operations:
+                 - Add 2^1 = 2 to n, so now n = 56.
+                 - Add 2^3 = 8 to n, so now n = 64.
+                 … (2 more)
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int minOperations(int n);
+
+FILES
+  edit : 2571.cpp
+  test : lc run 2571
+══════════════════════════════════════════════════════════════════════════

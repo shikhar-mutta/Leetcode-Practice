@@ -1,0 +1,68 @@
+══════════════════════════════════════════════════════════════════════════
+ 3441. Minimum Cost Good Caption
+ Hard  |  Tags: String, Dynamic Programming
+ https://leetcode.com/problems/minimum-cost-good-caption/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a string caption of length n. A good caption is a string
+  where every character appears in groups of at least 3 consecutive
+  occurrences.
+
+  For example:
+
+  - "aaabbb" and "aaaaccc" are good captions.
+
+  - "aabbb" and "ccccd" are not good captions.
+
+  You can perform the following operation any number of times:
+
+  Choose an index i (where 0 <= i < n) and change the character at that
+  index to either:
+
+  - The character immediately before it in the alphabet (if caption[i] !=
+    'a').
+
+  - The character immediately after it in the alphabet (if caption[i] !=
+    'z').
+
+  Your task is to convert the given caption into a good caption using the
+  minimum number of operations, and return it. If there are multiple
+  possible good captions, return the lexicographically smallest one among
+  them. If it is impossible to create a good caption, return an empty
+  string "".
+
+CONSTRAINTS
+  1 <= caption.length <= 5 * 10^4
+  caption consists only of lowercase English letters.
+
+TEST CASES
+  [1] Input    : caption = "cdcd"
+      Expected : "cccc"
+      Why      : It can be shown that the given caption cannot be transformed into a good caption with fewer than 2 operations. The possible good captions that can be created using exactly 2 operations are:
+                 - "dddd": Change caption[0] and caption[2] to their next character 'd'.
+                 - "cccc": Change caption[1] and caption[3] to their previous character 'c'.
+                 … (1 more)
+
+  [2] Input    : caption = "aca"
+      Expected : "aaa"
+      Why      : It can be proven that the given caption requires at least 2 operations to be transformed into a good caption. The only good caption that can be obtained with exactly 2 operations is as follows:
+                 - Operation 1: Change caption[1] to 'b'. caption = "aba".
+                 - Operation 2: Change caption[1] to 'a'. caption = "aaa".
+                 … (1 more)
+
+  [3] Input    : caption = "bc"
+      Expected : ""
+      Why      : It can be shown that the given caption cannot be converted to a good caption by using any number of operations.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  string minCostGoodCaption(string caption);
+
+FILES
+  edit : 3441.cpp
+  test : lc run 3441
+══════════════════════════════════════════════════════════════════════════

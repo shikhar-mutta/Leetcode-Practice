@@ -1,0 +1,49 @@
+══════════════════════════════════════════════════════════════════════════
+ 2279. Maximum Bags With Full Capacity of Rocks
+ Medium  |  Tags: Array, Greedy, Sorting
+ https://leetcode.com/problems/maximum-bags-with-full-capacity-of-rocks/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You have n bags numbered from 0 to n - 1. You are given two 0-indexed
+  integer arrays capacity and rocks. The i^th bag can hold a maximum of
+  capacity[i] rocks and currently contains rocks[i] rocks. You are also
+  given an integer additionalRocks, the number of additional rocks you can
+  place in any of the bags.
+
+  Return the maximum number of bags that could have full capacity after
+  placing the additional rocks in some bags.
+
+CONSTRAINTS
+  n == capacity.length == rocks.length
+  1 <= n <= 5 * 10^4
+  1 <= capacity[i] <= 10^9
+  0 <= rocks[i] <= capacity[i]
+  1 <= additionalRocks <= 10^9
+
+TEST CASES
+  [1] Input    : capacity = [2,3,4,5], rocks = [1,2,4,4], additionalRocks = 2
+      Expected : 3
+      Why      : Place 1 rock in bag 0 and 1 rock in bag 1.
+                 The number of rocks in each bag are now [2,3,4,4].
+                 Bags 0, 1, and 2 have full capacity.
+                 … (3 more)
+
+  [2] Input    : capacity = [10,2,2], rocks = [2,2,0], additionalRocks = 100
+      Expected : 3
+      Why      : Place 8 rocks in bag 0 and 2 rocks in bag 2.
+                 The number of rocks in each bag are now [10,2,2].
+                 Bags 0, 1, and 2 have full capacity.
+                 … (3 more)
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int maximumBags(vector<int>& capacity, vector<int>& rocks, int additionalRocks);
+
+FILES
+  edit : 2279.cpp
+  test : lc run 2279
+══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,37 @@
+══════════════════════════════════════════════════════════════════════════
+ 647. Palindromic Substrings
+ Medium  |  Tags: Two Pointers, String, Dynamic Programming
+ https://leetcode.com/problems/palindromic-substrings/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given a string s, return the number of palindromic substrings in it.
+
+  A string is a palindrome when it reads the same backward as forward.
+
+  A substring is a contiguous sequence of characters within the string.
+
+CONSTRAINTS
+  1 <= s.length <= 1000
+  s consists of lowercase English letters.
+
+TEST CASES
+  [1] Input    : s = "abc"
+      Expected : 3
+      Why      : Three palindromic strings: "a", "b", "c".
+
+  [2] Input    : s = "aaa"
+      Expected : 6
+      Why      : Six palindromic strings: "a", "a", "a", "aa", "aa", "aaa".
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int countSubstrings(string s);
+
+FILES
+  edit : 647.cpp
+  test : lc run 647
+══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,35 @@
+══════════════════════════════════════════════════════════════════════════
+ 498. Diagonal Traverse
+ Medium  |  Tags: Array, Matrix, Simulation
+ https://leetcode.com/problems/diagonal-traverse/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given an m x n matrix mat, return an array of all the elements of the
+  array in a diagonal order.
+
+CONSTRAINTS
+  m == mat.length
+  n == mat[i].length
+  1 <= m, n <= 10^4
+  1 <= m * n <= 10^4
+  -10^5 <= mat[i][j] <= 10^5
+
+TEST CASES
+  [1] Input    : mat = [[1,2,3],[4,5,6],[7,8,9]]
+      Expected : [1,2,4,7,5,3,6,8,9]
+
+  [2] Input    : mat = [[1,2],[3,4]]
+      Expected : [1,2,3,4]
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  vector<int> findDiagonalOrder(vector<vector<int>>& mat);
+
+FILES
+  edit : 498.cpp
+  test : lc run 498
+══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,64 @@
+══════════════════════════════════════════════════════════════════════════
+ 3974. Maximum Total Sum of K Selected Elements
+ Medium  |  Tags: Array, Greedy, Sorting
+ https://leetcode.com/problems/maximum-total-sum-of-k-selected-elements/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given an integer array nums and two integers k and mul.
+
+  Select exactly k elements from nums. Process these elements one by one
+  in any order you choose.
+
+  For each selected element, independently choose one of the following:
+
+  - Add the element's value to the total sum, or
+
+  - Multiply the element by the current value of mul and add the result to
+    the total sum.
+
+  After processing each selected element, mul decreases by 1, regardless
+  of which option was chosen. The current value of mul may become 0 or
+  negative.
+
+  Return an integer denoting the maximum possible total sum.
+
+CONSTRAINTS
+  1 <= nums.length <= 10^5
+  1 <= nums[i] <= 10^5
+  1 <= k <= nums.length
+  1 <= mul <= 10^5
+
+TEST CASES
+  [1] Input    : nums = [6,1,2,9], k = 3, mul = 2
+      Expected : 26
+      Why      : One optimal way:
+                 - One optimal selection is nums[3] = 9, nums[0] = 6, and nums[2] = 2.
+                 - Process nums[3] = 9 first: choose multiplication, so it contributes 9 * 2 = 18. Now, mul becomes 1.
+                 … (3 more)
+
+  [2] Input    : nums = [3,7,5,2], k = 2, mul = 4
+      Expected : 43
+      Why      : One optimal way:
+                 - One optimal selection is nums[1] = 7 and nums[2] = 5.
+                 - Process nums[1] = 7 first: choose multiplication, so it contributes 7 * 4 = 28. Now, mul becomes 3.
+                 … (2 more)
+
+  [3] Input    : nums = [4,4], k = 1, mul = 1
+      Expected : 4
+      Why      : One optimal way:
+                 - One optimal selection is nums[0] = 4.
+                 - Process nums[0] = 4: choose multiplication, so it contributes 4 * 1 = 4.
+                 … (1 more)
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  long long maxSum(vector<int>& nums, int k, int mul);
+
+FILES
+  edit : 3974.cpp
+  test : lc run 3974
+══════════════════════════════════════════════════════════════════════════

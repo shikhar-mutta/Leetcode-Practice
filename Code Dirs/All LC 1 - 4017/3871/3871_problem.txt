@@ -1,0 +1,41 @@
+══════════════════════════════════════════════════════════════════════════
+ 3871. Count Commas in Range II
+ Medium  |  Tags: Math
+ https://leetcode.com/problems/count-commas-in-range-ii/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given an integer n.
+
+  Return the total number of commas used when writing all integers from
+  [1, n] (inclusive) in standard number formatting.
+
+  In standard formatting:
+
+  - A comma is inserted after every three digits from the right.
+
+  - Numbers with fewer than 4 digits contain no commas.
+
+CONSTRAINTS
+  1 <= n <= 10^15
+
+TEST CASES
+  [1] Input    : n = 1002
+      Expected : 3
+      Why      : The numbers "1,000", "1,001", and "1,002" each contain one comma, giving a total of 3.
+
+  [2] Input    : n = 998
+      Expected : 0
+      Why      : All numbers from 1 to 998 have fewer than four digits. Therefore, no commas are used.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  long long countCommas(long long n);
+
+FILES
+  edit : 3871.cpp
+  test : lc run 3871
+══════════════════════════════════════════════════════════════════════════

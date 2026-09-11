@@ -1,0 +1,32 @@
+══════════════════════════════════════════════════════════════════════════
+ 369. Plus One Linked List
+ Medium  |  Tags: Linked List, Math
+ https://leetcode.com/problems/plus-one-linked-list/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : [1,2,3]
+      Expected : [1,2,4]
+
+  [2] Input    : [9,9,9]
+      Expected : [1,0,0,0]
+
+CODE TYPE
+  function · linked list
+    driver: one Solution call per test case
+    linked list: ListNode* — values in order, e.g. [1,2,3,4]
+
+SIGNATURE
+  ListNode* plusOne(ListNode* head);
+
+FILES
+  edit : 369.cpp
+  test : lc run 369
+══════════════════════════════════════════════════════════════════════════

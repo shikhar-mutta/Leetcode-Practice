@@ -1,0 +1,31 @@
+══════════════════════════════════════════════════════════════════════════
+ 256. Paint House
+ Medium  |  Tags: Array, Dynamic Programming
+ https://leetcode.com/problems/paint-house/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : [[17,2,17],[16,16,5],[14,3,19]]
+      Expected : 10
+
+  [2] Input    : [[7,6,2]]
+      Expected : 2
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int minCost(vector<vector<int>>& costs);
+
+FILES
+  edit : 256.cpp
+  test : lc run 256
+══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,50 @@
+══════════════════════════════════════════════════════════════════════════
+ 2063. Vowels of All Substrings
+ Medium  |  Tags: Math, String, Dynamic Programming, Combinatorics
+ https://leetcode.com/problems/vowels-of-all-substrings/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given a string word, return the sum of the number of vowels ('a', 'e',
+  'i', 'o', and 'u') in every substring of word.
+
+  A substring is a contiguous (non-empty) sequence of characters within a
+  string.
+
+  Note: Due to the large constraints, the answer may not fit in a signed
+  32-bit integer. Please be careful during the calculations.
+
+CONSTRAINTS
+  1 <= word.length <= 10^5
+  word consists of lowercase English letters.
+
+TEST CASES
+  [1] Input    : word = "aba"
+      Expected : 6
+      Why      : All possible substrings are: "a", "ab", "aba", "b", "ba", and "a".
+                 - "b" has 0 vowels in it
+                 - "a", "ab", "ba", and "a" have 1 vowel each
+                 … (2 more)
+
+  [2] Input    : word = "abc"
+      Expected : 3
+      Why      : All possible substrings are: "a", "ab", "abc", "b", "bc", and "c".
+                 - "a", "ab", and "abc" have 1 vowel each
+                 - "b", "bc", and "c" have 0 vowels each
+                 … (1 more)
+
+  [3] Input    : word = "ltcd"
+      Expected : 0
+      Why      : There are no vowels in any substring of "ltcd".
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  long long countVowels(string word);
+
+FILES
+  edit : 2063.cpp
+  test : lc run 2063
+══════════════════════════════════════════════════════════════════════════

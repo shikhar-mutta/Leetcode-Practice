@@ -1,0 +1,43 @@
+══════════════════════════════════════════════════════════════════════════
+ 598. Range Addition II
+ Easy  |  Tags: Array, Math
+ https://leetcode.com/problems/range-addition-ii/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given an m x n matrix M initialized with all 0's and an array of
+  operations ops, where ops[i] = [ai, bi] means M[x][y] should be
+  incremented by one for all 0 <= x < ai and 0 <= y < bi.
+
+  Count and return the number of maximum integers in the matrix after
+  performing all the operations.
+
+CONSTRAINTS
+  1 <= m, n <= 4 * 10^4
+  0 <= ops.length <= 10^4
+  ops[i].length == 2
+  1 <= ai <= m
+  1 <= bi <= n
+
+TEST CASES
+  [1] Input    : m = 3, n = 3, ops = [[2,2],[3,3]]
+      Expected : 4
+      Why      : The maximum integer in M is 2, and there are four of it in M. So return 4.
+
+  [2] Input    : m = 3, n = 3, ops = [[2,2],[3,3],[3,3],[3,3],[2,2],[3,3],[3,3],[3,3],[2,2],[3,3],[3,3],[3,3]]
+      Expected : 4
+
+  [3] Input    : m = 3, n = 3, ops = []
+      Expected : 9
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int maxCount(int m, int n, vector<vector<int>>& ops);
+
+FILES
+  edit : 598.cpp
+  test : lc run 598
+══════════════════════════════════════════════════════════════════════════

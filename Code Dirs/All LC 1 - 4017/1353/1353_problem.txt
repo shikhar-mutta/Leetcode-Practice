@@ -1,0 +1,42 @@
+══════════════════════════════════════════════════════════════════════════
+ 1353. Maximum Number of Events That Can Be Attended
+ Medium  |  Tags: Array, Greedy, Sorting, Heap (Priority Queue)
+ https://leetcode.com/problems/maximum-number-of-events-that-can-be-attended/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given an array of events where events[i] = [startDayi, endDayi].
+  Every event i starts at startDayiand ends at endDayi.
+
+  You can attend an event i at any day d where startDayi <= d <= endDayi.
+  You can only attend one event at any time d.
+
+  Return the maximum number of events you can attend.
+
+CONSTRAINTS
+  1 <= events.length <= 10^5
+  events[i].length == 2
+  1 <= startDayi <= endDayi <= 10^5
+
+TEST CASES
+  [1] Input    : events = [[1,2],[2,3],[3,4]]
+      Expected : 3
+      Why      : You can attend all the three events.
+                 One way to attend them all is as shown.
+                 Attend the first event on day 1.
+                 … (2 more)
+
+  [2] Input    : events= [[1,2],[2,3],[3,4],[1,2]]
+      Expected : 4
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int maxEvents(vector<vector<int>>& events);
+
+FILES
+  edit : 1353.cpp
+  test : lc run 1353
+══════════════════════════════════════════════════════════════════════════

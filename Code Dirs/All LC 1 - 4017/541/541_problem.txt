@@ -1,0 +1,37 @@
+══════════════════════════════════════════════════════════════════════════
+ 541. Reverse String II
+ Easy  |  Tags: Two Pointers, String
+ https://leetcode.com/problems/reverse-string-ii/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given a string s and an integer k, reverse the first k characters for
+  every 2k characters counting from the start of the string.
+
+  If there are fewer than k characters left, reverse all of them. If there
+  are less than 2k but greater than or equal to k characters, then reverse
+  the first k characters and leave the other as original.
+
+CONSTRAINTS
+  1 <= s.length <= 10^4
+  s consists of only lowercase English letters.
+  1 <= k <= 10^4
+
+TEST CASES
+  [1] Input    : s = "abcdefg", k = 2
+      Expected : "bacdfeg"
+
+  [2] Input    : s = "abcd", k = 2
+      Expected : "bacd"
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  string reverseStr(string s, int k);
+
+FILES
+  edit : 541.cpp
+  test : lc run 541
+══════════════════════════════════════════════════════════════════════════

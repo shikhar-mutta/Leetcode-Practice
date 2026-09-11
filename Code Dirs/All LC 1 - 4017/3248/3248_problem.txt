@@ -1,0 +1,53 @@
+══════════════════════════════════════════════════════════════════════════
+ 3248. Snake in Matrix
+ Easy  |  Tags: Array, String, Simulation
+ https://leetcode.com/problems/snake-in-matrix/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  There is a snake in an n x n matrix grid and can move in four possible
+  directions. Each cell in the grid is identified by the position:
+  grid[i][j] = (i * n) + j.
+
+  The snake starts at cell 0 and follows a sequence of commands.
+
+  You are given an integer n representing the size of the grid and an
+  array of strings commands where each command[i] is either "UP", "RIGHT",
+  "DOWN", and "LEFT". It's guaranteed that the snake will remain within
+  the grid boundaries throughout its movement.
+
+  Return the position of the final cell where the snake ends up after
+  executing commands.
+
+CONSTRAINTS
+  2 <= n <= 10
+  1 <= commands.length <= 100
+  commands consists only of "UP", "RIGHT", "DOWN", and "LEFT".
+  The input is generated such the snake will not move outside of the boundaries.
+
+TEST CASES
+  [1] Input    : n = 2, commands = ["RIGHT","DOWN"]
+      Expected : 3
+      Why      : 0
+                 1
+                 2
+                 … (9 more)
+
+  [2] Input    : n = 3, commands = ["DOWN","RIGHT","UP"]
+      Expected : 1
+      Why      : 0
+                 1
+                 2
+                 … (33 more)
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int finalPositionOfSnake(int n, vector<string>& commands);
+
+FILES
+  edit : 3248.cpp
+  test : lc run 3248
+══════════════════════════════════════════════════════════════════════════

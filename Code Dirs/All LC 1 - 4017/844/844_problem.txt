@@ -1,0 +1,43 @@
+══════════════════════════════════════════════════════════════════════════
+ 844. Backspace String Compare
+ Easy  |  Tags: Two Pointers, String, Stack, Simulation
+ https://leetcode.com/problems/backspace-string-compare/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given two strings s and t, return true if they are equal when both are
+  typed into empty text editors. '#' means a backspace character.
+
+  Note that after backspacing an empty text, the text will continue empty.
+
+CONSTRAINTS
+  1 <= s.length, t.length <= 200
+  s and t only contain lowercase letters and '#' characters.
+
+TEST CASES
+  [1] Input    : s = "ab#c", t = "ad#c"
+      Expected : true
+      Why      : Both s and t become "ac".
+
+  [2] Input    : s = "ab##", t = "c#d#"
+      Expected : true
+      Why      : Both s and t become "".
+
+  [3] Input    : s = "a#c", t = "b"
+      Expected : false
+      Why      : s becomes "c" while t becomes "b".
+
+FOLLOW UP
+  Can you solve it in O(n) time and O(1) space?
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  bool backspaceCompare(string s, string t);
+
+FILES
+  edit : 844.cpp
+  test : lc run 844
+══════════════════════════════════════════════════════════════════════════

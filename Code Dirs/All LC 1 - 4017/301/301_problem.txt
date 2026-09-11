@@ -1,0 +1,39 @@
+══════════════════════════════════════════════════════════════════════════
+ 301. Remove Invalid Parentheses
+ Hard  |  Tags: String, Backtracking, Breadth-First Search
+ https://leetcode.com/problems/remove-invalid-parentheses/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given a string s that contains parentheses and letters, remove the
+  minimum number of invalid parentheses to make the input string valid.
+
+  Return a list of unique strings that are valid with the minimum number
+  of removals. You may return the answer in any order.
+
+CONSTRAINTS
+  1 <= s.length <= 25
+  s consists of lowercase English letters and parentheses '(' and ')'.
+  There will be at most 20 parentheses in s.
+
+TEST CASES
+  [1] Input    : s = "()())()"
+      Expected : ["(())()","()()()"]
+
+  [2] Input    : s = "(a)())()"
+      Expected : ["(a())()","(a)()()"]
+
+  [3] Input    : s = ")("
+      Expected : [""]
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  vector<string> removeInvalidParentheses(string s);
+
+FILES
+  edit : 301.cpp
+  test : lc run 301
+══════════════════════════════════════════════════════════════════════════

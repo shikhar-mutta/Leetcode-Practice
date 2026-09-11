@@ -1,0 +1,32 @@
+══════════════════════════════════════════════════════════════════════════
+ 633. Sum of Square Numbers
+ Medium  |  Tags: Math, Two Pointers, Binary Search
+ https://leetcode.com/problems/sum-of-square-numbers/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given a non-negative integer c, decide whether there're two integers a
+  and b such that a^2 + b^2 = c.
+
+CONSTRAINTS
+  0 <= c <= 2^31 - 1
+
+TEST CASES
+  [1] Input    : c = 5
+      Expected : true
+      Why      : 1 * 1 + 2 * 2 = 5
+
+  [2] Input    : c = 3
+      Expected : false
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  bool judgeSquareSum(int c);
+
+FILES
+  edit : 633.cpp
+  test : lc run 633
+══════════════════════════════════════════════════════════════════════════

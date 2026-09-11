@@ -1,0 +1,35 @@
+══════════════════════════════════════════════════════════════════════════
+ 3345. Smallest Divisible Digit Product I
+ Easy  |  Tags: Math, Enumeration
+ https://leetcode.com/problems/smallest-divisible-digit-product-i/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given two integers n and t. Return the smallest number greater
+  than or equal to n such that the product of its digits is divisible by
+  t.
+
+CONSTRAINTS
+  1 <= n <= 100
+  1 <= t <= 10
+
+TEST CASES
+  [1] Input    : n = 10, t = 2
+      Expected : 10
+      Why      : The digit product of 10 is 0, which is divisible by 2, making it the smallest number greater than or equal to 10 that satisfies the condition.
+
+  [2] Input    : n = 15, t = 3
+      Expected : 16
+      Why      : The digit product of 16 is 6, which is divisible by 3, making it the smallest number greater than or equal to 15 that satisfies the condition.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int smallestNumber(int n, int t);
+
+FILES
+  edit : 3345.cpp
+  test : lc run 3345
+══════════════════════════════════════════════════════════════════════════

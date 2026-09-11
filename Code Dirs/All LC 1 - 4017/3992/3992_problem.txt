@@ -1,0 +1,48 @@
+══════════════════════════════════════════════════════════════════════════
+ 3992. Rearrange String to Avoid Character Pair
+ Easy  |  Tags: Two Pointers, String, Sorting
+ https://leetcode.com/problems/rearrange-string-to-avoid-character-pair/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a string s and two distinct lowercase English letters x
+  and y.
+
+  Rearrange the characters of s to construct a new string t such that:
+
+  - t is a permutation of s.
+
+  - Every occurrence of y appears before every occurrence of x in t.
+
+  Return any valid string t.
+
+CONSTRAINTS
+  1 <= s.length <= 100
+  s consists of lowercase English letters.
+  x and y are lowercase English letters.
+  x != y
+
+TEST CASES
+  [1] Input    : s = "aabc", x = "a", y = "c"
+      Expected : "cbaa"
+      Why      : The string "cbaa" is a permutation of "aabc", and every occurrence of 'c' appears before every occurrence of 'a'.
+
+  [2] Input    : s = "dcab", x = "d", y = "b"
+      Expected : "cabd"
+      Why      : The string "cabd" is a permutation of "dcab", and every occurrence of 'b' appears before every occurrence of 'd'.
+
+  [3] Input    : s = "axe", x = "o", y = "x"
+      Expected : "axe"
+      Why      : The string "axe" is already valid. Since 'o' does not occur in the string, the required condition is automatically satisfied.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  string rearrangeString(string s, char x, char y);
+
+FILES
+  edit : 3992.cpp
+  test : lc run 3992
+══════════════════════════════════════════════════════════════════════════

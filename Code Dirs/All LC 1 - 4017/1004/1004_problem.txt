@@ -1,0 +1,37 @@
+══════════════════════════════════════════════════════════════════════════
+ 1004. Max Consecutive Ones III
+ Medium  |  Tags: Array, Binary Search, Sliding Window, Prefix Sum
+ https://leetcode.com/problems/max-consecutive-ones-iii/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given a binary array nums and an integer k, return the maximum number of
+  consecutive 1's in the array if you can flip at most k 0's.
+
+CONSTRAINTS
+  1 <= nums.length <= 10^5
+  nums[i] is either 0 or 1.
+  0 <= k <= nums.length
+
+TEST CASES
+  [1] Input    : nums = [1,1,1,0,0,0,1,1,1,1,0], k = 2
+      Expected : 6
+      Why      : [1,1,1,0,0,1,1,1,1,1,1]
+                 Bolded numbers were flipped from 0 to 1. The longest subarray is underlined.
+
+  [2] Input    : nums = [0,0,1,1,0,0,1,1,1,0,1,1,0,0,0,1,1,1,1], k = 3
+      Expected : 10
+      Why      : [0,0,1,1,1,1,1,1,1,1,1,1,0,0,0,1,1,1,1]
+                 Bolded numbers were flipped from 0 to 1. The longest subarray is underlined.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int longestOnes(vector<int>& nums, int k);
+
+FILES
+  edit : 1004.cpp
+  test : lc run 1004
+══════════════════════════════════════════════════════════════════════════

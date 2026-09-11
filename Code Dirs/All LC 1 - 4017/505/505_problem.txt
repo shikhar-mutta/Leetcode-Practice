@@ -1,0 +1,31 @@
+══════════════════════════════════════════════════════════════════════════
+ 505. The Maze II
+ Medium  |  Tags: Array, Depth-First Search, Breadth-First Search, Graph Theory, Heap (Priority Queue), Matrix, Shortest Path, Dijkstra's Algorithm, Heuristic Search, A* Search
+ https://leetcode.com/problems/the-maze-ii/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : [[0,0,1,0,0],[0,0,0,0,0],[0,0,0,1,0],[1,1,0,1,1],[0,0,0,0,0]] | [0,4] | [4,4]
+      Expected : 12
+
+  [2] Input    : [[0,0,1,0,0],[0,0,0,0,0],[0,0,0,1,0],[1,1,0,1,1],[0,0,0,0,0]] | [0,4] | [3,2]
+      Expected : -1
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int shortestDistance(vector<vector<int>>& maze, vector<int>& start, vector<int>& destination);
+
+FILES
+  edit : 505.cpp
+  test : lc run 505
+══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,36 @@
+══════════════════════════════════════════════════════════════════════════
+ 14. Longest Common Prefix
+ Easy  |  Tags: Array, String, Trie
+ https://leetcode.com/problems/longest-common-prefix/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Write a function to find the longest common prefix string amongst an
+  array of strings.
+
+  If there is no common prefix, return an empty string "".
+
+CONSTRAINTS
+  1 <= strs.length <= 200
+  0 <= strs[i].length <= 200
+  strs[i] consists of only lowercase English letters if it is non-empty.
+
+TEST CASES
+  [1] Input    : strs = ["flower","flow","flight"]
+      Expected : "fl"
+
+  [2] Input    : strs = ["dog","racecar","car"]
+      Expected : ""
+      Why      : There is no common prefix among the input strings.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  string longestCommonPrefix(vector<string>& strs);
+
+FILES
+  edit : 14.cpp
+  test : lc run 14
+══════════════════════════════════════════════════════════════════════════

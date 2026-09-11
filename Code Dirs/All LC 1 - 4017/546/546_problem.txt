@@ -1,0 +1,45 @@
+══════════════════════════════════════════════════════════════════════════
+ 546. Remove Boxes
+ Hard  |  Tags: Array, Dynamic Programming, Memoization
+ https://leetcode.com/problems/remove-boxes/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given several boxes with different colors represented by
+  different positive numbers.
+
+  You may experience several rounds to remove boxes until there is no box
+  left. Each time you can choose some continuous boxes with the same color
+  (i.e., composed of k boxes, k >= 1), remove them and get k * k points.
+
+  Return the maximum points you can get.
+
+CONSTRAINTS
+  1 <= boxes.length <= 100
+  1 <= boxes[i] <= 100
+
+TEST CASES
+  [1] Input    : boxes = [1,3,2,2,2,3,4,3,1]
+      Expected : 23
+      Why      : [1, 3, 2, 2, 2, 3, 4, 3, 1]
+                 ----> [1, 3, 3, 4, 3, 1] (3*3=9 points)
+                 ----> [1, 3, 3, 3, 1] (1*1=1 points)
+                 … (2 more)
+
+  [2] Input    : boxes = [1,1,1]
+      Expected : 9
+
+  [3] Input    : boxes = [1]
+      Expected : 1
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int removeBoxes(vector<int>& boxes);
+
+FILES
+  edit : 546.cpp
+  test : lc run 546
+══════════════════════════════════════════════════════════════════════════

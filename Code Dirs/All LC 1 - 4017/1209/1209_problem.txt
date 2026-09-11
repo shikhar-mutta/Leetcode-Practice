@@ -1,0 +1,47 @@
+══════════════════════════════════════════════════════════════════════════
+ 1209. Remove All Adjacent Duplicates in String II
+ Medium  |  Tags: String, Stack
+ https://leetcode.com/problems/remove-all-adjacent-duplicates-in-string-ii/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a string s and an integer k, a k duplicate removal
+  consists of choosing k adjacent and equal letters from s and removing
+  them, causing the left and the right side of the deleted substring to
+  concatenate together.
+
+  We repeatedly make k duplicate removals on s until we no longer can.
+
+  Return the final string after all such duplicate removals have been
+  made. It is guaranteed that the answer is unique.
+
+CONSTRAINTS
+  1 <= s.length <= 10^5
+  2 <= k <= 10^4
+  s only contains lowercase English letters.
+
+TEST CASES
+  [1] Input    : s = "abcd", k = 2
+      Expected : "abcd"
+      Why      : There's nothing to delete.
+
+  [2] Input    : s = "deeedbbcccbdaa", k = 3
+      Expected : "aa"
+      Why      : First delete "eee" and "ccc", get "ddbbbdaa"
+                 Then delete "bbb", get "dddaa"
+                 Finally delete "ddd", get "aa"
+
+  [3] Input    : s = "pbbcggttciiippooaais", k = 2
+      Expected : "ps"
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  string removeDuplicates(string s, int k);
+
+FILES
+  edit : 1209.cpp
+  test : lc run 1209
+══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,37 @@
+══════════════════════════════════════════════════════════════════════════
+ 215. Kth Largest Element in an Array
+ Medium  |  Tags: Array, Divide and Conquer, Sorting, Heap (Priority Queue), Quickselect
+ https://leetcode.com/problems/kth-largest-element-in-an-array/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given an integer array nums and an integer k, return the k^th largest
+  element in the array.
+
+  Note that it is the k^th largest element in the sorted order, not the
+  k^th distinct element.
+
+  Can you solve it without sorting?
+
+CONSTRAINTS
+  1 <= k <= nums.length <= 10^5
+  -10^4 <= nums[i] <= 10^4
+
+TEST CASES
+  [1] Input    : nums = [3,2,1,5,6,4], k = 2
+      Expected : 5
+
+  [2] Input    : nums = [3,2,3,1,2,4,5,5,6], k = 4
+      Expected : 4
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int findKthLargest(vector<int>& nums, int k);
+
+FILES
+  edit : 215.cpp
+  test : lc run 215
+══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,32 @@
+══════════════════════════════════════════════════════════════════════════
+ 298. Binary Tree Longest Consecutive Sequence
+ Medium  |  Tags: Tree, Depth-First Search, Binary Tree, DP on Trees
+ https://leetcode.com/problems/binary-tree-longest-consecutive-sequence/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : [1,null,3,2,4,null,null,null,5]
+      Expected : 3
+
+  [2] Input    : [2,null,3,2,null,1]
+      Expected : 2
+
+CODE TYPE
+  function · tree
+    driver: one Solution call per test case
+    tree: TreeNode* — level order, e.g. [3,9,20,null,null,15,7]
+
+SIGNATURE
+  int longestConsecutive(TreeNode* root);
+
+FILES
+  edit : 298.cpp
+  test : lc run 298
+══════════════════════════════════════════════════════════════════════════

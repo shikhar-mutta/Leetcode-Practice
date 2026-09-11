@@ -1,0 +1,40 @@
+══════════════════════════════════════════════════════════════════════════
+ 2376. Count Special Integers
+ Hard  |  Tags: Math, Dynamic Programming
+ https://leetcode.com/problems/count-special-integers/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  We call a positive integer special if all of its digits are distinct.
+
+  Given a positive integer n, return the number of special integers that
+  belong to the interval [1, n].
+
+CONSTRAINTS
+  1 <= n <= 2 * 10^9
+
+TEST CASES
+  [1] Input    : n = 20
+      Expected : 19
+      Why      : All the integers from 1 to 20, except 11, are special. Thus, there are 19 special integers.
+
+  [2] Input    : n = 5
+      Expected : 5
+      Why      : All the integers from 1 to 5 are special.
+
+  [3] Input    : n = 135
+      Expected : 110
+      Why      : There are 110 integers from 1 to 135 that are special.
+                 Some of the integers that are not special are: 22, 114, and 131.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int countSpecialNumbers(int n);
+
+FILES
+  edit : 2376.cpp
+  test : lc run 2376
+══════════════════════════════════════════════════════════════════════════

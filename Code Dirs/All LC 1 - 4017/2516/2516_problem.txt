@@ -1,0 +1,43 @@
+══════════════════════════════════════════════════════════════════════════
+ 2516. Take K of Each Character From Left and Right
+ Medium  |  Tags: Hash Table, String, Sliding Window
+ https://leetcode.com/problems/take-k-of-each-character-from-left-and-right/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a string s consisting of the characters 'a', 'b', and 'c'
+  and a non-negative integer k. Each minute, you may take either the
+  leftmost character of s, or the rightmost character of s.
+
+  Return the minimum number of minutes needed for you to take at least k
+  of each character, or return -1 if it is not possible to take k of each
+  character.
+
+CONSTRAINTS
+  1 <= s.length <= 10^5
+  s consists of only the letters 'a', 'b', and 'c'.
+  0 <= k <= s.length
+
+TEST CASES
+  [1] Input    : s = "aabaaaacaabc", k = 2
+      Expected : 8
+      Why      : Take three characters from the left of s. You now have two 'a' characters, and one 'b' character.
+                 Take five characters from the right of s. You now have four 'a' characters, two 'b' characters, and two 'c' characters.
+                 A total of 3 + 5 = 8 minutes is needed.
+                 … (1 more)
+
+  [2] Input    : s = "a", k = 1
+      Expected : -1
+      Why      : It is not possible to take one 'b' or 'c' so return -1.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int takeCharacters(string s, int k);
+
+FILES
+  edit : 2516.cpp
+  test : lc run 2516
+══════════════════════════════════════════════════════════════════════════

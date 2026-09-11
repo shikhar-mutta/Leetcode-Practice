@@ -1,0 +1,49 @@
+══════════════════════════════════════════════════════════════════════════
+ 2033. Minimum Operations to Make a Uni-Value Grid
+ Medium  |  Tags: Array, Math, Sorting, Matrix
+ https://leetcode.com/problems/minimum-operations-to-make-a-uni-value-grid/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a 2D integer grid of size m x n and an integer x. In one
+  operation, you can add x to or subtract x from any element in the grid.
+
+  A uni-value grid is a grid where all the elements of it are equal.
+
+  Return the minimum number of operations to make the grid uni-value. If
+  it is not possible, return -1.
+
+CONSTRAINTS
+  m == grid.length
+  n == grid[i].length
+  1 <= m, n <= 10^5
+  1 <= m * n <= 10^5
+  1 <= x, grid[i][j] <= 10^4
+
+TEST CASES
+  [1] Input    : grid = [[2,4],[6,8]], x = 2
+      Expected : 4
+      Why      : We can make every element equal to 4 by doing the following:
+                 - Add x to 2 once.
+                 - Subtract x from 6 once.
+                 … (2 more)
+
+  [2] Input    : grid = [[1,5],[2,3]], x = 1
+      Expected : 5
+      Why      : We can make every element equal to 3.
+
+  [3] Input    : grid = [[1,2],[3,4]], x = 2
+      Expected : -1
+      Why      : It is impossible to make every element equal.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int minOperations(vector<vector<int>>& grid, int x);
+
+FILES
+  edit : 2033.cpp
+  test : lc run 2033
+══════════════════════════════════════════════════════════════════════════

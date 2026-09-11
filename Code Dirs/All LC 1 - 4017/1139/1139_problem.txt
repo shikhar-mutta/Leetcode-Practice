@@ -1,0 +1,34 @@
+══════════════════════════════════════════════════════════════════════════
+ 1139. Largest 1-Bordered Square
+ Medium  |  Tags: Array, Dynamic Programming, Matrix
+ https://leetcode.com/problems/largest-1-bordered-square/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given a 2D grid of 0s and 1s, return the number of elements in the
+  largest square subgrid that has all 1s on its border, or 0 if such a
+  subgrid doesn't exist in the grid.
+
+CONSTRAINTS
+  1 <= grid.length <= 100
+  1 <= grid[0].length <= 100
+  grid[i][j] is 0 or 1
+
+TEST CASES
+  [1] Input    : grid = [[1,1,1],[1,0,1],[1,1,1]]
+      Expected : 9
+
+  [2] Input    : grid = [[1,1,0,0]]
+      Expected : 1
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int largest1BorderedSquare(vector<vector<int>>& grid);
+
+FILES
+  edit : 1139.cpp
+  test : lc run 1139
+══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,32 @@
+══════════════════════════════════════════════════════════════════════════
+ 539. Minimum Time Difference
+ Medium  |  Tags: Array, Math, String, Sorting
+ https://leetcode.com/problems/minimum-time-difference/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given a list of 24-hour clock time points in "HH:MM" format, return the
+  minimum minutes difference between any two time-points in the list.
+
+CONSTRAINTS
+  2 <= timePoints.length <= 2 * 10^4
+  timePoints[i] is in the format "HH:MM".
+
+TEST CASES
+  [1] Input    : timePoints = ["23:59","00:00"]
+      Expected : 1
+
+  [2] Input    : timePoints = ["00:00","23:59","00:00"]
+      Expected : 0
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int findMinDifference(vector<string>& timePoints);
+
+FILES
+  edit : 539.cpp
+  test : lc run 539
+══════════════════════════════════════════════════════════════════════════

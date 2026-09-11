@@ -1,0 +1,46 @@
+══════════════════════════════════════════════════════════════════════════
+ 1536. Minimum Swaps to Arrange a Binary Grid
+ Medium  |  Tags: Array, Greedy, Matrix
+ https://leetcode.com/problems/minimum-swaps-to-arrange-a-binary-grid/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given an n x n binary grid, in one step you can choose two adjacent rows
+  of the grid and swap them.
+
+  A grid is said to be valid if all the cells above the main diagonal are
+  zeros.
+
+  Return the minimum number of steps needed to make the grid valid, or -1
+  if the grid cannot be valid.
+
+  The main diagonal of a grid is the diagonal that starts at cell (1, 1)
+  and ends at cell (n, n).
+
+CONSTRAINTS
+  n == grid.length == grid[i].length
+  1 <= n <= 200
+  grid[i][j] is either 0 or 1
+
+TEST CASES
+  [1] Input    : grid = [[0,0,1],[1,1,0],[1,0,0]]
+      Expected : 3
+
+  [2] Input    : grid = [[0,1,1,0],[0,1,1,0],[0,1,1,0],[0,1,1,0]]
+      Expected : -1
+      Why      : All rows are similar, swaps have no effect on the grid.
+
+  [3] Input    : grid = [[1,0,0],[1,1,0],[1,1,1]]
+      Expected : 0
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int minSwaps(vector<vector<int>>& grid);
+
+FILES
+  edit : 1536.cpp
+  test : lc run 1536
+══════════════════════════════════════════════════════════════════════════

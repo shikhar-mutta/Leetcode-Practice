@@ -1,0 +1,56 @@
+══════════════════════════════════════════════════════════════════════════
+ 3003. Maximize the Number of Partitions After Operations
+ Hard  |  Tags: String, Dynamic Programming, Bit Manipulation, Bitmask
+ https://leetcode.com/problems/maximize-the-number-of-partitions-after-operations/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a string s and an integer k.
+
+  First, you are allowed to change at most one index in s to another
+  lowercase English letter.
+
+  After that, do the following partitioning operation until s is empty:
+
+  - Choose the longest prefix of s containing at most k distinct
+    characters.
+
+  - Delete the prefix from s and increase the number of partitions by one.
+    The remaining characters (if any) in s maintain their initial order.
+
+  Return an integer denoting the maximum number of resulting partitions
+  after the operations by optimally choosing at most one index to change.
+
+CONSTRAINTS
+  1 <= s.length <= 10^4
+  s consists only of lowercase English letters.
+  1 <= k <= 26
+
+TEST CASES
+  [1] Input    : s = "accca", k = 2
+      Expected : 3
+      Why      : The optimal way is to change s[2] to something other than a and c, for example, b. then it becomes "acbca".
+                 Then we perform the operations:
+                 - The longest prefix containing at most 2 distinct characters is "ac", we remove it and s becomes "bca".
+                 … (3 more)
+
+  [2] Input    : s = "aabaab", k = 3
+      Expected : 1
+      Why      : Initially s contains 2 distinct characters, so whichever character we change, it will contain at most 3 distinct characters, so the longest prefix with at most 3 distinct characters would always be all of it, therefore the answer is 1.
+
+  [3] Input    : s = "xxyz", k = 1
+      Expected : 4
+      Why      : The optimal way is to change s[0] or s[1] to something other than characters in s, for example, to change s[0] to w.
+                 Then s becomes "wxyz", which consists of 4 distinct characters, so as k is 1, it will divide into 4 partitions.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int maxPartitionsAfterOperations(string s, int k);
+
+FILES
+  edit : 3003.cpp
+  test : lc run 3003
+══════════════════════════════════════════════════════════════════════════

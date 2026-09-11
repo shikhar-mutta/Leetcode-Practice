@@ -1,0 +1,66 @@
+══════════════════════════════════════════════════════════════════════════
+ 3921. Score Validator
+ Easy  |  Tags: Array, String, Simulation
+ https://leetcode.com/problems/score-validator/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a string array events.
+
+  Initially, score = 0 and counter = 0. Each element in events is one of
+  the following:
+
+  - "0", "1", "2", "3", "4", "6": Add that value to the total score.
+
+  - "W": Increase the counter by 1. No score is added.
+
+  - "WD": Add 1 to the total score.
+
+  - "NB": Add 1 to the total score.
+
+  Process the array from left to right. Stop processing when either:
+
+  - All elements in events have been processed, or
+
+  - The counter becomes 10.
+
+  Return an integer array [score, counter], where:
+
+  - score is the final total score.
+
+  - counter is the final counter value.
+
+CONSTRAINTS
+  1 <= events.length <= 1000
+  events[i] is one of "0", "1", "2", "3", "4", "6", "W", "WD", or "NB".
+
+TEST CASES
+  [1] Input    : events = ["1","4","W","6","WD"]
+      Expected : [12,1]
+      Why      : Event
+                 Score
+                 Counter
+                 … (16 more)
+
+  [2] Input    : events = ["WD","NB","0","4","4"]
+      Expected : [10,0]
+      Why      : Event
+                 Score
+                 Counter
+                 … (16 more)
+
+  [3] Input    : events = ["W","W","W","W","W","W","W","W","W","W","W"]
+      Expected : [0,10]
+      Why      : After 10 occurrences of "W", the counter reaches 10, so processing stops. The remaining events are ignored.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  vector<int> scoreValidator(vector<string>& events);
+
+FILES
+  edit : 3921.cpp
+  test : lc run 3921
+══════════════════════════════════════════════════════════════════════════

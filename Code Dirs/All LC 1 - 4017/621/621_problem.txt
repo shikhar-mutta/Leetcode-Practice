@@ -1,0 +1,44 @@
+══════════════════════════════════════════════════════════════════════════
+ 621. Task Scheduler
+ Medium  |  Tags: Array, Hash Table, Greedy, Sorting, Heap (Priority Queue), Counting
+ https://leetcode.com/problems/task-scheduler/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given an array of CPU tasks, each labeled with a letter from A
+  to Z, and a number n. Each CPU interval can be idle or allow the
+  completion of one task. Tasks can be completed in any order, but there's
+  a constraint: there has to be a gap of at least n intervals between two
+  tasks with the same label.
+
+  Return the minimum number of CPU intervals required to complete all
+  tasks.
+
+CONSTRAINTS
+  1 <= tasks.length <= 10^4
+  tasks[i] is an uppercase English letter.
+  0 <= n <= 100
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : ["A","A","A","B","B","B"] | 2
+      Expected : 8
+
+  [2] Input    : ["A","C","A","B","D","B"] | 1
+      Expected : 6
+
+  [3] Input    : ["A","A","A","B","B","B"] | 3
+      Expected : 10
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int leastInterval(vector<char>& tasks, int n);
+
+FILES
+  edit : 621.cpp
+  test : lc run 621
+══════════════════════════════════════════════════════════════════════════

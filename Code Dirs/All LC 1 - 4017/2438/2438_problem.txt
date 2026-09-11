@@ -1,0 +1,49 @@
+══════════════════════════════════════════════════════════════════════════
+ 2438. Range Product Queries of Powers
+ Medium  |  Tags: Array, Bit Manipulation, Prefix Sum
+ https://leetcode.com/problems/range-product-queries-of-powers/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given a positive integer n, there exists a 0-indexed array called
+  powers, composed of the minimum number of powers of 2 that sum to n. The
+  array is sorted in non-decreasing order, and there is only one way to
+  form the array.
+
+  You are also given a 0-indexed 2D integer array queries, where
+  queries[i] = [lefti, righti]. Each queries[i] represents a query where
+  you have to find the product of all powers[j] with lefti <= j <= righti.
+
+  Return an array answers, equal in length to queries, where answers[i] is
+  the answer to the i^th query. Since the answer to the i^th query may be
+  too large, each answers[i] should be returned modulo 10^9 + 7.
+
+CONSTRAINTS
+  1 <= n <= 10^9
+  1 <= queries.length <= 10^5
+  0 <= starti <= endi < powers.length
+
+TEST CASES
+  [1] Input    : n = 15, queries = [[0,1],[2,2],[0,3]]
+      Expected : [2,4,64]
+      Why      : For n = 15, powers = [1,2,4,8]. It can be shown that powers cannot be a smaller size.
+                 Answer to 1st query: powers[0] * powers[1] = 1 * 2 = 2.
+                 Answer to 2nd query: powers[2] = 4.
+                 … (2 more)
+
+  [2] Input    : n = 2, queries = [[0,0]]
+      Expected : [2]
+      Why      : For n = 2, powers = [2].
+                 The answer to the only query is powers[0] = 2. The answer modulo 10^9 + 7 is the same, so [2] is returned.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  vector<int> productQueries(int n, vector<vector<int>>& queries);
+
+FILES
+  edit : 2438.cpp
+  test : lc run 2438
+══════════════════════════════════════════════════════════════════════════

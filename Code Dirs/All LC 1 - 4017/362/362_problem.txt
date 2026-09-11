@@ -1,0 +1,30 @@
+══════════════════════════════════════════════════════════════════════════
+ 362. Design Hit Counter
+ Medium  |  Tags: Array, Binary Search, Design, Queue, Data Stream
+ https://leetcode.com/problems/design-hit-counter/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : ["HitCounter","hit","hit","hit","getHits","hit","getHits","getHits"] | [[],[1],[2],[3],[4],[300],[300],[301]]
+      Expected : [null, null, null, null, 3, null, 4, 3]
+
+CODE TYPE
+  design · HitCounter
+    driver: replays ["HitCounter","op",...] / [[args],...] and prints [null,...]
+
+SIGNATURE
+  HitCounter();
+  void hit(int timestamp);
+  int getHits(int timestamp);
+
+FILES
+  edit : 362.cpp
+  test : lc run 362
+══════════════════════════════════════════════════════════════════════════

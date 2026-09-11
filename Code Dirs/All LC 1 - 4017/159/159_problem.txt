@@ -1,0 +1,31 @@
+══════════════════════════════════════════════════════════════════════════
+ 159. Longest Substring with At Most Two Distinct Characters
+ Medium  |  Tags: Hash Table, String, Sliding Window
+ https://leetcode.com/problems/longest-substring-with-at-most-two-distinct-characters/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : "eceba"
+      Expected : 3
+
+  [2] Input    : "ccaabbb"
+      Expected : 5
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int lengthOfLongestSubstringTwoDistinct(string s);
+
+FILES
+  edit : 159.cpp
+  test : lc run 159
+══════════════════════════════════════════════════════════════════════════

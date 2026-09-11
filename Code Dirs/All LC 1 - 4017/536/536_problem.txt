@@ -1,0 +1,32 @@
+══════════════════════════════════════════════════════════════════════════
+ 536. Construct Binary Tree from String
+ Medium  |  Tags: String, Stack, Tree, Depth-First Search, Binary Tree
+ https://leetcode.com/problems/construct-binary-tree-from-string/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : "4(2(3)(1))(6(5))"
+      Expected : [4,2,6,3,1,5]
+
+  [2] Input    : "-4(2(3)(1))(6(5)(7))"
+      Expected : [-4,2,6,3,1,5,7]
+
+CODE TYPE
+  function · tree
+    driver: one Solution call per test case
+    tree: TreeNode* — level order, e.g. [3,9,20,null,null,15,7]
+
+SIGNATURE
+  TreeNode* str2tree(string s);
+
+FILES
+  edit : 536.cpp
+  test : lc run 536
+══════════════════════════════════════════════════════════════════════════

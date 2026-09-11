@@ -1,0 +1,31 @@
+══════════════════════════════════════════════════════════════════════════
+ 544. Output Contest Matches
+ Medium  |  Tags: String, Recursion, Simulation
+ https://leetcode.com/problems/output-contest-matches/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : 4
+      Expected : "((1,4),(2,3))"
+
+  [2] Input    : 8
+      Expected : "(((1,8),(4,5)),((2,7),(3,6)))"
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  string findContestMatch(int n);
+
+FILES
+  edit : 544.cpp
+  test : lc run 544
+══════════════════════════════════════════════════════════════════════════

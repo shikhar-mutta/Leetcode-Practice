@@ -1,0 +1,74 @@
+══════════════════════════════════════════════════════════════════════════
+ 3207. Maximum Points After Enemy Battles
+ Medium  |  Tags: Array, Greedy
+ https://leetcode.com/problems/maximum-points-after-enemy-battles/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given an integer array enemyEnergies denoting the energy values
+  of various enemies.
+
+  You are also given an integer currentEnergy denoting the amount of
+  energy you have initially.
+
+  You start with 0 points, and all the enemies are unmarked initially.
+
+  You can perform either of the following operations zero or multiple
+  times to gain points:
+
+  - Choose an unmarked enemy, i, such that currentEnergy >=
+    enemyEnergies[i]. By choosing this option:
+
+
+  - You gain 1 point.
+
+  - Your energy is reduced by the enemy's energy, i.e. currentEnergy =
+    currentEnergy - enemyEnergies[i].
+
+
+
+
+
+  - If you have at least 1 point, you can choose an unmarked enemy, i. By
+    choosing this option:
+
+  - Your energy increases by the enemy's energy, i.e. currentEnergy =
+    currentEnergy + enemyEnergies[i].
+
+  - The enemy i is marked.
+
+
+
+
+
+  Return an integer denoting the maximum points you can get in the end by
+  optimally performing operations.
+
+CONSTRAINTS
+  1 <= enemyEnergies.length <= 10^5
+  1 <= enemyEnergies[i] <= 10^9
+  0 <= currentEnergy <= 10^9
+
+TEST CASES
+  [1] Input    : enemyEnergies = [3,2,2], currentEnergy = 2
+      Expected : 3
+      Why      : The following operations can be performed to get 3 points, which is the maximum:
+                 - First operation on enemy 1: points increases by 1, and currentEnergy decreases by 2. So, points = 1, and currentEnergy = 0.
+                 - Second operation on enemy 0: currentEnergy increases by 3, and enemy 0 is marked. So, points = 1, currentEnergy = 3, and marked enemies = [0].
+                 … (3 more)
+
+  [2] Input    : enemyEnergies = [2], currentEnergy = 10
+      Expected : 5
+      Why      : Performing the first operation 5 times on enemy 0 results in the maximum number of points.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  long long maximumPoints(vector<int>& enemyEnergies, int currentEnergy);
+
+FILES
+  edit : 3207.cpp
+  test : lc run 3207
+══════════════════════════════════════════════════════════════════════════

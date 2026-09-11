@@ -1,0 +1,51 @@
+══════════════════════════════════════════════════════════════════════════
+ 3722. Lexicographically Smallest String After Reverse
+ Medium  |  Tags: Two Pointers, Binary Search, Enumeration
+ https://leetcode.com/problems/lexicographically-smallest-string-after-reverse/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a string s of length n consisting of lowercase English
+  letters.
+
+  You must perform exactly one operation by choosing any integer k such
+  that 1 <= k <= n and either:
+
+  - reverse the first k characters of s, or
+
+  - reverse the last k characters of s.
+
+  Return the lexicographically smallest string that can be obtained after
+  exactly one such operation.
+
+CONSTRAINTS
+  1 <= n == s.length <= 1000
+  s consists of lowercase English letters.
+
+TEST CASES
+  [1] Input    : s = "dcab"
+      Expected : "acdb"
+      Why      : - Choose k = 3, reverse the first 3 characters.
+                 - Reverse "dca" to "acd", resulting string s = "acdb", which is the lexicographically smallest string achievable.
+
+  [2] Input    : s = "abba"
+      Expected : "aabb"
+      Why      : - Choose k = 3, reverse the last 3 characters.
+                 - Reverse "bba" to "abb", so the resulting string is "aabb", which is the lexicographically smallest string achievable.
+
+  [3] Input    : s = "zxy"
+      Expected : "xzy"
+      Why      : - Choose k = 2, reverse the first 2 characters.
+                 - Reverse "zx" to "xz", so the resulting string is "xzy", which is the lexicographically smallest string achievable.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  string lexSmallest(string s);
+
+FILES
+  edit : 3722.cpp
+  test : lc run 3722
+══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,31 @@
+══════════════════════════════════════════════════════════════════════════
+ 1556. Thousand Separator
+ Easy  |  Tags: String
+ https://leetcode.com/problems/thousand-separator/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given an integer n, add a dot (".") as the thousands separator and
+  return it in string format.
+
+CONSTRAINTS
+  0 <= n <= 2^31 - 1
+
+TEST CASES
+  [1] Input    : n = 987
+      Expected : "987"
+
+  [2] Input    : n = 1234
+      Expected : "1.234"
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  string thousandSeparator(int n);
+
+FILES
+  edit : 1556.cpp
+  test : lc run 1556
+══════════════════════════════════════════════════════════════════════════

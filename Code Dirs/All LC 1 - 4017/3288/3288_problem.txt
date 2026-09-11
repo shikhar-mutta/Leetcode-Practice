@@ -1,0 +1,49 @@
+══════════════════════════════════════════════════════════════════════════
+ 3288. Length of the Longest Increasing Path
+ Hard  |  Tags: Array, Binary Search, Sorting, Longest Increasing Subsequence
+ https://leetcode.com/problems/length-of-the-longest-increasing-path/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a 2D array of integers coordinates of length n and an
+  integer k, where 0 <= k < n.
+
+  coordinates[i] = [xi, yi] indicates the point (xi, yi) in a 2D plane.
+
+  An increasing path of length m is defined as a list of points (x1, y1),
+  (x2, y2), (x3, y3), ..., (xm, ym) such that:
+
+  - xi < xi + 1 and yi < yi + 1 for all i where 1 <= i < m.
+
+  - (xi, yi) is in the given coordinates for all i where 1 <= i <= m.
+
+  Return the maximum length of an increasing path that contains
+  coordinates[k].
+
+CONSTRAINTS
+  1 <= n == coordinates.length <= 10^5
+  coordinates[i].length == 2
+  0 <= coordinates[i][0], coordinates[i][1] <= 10^9
+  All elements in coordinates are distinct.
+  0 <= k <= n - 1
+
+TEST CASES
+  [1] Input    : coordinates = [[3,1],[2,2],[4,1],[0,0],[5,3]], k = 1
+      Expected : 3
+      Why      : (0, 0), (2, 2), (5, 3) is the longest increasing path that contains (2, 2).
+
+  [2] Input    : coordinates = [[2,1],[7,0],[5,6]], k = 2
+      Expected : 2
+      Why      : (2, 1), (5, 6) is the longest increasing path that contains (5, 6).
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int maxPathLength(vector<vector<int>>& coordinates, int k);
+
+FILES
+  edit : 3288.cpp
+  test : lc run 3288
+══════════════════════════════════════════════════════════════════════════

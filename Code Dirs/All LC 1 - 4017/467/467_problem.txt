@@ -1,0 +1,43 @@
+══════════════════════════════════════════════════════════════════════════
+ 467. Unique Substrings in Wraparound String
+ Medium  |  Tags: String, Dynamic Programming
+ https://leetcode.com/problems/unique-substrings-in-wraparound-string/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  We define the string base to be the infinite wraparound string of
+  "abcdefghijklmnopqrstuvwxyz", so base will look like this:
+
+  - "...zabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcd....".
+
+  Given a string s, return the number of unique non-empty substrings of s
+  are present in base.
+
+CONSTRAINTS
+  1 <= s.length <= 10^5
+  s consists of lowercase English letters.
+
+TEST CASES
+  [1] Input    : s = "a"
+      Expected : 1
+      Why      : Only the substring "a" of s is in base.
+
+  [2] Input    : s = "cac"
+      Expected : 2
+      Why      : There are two substrings ("a", "c") of s in base.
+
+  [3] Input    : s = "zab"
+      Expected : 6
+      Why      : There are six substrings ("z", "a", "b", "za", "ab", and "zab") of s in base.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int findSubstringInWraproundString(string s);
+
+FILES
+  edit : 467.cpp
+  test : lc run 467
+══════════════════════════════════════════════════════════════════════════

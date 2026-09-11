@@ -1,0 +1,44 @@
+══════════════════════════════════════════════════════════════════════════
+ 892. Surface Area of 3D Shapes
+ Easy  |  Tags: Array, Math, Geometry, Matrix
+ https://leetcode.com/problems/surface-area-of-3d-shapes/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given an n x n grid where you have placed some 1 x 1 x 1 cubes.
+  Each value v = grid[i][j] represents a tower of v cubes placed on top of
+  cell (i, j).
+
+  After placing these cubes, you have decided to glue any directly
+  adjacent cubes to each other, forming several irregular 3D shapes.
+
+  Return the total surface area of the resulting shapes.
+
+  Note: The bottom face of each shape counts toward its surface area.
+
+CONSTRAINTS
+  n == grid.length == grid[i].length
+  1 <= n <= 50
+  0 <= grid[i][j] <= 50
+
+TEST CASES
+  [1] Input    : grid = [[1,2],[3,4]]
+      Expected : 34
+
+  [2] Input    : grid = [[1,1,1],[1,0,1],[1,1,1]]
+      Expected : 32
+
+  [3] Input    : grid = [[2,2,2],[2,1,2],[2,2,2]]
+      Expected : 46
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int surfaceArea(vector<vector<int>>& grid);
+
+FILES
+  edit : 892.cpp
+  test : lc run 892
+══════════════════════════════════════════════════════════════════════════

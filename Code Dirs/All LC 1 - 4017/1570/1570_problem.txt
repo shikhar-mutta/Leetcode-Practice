@@ -1,0 +1,32 @@
+══════════════════════════════════════════════════════════════════════════
+ 1570. Dot Product of Two Sparse Vectors
+ Medium  |  Tags: Array, Hash Table, Two Pointers, Design, Linear Algebra
+ https://leetcode.com/problems/dot-product-of-two-sparse-vectors/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : [1,0,0,2,3] | [0,3,0,4,0]
+      Expected : 8
+
+  [2] Input    : [0,1,0,0,0] | [0,0,0,0,2]
+      Expected : 0
+
+CODE TYPE
+  design · SparseVector
+    driver: replays ["SparseVector","op",...] / [[args],...] and prints [null,...]
+
+SIGNATURE
+  SparseVector(vector<int> &nums);
+  int dotProduct(SparseVector& vec);
+
+FILES
+  edit : 1570.cpp
+  test : lc run 1570
+══════════════════════════════════════════════════════════════════════════

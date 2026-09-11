@@ -1,0 +1,40 @@
+══════════════════════════════════════════════════════════════════════════
+ 3202. Find the Maximum Length of Valid Subsequence II
+ Medium  |  Tags: Array, Dynamic Programming
+ https://leetcode.com/problems/find-the-maximum-length-of-valid-subsequence-ii/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given an integer array nums and a positive integer k.
+  A subsequence sub of nums with length x is called valid if it satisfies:
+
+  - (sub[0] + sub[1]) % k == (sub[1] + sub[2]) % k == ... == (sub[x - 2] +
+    sub[x - 1]) % k.
+
+  Return the length of the longest valid subsequence of nums.
+
+CONSTRAINTS
+  2 <= nums.length <= 10^3
+  1 <= nums[i] <= 10^7
+  1 <= k <= 10^3
+
+TEST CASES
+  [1] Input    : nums = [1,2,3,4,5], k = 2
+      Expected : 5
+      Why      : The longest valid subsequence is [1, 2, 3, 4, 5].
+
+  [2] Input    : nums = [1,4,2,3,1,4], k = 3
+      Expected : 4
+      Why      : The longest valid subsequence is [1, 4, 1, 4].
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int maximumLength(vector<int>& nums, int k);
+
+FILES
+  edit : 3202.cpp
+  test : lc run 3202
+══════════════════════════════════════════════════════════════════════════

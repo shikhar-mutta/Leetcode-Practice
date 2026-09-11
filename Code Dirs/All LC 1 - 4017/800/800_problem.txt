@@ -1,0 +1,28 @@
+══════════════════════════════════════════════════════════════════════════
+ 800. Similar RGB Color
+ Easy  |  Tags: Math, String, Enumeration
+ https://leetcode.com/problems/similar-rgb-color/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : "#09f166"
+      Expected : #11ee66
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  string similarRGB(string color);
+
+FILES
+  edit : 800.cpp
+  test : lc run 800
+══════════════════════════════════════════════════════════════════════════

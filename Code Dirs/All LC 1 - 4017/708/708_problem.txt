@@ -1,0 +1,32 @@
+══════════════════════════════════════════════════════════════════════════
+ 708. Insert into a Sorted Circular Linked List
+ Medium  |  Tags: Linked List
+ https://leetcode.com/problems/insert-into-a-sorted-circular-linked-list/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : [3,4,1] | 2
+      Expected : [3,4,1,2]
+
+  [2] Input    : [] | 1
+      Expected : [1]
+
+CODE TYPE
+  function · next pointers
+    driver: one Solution call per test case
+    next pointers: Node* {left, right, next} — tree in level order; output walks next: [1,#,2,3,#]
+
+SIGNATURE
+  Node* insert(Node* head, int insertVal);
+
+FILES
+  edit : 708.cpp
+  test : lc run 708
+══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,66 @@
+══════════════════════════════════════════════════════════════════════════
+ 1625. Lexicographically Smallest String After Applying Operations
+ Medium  |  Tags: String, Depth-First Search, Breadth-First Search, Enumeration
+ https://leetcode.com/problems/lexicographically-smallest-string-after-applying-operations/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a string s of even length consisting of digits from 0 to
+  9, and two integers a and b.
+
+  You can apply either of the following two operations any number of times
+  and in any order on s:
+
+  - Add a to all odd indices of s (0-indexed). Digits post 9 are cycled
+    back to 0. For example, if s = "3456" and a = 5, s becomes "3951".
+
+  - Rotate s to the right by b positions. For example, if s = "3456" and b
+    = 1, s becomes "6345".
+
+  Return the lexicographically smallest string you can obtain by applying
+  the above operations any number of times on s.
+
+  A string a is lexicographically smaller than a string b (of the same
+  length) if in the first position where a and b differ, string a has a
+  letter that appears earlier in the alphabet than the corresponding
+  letter in b. For example, "0158" is lexicographically smaller than
+  "0190" because the first position they differ is at the third letter,
+  and '5' comes before '9'.
+
+CONSTRAINTS
+  2 <= s.length <= 100
+  s.length is even.
+  s consists of digits from 0 to 9 only.
+  1 <= a <= 9
+  1 <= b <= s.length - 1
+
+TEST CASES
+  [1] Input    : s = "5525", a = 9, b = 2
+      Expected : "2050"
+      Why      : We can apply the following operations:
+                 Start: "5525"
+                 Rotate: "2555"
+                 … (8 more)
+
+  [2] Input    : s = "74", a = 5, b = 1
+      Expected : "24"
+      Why      : We can apply the following operations:
+                 Start: "74"
+                 Rotate: "47"
+                 … (3 more)
+
+  [3] Input    : s = "0011", a = 4, b = 2
+      Expected : "0011"
+      Why      : There are no sequence of operations that will give us a lexicographically smaller string than "0011".
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  string findLexSmallestString(string s, int a, int b);
+
+FILES
+  edit : 1625.cpp
+  test : lc run 1625
+══════════════════════════════════════════════════════════════════════════

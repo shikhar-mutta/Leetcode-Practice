@@ -1,0 +1,31 @@
+══════════════════════════════════════════════════════════════════════════
+ 418. Sentence Screen Fitting
+ Medium  |  Tags: Array, String, Dynamic Programming
+ https://leetcode.com/problems/sentence-screen-fitting/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : 3 | 6 | ["a","bcd","e"]
+      Expected : 2
+
+  [2] Input    : 2 | 8 | ["hello","world"]
+      Expected : 1
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int wordsTyping(vector<string>& sentence, int rows, int cols);
+
+FILES
+  edit : 418.cpp
+  test : lc run 418
+══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,45 @@
+══════════════════════════════════════════════════════════════════════════
+ 3442. Maximum Difference Between Even and Odd Frequency I
+ Easy  |  Tags: Hash Table, String, Counting
+ https://leetcode.com/problems/maximum-difference-between-even-and-odd-frequency-i/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a string s consisting of lowercase English letters.
+
+  Your task is to find the maximum difference diff = freq(a1) - freq(a2)
+  between the frequency of characters a1 and a2 in the string such that:
+
+  - a1 has an odd frequency in the string.
+
+  - a2 has an even frequency in the string.
+
+  Return this maximum difference.
+
+CONSTRAINTS
+  3 <= s.length <= 100
+  s consists only of lowercase English letters.
+  s contains at least one character with an odd frequency and one with an even frequency.
+
+TEST CASES
+  [1] Input    : s = "aaaaabbc"
+      Expected : 3
+      Why      : - The character 'a' has an odd frequency of 5, and 'b' has an even frequency of 2.
+                 - The maximum difference is 5 - 2 = 3.
+
+  [2] Input    : s = "abcabcab"
+      Expected : 1
+      Why      : - The character 'a' has an odd frequency of 3, and 'c' has an even frequency of 2.
+                 - The maximum difference is 3 - 2 = 1.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int maxDifference(string s);
+
+FILES
+  edit : 3442.cpp
+  test : lc run 3442
+══════════════════════════════════════════════════════════════════════════

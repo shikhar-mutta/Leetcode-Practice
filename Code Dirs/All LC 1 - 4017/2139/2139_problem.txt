@@ -1,0 +1,56 @@
+══════════════════════════════════════════════════════════════════════════
+ 2139. Minimum Moves to Reach Target Score
+ Medium  |  Tags: Math, Greedy
+ https://leetcode.com/problems/minimum-moves-to-reach-target-score/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are playing a game with integers. You start with the integer 1 and
+  you want to reach the integer target.
+
+  In one move, you can either:
+
+  - Increment the current integer by one (i.e., x = x + 1).
+
+  - Double the current integer (i.e., x = 2 * x).
+
+  You can use the increment operation any number of times, however, you
+  can only use the double operation at most maxDoubles times.
+
+  Given the two integers target and maxDoubles, return the minimum number
+  of moves needed to reach target starting with 1.
+
+CONSTRAINTS
+  1 <= target <= 10^9
+  0 <= maxDoubles <= 100
+
+TEST CASES
+  [1] Input    : target = 5, maxDoubles = 0
+      Expected : 4
+      Why      : Keep incrementing by 1 until you reach target.
+
+  [2] Input    : target = 19, maxDoubles = 2
+      Expected : 7
+      Why      : Initially, x = 1
+                 Increment 3 times so x = 4
+                 Double once so x = 8
+                 … (3 more)
+
+  [3] Input    : target = 10, maxDoubles = 4
+      Expected : 4
+      Why      : Initially, x = 1
+                 Increment once so x = 2
+                 Double once so x = 4
+                 … (2 more)
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int minMoves(int target, int maxDoubles);
+
+FILES
+  edit : 2139.cpp
+  test : lc run 2139
+══════════════════════════════════════════════════════════════════════════

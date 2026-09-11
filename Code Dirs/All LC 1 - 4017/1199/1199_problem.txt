@@ -1,0 +1,34 @@
+══════════════════════════════════════════════════════════════════════════
+ 1199. Minimum Time to Build Blocks
+ Hard  |  Tags: Array, Math, Greedy, Heap (Priority Queue)
+ https://leetcode.com/problems/minimum-time-to-build-blocks/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : [1] | 1
+      Expected : 1
+
+  [2] Input    : [1,2] | 5
+      Expected : 7
+
+  [3] Input    : [1,2,3] | 1
+      Expected : 4
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int minBuildTime(vector<int>& blocks, int split);
+
+FILES
+  edit : 1199.cpp
+  test : lc run 1199
+══════════════════════════════════════════════════════════════════════════

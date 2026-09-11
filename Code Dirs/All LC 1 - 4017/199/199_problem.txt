@@ -1,0 +1,40 @@
+══════════════════════════════════════════════════════════════════════════
+ 199. Binary Tree Right Side View
+ Medium  |  Tags: Tree, Depth-First Search, Breadth-First Search, Binary Tree
+ https://leetcode.com/problems/binary-tree-right-side-view/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given the root of a binary tree, imagine yourself standing on the right
+  side of it, return the values of the nodes you can see ordered from top
+  to bottom.
+
+CONSTRAINTS
+  The number of nodes in the tree is in the range [0, 100].
+  -100 <= Node.val <= 100
+
+TEST CASES
+  [1] Input    : root = [1,2,3,null,5,null,4]
+      Expected : [1,3,4]
+
+  [2] Input    : root = [1,2,3,4,null,null,null,5]
+      Expected : [1,3,4,5]
+
+  [3] Input    : root = [1,null,3]
+      Expected : [1,3]
+
+  [4] Input    : root = []
+      Expected : []
+
+CODE TYPE
+  function · tree
+    driver: one Solution call per test case
+    tree: TreeNode* — level order, e.g. [3,9,20,null,null,15,7]
+
+SIGNATURE
+  vector<int> rightSideView(TreeNode* root);
+
+FILES
+  edit : 199.cpp
+  test : lc run 199
+══════════════════════════════════════════════════════════════════════════

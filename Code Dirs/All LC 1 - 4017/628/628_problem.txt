@@ -1,0 +1,40 @@
+══════════════════════════════════════════════════════════════════════════
+ 628. Maximum Product of Three Numbers
+ Easy  |  Tags: Array, Math, Sorting
+ https://leetcode.com/problems/maximum-product-of-three-numbers/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given an integer array nums.
+
+  Find three numbers whose product is maximum and return the maximum
+  product.
+
+CONSTRAINTS
+  3 <= nums.length <= 10^4
+  -1000 <= nums[i] <= 1000
+
+TEST CASES
+  [1] Input    : nums = [1,2,3]
+      Expected : 6
+      Why      : The only three numbers are 1, 2, and 3, so the maximum product is 1 * 2 * 3 = 6.
+
+  [2] Input    : nums = [1,2,3,4]
+      Expected : 24
+      Why      : The largest product comes from the three greatest numbers: 2 * 3 * 4 = 24.
+
+  [3] Input    : nums = [-1,-2,-3]
+      Expected : -6
+      Why      : The only three numbers are -1, -2, and -3, so the maximum product is (-1) * (-2) * (-3) = -6.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int maximumProduct(vector<int>& nums);
+
+FILES
+  edit : 628.cpp
+  test : lc run 628
+══════════════════════════════════════════════════════════════════════════

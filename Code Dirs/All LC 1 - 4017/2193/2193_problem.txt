@@ -1,0 +1,48 @@
+══════════════════════════════════════════════════════════════════════════
+ 2193. Minimum Number of Moves to Make Palindrome
+ Hard  |  Tags: Two Pointers, String, Greedy, Binary Indexed Tree
+ https://leetcode.com/problems/minimum-number-of-moves-to-make-palindrome/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a string s consisting only of lowercase English letters.
+
+  In one move, you can select any two adjacent characters of s and swap
+  them.
+
+  Return the minimum number of moves needed to make s a palindrome.
+
+  Note that the input will be generated such that s can always be
+  converted to a palindrome.
+
+CONSTRAINTS
+  1 <= s.length <= 2000
+  s consists only of lowercase English letters.
+  s can be converted to a palindrome using a finite number of moves.
+
+TEST CASES
+  [1] Input    : s = "aabb"
+      Expected : 2
+      Why      : We can obtain two palindromes from s, "abba" and "baab".
+                 - We can obtain "abba" from s in 2 moves: "aabb" -> "abab" -> "abba".
+                 - We can obtain "baab" from s in 2 moves: "aabb" -> "abab" -> "baab".
+                 … (1 more)
+
+  [2] Input    : s = "letelt"
+      Expected : 2
+      Why      : One of the palindromes we can obtain from s in 2 moves is "lettel".
+                 One of the ways we can obtain it is "letelt" -> "letetl" -> "lettel".
+                 Other palindromes such as "tleelt" can also be obtained in 2 moves.
+                 … (1 more)
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int minMovesToMakePalindrome(string s);
+
+FILES
+  edit : 2193.cpp
+  test : lc run 2193
+══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,33 @@
+══════════════════════════════════════════════════════════════════════════
+ 273. Integer to English Words
+ Hard  |  Tags: Math, String, Recursion
+ https://leetcode.com/problems/integer-to-english-words/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Convert a non-negative integer num to its English words representation.
+
+CONSTRAINTS
+  0 <= num <= 2^31 - 1
+
+TEST CASES
+  [1] Input    : num = 123
+      Expected : "One Hundred Twenty Three"
+
+  [2] Input    : num = 12345
+      Expected : "Twelve Thousand Three Hundred Forty Five"
+
+  [3] Input    : num = 1234567
+      Expected : "One Million Two Hundred Thirty Four Thousand Five Hundred Sixty Seven"
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  string numberToWords(int num);
+
+FILES
+  edit : 273.cpp
+  test : lc run 273
+══════════════════════════════════════════════════════════════════════════

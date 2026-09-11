@@ -1,0 +1,41 @@
+══════════════════════════════════════════════════════════════════════════
+ 191. Number of 1 Bits
+ Easy  |  Tags: Divide and Conquer, Bit Manipulation
+ https://leetcode.com/problems/number-of-1-bits/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given a positive integer n, write a function that returns the number of
+  set bits in its binary representation (also known as the Hamming
+  weight).
+
+CONSTRAINTS
+  1 <= n <= 2^31 - 1
+
+TEST CASES
+  [1] Input    : n = 11
+      Expected : 3
+      Why      : The input binary string 1011 has a total of three set bits.
+
+  [2] Input    : n = 128
+      Expected : 1
+      Why      : The input binary string 10000000 has a total of one set bit.
+
+  [3] Input    : n = 2147483645
+      Expected : 30
+      Why      : The input binary string 1111111111111111111111111111101 has a total of thirty set bits.
+
+FOLLOW UP
+  If this function is called many times, how would you optimize it?
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int hammingWeight(int n);
+
+FILES
+  edit : 191.cpp
+  test : lc run 191
+══════════════════════════════════════════════════════════════════════════

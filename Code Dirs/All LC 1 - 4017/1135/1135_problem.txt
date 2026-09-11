@@ -1,0 +1,31 @@
+══════════════════════════════════════════════════════════════════════════
+ 1135. Connecting Cities With Minimum Cost
+ Medium  |  Tags: Union-Find, Graph Theory, Heap (Priority Queue), Minimum Spanning Tree
+ https://leetcode.com/problems/connecting-cities-with-minimum-cost/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : 3 | [[1,2,5],[1,3,6],[2,3,1]]
+      Expected : 6
+
+  [2] Input    : 4 | [[1,2,3],[3,4,4]]
+      Expected : -1
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int minimumCost(int n, vector<vector<int>>& connections);
+
+FILES
+  edit : 1135.cpp
+  test : lc run 1135
+══════════════════════════════════════════════════════════════════════════

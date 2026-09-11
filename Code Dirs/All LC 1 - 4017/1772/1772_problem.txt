@@ -1,0 +1,28 @@
+══════════════════════════════════════════════════════════════════════════
+ 1772. Sort Features by Popularity
+ Medium  |  Tags: Array, Hash Table, String, Sorting
+ https://leetcode.com/problems/sort-features-by-popularity/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : ["cooler","lock","touch"] | ["i like cooler cooler","lock touch cool","locker like touch"]
+      Expected : touch cooler lock
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  vector<string> sortFeatures(vector<string>& features, vector<string>& responses);
+
+FILES
+  edit : 1772.cpp
+  test : lc run 1772
+══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,40 @@
+══════════════════════════════════════════════════════════════════════════
+ 148. Sort List
+ Medium  |  Tags: Linked List, Two Pointers, Divide and Conquer, Sorting, Merge Sort
+ https://leetcode.com/problems/sort-list/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given the head of a linked list, return the list after sorting it in
+  ascending order.
+
+CONSTRAINTS
+  The number of nodes in the list is in the range [0, 5 * 10^4].
+  -10^5 <= Node.val <= 10^5
+
+TEST CASES
+  [1] Input    : head = [4,2,1,3]
+      Expected : [1,2,3,4]
+
+  [2] Input    : head = [-1,5,3,4,0]
+      Expected : [-1,0,3,4,5]
+
+  [3] Input    : head = []
+      Expected : []
+
+FOLLOW UP
+  Can you sort the linked list in O(n logn) time and O(1) memory (i.e.
+  constant space)?
+
+CODE TYPE
+  function · linked list
+    driver: one Solution call per test case
+    linked list: ListNode* — values in order, e.g. [1,2,3,4]
+
+SIGNATURE
+  ListNode* sortList(ListNode* head);
+
+FILES
+  edit : 148.cpp
+  test : lc run 148
+══════════════════════════════════════════════════════════════════════════

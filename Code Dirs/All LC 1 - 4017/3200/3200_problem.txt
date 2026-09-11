@@ -1,0 +1,47 @@
+══════════════════════════════════════════════════════════════════════════
+ 3200. Maximum Height of a Triangle
+ Easy  |  Tags: Array, Enumeration
+ https://leetcode.com/problems/maximum-height-of-a-triangle/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given two integers red and blue representing the count of red
+  and blue colored balls. You have to arrange these balls to form a
+  triangle such that the 1^st row will have 1 ball, the 2^nd row will have
+  2 balls, the 3^rd row will have 3 balls, and so on.
+
+  All the balls in a particular row should be the same color, and adjacent
+  rows should have different colors.
+
+  Return the maximum height of the triangle that can be achieved.
+
+CONSTRAINTS
+  1 <= red, blue <= 100
+
+TEST CASES
+  [1] Input    : red = 2, blue = 4
+      Expected : 3
+      Why      : The only possible arrangement is shown above.
+
+  [2] Input    : red = 2, blue = 1
+      Expected : 2
+      Why      : The only possible arrangement is shown above.
+
+  [3] Input    : red = 1, blue = 1
+      Expected : 1
+
+  [4] Input    : red = 10, blue = 1
+      Expected : 2
+      Why      : The only possible arrangement is shown above.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int maxHeightOfTriangle(int red, int blue);
+
+FILES
+  edit : 3200.cpp
+  test : lc run 3200
+══════════════════════════════════════════════════════════════════════════

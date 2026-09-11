@@ -1,0 +1,39 @@
+══════════════════════════════════════════════════════════════════════════
+ 3827. Count Monobit Integers
+ Easy  |  Tags: Bit Manipulation, Enumeration
+ https://leetcode.com/problems/count-monobit-integers/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given an integer n.
+
+  An integer is called Monobit if all bits in its binary representation
+  are the same.
+
+  Return the count of Monobit integers in the range [0, n] (inclusive).
+
+CONSTRAINTS
+  0 <= n <= 1000
+
+TEST CASES
+  [1] Input    : n = 1
+      Expected : 2
+      Why      : - The integers in the range [0, 1] have binary representations "0" and "1".
+                 - Each representation consists of identical bits. Thus, the answer is 2.
+
+  [2] Input    : n = 4
+      Expected : 3
+      Why      : - The integers in the range [0, 4] include binaries "0", "1", "10", "11", and "100".
+                 - Only 0, 1 and 3 satisfy the Monobit condition. Thus, the answer is 3.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int countMonobit(int n);
+
+FILES
+  edit : 3827.cpp
+  test : lc run 3827
+══════════════════════════════════════════════════════════════════════════

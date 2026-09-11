@@ -1,0 +1,35 @@
+══════════════════════════════════════════════════════════════════════════
+ 344. Reverse String
+ Easy  |  Tags: Two Pointers, String
+ https://leetcode.com/problems/reverse-string/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Write a function that reverses a string. The input string is given as an
+  array of characters s.
+
+  You must do this by modifying the input array in-place with O(1) extra
+  memory.
+
+CONSTRAINTS
+  1 <= s.length <= 10^5
+  s[i] is a printable ascii character.
+
+TEST CASES
+  [1] Input    : s = ["h","e","l","l","o"]
+      Expected : ["o","l","l","e","h"]
+
+  [2] Input    : s = ["H","a","n","n","a","h"]
+      Expected : ["h","a","n","n","a","H"]
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  void reverseString(vector<char>& s);
+
+FILES
+  edit : 344.cpp
+  test : lc run 344
+══════════════════════════════════════════════════════════════════════════

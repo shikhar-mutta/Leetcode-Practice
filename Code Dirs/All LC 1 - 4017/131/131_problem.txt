@@ -1,0 +1,32 @@
+══════════════════════════════════════════════════════════════════════════
+ 131. Palindrome Partitioning
+ Medium  |  Tags: String, Dynamic Programming, Backtracking
+ https://leetcode.com/problems/palindrome-partitioning/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given a string s, partition s such that every substring of the partition
+  is a palindrome. Return all possible palindrome partitioning of s.
+
+CONSTRAINTS
+  1 <= s.length <= 16
+  s contains only lowercase English letters.
+
+TEST CASES
+  [1] Input    : s = "aab"
+      Expected : [["a","a","b"],["aa","b"]]
+
+  [2] Input    : s = "a"
+      Expected : [["a"]]
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  vector<vector<string>> partition(string s);
+
+FILES
+  edit : 131.cpp
+  test : lc run 131
+══════════════════════════════════════════════════════════════════════════

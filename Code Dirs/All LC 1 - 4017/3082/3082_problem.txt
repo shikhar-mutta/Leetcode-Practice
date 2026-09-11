@@ -1,0 +1,45 @@
+══════════════════════════════════════════════════════════════════════════
+ 3082. Find the Sum of the Power of All Subsequences
+ Hard  |  Tags: Array, Dynamic Programming, Knapsack Problem, 0-1 Knapsack
+ https://leetcode.com/problems/find-the-sum-of-the-power-of-all-subsequences/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given an integer array nums of length n and a positive integer
+  k.
+
+  The power of an array of integers is defined as the number of
+  subsequences with their sum equal to k.
+
+  Return the sum of power of all subsequences of nums.
+
+  Since the answer may be very large, return it modulo 10^9 + 7.
+
+CONSTRAINTS
+  1 <= n <= 100
+  1 <= nums[i] <= 10^4
+  1 <= k <= 100
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : [1,2,3] | 3
+      Expected : 6
+
+  [2] Input    : [2,3,3] | 5
+      Expected : 4
+
+  [3] Input    : [1,2,3] | 7
+      Expected : 0
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int sumOfPower(vector<int>& nums, int k);
+
+FILES
+  edit : 3082.cpp
+  test : lc run 3082
+══════════════════════════════════════════════════════════════════════════

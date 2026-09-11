@@ -1,0 +1,29 @@
+══════════════════════════════════════════════════════════════════════════
+ 359. Logger Rate Limiter
+ Easy  |  Tags: Hash Table, Design, Data Stream
+ https://leetcode.com/problems/logger-rate-limiter/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : ["Logger","shouldPrintMessage","shouldPrintMessage","shouldPrintMessage","shouldPrintMessage","shouldPrintMessage","shouldPrintMessage"] | [[],[1,"foo"],[2,"bar"],[3,"foo"],[8,"bar"],[10,"foo"],[11,"foo"]]
+      Expected : [null, true, true, false, false, false, true]
+
+CODE TYPE
+  design · Logger
+    driver: replays ["Logger","op",...] / [[args],...] and prints [null,...]
+
+SIGNATURE
+  Logger();
+  bool shouldPrintMessage(int timestamp, string message);
+
+FILES
+  edit : 359.cpp
+  test : lc run 359
+══════════════════════════════════════════════════════════════════════════

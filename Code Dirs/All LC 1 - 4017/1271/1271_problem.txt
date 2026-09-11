@@ -1,0 +1,31 @@
+══════════════════════════════════════════════════════════════════════════
+ 1271. Hexspeak
+ Easy  |  Tags: Math, String
+ https://leetcode.com/problems/hexspeak/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : "257"
+      Expected : IOI
+
+  [2] Input    : "3"
+      Expected : ERROR
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  string toHexspeak(string num);
+
+FILES
+  edit : 1271.cpp
+  test : lc run 1271
+══════════════════════════════════════════════════════════════════════════

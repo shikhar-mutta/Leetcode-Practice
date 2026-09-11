@@ -1,0 +1,31 @@
+══════════════════════════════════════════════════════════════════════════
+ 422. Valid Word Square
+ Easy  |  Tags: Array, Matrix
+ https://leetcode.com/problems/valid-word-square/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : ["abcd","bnrt","crmy","dtye"]
+      Expected : true
+
+  [2] Input    : ["ball","area","read","lady"]
+      Expected : false
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  bool validWordSquare(vector<string>& words);
+
+FILES
+  edit : 422.cpp
+  test : lc run 422
+══════════════════════════════════════════════════════════════════════════

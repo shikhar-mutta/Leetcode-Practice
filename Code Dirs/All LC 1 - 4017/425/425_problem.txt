@@ -1,0 +1,28 @@
+══════════════════════════════════════════════════════════════════════════
+ 425. Word Squares
+ Hard  |  Tags: Array, String, Backtracking, Trie
+ https://leetcode.com/problems/word-squares/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : ["area","lead","wall","lady","ball"]
+      Expected : [["ball","area","lead","lady"],["wall","area","lead","lady"]]
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  vector<vector<string>> wordSquares(vector<string>& words);
+
+FILES
+  edit : 425.cpp
+  test : lc run 425
+══════════════════════════════════════════════════════════════════════════

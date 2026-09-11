@@ -1,0 +1,55 @@
+══════════════════════════════════════════════════════════════════════════
+ 1642. Furthest Building You Can Reach
+ Medium  |  Tags: Array, Greedy, Heap (Priority Queue)
+ https://leetcode.com/problems/furthest-building-you-can-reach/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given an integer array heights representing the heights of
+  buildings, some bricks, and some ladders.
+
+  You start your journey from building 0 and move to the next building by
+  possibly using bricks or ladders.
+
+  While moving from building i to building i+1 (0-indexed),
+
+  - If the current building's height is greater than or equal to the next
+    building's height, you do not need a ladder or bricks.
+
+  - If the current building's height is less than the next building's
+    height, you can either use one ladder or (h[i+1] - h[i]) bricks.
+
+  Return the furthest building index (0-indexed) you can reach if you use
+  the given ladders and bricks optimally.
+
+CONSTRAINTS
+  1 <= heights.length <= 10^5
+  1 <= heights[i] <= 10^6
+  0 <= bricks <= 10^9
+  0 <= ladders <= heights.length
+
+TEST CASES
+  [1] Input    : heights = [4,2,7,6,9,14,12], bricks = 5, ladders = 1
+      Expected : 4
+      Why      : Starting at building 0, you can follow these steps:
+                 - Go to building 1 without using ladders nor bricks since 4 >= 2.
+                 - Go to building 2 using 5 bricks. You must use either bricks or ladders because 2 < 7.
+                 … (3 more)
+
+  [2] Input    : heights = [4,12,2,7,3,18,20,3,19], bricks = 10, ladders = 2
+      Expected : 7
+
+  [3] Input    : heights = [14,3,19,3], bricks = 17, ladders = 0
+      Expected : 3
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int furthestBuilding(vector<int>& heights, int bricks, int ladders);
+
+FILES
+  edit : 1642.cpp
+  test : lc run 1642
+══════════════════════════════════════════════════════════════════════════

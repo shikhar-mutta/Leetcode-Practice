@@ -1,0 +1,48 @@
+══════════════════════════════════════════════════════════════════════════
+ 2833. Furthest Point From Origin
+ Easy  |  Tags: String, Counting
+ https://leetcode.com/problems/furthest-point-from-origin/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a string moves of length n consisting only of characters
+  'L', 'R', and '_'. The string represents your movement on a number line
+  starting from the origin 0.
+
+  In the i^th move, you can choose one of the following directions:
+
+  - move to the left if moves[i] = 'L' or moves[i] = '_'
+
+  - move to the right if moves[i] = 'R' or moves[i] = '_'
+
+  Return the distance from the origin of the furthest point you can get to
+  after n moves.
+
+CONSTRAINTS
+  1 <= moves.length == n <= 50
+  moves consists only of characters 'L', 'R' and '_'.
+
+TEST CASES
+  [1] Input    : moves = "L_RL__R"
+      Expected : 3
+      Why      : The furthest point we can reach from the origin 0 is point -3 through the following sequence of moves "LLRLLLR".
+
+  [2] Input    : moves = "_R__LL_"
+      Expected : 5
+      Why      : The furthest point we can reach from the origin 0 is point -5 through the following sequence of moves "LRLLLLL".
+
+  [3] Input    : moves = "_______"
+      Expected : 7
+      Why      : The furthest point we can reach from the origin 0 is point 7 through the following sequence of moves "RRRRRRR".
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int furthestDistanceFromOrigin(string moves);
+
+FILES
+  edit : 2833.cpp
+  test : lc run 2833
+══════════════════════════════════════════════════════════════════════════

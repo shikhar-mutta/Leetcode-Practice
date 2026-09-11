@@ -1,0 +1,31 @@
+══════════════════════════════════════════════════════════════════════════
+ 439. Ternary Expression Parser
+ Medium  |  Tags: String, Stack, Recursion
+ https://leetcode.com/problems/ternary-expression-parser/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : "T?2:3"
+      Expected : "2"
+
+  [2] Input    : "F?1:T?4:5"
+      Expected : "4"
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  string parseTernary(string expression);
+
+FILES
+  edit : 439.cpp
+  test : lc run 439
+══════════════════════════════════════════════════════════════════════════

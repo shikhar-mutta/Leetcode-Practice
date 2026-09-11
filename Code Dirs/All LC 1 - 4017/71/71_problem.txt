@@ -1,0 +1,76 @@
+══════════════════════════════════════════════════════════════════════════
+ 71. Simplify Path
+ Medium  |  Tags: String, Stack
+ https://leetcode.com/problems/simplify-path/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given an absolute path for a Unix-style file system, which
+  always begins with a slash '/'. Your task is to transform this absolute
+  path into its simplified canonical path.
+
+  The rules of a Unix-style file system are as follows:
+
+  - A single period '.' represents the current directory.
+
+  - A double period '..' represents the previous/parent directory.
+
+  - Multiple consecutive slashes such as '//' and '///' are treated as a
+    single slash '/'.
+
+  - Any sequence of periods that does not match the rules above should be
+    treated as a valid directory or file name. For example, '...' and
+    '....' are valid directory or file names.
+
+  The simplified canonical path should follow these rules:
+
+  - The path must start with a single slash '/'.
+
+  - Directories within the path must be separated by exactly one slash
+    '/'.
+
+  - The path must not end with a slash '/', unless it is the root
+    directory.
+
+  - The path must not have any single or double periods ('.' and '..')
+    used to denote current or parent directories.
+
+  Return the simplified canonical path.
+
+CONSTRAINTS
+  1 <= path.length <= 3000
+  path consists of English letters, digits, period '.', slash '/' or '_'.
+  path is a valid absolute Unix path.
+
+TEST CASES
+  [1] Input    : path = "/home/"
+      Expected : "/home"
+      Why      : The trailing slash should be removed.
+
+  [2] Input    : path = "/home//foo/"
+      Expected : "/home/foo"
+      Why      : Multiple consecutive slashes are replaced by a single one.
+
+  [3] Input    : path = "/home/user/Documents/../Pictures"
+      Expected : "/home/user/Pictures"
+      Why      : A double period ".." refers to the directory up a level (the parent directory).
+
+  [4] Input    : path = "/../"
+      Expected : "/"
+      Why      : Going one level up from the root directory is not possible.
+
+  [5] Input    : path = "/.../a/../b/c/../d/./"
+      Expected : "/.../b/d"
+      Why      : "..." is a valid name for a directory in this problem.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  string simplifyPath(string path);
+
+FILES
+  edit : 71.cpp
+  test : lc run 71
+══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,37 @@
+══════════════════════════════════════════════════════════════════════════
+ 459. Repeated Substring Pattern
+ Easy  |  Tags: String, String Matching, Z Algorithm, Knuth–Morris–Pratt Algorithm
+ https://leetcode.com/problems/repeated-substring-pattern/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given a string s, check if it can be constructed by taking a substring
+  of it and appending multiple copies of the substring together.
+
+CONSTRAINTS
+  1 <= s.length <= 10^4
+  s consists of lowercase English letters.
+
+TEST CASES
+  [1] Input    : s = "abab"
+      Expected : true
+      Why      : It is the substring "ab" twice.
+
+  [2] Input    : s = "aba"
+      Expected : false
+
+  [3] Input    : s = "abcabcabcabc"
+      Expected : true
+      Why      : It is the substring "abc" four times or the substring "abcabc" twice.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  bool repeatedSubstringPattern(string s);
+
+FILES
+  edit : 459.cpp
+  test : lc run 459
+══════════════════════════════════════════════════════════════════════════

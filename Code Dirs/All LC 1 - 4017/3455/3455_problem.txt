@@ -1,0 +1,51 @@
+══════════════════════════════════════════════════════════════════════════
+ 3455. Shortest Matching Substring
+ Hard  |  Tags: Two Pointers, String, Binary Search, String Matching
+ https://leetcode.com/problems/shortest-matching-substring/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a string s and a pattern string p, where p contains
+  exactly two '*' characters.
+
+  The '*' in p matches any sequence of zero or more characters.
+
+  Return the length of the shortest substring in s that matches p. If
+  there is no such substring, return -1.
+
+  Note: The empty substring is considered valid.
+
+CONSTRAINTS
+  1 <= s.length <= 10^5
+  2 <= p.length <= 10^5
+  s contains only lowercase English letters.
+  p contains only lowercase English letters and exactly two '*'.
+
+TEST CASES
+  [1] Input    : s = "abaacbaecebce", p = "ba*c*ce"
+      Expected : 8
+      Why      : The shortest matching substring of p in s is "baecebce".
+
+  [2] Input    : s = "baccbaadbc", p = "cc*baa*adb"
+      Expected : -1
+      Why      : There is no matching substring in s.
+
+  [3] Input    : s = "a", p = "**"
+      Expected : 0
+      Why      : The empty substring is the shortest matching substring.
+
+  [4] Input    : s = "madlogic", p = "*adlogi*"
+      Expected : 6
+      Why      : The shortest matching substring of p in s is "adlogi".
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int shortestMatchingSubstring(string s, string p);
+
+FILES
+  edit : 3455.cpp
+  test : lc run 3455
+══════════════════════════════════════════════════════════════════════════

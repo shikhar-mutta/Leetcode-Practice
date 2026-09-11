@@ -1,0 +1,31 @@
+══════════════════════════════════════════════════════════════════════════
+ 758. Bold Words in String
+ Medium  |  Tags: Array, Hash Table, String, Trie, String Matching, Aho–Corasick Algorithm
+ https://leetcode.com/problems/bold-words-in-string/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : ["ab","bc"] | "abcd"
+      Expected : <b>abc</b>d
+
+  [2] Input    : ["ab","cb"] | "aaabbcc"
+      Expected : aa<b>ab</b>bcc
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  string boldWords(vector<string>& words, string s);
+
+FILES
+  edit : 758.cpp
+  test : lc run 758
+══════════════════════════════════════════════════════════════════════════

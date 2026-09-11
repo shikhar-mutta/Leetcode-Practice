@@ -1,0 +1,28 @@
+══════════════════════════════════════════════════════════════════════════
+ 1152. Analyze User Website Visit Pattern
+ Medium  |  Tags: Array, Hash Table, String, Sorting
+ https://leetcode.com/problems/analyze-user-website-visit-pattern/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : ["joe","joe","joe","james","james","james","james","mary","mary","mary"] | [1,2,3,4,5,6,7,8,9,10] | ["home","about","career","home","cart","maps","home","home","about","career"]
+      Expected : home about career
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  vector<string> mostVisitedPattern(vector<string>& username, vector<int>& timestamp, vector<string>& website);
+
+FILES
+  edit : 1152.cpp
+  test : lc run 1152
+══════════════════════════════════════════════════════════════════════════

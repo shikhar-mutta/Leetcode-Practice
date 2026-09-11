@@ -1,0 +1,52 @@
+══════════════════════════════════════════════════════════════════════════
+ 2306. Naming a Company
+ Hard  |  Tags: Array, Hash Table, String, Bit Manipulation, Enumeration
+ https://leetcode.com/problems/naming-a-company/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given an array of strings ideas that represents a list of names
+  to be used in the process of naming a company. The process of naming a
+  company is as follows:
+
+  - Choose 2 distinct names from ideas, call them ideaA and ideaB.
+
+  - Swap the first letters of ideaA and ideaB with each other.
+
+  - If both of the new names are not found in the original ideas, then the
+    name ideaA ideaB (the concatenation of ideaA and ideaB, separated by a
+    space) is a valid company name.
+
+  - Otherwise, it is not a valid name.
+
+  Return the number of distinct valid names for the company.
+
+CONSTRAINTS
+  2 <= ideas.length <= 5 * 10^4
+  1 <= ideas[i].length <= 10
+  ideas[i] consists of lowercase English letters.
+  All the strings in ideas are unique.
+
+TEST CASES
+  [1] Input    : ideas = ["coffee","donuts","time","toffee"]
+      Expected : 6
+      Why      : The following selections are valid:
+                 - ("coffee", "donuts"): The company name created is "doffee conuts".
+                 - ("donuts", "coffee"): The company name created is "conuts doffee".
+                 … (9 more)
+
+  [2] Input    : ideas = ["lack","back"]
+      Expected : 0
+      Why      : There are no valid selections. Therefore, 0 is returned.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  long long distinctNames(vector<string>& ideas);
+
+FILES
+  edit : 2306.cpp
+  test : lc run 2306
+══════════════════════════════════════════════════════════════════════════

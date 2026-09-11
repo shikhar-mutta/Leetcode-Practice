@@ -1,0 +1,53 @@
+══════════════════════════════════════════════════════════════════════════
+ 3693. Climbing Stairs II
+ Medium  |  Tags: Array, Dynamic Programming
+ https://leetcode.com/problems/climbing-stairs-ii/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are climbing a staircase with n + 1 steps, numbered from 0 to n.
+
+  You are also given a 1-indexed integer array costs of length n, where
+  costs[i] is the cost of step i.
+
+  From step i, you can jump only to step i + 1, i + 2, or i + 3. The cost
+  of jumping from step i to step j is defined as: costs[j] + (j - i)^2
+
+  You start from step 0 with cost = 0.
+
+  Return the minimum total cost to reach step n.
+
+CONSTRAINTS
+  1 <= n == costs.length <= 10^5
+  1 <= costs[i] <= 10^4
+
+TEST CASES
+  [1] Input    : n = 4, costs = [1,2,3,4]
+      Expected : 13
+      Why      : One optimal path is 0 → 1 → 2 → 4
+                 Jump
+                 Cost Calculation
+                 … (11 more)
+
+  [2] Input    : n = 4, costs = [5,1,6,2]
+      Expected : 11
+      Why      : One optimal path is 0 → 2 → 4
+                 Jump
+                 Cost Calculation
+                 … (8 more)
+
+  [3] Input    : n = 3, costs = [9,8,3]
+      Expected : 12
+      Why      : The optimal path is 0 → 3 with total cost = costs[3] + (3 - 0)^2 = 3 + 9 = 12
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int climbStairs(int n, vector<int>& costs);
+
+FILES
+  edit : 3693.cpp
+  test : lc run 3693
+══════════════════════════════════════════════════════════════════════════

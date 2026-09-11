@@ -1,0 +1,31 @@
+══════════════════════════════════════════════════════════════════════════
+ 681. Next Closest Time
+ Medium  |  Tags: Hash Table, String, Backtracking, Enumeration
+ https://leetcode.com/problems/next-closest-time/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : "19:34"
+      Expected : 19:39
+
+  [2] Input    : "23:59"
+      Expected : 22:22
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  string nextClosestTime(string time);
+
+FILES
+  edit : 681.cpp
+  test : lc run 681
+══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,53 @@
+══════════════════════════════════════════════════════════════════════════
+ 1410. HTML Entity Parser
+ Medium  |  Tags: Hash Table, String
+ https://leetcode.com/problems/html-entity-parser/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  HTML entity parser is the parser that takes HTML code as input and
+  replace all the entities of the special characters by the characters
+  itself.
+
+  The special characters and their entities for HTML are:
+
+  - Quotation Mark: the entity is &quot; and symbol character is ".
+
+  - Single Quote Mark: the entity is &apos; and symbol character is '.
+
+  - Ampersand: the entity is &amp; and symbol character is &.
+
+  - Greater Than Sign: the entity is &gt; and symbol character is >.
+
+  - Less Than Sign: the entity is &lt; and symbol character is <.
+
+  - Slash: the entity is &frasl; and symbol character is /.
+
+  Given the input text string to the HTML parser, you have to implement
+  the entity parser.
+
+  Return the text after replacing the entities by the special characters.
+
+CONSTRAINTS
+  1 <= text.length <= 10^5
+  The string may contain any possible characters out of all the 256 ASCII characters.
+
+TEST CASES
+  [1] Input    : text = "&amp; is an HTML entity but &ambassador; is not."
+      Expected : "& is an HTML entity but &ambassador; is not."
+      Why      : The parser will replace the &amp; entity by &
+
+  [2] Input    : text = "and I quote: &quot;...&quot;"
+      Expected : "and I quote: \"...\""
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  string entityParser(string text);
+
+FILES
+  edit : 1410.cpp
+  test : lc run 1410
+══════════════════════════════════════════════════════════════════════════

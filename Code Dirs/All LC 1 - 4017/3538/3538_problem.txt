@@ -1,0 +1,54 @@
+══════════════════════════════════════════════════════════════════════════
+ 3538. Merge Operations for Minimum Travel Time
+ Hard  |  Tags: Array, Dynamic Programming, Prefix Sum
+ https://leetcode.com/problems/merge-operations-for-minimum-travel-time/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a straight road of length l km, an integer n, an integer
+  k, and two integer arrays, position and time, each of length n.
+
+  The array position lists the positions (in km) of signs in strictly
+  increasing order (with position[0] = 0 and position[n - 1] = l).
+
+  Each time[i] represents the time (in minutes) required to travel 1 km
+  between position[i] and position[i + 1].
+
+  You must perform exactly k merge operations. In one merge, you can
+  choose any two adjacent signs at indices i and i + 1 (with i > 0 and i +
+  1 < n) and:
+
+  Update the sign at index i + 1 so that its time becomes time[i] + time[i
+  + 1].
+
+  Remove the sign at index i.
+
+  Return the minimum total travel time (in minutes) to travel from 0 to l
+  after exactly k merges.
+
+TEST CASES
+  [1] Input    : l = 10, n = 4, k = 1, position = [0,3,8,10], time = [5,8,3,6]
+      Expected : 62
+      Why      : Merge the signs at indices 1 and 2. Remove the sign at index 1, and change the time at index 2 to 8 + 3 = 11.
+                 After the merge:
+                 position array: [0, 8, 10]
+                 … (14 more)
+
+  [2] Input    : l = 5, n = 5, k = 1, position = [0,1,2,3,5], time = [8,3,9,3,3]
+      Expected : 34
+      Why      : Merge the signs at indices 1 and 2. Remove the sign at index 1, and change the time at index 2 to 3 + 9 = 12.
+                 After the merge:
+                 position array: [0, 2, 3, 5]
+                 … (18 more)
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int minTravelTime(int l, int n, int k, vector<int>& position, vector<int>& time);
+
+FILES
+  edit : 3538.cpp
+  test : lc run 3538
+══════════════════════════════════════════════════════════════════════════

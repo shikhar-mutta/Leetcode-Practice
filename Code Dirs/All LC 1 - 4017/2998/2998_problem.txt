@@ -1,0 +1,57 @@
+══════════════════════════════════════════════════════════════════════════
+ 2998. Minimum Number of Operations to Make X and Y Equal
+ Medium  |  Tags: Dynamic Programming, Breadth-First Search, Memoization
+ https://leetcode.com/problems/minimum-number-of-operations-to-make-x-and-y-equal/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given two positive integers x and y.
+
+  In one operation, you can do one of the four following operations:
+
+  - Divide x by 11 if x is a multiple of 11.
+
+  - Divide x by 5 if x is a multiple of 5.
+
+  - Decrement x by 1.
+
+  - Increment x by 1.
+
+  Return the minimum number of operations required to make x and y equal.
+
+CONSTRAINTS
+  1 <= x, y <= 10^4
+
+TEST CASES
+  [1] Input    : x = 26, y = 1
+      Expected : 3
+      Why      : We can make 26 equal to 1 by applying the following operations:
+                 1. Decrement x by 1
+                 2. Divide x by 5
+                 … (2 more)
+
+  [2] Input    : x = 54, y = 2
+      Expected : 4
+      Why      : We can make 54 equal to 2 by applying the following operations:
+                 1. Increment x by 1
+                 2. Divide x by 11
+                 … (3 more)
+
+  [3] Input    : x = 25, y = 30
+      Expected : 5
+      Why      : We can make 25 equal to 30 by applying the following operations:
+                 1. Increment x by 1
+                 2. Increment x by 1
+                 … (4 more)
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int minimumOperationsToMakeEqual(int x, int y);
+
+FILES
+  edit : 2998.cpp
+  test : lc run 2998
+══════════════════════════════════════════════════════════════════════════

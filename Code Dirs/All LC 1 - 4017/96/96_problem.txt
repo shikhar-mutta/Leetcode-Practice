@@ -1,0 +1,32 @@
+══════════════════════════════════════════════════════════════════════════
+ 96. Unique Binary Search Trees
+ Medium  |  Tags: Math, Dynamic Programming, Tree, Binary Search Tree, Binary Tree
+ https://leetcode.com/problems/unique-binary-search-trees/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given an integer n, return the number of structurally unique BST's
+  (binary search trees) which has exactly n nodes of unique values from 1
+  to n.
+
+CONSTRAINTS
+  1 <= n <= 19
+
+TEST CASES
+  [1] Input    : n = 3
+      Expected : 5
+
+  [2] Input    : n = 1
+      Expected : 1
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int numTrees(int n);
+
+FILES
+  edit : 96.cpp
+  test : lc run 96
+══════════════════════════════════════════════════════════════════════════

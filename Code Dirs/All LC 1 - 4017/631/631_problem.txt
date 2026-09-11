@@ -1,0 +1,31 @@
+══════════════════════════════════════════════════════════════════════════
+ 631. Design Excel Sum Formula
+ Hard  |  Tags: Array, Hash Table, String, Graph Theory, Design, Topological Sort, Matrix
+ https://leetcode.com/problems/design-excel-sum-formula/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : ["Excel","set","sum","set","get"] | [3,"C"] | [1,"A","2"] | [3,"C","A1","A1:B2"] | [2,"B","2"] | [3,"C"]
+      Expected : [null,null,4,null,6]
+
+CODE TYPE
+  design · Excel
+    driver: replays ["Excel","op",...] / [[args],...] and prints [null,...]
+
+SIGNATURE
+  Excel(int height, char width);
+  void set(int row, char column, int val);
+  int get(int row, char column);
+  int sum(int row, char column, vector<string> numbers);
+
+FILES
+  edit : 631.cpp
+  test : lc run 631
+══════════════════════════════════════════════════════════════════════════

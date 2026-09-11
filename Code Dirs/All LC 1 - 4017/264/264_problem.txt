@@ -1,0 +1,35 @@
+══════════════════════════════════════════════════════════════════════════
+ 264. Ugly Number II
+ Medium  |  Tags: Hash Table, Math, Dynamic Programming, Heap (Priority Queue)
+ https://leetcode.com/problems/ugly-number-ii/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  An ugly number is a positive integer whose prime factors are limited to
+  2, 3, and 5.
+
+  Given an integer n, return the n^th ugly number.
+
+CONSTRAINTS
+  1 <= n <= 1690
+
+TEST CASES
+  [1] Input    : n = 10
+      Expected : 12
+      Why      : [1, 2, 3, 4, 5, 6, 8, 9, 10, 12] is the sequence of the first 10 ugly numbers.
+
+  [2] Input    : n = 1
+      Expected : 1
+      Why      : 1 has no prime factors, therefore all of its prime factors are limited to 2, 3, and 5.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int nthUglyNumber(int n);
+
+FILES
+  edit : 264.cpp
+  test : lc run 264
+══════════════════════════════════════════════════════════════════════════

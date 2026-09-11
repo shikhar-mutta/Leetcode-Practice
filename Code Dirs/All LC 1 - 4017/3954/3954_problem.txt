@@ -1,0 +1,52 @@
+══════════════════════════════════════════════════════════════════════════
+ 3954. Sum of Compatible Numbers in Range I
+ Easy  |  Tags: Dynamic Programming, Bit Manipulation, Enumeration
+ https://leetcode.com/problems/sum-of-compatible-numbers-in-range-i/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given two integers n and k.
+
+  A positive integer x is called compatible if it satisfies both of the
+  following conditions:
+
+  - abs(n - x) <= k
+
+  - (n & x) == 0
+
+  Return the sum of all compatible integers x.
+
+  Note:
+
+  - Here, & denotes the bitwise AND operator.
+
+  - The absolute difference between integers i and j is defined as abs(i -
+    j).
+
+CONSTRAINTS
+  1 <= n <= 100
+  1 <= k <= 100
+
+TEST CASES
+  [1] Input    : n = 2, k = 3
+      Expected : 10
+      Why      : The compatible integers are:
+                 - x = 1, since abs(2 - 1) = 1 and 2 & 1 = 0.
+                 - x = 4, since abs(2 - 4) = 2 and 2 & 4 = 0.
+                 … (2 more)
+
+  [2] Input    : n = 5, k = 1
+      Expected : 0
+      Why      : There are no compatible integers in the range [4, 6]. Thus, the answer is 0.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int sumOfGoodIntegers(int n, int k);
+
+FILES
+  edit : 3954.cpp
+  test : lc run 3954
+══════════════════════════════════════════════════════════════════════════

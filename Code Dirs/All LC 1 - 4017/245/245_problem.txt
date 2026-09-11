@@ -1,0 +1,31 @@
+══════════════════════════════════════════════════════════════════════════
+ 245. Shortest Word Distance III
+ Medium  |  Tags: Array, String
+ https://leetcode.com/problems/shortest-word-distance-iii/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : ["practice","makes","perfect","coding","makes"] | "makes" | "coding"
+      Expected : 1
+
+  [2] Input    : ["practice","makes","perfect","coding","makes"] | "makes" | "makes"
+      Expected : 3
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int shortestWordDistance(vector<string>& wordsDict, string word1, string word2);
+
+FILES
+  edit : 245.cpp
+  test : lc run 245
+══════════════════════════════════════════════════════════════════════════

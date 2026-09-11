@@ -158,7 +158,7 @@ $ ./lc
 │ lcagent · no problem                                  groq │
 └────────────────────────────────────────────────────────────┘
   PROBLEM
-   1  New problem     fetch, scaffold, write the question file
+   1  New problem     local archive first, else LeetCode
    2  Show question   statement, constraints, test cases
    3  Repair driver   fill the driver's TODO scaffolding
   SOLVE
@@ -184,9 +184,9 @@ $ ./lc
          problem id > 2859
 
 · fetching 2859 ...
-✓ scaffolded 2859: solution, driver, input, expected
-✓ wrote 2859_problem.txt
-· statement: 2859_problem.txt
+✓ scaffolded 2859 from the local archive — empty 2859.cpp, archived driver and tests
+✓ question: 2859_problem.txt (from the local archive)
+· type: function
 · edit 2859.cpp, then `run` (or `watch`)
 
   choose or type a command > 5          ← watch: retests on every save
@@ -237,7 +237,7 @@ exactly the same path — the menu is a front end, never a second implementation
 
 | Key | Command | Aliases | What it does |
 |:--:|:--|:--|:--|
-| `1` | `new <id>` | `n` | fetch, scaffold, write `<id>_problem.txt` |
+| `1` | `new <id>` | `n` | scaffold from the local archive (empty stub), else LeetCode; question file + code type |
 | `2` | `show` | `problem` | print the statement, constraints and test cases |
 | `3` | `repair` | `driver` | fill the driver's `// TODO` scaffolding, then retest |
 | `4` | `run [id]` | `r`, `test`, `t` | compile, run, per-case results |
@@ -254,13 +254,15 @@ exactly the same path — the menu is a front end, never a second implementation
 | `p` | `provider` | `providers` | model backends, and which are usable |
 | `h` | `help` | `?` | every command and alias |
 | `0` | `quit` | `q`, `exit` | save the session and exit |
+| — | `statements [ids]` | `questions` | write `<id>_problem.txt` into every `Code Dirs/` folder (resumable) |
 
-**Flags**
+**Flags** — also accepted at the `problem id >` prompt, e.g. `2859 --live`
 
 ```
-new <id> --live        fetch from LeetCode only, never fall back to the archive
+new <id> --live        skip the archive, fetch a fresh scaffold from LeetCode
          --offline     use the local archive only, no network
          --force       refetch even if files already exist
+statements --refresh   re-render question files that already exist
 solve    --force       overwrite a solution that already has real work in it
 finish   --commit      also commit as the next U<n>
          -m "msg"      use your own commit message
@@ -299,8 +301,8 @@ instead of failing.
      no key, no network*           free tier is sufficient
 ```
 
-\* except `fetcher`, which needs the network unless the problem is cached or in
-the local archive.
+\* except `fetcher`, which needs the network only for a problem the local
+archive does not have.
 
 This is why the system is genuinely usable with no key at all: fetching,
 rendering the question, compiling, running tests, scoring, archiving, updating
@@ -449,7 +451,7 @@ Fifteen agents. `offline` needs no model provider at all; `model` needs one.
 | Agent | Role | Reads | Writes | Fails when |
 |:--|:--|:--|:--|:--|
 | **master** | owns the session loop, the menu and dispatch | `session.json` | `session.json` | never — it is the loop |
-| **fetcher** | fetch a problem and scaffold its files | LeetCode API, cache, archive | `<id>.cpp`, `_driver.cpp`, `_input.txt`, `_expected.txt` | network down **and** not cached or archived |
+| **fetcher** | scaffold a problem: archive first (driver, tests, question; empty stub for the solution), else LeetCode | archive, LeetCode API | `<id>.cpp`, `_driver.cpp`, `_input.txt`, `_expected.txt`, `_debug.txt`, `_problem.txt` | not archived **and** network down |
 | **statement** | render the question, constraints and test cases | `ctx.problem` | `<id>_problem.txt` at the **repo root** | the problem is premium (empty content) |
 | **verifier** | compile the driver, run the cases, diff per case | the four scaffold files | `ctx.report` | no compiler; missing files |
 | **scorer** | grade the solution, say if a better approach exists | code, `ctx.report`, archive reference | `ctx.score`, `data/scores/<id>_score.json` | never — degrades to the measured half with no model |
@@ -518,7 +520,8 @@ Leetcode-Practice/
 Only **five files** ever sit at the repo root for a problem, and a new `new <id>`
 clears the previous problem's files before scaffolding the next — matching the
 `rename.sh` workflow this replaced. Anything not yet archived is rescued to
-`lcagent/data/replaced/` first, never deleted.
+`lcagent/data/replaced/` first, never deleted — except a stub that is still
+exactly empty, which holds no work and would otherwise overwrite a real rescue.
 
 ### 6.2 Safe to delete
 
@@ -1207,6 +1210,53 @@ opened for writing.
 
 ---
 
+### Phase 7 — Local-first fetch, empty stubs, code types (2026-09-12) ✅
+
+Menu option 1 used to go to LeetCode first and treat the archive as a
+fallback — and the fallback copied the archived `<id>.cpp`, which is the
+finished solution. Now the archive comes first, never hands back the answer,
+and every scaffold is matched to the kind of code the problem needs.
+
+| File | Role |
+|:--|:--|
+| `core/stub.py` | archived solution → the empty stub a fresh fetch would give |
+| `core/codetype.py` | shape + structures + hidden APIs of a problem's code |
+| `agents/fetcher.py` | archive first; LeetCode only for what the archive lacks |
+| `agents/statement.py` | `CODE TYPE` section; `backfill_archive()` for `statements` |
+| `fetch_problem.py` | `generate()` split out of `main()`; drivers per code type |
+
+**Decisions**
+
+1. **Archive first, answer never.** The archived drivers and expected files
+   carry hand repairs (special judges, readers for odd inputs) that a fresh
+   fetch regenerates broken, so they are copied as they are. The solution is
+   rebuilt by `stub.make_stub()`: the `// Link:` header, the includes, every
+   type the signature or the driver needs (`TreeNode`, a mock `Iterator`, the
+   `int guess(int num);` declaration) verbatim, and the class with its public
+   API emptied. Which methods are the API is read off the driver — whatever it
+   calls survives, helpers and members do not. Aliases (`ll`, `V<int>`), macros,
+   `static` and user-added default arguments are resolved back to LeetCode's
+   own signature.
+2. **The question travels with the scaffold.** `statements` writes
+   `<id>_problem.txt` into every `Code Dirs/` folder (one request per problem,
+   slug taken from the Link line, resumable), the archiver keeps it on
+   `finish`, and the fetcher copies it — so `new <id>` on an archived problem
+   makes no network call at all.
+3. **An untouched stub is not "work".** Clearing a stub that is still exactly
+   empty skips the rescue into `data/replaced/`, which would otherwise
+   overwrite a real rescued copy of the same id.
+4. **Code type decides the environment.** Four shapes — function, design,
+   interactive, concurrency — and the structures crossing the signature. The
+   six LeetCode structures all named `Node` are told apart by their fields
+   (neighbors → graph, children → n-ary, random, child → multilevel, topLeft →
+   quad, next → next pointers), each with its own reader and printer. Judge
+   classes (`NestedInteger`, `Iterator`) are mocked in the driver **before**
+   the `#include`, never in `<id>.cpp` — the 284 lesson: a mock in the
+   submitted file is a redefinition on LeetCode. Hidden APIs are declared in
+   the stub and defined in the driver, backed by each case's extra input line.
+   Round trips (`deser.deserialize(ser.serialize(root))`) and drained
+   iterators (`while (i.hasNext())`) get their own drivers.
+
 ## 11. Known gaps
 
 Honest list of what is not solved, kept here rather than left implied:
@@ -1248,6 +1298,9 @@ Honest list of what is not solved, kept here rather than left implied:
 | *(added)* Menu, like a switch-case | `MENU` in `agents/master.py` ✅ |
 | *(added)* A failed fetch must not modify old files or delete partial ones | `agents/fetcher.py` — snapshot → verify → rollback ✅ |
 | *(added)* A new fetch replaces the previous problem at the root | `_replace_previous()`, rescuing unarchived work ✅ |
+| *(added)* Option 1 fetches from the local archive, without the solved code | `agents/fetcher.py` + `core/stub.py` ✅ |
+| *(added)* A question file in every `Code Dirs/` folder | `statements` → `backfill_archive()` ✅ |
+| *(added)* Analyse the code type, scaffold an environment to match | `core/codetype.py` + `fetch_problem.environment()` ✅ |
 | *(added)* "Better code" writes straight into the file | `agents/improve.py` — verified first, backed up, then installed ✅ |
 | *(added)* A setup script that installs the prerequisites on both systems | `bootstrap.py` + `setup.sh` + `setup.bat` ✅ (Windows path untested) |
 | *(added)* README with a phase-by-phase log and the architecture | this file ✅ |

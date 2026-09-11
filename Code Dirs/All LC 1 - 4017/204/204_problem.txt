@@ -1,0 +1,35 @@
+══════════════════════════════════════════════════════════════════════════
+ 204. Count Primes
+ Medium  |  Tags: Array, Math, Enumeration, Number Theory, Primality Test, Sieve Theory, Prime Number Sieve
+ https://leetcode.com/problems/count-primes/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given an integer n, return the number of prime numbers that are strictly
+  less than n.
+
+CONSTRAINTS
+  0 <= n <= 5 * 10^6
+
+TEST CASES
+  [1] Input    : n = 10
+      Expected : 4
+      Why      : There are 4 prime numbers less than 10, they are 2, 3, 5, 7.
+
+  [2] Input    : n = 0
+      Expected : 0
+
+  [3] Input    : n = 1
+      Expected : 0
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int countPrimes(int n);
+
+FILES
+  edit : 204.cpp
+  test : lc run 204
+══════════════════════════════════════════════════════════════════════════

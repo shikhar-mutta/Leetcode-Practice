@@ -1,0 +1,30 @@
+══════════════════════════════════════════════════════════════════════════
+ 308. Range Sum Query 2D - Mutable
+ Medium  |  Tags: Array, Design, Binary Indexed Tree, Segment Tree, Matrix, Sqrt Decomposition
+ https://leetcode.com/problems/range-sum-query-2d-mutable/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : ["NumMatrix","sumRegion","update","sumRegion"] | [[[[3,0,1,4,2],[5,6,3,2,1],[1,2,0,1,5],[4,1,0,1,7],[1,0,3,0,5]]],[2,1,4,3],[3,2,2],[2,1,4,3]]
+      Expected : [null, 8, null, 10]
+
+CODE TYPE
+  design · NumMatrix
+    driver: replays ["NumMatrix","op",...] / [[args],...] and prints [null,...]
+
+SIGNATURE
+  NumMatrix(vector<vector<int>>& matrix);
+  void update(int row, int col, int val);
+  int sumRegion(int row1, int col1, int row2, int col2);
+
+FILES
+  edit : 308.cpp
+  test : lc run 308
+══════════════════════════════════════════════════════════════════════════

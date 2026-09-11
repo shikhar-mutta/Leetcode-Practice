@@ -1,0 +1,41 @@
+══════════════════════════════════════════════════════════════════════════
+ 1110. Delete Nodes And Return Forest
+ Medium  |  Tags: Array, Hash Table, Tree, Depth-First Search, Binary Tree
+ https://leetcode.com/problems/delete-nodes-and-return-forest/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given the root of a binary tree, each node in the tree has a distinct
+  value.
+
+  After deleting all nodes with a value in to_delete, we are left with a
+  forest (a disjoint union of trees).
+
+  Return the roots of the trees in the remaining forest. You may return
+  the result in any order.
+
+CONSTRAINTS
+  The number of nodes in the given tree is at most 1000.
+  Each node has a distinct value between 1 and 1000.
+  to_delete.length <= 1000
+  to_delete contains distinct values between 1 and 1000.
+
+TEST CASES
+  [1] Input    : root = [1,2,3,4,5,6,7], to_delete = [3,5]
+      Expected : [[1,2,null,4],[6],[7]]
+
+  [2] Input    : root = [1,2,4,null,3], to_delete = [3]
+      Expected : [[1,2,4]]
+
+CODE TYPE
+  function · tree
+    driver: one Solution call per test case
+    tree: TreeNode* — level order, e.g. [3,9,20,null,null,15,7]
+
+SIGNATURE
+  vector<TreeNode*> delNodes(TreeNode* root, vector<int>& to_delete);
+
+FILES
+  edit : 1110.cpp
+  test : lc run 1110
+══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,48 @@
+══════════════════════════════════════════════════════════════════════════
+ 837. New 21 Game
+ Medium  |  Tags: Math, Dynamic Programming, Sliding Window, Probability and Statistics
+ https://leetcode.com/problems/new-21-game/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Alice plays the following game, loosely based on the card game "21".
+
+  Alice starts with 0 points and draws numbers while she has less than k
+  points. During each draw, she gains an integer number of points randomly
+  from the range [1, maxPts], where maxPts is an integer. Each draw is
+  independent and the outcomes have equal probabilities.
+
+  Alice stops drawing numbers when she gets k or more points.
+
+  Return the probability that Alice has n or fewer points.
+
+  Answers within 10^-5 of the actual answer are considered accepted.
+
+CONSTRAINTS
+  0 <= k <= n <= 10^4
+  1 <= maxPts <= 10^4
+
+TEST CASES
+  [1] Input    : n = 10, k = 1, maxPts = 10
+      Expected : 1.00000
+      Why      : Alice gets a single card, then stops.
+
+  [2] Input    : n = 6, k = 1, maxPts = 10
+      Expected : 0.60000
+      Why      : Alice gets a single card, then stops.
+                 In 6 out of 10 possibilities, she is at or below 6 points.
+
+  [3] Input    : n = 21, k = 17, maxPts = 10
+      Expected : 0.73278
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  double new21Game(int n, int k, int maxPts);
+
+FILES
+  edit : 837.cpp
+  test : lc run 837
+══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,31 @@
+══════════════════════════════════════════════════════════════════════════
+ 323. Number of Connected Components in an Undirected Graph
+ Medium  |  Tags: Depth-First Search, Breadth-First Search, Union-Find, Graph Theory
+ https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : 5 | [[0,1],[1,2],[3,4]]
+      Expected : 2
+
+  [2] Input    : 5 | [[0,1],[1,2],[2,3],[3,4]]
+      Expected : 1
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int countComponents(int n, vector<vector<int>>& edges);
+
+FILES
+  edit : 323.cpp
+  test : lc run 323
+══════════════════════════════════════════════════════════════════════════

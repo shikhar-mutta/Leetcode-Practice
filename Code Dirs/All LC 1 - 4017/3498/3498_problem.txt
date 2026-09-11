@@ -1,0 +1,49 @@
+══════════════════════════════════════════════════════════════════════════
+ 3498. Reverse Degree of a String
+ Easy  |  Tags: String, Simulation
+ https://leetcode.com/problems/reverse-degree-of-a-string/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given a string s, calculate its reverse degree.
+
+  The reverse degree is calculated as follows:
+
+  - For each character, multiply its position in the reversed alphabet
+    ('a' = 26, 'b' = 25, ..., 'z' = 1) with its position in the string
+    (1-indexed).
+
+  - Sum these products for all characters in the string.
+
+  Return the reverse degree of s.
+
+CONSTRAINTS
+  1 <= s.length <= 1000
+  s contains only lowercase English letters.
+
+TEST CASES
+  [1] Input    : s = "abc"
+      Expected : 148
+      Why      : Letter
+                 Index in Reversed Alphabet
+                 Index in String
+                 … (14 more)
+
+  [2] Input    : s = "zaza"
+      Expected : 160
+      Why      : Letter
+                 Index in Reversed Alphabet
+                 Index in String
+                 … (18 more)
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int reverseDegree(string s);
+
+FILES
+  edit : 3498.cpp
+  test : lc run 3498
+══════════════════════════════════════════════════════════════════════════

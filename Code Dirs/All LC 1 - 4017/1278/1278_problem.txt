@@ -1,0 +1,45 @@
+══════════════════════════════════════════════════════════════════════════
+ 1278. Palindrome Partitioning III
+ Hard  |  Tags: String, Dynamic Programming
+ https://leetcode.com/problems/palindrome-partitioning-iii/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a string s containing lowercase letters and an integer k.
+  You need to :
+
+  - First, change some characters of s to other lowercase English letters.
+
+  - Then divide s into k non-empty disjoint substrings such that each
+    substring is a palindrome.
+
+  Return the minimal number of characters that you need to change to
+  divide the string.
+
+CONSTRAINTS
+  1 <= k <= s.length <= 100.
+  s only contains lowercase English letters.
+
+TEST CASES
+  [1] Input    : s = "abc", k = 2
+      Expected : 1
+      Why      : You can split the string into "ab" and "c", and change 1 character in "ab" to make it palindrome.
+
+  [2] Input    : s = "aabbc", k = 3
+      Expected : 0
+      Why      : You can split the string into "aa", "bb" and "c", all of them are palindrome.
+
+  [3] Input    : s = "leetcode", k = 8
+      Expected : 0
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int palindromePartition(string s, int k);
+
+FILES
+  edit : 1278.cpp
+  test : lc run 1278
+══════════════════════════════════════════════════════════════════════════

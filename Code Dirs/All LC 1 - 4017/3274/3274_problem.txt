@@ -1,0 +1,44 @@
+══════════════════════════════════════════════════════════════════════════
+ 3274. Check if Two Chessboard Squares Have the Same Color
+ Easy  |  Tags: Math, String
+ https://leetcode.com/problems/check-if-two-chessboard-squares-have-the-same-color/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given two strings, coordinate1 and coordinate2, representing the
+  coordinates of a square on an 8 x 8 chessboard.
+
+  Below is the chessboard for reference.
+
+  Return true if these two squares have the same color and false
+  otherwise.
+
+  The coordinate will always represent a valid chessboard square. The
+  coordinate will always have the letter first (indicating its column),
+  and the number second (indicating its row).
+
+CONSTRAINTS
+  coordinate1.length == coordinate2.length == 2
+  'a' <= coordinate1[0], coordinate2[0] <= 'h'
+  '1' <= coordinate1[1], coordinate2[1] <= '8'
+
+TEST CASES
+  [1] Input    : coordinate1 = "a1", coordinate2 = "c3"
+      Expected : true
+      Why      : Both squares are black.
+
+  [2] Input    : coordinate1 = "a1", coordinate2 = "h3"
+      Expected : false
+      Why      : Square "a1" is black and "h3" is white.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  bool checkTwoChessboards(string coordinate1, string coordinate2);
+
+FILES
+  edit : 3274.cpp
+  test : lc run 3274
+══════════════════════════════════════════════════════════════════════════

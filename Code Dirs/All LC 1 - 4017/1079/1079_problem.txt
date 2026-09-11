@@ -1,0 +1,38 @@
+══════════════════════════════════════════════════════════════════════════
+ 1079. Letter Tile Possibilities
+ Medium  |  Tags: Hash Table, String, Backtracking, Counting
+ https://leetcode.com/problems/letter-tile-possibilities/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You have n tiles, where each tile has one letter tiles[i] printed on it.
+
+  Return the number of possible non-empty sequences of letters you can
+  make using the letters printed on those tiles.
+
+CONSTRAINTS
+  1 <= tiles.length <= 7
+  tiles consists of uppercase English letters.
+
+TEST CASES
+  [1] Input    : tiles = "AAB"
+      Expected : 8
+      Why      : The possible sequences are "A", "B", "AA", "AB", "BA", "AAB", "ABA", "BAA".
+
+  [2] Input    : tiles = "AAABBC"
+      Expected : 188
+
+  [3] Input    : tiles = "V"
+      Expected : 1
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int numTilePossibilities(string tiles);
+
+FILES
+  edit : 1079.cpp
+  test : lc run 1079
+══════════════════════════════════════════════════════════════════════════

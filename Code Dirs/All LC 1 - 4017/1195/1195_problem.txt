@@ -1,0 +1,78 @@
+══════════════════════════════════════════════════════════════════════════
+ 1195. Fizz Buzz Multithreaded
+ Medium  |  Tags: Concurrency
+ https://leetcode.com/problems/fizz-buzz-multithreaded/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You have the four functions:
+
+  - printFizz that prints the word "fizz" to the console,
+
+  - printBuzz that prints the word "buzz" to the console,
+
+  - printFizzBuzz that prints the word "fizzbuzz" to the console, and
+
+  - printNumber that prints a given integer to the console.
+
+  You are given an instance of the class FizzBuzz that has four functions:
+  fizz, buzz, fizzbuzz and number. The same instance of FizzBuzz will be
+  passed to four different threads:
+
+  - Thread A: calls fizz() that should output the word "fizz".
+
+  - Thread B: calls buzz() that should output the word "buzz".
+
+  - Thread C: calls fizzbuzz() that should output the word "fizzbuzz".
+
+  - Thread D: calls number() that should only output the integers.
+
+  Modify the given class to output the series [1, 2, "fizz", 4, "buzz",
+  ...] where the i^th token (1-indexed) of the series is:
+
+  - "fizzbuzz" if i is divisible by 3 and 5,
+
+  - "fizz" if i is divisible by 3 and not 5,
+
+  - "buzz" if i is divisible by 5 and not 3, or
+
+  - i if i is not divisible by 3 or 5.
+
+  Implement the FizzBuzz class:
+
+  - FizzBuzz(int n) Initializes the object with the number n that
+    represents the length of the sequence that should be printed.
+
+  - void fizz(printFizz) Calls printFizz to output "fizz".
+
+  - void buzz(printBuzz) Calls printBuzz to output "buzz".
+
+  - void fizzbuzz(printFizzBuzz) Calls printFizzBuzz to output "fizzbuzz".
+
+  - void number(printNumber) Calls printnumber to output the numbers.
+
+CONSTRAINTS
+  1 <= n <= 50
+
+TEST CASES
+  [1] Input    : n = 15
+      Expected : [1,2,"fizz",4,"buzz","fizz",7,8,"fizz","buzz",11,"fizz",13,14,"fizzbuzz"]
+
+  [2] Input    : n = 5
+      Expected : [1,2,"fizz",4,"buzz"]
+
+CODE TYPE
+  concurrency · FizzBuzz
+    driver: runs each method on its own thread, checks the combined output
+
+SIGNATURE
+  FizzBuzz(int n);
+  void fizz(function<void()> printFizz);
+  void buzz(function<void()> printBuzz);
+  void fizzbuzz(function<void()> printFizzBuzz);
+  void number(function<void(int)> printNumber);
+
+FILES
+  edit : 1195.cpp
+  test : lc run 1195
+══════════════════════════════════════════════════════════════════════════

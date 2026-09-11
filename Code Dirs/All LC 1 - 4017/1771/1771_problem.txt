@@ -1,0 +1,55 @@
+══════════════════════════════════════════════════════════════════════════
+ 1771. Maximize Palindrome Length From Subsequences
+ Hard  |  Tags: String, Dynamic Programming
+ https://leetcode.com/problems/maximize-palindrome-length-from-subsequences/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given two strings, word1 and word2. You want to construct a
+  string in the following manner:
+
+  - Choose some non-empty subsequence subsequence1 from word1.
+
+  - Choose some non-empty subsequence subsequence2 from word2.
+
+  - Concatenate the subsequences: subsequence1 + subsequence2, to make the
+    string.
+
+  Return the length of the longest palindrome that can be constructed in
+  the described manner. If no palindromes can be constructed, return 0.
+
+  A subsequence of a string s is a string that can be made by deleting
+  some (possibly none) characters from s without changing the order of the
+  remaining characters.
+
+  A palindrome is a string that reads the same forward as well as
+  backward.
+
+CONSTRAINTS
+  1 <= word1.length, word2.length <= 1000
+  word1 and word2 consist of lowercase English letters.
+
+TEST CASES
+  [1] Input    : word1 = "cacb", word2 = "cbba"
+      Expected : 5
+      Why      : Choose "ab" from word1 and "cba" from word2 to make "abcba", which is a palindrome.
+
+  [2] Input    : word1 = "ab", word2 = "ab"
+      Expected : 3
+      Why      : Choose "ab" from word1 and "a" from word2 to make "aba", which is a palindrome.
+
+  [3] Input    : word1 = "aa", word2 = "bb"
+      Expected : 0
+      Why      : You cannot construct a palindrome from the described method, so return 0.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int longestPalindrome(string word1, string word2);
+
+FILES
+  edit : 1771.cpp
+  test : lc run 1771
+══════════════════════════════════════════════════════════════════════════

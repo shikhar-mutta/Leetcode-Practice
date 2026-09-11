@@ -1,0 +1,38 @@
+══════════════════════════════════════════════════════════════════════════
+ 7. Reverse Integer
+ Medium  |  Tags: Math
+ https://leetcode.com/problems/reverse-integer/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given a signed 32-bit integer x, return x with its digits reversed. If
+  reversing x causes the value to go outside the signed 32-bit integer
+  range [-2^31, 2^31 - 1], then return 0.
+
+  Assume the environment does not allow you to store 64-bit integers
+  (signed or unsigned).
+
+CONSTRAINTS
+  -2^31 <= x <= 2^31 - 1
+
+TEST CASES
+  [1] Input    : x = 123
+      Expected : 321
+
+  [2] Input    : x = -123
+      Expected : -321
+
+  [3] Input    : x = 120
+      Expected : 21
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int reverse(int x);
+
+FILES
+  edit : 7.cpp
+  test : lc run 7
+══════════════════════════════════════════════════════════════════════════

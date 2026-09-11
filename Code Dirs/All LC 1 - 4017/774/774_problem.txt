@@ -1,0 +1,28 @@
+══════════════════════════════════════════════════════════════════════════
+ 774. Minimize Max Distance to Gas Station
+ Hard  |  Tags: Array, Binary Search
+ https://leetcode.com/problems/minimize-max-distance-to-gas-station/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : [1,2,3,4,5,6,7,8,9,10] | 9
+      Expected : 0.50000
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  double minmaxGasDist(vector<int>& stations, int k);
+
+FILES
+  edit : 774.cpp
+  test : lc run 774
+══════════════════════════════════════════════════════════════════════════

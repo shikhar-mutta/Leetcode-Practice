@@ -1,0 +1,31 @@
+══════════════════════════════════════════════════════════════════════════
+ 499. The Maze III
+ Hard  |  Tags: Array, String, Depth-First Search, Breadth-First Search, Graph Theory, Heap (Priority Queue), Matrix, Shortest Path, Dijkstra's Algorithm, Heuristic Search, A* Search
+ https://leetcode.com/problems/the-maze-iii/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : [[0,0,0,0,0],[1,1,0,0,1],[0,0,0,0,0],[0,1,0,0,1],[0,1,0,0,0]] | [4,3] | [0,1]
+      Expected : "lul"
+
+  [2] Input    : [[0,0,0,0,0],[1,1,0,0,1],[0,0,0,0,0],[0,1,0,0,1],[0,1,0,0,0]] | [4,3] | [3,0]
+      Expected : "impossible"
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  string findShortestWay(vector<vector<int>>& maze, vector<int>& ball, vector<int>& hole);
+
+FILES
+  edit : 499.cpp
+  test : lc run 499
+══════════════════════════════════════════════════════════════════════════

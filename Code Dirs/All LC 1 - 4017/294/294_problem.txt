@@ -1,0 +1,31 @@
+══════════════════════════════════════════════════════════════════════════
+ 294. Flip Game II
+ Medium  |  Tags: Math, Dynamic Programming, Backtracking, Memoization, Minimax, Game Theory, Sprague–Grundy Theorem, Impartial Game
+ https://leetcode.com/problems/flip-game-ii/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : "++++"
+      Expected : true
+
+  [2] Input    : "+"
+      Expected : false
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  bool canWin(string currentState);
+
+FILES
+  edit : 294.cpp
+  test : lc run 294
+══════════════════════════════════════════════════════════════════════════

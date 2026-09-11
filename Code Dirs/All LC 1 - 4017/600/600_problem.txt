@@ -1,0 +1,39 @@
+══════════════════════════════════════════════════════════════════════════
+ 600. Non-negative Integers without Consecutive Ones
+ Hard  |  Tags: Dynamic Programming
+ https://leetcode.com/problems/non-negative-integers-without-consecutive-ones/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given a positive integer n, return the number of the integers in the
+  range [0, n] whose binary representations do not contain consecutive
+  ones.
+
+CONSTRAINTS
+  1 <= n <= 10^9
+
+TEST CASES
+  [1] Input    : n = 5
+      Expected : 5
+      Why      : Here are the non-negative integers <= 5 with their corresponding binary representations:
+                 0 : 0
+                 1 : 1
+                 … (5 more)
+
+  [2] Input    : n = 1
+      Expected : 2
+
+  [3] Input    : n = 2
+      Expected : 3
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int findIntegers(int n);
+
+FILES
+  edit : 600.cpp
+  test : lc run 600
+══════════════════════════════════════════════════════════════════════════

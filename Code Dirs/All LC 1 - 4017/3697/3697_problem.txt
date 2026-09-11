@@ -1,0 +1,45 @@
+══════════════════════════════════════════════════════════════════════════
+ 3697. Compute Decimal Representation
+ Easy  |  Tags: Array, Math
+ https://leetcode.com/problems/compute-decimal-representation/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a positive integer n.
+
+  A positive integer is a base-10 component if it is the product of a
+  single digit from 1 to 9 and a non-negative power of 10. For example,
+  500, 30, and 7 are base-10 components, while 537, 102, and 11 are not.
+
+  Express n as a sum of only base-10 components, using the fewest base-10
+  components possible.
+
+  Return an array containing these base-10 components in descending order.
+
+CONSTRAINTS
+  1 <= n <= 10^9
+
+TEST CASES
+  [1] Input    : n = 537
+      Expected : [500,30,7]
+      Why      : We can express 537 as 500 + 30 + 7. It is impossible to express 537 as a sum using fewer than 3 base-10 components.
+
+  [2] Input    : n = 102
+      Expected : [100,2]
+      Why      : We can express 102 as 100 + 2. 102 is not a base-10 component, which means 2 base-10 components are needed.
+
+  [3] Input    : n = 6
+      Expected : [6]
+      Why      : 6 is a base-10 component.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  vector<int> decimalRepresentation(int n);
+
+FILES
+  edit : 3697.cpp
+  test : lc run 3697
+══════════════════════════════════════════════════════════════════════════

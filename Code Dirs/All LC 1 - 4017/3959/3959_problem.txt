@@ -1,0 +1,45 @@
+══════════════════════════════════════════════════════════════════════════
+ 3959. Check Good Integer
+ Easy  |  Tags: Math, Simulation
+ https://leetcode.com/problems/check-good-integer/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a positive integer n.
+
+  Let digitSum be the sum of the digits of n, and let squareSum be the sum
+  of the squares of the digits of n.
+
+  An integer is called good if squareSum - digitSum >= 50.
+
+  Return true if n is good. Otherwise, return false.
+
+CONSTRAINTS
+  1 <= n <= 10^9
+
+TEST CASES
+  [1] Input    : n = 1000
+      Expected : false
+      Why      : - The digits of 1000 are 1, 0, 0, and 0.
+                 - The digitSum is 1 + 0 + 0 + 0 = 1.
+                 - The squareSum is 1^2 + 0^2 + 0^2 + 0^2 = 1.
+                 … (1 more)
+
+  [2] Input    : n = 19
+      Expected : true
+      Why      : - The digits of 19 are 1 and 9.
+                 - The digitSum is 1 + 9 = 10.
+                 - The squareSum is 1^2 + 9^2 = 1 + 81 = 82.
+                 … (1 more)
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  bool checkGoodInteger(int n);
+
+FILES
+  edit : 3959.cpp
+  test : lc run 3959
+══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,37 @@
+══════════════════════════════════════════════════════════════════════════
+ 2443. Sum of Number and Its Reverse
+ Medium  |  Tags: Math, Enumeration
+ https://leetcode.com/problems/sum-of-number-and-its-reverse/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given a non-negative integer num, return true if num can be expressed as
+  the sum of any non-negative integer and its reverse, or false otherwise.
+
+CONSTRAINTS
+  0 <= num <= 10^5
+
+TEST CASES
+  [1] Input    : num = 443
+      Expected : true
+      Why      : 172 + 271 = 443 so we return true.
+
+  [2] Input    : num = 63
+      Expected : false
+      Why      : 63 cannot be expressed as the sum of a non-negative integer and its reverse so we return false.
+
+  [3] Input    : num = 181
+      Expected : true
+      Why      : 140 + 041 = 181 so we return true. Note that when a number is reversed, there may be leading zeros.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  bool sumOfNumberAndReverse(int num);
+
+FILES
+  edit : 2443.cpp
+  test : lc run 2443
+══════════════════════════════════════════════════════════════════════════

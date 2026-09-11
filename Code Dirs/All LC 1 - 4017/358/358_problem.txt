@@ -1,0 +1,31 @@
+══════════════════════════════════════════════════════════════════════════
+ 358. Rearrange String k Distance Apart
+ Hard  |  Tags: Hash Table, String, Greedy, Sorting, Heap (Priority Queue), Counting
+ https://leetcode.com/problems/rearrange-string-k-distance-apart/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : "aabbcc" | 3
+      Expected : PASS
+
+  [2] Input    : "aaabc" | 3
+      Expected : PASS
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  string rearrangeString(string s, int k);
+
+FILES
+  edit : 358.cpp
+  test : lc run 358
+══════════════════════════════════════════════════════════════════════════

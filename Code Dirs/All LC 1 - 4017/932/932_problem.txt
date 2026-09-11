@@ -1,0 +1,38 @@
+══════════════════════════════════════════════════════════════════════════
+ 932. Beautiful Array
+ Medium  |  Tags: Array, Math, Divide and Conquer
+ https://leetcode.com/problems/beautiful-array/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  An array nums of length n is beautiful if:
+
+  - nums is a permutation of the integers in the range [1, n].
+
+  - For every 0 <= i < j < n, there is no index k with i < k < j where 2 *
+    nums[k] == nums[i] + nums[j].
+
+  Given the integer n, return any beautiful array nums of length n. There
+  will be at least one valid answer for the given n.
+
+CONSTRAINTS
+  1 <= n <= 1000
+
+TEST CASES
+  [1] Input    : n = 4
+      Expected : [2,1,4,3]
+
+  [2] Input    : n = 5
+      Expected : [3,1,2,5,4]
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  vector<int> beautifulArray(int n);
+
+FILES
+  edit : 932.cpp
+  test : lc run 932
+══════════════════════════════════════════════════════════════════════════

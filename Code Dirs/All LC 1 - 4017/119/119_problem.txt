@@ -1,0 +1,40 @@
+══════════════════════════════════════════════════════════════════════════
+ 119. Pascal's Triangle II
+ Easy  |  Tags: Array, Dynamic Programming
+ https://leetcode.com/problems/pascals-triangle-ii/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given an integer rowIndex, return the rowIndex^th (0-indexed) row of the
+  Pascal's triangle.
+
+  In Pascal's triangle, each number is the sum of the two numbers directly
+  above it as shown:
+
+CONSTRAINTS
+  0 <= rowIndex <= 33
+
+TEST CASES
+  [1] Input    : rowIndex = 3
+      Expected : [1,3,3,1]
+
+  [2] Input    : rowIndex = 0
+      Expected : [1]
+
+  [3] Input    : rowIndex = 1
+      Expected : [1,1]
+
+FOLLOW UP
+  Could you optimize your algorithm to use only O(rowIndex) extra space?
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  vector<int> getRow(int rowIndex);
+
+FILES
+  edit : 119.cpp
+  test : lc run 119
+══════════════════════════════════════════════════════════════════════════

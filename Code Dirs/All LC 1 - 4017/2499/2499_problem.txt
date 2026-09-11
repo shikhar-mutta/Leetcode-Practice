@@ -1,0 +1,56 @@
+══════════════════════════════════════════════════════════════════════════
+ 2499. Minimum Total Cost to Make Arrays Unequal
+ Hard  |  Tags: Array, Hash Table, Greedy, Counting
+ https://leetcode.com/problems/minimum-total-cost-to-make-arrays-unequal/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given two 0-indexed integer arrays nums1 and nums2, of equal
+  length n.
+
+  In one operation, you can swap the values of any two indices of nums1.
+  The cost of this operation is the sum of the indices.
+
+  Find the minimum total cost of performing the given operation any number
+  of times such that nums1[i] != nums2[i] for all 0 <= i <= n - 1 after
+  performing all the operations.
+
+  Return the minimum total cost such that nums1 and nums2 satisfy the
+  above condition. In case it is not possible, return -1.
+
+CONSTRAINTS
+  n == nums1.length == nums2.length
+  1 <= n <= 10^5
+  1 <= nums1[i], nums2[i] <= n
+
+TEST CASES
+  [1] Input    : nums1 = [1,2,3,4,5], nums2 = [1,2,3,4,5]
+      Expected : 10
+      Why      : One of the ways we can perform the operations is:
+                 - Swap values at indices 0 and 3, incurring cost = 0 + 3 = 3. Now, nums1 = [4,2,3,1,5]
+                 - Swap values at indices 1 and 2, incurring cost = 1 + 2 = 3. Now, nums1 = [4,3,2,1,5].
+                 … (3 more)
+
+  [2] Input    : nums1 = [2,2,2,1,3], nums2 = [1,2,2,3,3]
+      Expected : 10
+      Why      : One of the ways we can perform the operations is:
+                 - Swap values at indices 2 and 3, incurring cost = 2 + 3 = 5. Now, nums1 = [2,2,1,2,3].
+                 - Swap values at indices 1 and 4, incurring cost = 1 + 4 = 5. Now, nums1 = [2,3,1,2,2].
+                 … (1 more)
+
+  [3] Input    : nums1 = [1,2,2], nums2 = [1,2,2]
+      Expected : -1
+      Why      : It can be shown that it is not possible to satisfy the given conditions irrespective of the number of operations we perform.
+                 Hence, we return -1.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  long long minimumTotalCost(vector<int>& nums1, vector<int>& nums2);
+
+FILES
+  edit : 2499.cpp
+  test : lc run 2499
+══════════════════════════════════════════════════════════════════════════

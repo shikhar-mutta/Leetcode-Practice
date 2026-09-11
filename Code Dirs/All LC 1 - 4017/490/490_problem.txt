@@ -1,0 +1,31 @@
+══════════════════════════════════════════════════════════════════════════
+ 490. The Maze
+ Medium  |  Tags: Array, Depth-First Search, Breadth-First Search, Matrix
+ https://leetcode.com/problems/the-maze/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : [[0,0,1,0,0],[0,0,0,0,0],[0,0,0,1,0],[1,1,0,1,1],[0,0,0,0,0]] | [0,4] | [4,4]
+      Expected : true
+
+  [2] Input    : [[0,0,1,0,0],[0,0,0,0,0],[0,0,0,1,0],[1,1,0,1,1],[0,0,0,0,0]] | [0,4] | [3,2]
+      Expected : false
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  bool hasPath(vector<vector<int>>& maze, vector<int>& start, vector<int>& destination);
+
+FILES
+  edit : 490.cpp
+  test : lc run 490
+══════════════════════════════════════════════════════════════════════════

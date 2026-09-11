@@ -1,0 +1,55 @@
+══════════════════════════════════════════════════════════════════════════
+ 2091. Removing Minimum and Maximum From Array
+ Medium  |  Tags: Array, Greedy
+ https://leetcode.com/problems/removing-minimum-and-maximum-from-array/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a 0-indexed array of distinct integers nums.
+
+  There is an element in nums that has the lowest value and an element
+  that has the highest value. We call them the minimum and maximum
+  respectively. Your goal is to remove both these elements from the array.
+
+  A deletion is defined as either removing an element from the front of
+  the array or removing an element from the back of the array.
+
+  Return the minimum number of deletions it would take to remove both the
+  minimum and maximum element from the array.
+
+CONSTRAINTS
+  1 <= nums.length <= 10^5
+  -10^5 <= nums[i] <= 10^5
+  The integers in nums are distinct.
+
+TEST CASES
+  [1] Input    : nums = [2,10,7,5,4,1,8,6]
+      Expected : 5
+      Why      : The minimum element in the array is nums[5], which is 1.
+                 The maximum element in the array is nums[1], which is 10.
+                 We can remove both the minimum and maximum by removing 2 elements from the front and 3 elements from the back.
+                 … (1 more)
+
+  [2] Input    : nums = [0,-4,19,1,8,-2,-3,5]
+      Expected : 3
+      Why      : The minimum element in the array is nums[1], which is -4.
+                 The maximum element in the array is nums[2], which is 19.
+                 We can remove both the minimum and maximum by removing 3 elements from the front.
+                 … (1 more)
+
+  [3] Input    : nums = [101]
+      Expected : 1
+      Why      : There is only one element in the array, which makes it both the minimum and maximum element.
+                 We can remove it with 1 deletion.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int minimumDeletions(vector<int>& nums);
+
+FILES
+  edit : 2091.cpp
+  test : lc run 2091
+══════════════════════════════════════════════════════════════════════════

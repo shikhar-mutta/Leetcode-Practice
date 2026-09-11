@@ -1,0 +1,50 @@
+══════════════════════════════════════════════════════════════════════════
+ 3462. Maximum Sum With at Most K Elements
+ Medium  |  Tags: Array, Greedy, Sorting, Heap (Priority Queue), Matrix
+ https://leetcode.com/problems/maximum-sum-with-at-most-k-elements/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a 2D integer matrix grid of size n x m, an integer array
+  limits of length n, and an integer k. The task is to find the maximum
+  sum of at most k elements from the matrix grid such that:
+
+  -
+  The number of elements taken from the i^th row of grid does not exceed
+  limits[i].
+
+
+
+  Return the maximum sum.
+
+CONSTRAINTS
+  n == grid.length == limits.length
+  m == grid[i].length
+  1 <= n, m <= 500
+  0 <= grid[i][j] <= 10^5
+  0 <= limits[i] <= m
+  0 <= k <= min(n * m, sum(limits))
+
+TEST CASES
+  [1] Input    : grid = [[1,2],[3,4]], limits = [1,2], k = 2
+      Expected : 7
+      Why      : - From the second row, we can take at most 2 elements. The elements taken are 4 and 3.
+                 - The maximum possible sum of at most 2 selected elements is 4 + 3 = 7.
+
+  [2] Input    : grid = [[5,3,7],[8,2,6]], limits = [2,2], k = 3
+      Expected : 21
+      Why      : - From the first row, we can take at most 2 elements. The element taken is 7.
+                 - From the second row, we can take at most 2 elements. The elements taken are 8 and 6.
+                 - The maximum possible sum of at most 3 selected elements is 7 + 8 + 6 = 21.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  long long maxSum(vector<vector<int>>& grid, vector<int>& limits, int k);
+
+FILES
+  edit : 3462.cpp
+  test : lc run 3462
+══════════════════════════════════════════════════════════════════════════

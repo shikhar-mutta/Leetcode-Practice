@@ -1,0 +1,32 @@
+══════════════════════════════════════════════════════════════════════════
+ 1469. Find All The Lonely Nodes
+ Easy  |  Tags: Tree, Depth-First Search, Breadth-First Search, Binary Tree
+ https://leetcode.com/problems/find-all-the-lonely-nodes/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : [1,2,3,null,4]
+      Expected : 4
+
+  [2] Input    : [7,1,4,6,null,5,3,null,null,null,null,null,2]
+      Expected : 6 2
+
+CODE TYPE
+  function · tree
+    driver: one Solution call per test case
+    tree: TreeNode* — level order, e.g. [3,9,20,null,null,15,7]
+
+SIGNATURE
+  vector<int> findLonelyNodes(TreeNode* root);
+
+FILES
+  edit : 1469.cpp
+  test : lc run 1469
+══════════════════════════════════════════════════════════════════════════

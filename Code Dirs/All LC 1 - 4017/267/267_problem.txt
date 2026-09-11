@@ -1,0 +1,31 @@
+══════════════════════════════════════════════════════════════════════════
+ 267. Palindrome Permutation II
+ Medium  |  Tags: Hash Table, String, Backtracking
+ https://leetcode.com/problems/palindrome-permutation-ii/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : "aabb"
+      Expected : abba baab
+
+  [2] Input    : "abc"
+      Expected : 
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  vector<string> generatePalindromes(string s);
+
+FILES
+  edit : 267.cpp
+  test : lc run 267
+══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,51 @@
+══════════════════════════════════════════════════════════════════════════
+ 2134. Minimum Swaps to Group All 1's Together II
+ Medium  |  Tags: Array, Sliding Window
+ https://leetcode.com/problems/minimum-swaps-to-group-all-1s-together-ii/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  A swap is defined as taking two distinct positions in an array and
+  swapping the values in them.
+
+  A circular array is defined as an array where we consider the first
+  element and the last element to be adjacent.
+
+  Given a binary circular array nums, return the minimum number of swaps
+  required to group all 1's present in the array together at any location.
+
+CONSTRAINTS
+  1 <= nums.length <= 10^5
+  nums[i] is either 0 or 1.
+
+TEST CASES
+  [1] Input    : nums = [0,1,0,1,1,0,0]
+      Expected : 1
+      Why      : Here are a few of the ways to group all the 1's together:
+                 [0,0,1,1,1,0,0] using 1 swap.
+                 [0,1,1,1,0,0,0] using 1 swap.
+                 … (3 more)
+
+  [2] Input    : nums = [0,1,1,1,0,0,1,1,0]
+      Expected : 2
+      Why      : Here are a few of the ways to group all the 1's together:
+                 [1,1,1,0,0,0,0,1,1] using 2 swaps (using the circular property of the array).
+                 [1,1,1,1,1,0,0,0,0] using 2 swaps.
+                 … (2 more)
+
+  [3] Input    : nums = [1,1,0,0,1]
+      Expected : 0
+      Why      : All the 1's are already grouped together due to the circular property of the array.
+                 Thus, the minimum number of swaps required is 0.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int minSwaps(vector<int>& nums);
+
+FILES
+  edit : 2134.cpp
+  test : lc run 2134
+══════════════════════════════════════════════════════════════════════════

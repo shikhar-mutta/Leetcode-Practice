@@ -1,0 +1,40 @@
+══════════════════════════════════════════════════════════════════════════
+ 1346. Check If N and Its Double Exist
+ Easy  |  Tags: Array, Hash Table, Two Pointers, Binary Search, Sorting
+ https://leetcode.com/problems/check-if-n-and-its-double-exist/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given an array arr of integers, check if there exist two indices i and j
+  such that :
+
+  - i != j
+
+  - 0 <= i, j < arr.length
+
+  - arr[i] == 2 * arr[j]
+
+CONSTRAINTS
+  2 <= arr.length <= 500
+  -10^3 <= arr[i] <= 10^3
+
+TEST CASES
+  [1] Input    : arr = [10,2,5,3]
+      Expected : true
+      Why      : For i = 0 and j = 2, arr[i] == 10 == 2 * 5 == 2 * arr[j]
+
+  [2] Input    : arr = [3,1,7,11]
+      Expected : false
+      Why      : There is no i and j that satisfy the conditions.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  bool checkIfExist(vector<int>& arr);
+
+FILES
+  edit : 1346.cpp
+  test : lc run 1346
+══════════════════════════════════════════════════════════════════════════

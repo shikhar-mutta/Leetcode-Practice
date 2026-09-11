@@ -1,0 +1,34 @@
+══════════════════════════════════════════════════════════════════════════
+ 266. Palindrome Permutation
+ Easy  |  Tags: Hash Table, String, Bit Manipulation
+ https://leetcode.com/problems/palindrome-permutation/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : "code"
+      Expected : false
+
+  [2] Input    : "aab"
+      Expected : true
+
+  [3] Input    : "carerac"
+      Expected : true
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  bool canPermutePalindrome(string s);
+
+FILES
+  edit : 266.cpp
+  test : lc run 266
+══════════════════════════════════════════════════════════════════════════

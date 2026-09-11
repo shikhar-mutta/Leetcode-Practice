@@ -1,0 +1,28 @@
+══════════════════════════════════════════════════════════════════════════
+ 548. Split Array with Equal Sum
+ Hard  |  Tags: Array, Hash Table, Prefix Sum
+ https://leetcode.com/problems/split-array-with-equal-sum/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : [1,2,1,2,1,2,1]
+      Expected : true
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  bool splitArray(vector<int>& nums);
+
+FILES
+  edit : 548.cpp
+  test : lc run 548
+══════════════════════════════════════════════════════════════════════════

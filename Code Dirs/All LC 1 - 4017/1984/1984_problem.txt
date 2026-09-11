@@ -1,0 +1,44 @@
+══════════════════════════════════════════════════════════════════════════
+ 1984. Minimum Difference Between Highest and Lowest of K Scores
+ Easy  |  Tags: Array, Sliding Window, Sorting
+ https://leetcode.com/problems/minimum-difference-between-highest-and-lowest-of-k-scores/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a 0-indexed integer array nums, where nums[i] represents
+  the score of the i^th student. You are also given an integer k.
+
+  Pick the scores of any k students from the array so that the difference
+  between the highest and the lowest of the k scores is minimized.
+
+  Return the minimum possible difference.
+
+CONSTRAINTS
+  1 <= k <= nums.length <= 1000
+  0 <= nums[i] <= 10^5
+
+TEST CASES
+  [1] Input    : nums = [90], k = 1
+      Expected : 0
+      Why      : There is one way to pick score(s) of one student:
+                 - [90]. The difference between the highest and lowest score is 90 - 90 = 0.
+                 The minimum possible difference is 0.
+
+  [2] Input    : nums = [9,4,1,7], k = 2
+      Expected : 2
+      Why      : There are six ways to pick score(s) of two students:
+                 - [9,4,1,7]. The difference between the highest and lowest score is 9 - 4 = 5.
+                 - [9,4,1,7]. The difference between the highest and lowest score is 9 - 1 = 8.
+                 … (5 more)
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int minimumDifference(vector<int>& nums, int k);
+
+FILES
+  edit : 1984.cpp
+  test : lc run 1984
+══════════════════════════════════════════════════════════════════════════

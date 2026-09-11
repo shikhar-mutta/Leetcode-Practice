@@ -1,0 +1,39 @@
+══════════════════════════════════════════════════════════════════════════
+ 1582. Special Positions in a Binary Matrix
+ Easy  |  Tags: Array, Matrix
+ https://leetcode.com/problems/special-positions-in-a-binary-matrix/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given an m x n binary matrix mat, return the number of special positions
+  in mat.
+
+  A position (i, j) is called special if mat[i][j] == 1 and all other
+  elements in row i and column j are 0 (rows and columns are 0-indexed).
+
+CONSTRAINTS
+  m == mat.length
+  n == mat[i].length
+  1 <= m, n <= 100
+  mat[i][j] is either 0 or 1.
+
+TEST CASES
+  [1] Input    : mat = [[1,0,0],[0,0,1],[1,0,0]]
+      Expected : 1
+      Why      : (1, 2) is a special position because mat[1][2] == 1 and all other elements in row 1 and column 2 are 0.
+
+  [2] Input    : mat = [[1,0,0],[0,1,0],[0,0,1]]
+      Expected : 3
+      Why      : (0, 0), (1, 1) and (2, 2) are special positions.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int numSpecial(vector<vector<int>>& mat);
+
+FILES
+  edit : 1582.cpp
+  test : lc run 1582
+══════════════════════════════════════════════════════════════════════════

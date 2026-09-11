@@ -1,0 +1,31 @@
+══════════════════════════════════════════════════════════════════════════
+ 660. Remove 9
+ Hard  |  Tags: Math
+ https://leetcode.com/problems/remove-9/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : 9
+      Expected : 10
+
+  [2] Input    : 18
+      Expected : 20
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int newInteger(int n);
+
+FILES
+  edit : 660.cpp
+  test : lc run 660
+══════════════════════════════════════════════════════════════════════════

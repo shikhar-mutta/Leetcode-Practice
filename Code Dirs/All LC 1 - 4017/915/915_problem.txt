@@ -1,0 +1,45 @@
+══════════════════════════════════════════════════════════════════════════
+ 915. Partition Array into Disjoint Intervals
+ Medium  |  Tags: Array
+ https://leetcode.com/problems/partition-array-into-disjoint-intervals/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given an integer array nums, partition it into two (contiguous)
+  subarrays left and right so that:
+
+  - Every element in left is less than or equal to every element in right.
+
+  - left and right are non-empty.
+
+  - left has the smallest possible size.
+
+  Return the length of left after such a partitioning.
+
+  Test cases are generated such that partitioning exists.
+
+CONSTRAINTS
+  2 <= nums.length <= 10^5
+  0 <= nums[i] <= 10^6
+  There is at least one valid answer for the given input.
+
+TEST CASES
+  [1] Input    : nums = [5,0,3,8,6]
+      Expected : 3
+      Why      : left = [5,0,3], right = [8,6]
+
+  [2] Input    : nums = [1,1,1,0,6,12]
+      Expected : 4
+      Why      : left = [1,1,1,0], right = [6,12]
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int partitionDisjoint(vector<int>& nums);
+
+FILES
+  edit : 915.cpp
+  test : lc run 915
+══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,49 @@
+══════════════════════════════════════════════════════════════════════════
+ 3962. Maximum Subarray Sum After at Most K Swaps
+ Hard  |  Tags: Array, Hash Table, Greedy, Binary Indexed Tree, Sorting, Heap (Priority Queue), Ordered Set
+ https://leetcode.com/problems/maximum-subarray-sum-after-at-most-k-swaps/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given an integer array nums and an integer k.
+
+  You are allowed to perform at most k swap operations on the array.
+
+  In one swap operation, you may choose any two indices i and j and swap
+  nums[i] and nums[j].
+
+  Return an integer denoting the maximum possible subarray sum after
+  performing the swaps.
+
+CONSTRAINTS
+  1 <= nums.length <= 1500
+  -10^5 <= nums[i] <= 10^5
+  0 <= k <= nums.length
+
+TEST CASES
+  [1] Input    : nums = [1,-1,0,2], k = 1
+      Expected : 3
+      Why      : - We can swap on indices 1 and 3, resulting in the array [1, 2, 0, -1].
+                 - The subarray [1, 2] has a sum of 3, which is the maximum possible subarray sum after at most k = 1 swap.
+
+  [2] Input    : nums = [4,3,2,4], k = 2
+      Expected : 13
+      Why      : The maximum possible subarray sum after at most k = 2 swaps is the sum of the entire array, which is 13.
+
+  [3] Input    : nums = [-1,-2], k = 0
+      Expected : -1
+      Why      : - k = 0 swaps are allowed.
+                 - The possible subarrays are [-1], [-2], and [-1, -2], with sums -1, -2, and -3 respectively.
+                 - Among these sums, the maximum is -1.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  long long maxSum(vector<int>& nums, int k);
+
+FILES
+  edit : 3962.cpp
+  test : lc run 3962
+══════════════════════════════════════════════════════════════════════════

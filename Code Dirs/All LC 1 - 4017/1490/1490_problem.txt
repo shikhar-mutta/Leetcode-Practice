@@ -1,0 +1,32 @@
+══════════════════════════════════════════════════════════════════════════
+ 1490. Clone N-ary Tree
+ Medium  |  Tags: Hash Table, Tree, Depth-First Search, Breadth-First Search
+ https://leetcode.com/problems/clone-n-ary-tree/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : [1,null,3,2,4,null,5,6]
+      Expected : PASS
+
+  [2] Input    : [1,null,2,3,4,5,null,null,6,7,null,8,null,9,10,null,null,11,null,12,null,13,null,null,14]
+      Expected : PASS
+
+CODE TYPE
+  function · n-ary tree
+    driver: one Solution call per test case
+    n-ary tree: Node* {val, children} — level order, null ends a child group, e.g. [1,null,3,2,4,null,5,6]
+
+SIGNATURE
+  Node* cloneTree(Node* root);
+
+FILES
+  edit : 1490.cpp
+  test : lc run 1490
+══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,40 @@
+══════════════════════════════════════════════════════════════════════════
+ 1504. Count Submatrices With All Ones
+ Medium  |  Tags: Array, Dynamic Programming, Stack, Matrix, Monotonic Stack
+ https://leetcode.com/problems/count-submatrices-with-all-ones/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given an m x n binary matrix mat, return the number of submatrices that
+  have all ones.
+
+CONSTRAINTS
+  1 <= m, n <= 150
+  mat[i][j] is either 0 or 1.
+
+TEST CASES
+  [1] Input    : mat = [[1,0,1],[1,1,0],[1,1,0]]
+      Expected : 13
+      Why      : There are 6 rectangles of side 1x1.
+                 There are 2 rectangles of side 1x2.
+                 There are 3 rectangles of side 2x1.
+                 … (3 more)
+
+  [2] Input    : mat = [[0,1,1,0],[0,1,1,1],[1,1,1,0]]
+      Expected : 24
+      Why      : There are 8 rectangles of side 1x1.
+                 There are 5 rectangles of side 1x2.
+                 There are 2 rectangles of side 1x3.
+                 … (5 more)
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int numSubmat(vector<vector<int>>& mat);
+
+FILES
+  edit : 1504.cpp
+  test : lc run 1504
+══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,55 @@
+══════════════════════════════════════════════════════════════════════════
+ 2096. Step-By-Step Directions From a Binary Tree Node to Another
+ Medium  |  Tags: String, Tree, Depth-First Search, Binary Tree, Binary Lifting, Lowest Common Ancestor
+ https://leetcode.com/problems/step-by-step-directions-from-a-binary-tree-node-to-another/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given the root of a binary tree with n nodes. Each node is
+  uniquely assigned a value from 1 to n. You are also given an integer
+  startValue representing the value of the start node s, and a different
+  integer destValue representing the value of the destination node t.
+
+  Find the shortest path starting from node s and ending at node t.
+  Generate step-by-step directions of such path as a string consisting of
+  only the uppercase letters 'L', 'R', and 'U'. Each letter indicates a
+  specific direction:
+
+  - 'L' means to go from a node to its left child node.
+
+  - 'R' means to go from a node to its right child node.
+
+  - 'U' means to go from a node to its parent node.
+
+  Return the step-by-step directions of the shortest path from node s to
+  node t.
+
+CONSTRAINTS
+  The number of nodes in the tree is n.
+  2 <= n <= 10^5
+  1 <= Node.val <= n
+  All the values in the tree are unique.
+  1 <= startValue, destValue <= n
+  startValue != destValue
+
+TEST CASES
+  [1] Input    : root = [5,1,2,3,null,6,4], startValue = 3, destValue = 6
+      Expected : "UURL"
+      Why      : The shortest path is: 3 → 1 → 5 → 2 → 6.
+
+  [2] Input    : root = [2,1], startValue = 2, destValue = 1
+      Expected : "L"
+      Why      : The shortest path is: 2 → 1.
+
+CODE TYPE
+  function · tree
+    driver: one Solution call per test case
+    tree: TreeNode* — level order, e.g. [3,9,20,null,null,15,7]
+
+SIGNATURE
+  string getDirections(TreeNode* root, int startValue, int destValue);
+
+FILES
+  edit : 2096.cpp
+  test : lc run 2096
+══════════════════════════════════════════════════════════════════════════

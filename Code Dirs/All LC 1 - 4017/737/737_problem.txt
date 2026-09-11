@@ -1,0 +1,28 @@
+══════════════════════════════════════════════════════════════════════════
+ 737. Sentence Similarity II
+ Medium  |  Tags: Array, Hash Table, String, Depth-First Search, Breadth-First Search, Union-Find
+ https://leetcode.com/problems/sentence-similarity-ii/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : ["great","acting","skills"] | ["fine","drama","talent"] | [["great","good"],["fine","good"],["acting","drama"],["skills","talent"]]
+      Expected : true
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  bool areSentencesSimilarTwo(vector<string>& sentence1, vector<string>& sentence2, vector<vector<string>>& similarPairs);
+
+FILES
+  edit : 737.cpp
+  test : lc run 737
+══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,37 @@
+══════════════════════════════════════════════════════════════════════════
+ 372. Super Pow
+ Medium  |  Tags: Math, Divide and Conquer, Euler's Totient Function, Euler's Theorem
+ https://leetcode.com/problems/super-pow/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Your task is to calculate a^b mod 1337 where a is a positive integer and
+  b is an extremely large positive integer given in the form of an array.
+
+CONSTRAINTS
+  1 <= a <= 2^31 - 1
+  1 <= b.length <= 2000
+  0 <= b[i] <= 9
+  b does not contain leading zeros.
+
+TEST CASES
+  [1] Input    : a = 2, b = [3]
+      Expected : 8
+
+  [2] Input    : a = 2, b = [1,0]
+      Expected : 1024
+
+  [3] Input    : a = 1, b = [4,3,3,8,5,2]
+      Expected : 1
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int superPow(int a, vector<int>& b);
+
+FILES
+  edit : 372.cpp
+  test : lc run 372
+══════════════════════════════════════════════════════════════════════════

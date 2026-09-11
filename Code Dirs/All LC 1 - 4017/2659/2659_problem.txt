@@ -1,0 +1,43 @@
+══════════════════════════════════════════════════════════════════════════
+ 2659. Make Array Empty
+ Hard  |  Tags: Array, Binary Search, Greedy, Binary Indexed Tree, Segment Tree, Sorting, Ordered Set
+ https://leetcode.com/problems/make-array-empty/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given an integer array nums containing distinct numbers, and you
+  can perform the following operations until the array is empty:
+
+  - If the first element has the smallest value, remove it
+
+  - Otherwise, put the first element at the end of the array.
+
+  Return an integer denoting the number of operations it takes to make
+  nums empty.
+
+CONSTRAINTS
+  1 <= nums.length <= 10^5
+  -10^9 <= nums[i] <= 10^9
+  All values in nums are distinct.
+
+TEST CASES
+  [1] Input    : nums = [3,4,-1]
+      Expected : 5
+
+  [2] Input    : nums = [1,2,4,3]
+      Expected : 5
+
+  [3] Input    : nums = [1,2,3]
+      Expected : 3
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  long long countOperationsToEmptyArray(vector<int>& nums);
+
+FILES
+  edit : 2659.cpp
+  test : lc run 2659
+══════════════════════════════════════════════════════════════════════════

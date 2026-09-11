@@ -1,0 +1,42 @@
+══════════════════════════════════════════════════════════════════════════
+ 942. DI String Match
+ Easy  |  Tags: Array, Two Pointers, String, Greedy
+ https://leetcode.com/problems/di-string-match/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  A permutation perm of n + 1 integers of all the integers in the range
+  [0, n] can be represented as a string s of length n where:
+
+  - s[i] == 'I' if perm[i] < perm[i + 1], and
+
+  - s[i] == 'D' if perm[i] > perm[i + 1].
+
+  Given a string s, reconstruct the permutation perm and return it. If
+  there are multiple valid permutations perm, return any of them.
+
+CONSTRAINTS
+  1 <= s.length <= 10^5
+  s[i] is either 'I' or 'D'.
+
+TEST CASES
+  [1] Input    : s = "IDID"
+      Expected : [0,4,1,3,2]
+
+  [2] Input    : s = "III"
+      Expected : [0,1,2,3]
+
+  [3] Input    : s = "DDI"
+      Expected : [3,2,0,1]
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  vector<int> diStringMatch(string s);
+
+FILES
+  edit : 942.cpp
+  test : lc run 942
+══════════════════════════════════════════════════════════════════════════

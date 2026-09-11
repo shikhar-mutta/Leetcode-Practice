@@ -1,0 +1,44 @@
+══════════════════════════════════════════════════════════════════════════
+ 1758. Minimum Changes To Make Alternating Binary String
+ Easy  |  Tags: String
+ https://leetcode.com/problems/minimum-changes-to-make-alternating-binary-string/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a string s consisting only of the characters '0' and '1'.
+  In one operation, you can change any '0' to '1' or vice versa.
+
+  The string is called alternating if no two adjacent characters are
+  equal. For example, the string "010" is alternating, while the string
+  "0100" is not.
+
+  Return the minimum number of operations needed to make s alternating.
+
+CONSTRAINTS
+  1 <= s.length <= 10^4
+  s[i] is either '0' or '1'.
+
+TEST CASES
+  [1] Input    : s = "0100"
+      Expected : 1
+      Why      : If you change the last character to '1', s will be "0101", which is alternating.
+
+  [2] Input    : s = "10"
+      Expected : 0
+      Why      : s is already alternating.
+
+  [3] Input    : s = "1111"
+      Expected : 2
+      Why      : You need two operations to reach "0101" or "1010".
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int minOperations(string s);
+
+FILES
+  edit : 1758.cpp
+  test : lc run 1758
+══════════════════════════════════════════════════════════════════════════

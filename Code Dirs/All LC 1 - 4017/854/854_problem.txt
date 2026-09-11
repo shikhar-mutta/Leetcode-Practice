@@ -1,0 +1,40 @@
+══════════════════════════════════════════════════════════════════════════
+ 854. K-Similar Strings
+ Hard  |  Tags: Hash Table, String, Breadth-First Search
+ https://leetcode.com/problems/k-similar-strings/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Strings s1 and s2 are k-similar (for some non-negative integer k) if we
+  can swap the positions of two letters in s1 exactly k times so that the
+  resulting string equals s2.
+
+  Given two anagrams s1 and s2, return the smallest k for which s1 and s2
+  are k-similar.
+
+CONSTRAINTS
+  1 <= s1.length <= 20
+  s2.length == s1.length
+  s1 and s2 contain only lowercase letters from the set {'a', 'b', 'c', 'd', 'e', 'f'}.
+  s2 is an anagram of s1.
+
+TEST CASES
+  [1] Input    : s1 = "ab", s2 = "ba"
+      Expected : 1
+      Why      : The two string are 1-similar because we can use one swap to change s1 to s2: "ab" --> "ba".
+
+  [2] Input    : s1 = "abc", s2 = "bca"
+      Expected : 2
+      Why      : The two strings are 2-similar because we can use two swaps to change s1 to s2: "abc" --> "bac" --> "bca".
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int kSimilarity(string s1, string s2);
+
+FILES
+  edit : 854.cpp
+  test : lc run 854
+══════════════════════════════════════════════════════════════════════════

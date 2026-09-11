@@ -1,0 +1,37 @@
+══════════════════════════════════════════════════════════════════════════
+ 693. Binary Number with Alternating Bits
+ Easy  |  Tags: Bit Manipulation
+ https://leetcode.com/problems/binary-number-with-alternating-bits/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given a positive integer, check whether it has alternating bits: namely,
+  if two adjacent bits will always have different values.
+
+CONSTRAINTS
+  1 <= n <= 2^31 - 1
+
+TEST CASES
+  [1] Input    : n = 5
+      Expected : true
+      Why      : The binary representation of 5 is: 101
+
+  [2] Input    : n = 7
+      Expected : false
+      Why      : The binary representation of 7 is: 111.
+
+  [3] Input    : n = 11
+      Expected : false
+      Why      : The binary representation of 11 is: 1011.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  bool hasAlternatingBits(int n);
+
+FILES
+  edit : 693.cpp
+  test : lc run 693
+══════════════════════════════════════════════════════════════════════════

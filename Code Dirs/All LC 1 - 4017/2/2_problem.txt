@@ -1,0 +1,43 @@
+══════════════════════════════════════════════════════════════════════════
+ 2. Add Two Numbers
+ Medium  |  Tags: Linked List, Math, Recursion
+ https://leetcode.com/problems/add-two-numbers/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given two non-empty linked lists representing two non-negative
+  integers. The digits are stored in reverse order, and each of their
+  nodes contains a single digit. Add the two numbers and return the sum as
+  a linked list.
+
+  You may assume the two numbers do not contain any leading zero, except
+  the number 0 itself.
+
+CONSTRAINTS
+  The number of nodes in each linked list is in the range [1, 100].
+  0 <= Node.val <= 9
+  It is guaranteed that the list represents a number that does not have leading zeros.
+
+TEST CASES
+  [1] Input    : l1 = [2,4,3], l2 = [5,6,4]
+      Expected : [7,0,8]
+      Why      : 342 + 465 = 807.
+
+  [2] Input    : l1 = [0], l2 = [0]
+      Expected : [0]
+
+  [3] Input    : l1 = [9,9,9,9,9,9,9], l2 = [9,9,9,9]
+      Expected : [8,9,9,9,0,0,0,1]
+
+CODE TYPE
+  function · linked list
+    driver: one Solution call per test case
+    linked list: ListNode* — values in order, e.g. [1,2,3,4]
+
+SIGNATURE
+  ListNode* addTwoNumbers(ListNode* l1, ListNode* l2);
+
+FILES
+  edit : 2.cpp
+  test : lc run 2
+══════════════════════════════════════════════════════════════════════════

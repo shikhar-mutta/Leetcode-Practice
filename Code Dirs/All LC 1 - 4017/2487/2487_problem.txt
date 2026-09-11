@@ -1,0 +1,42 @@
+══════════════════════════════════════════════════════════════════════════
+ 2487. Remove Nodes From Linked List
+ Medium  |  Tags: Linked List, Stack, Recursion, Monotonic Stack
+ https://leetcode.com/problems/remove-nodes-from-linked-list/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given the head of a linked list.
+
+  Remove every node which has a node with a greater value anywhere to the
+  right side of it.
+
+  Return the head of the modified linked list.
+
+CONSTRAINTS
+  The number of the nodes in the given list is in the range [1, 10^5].
+  1 <= Node.val <= 10^5
+
+TEST CASES
+  [1] Input    : head = [5,2,13,3,8]
+      Expected : [13,8]
+      Why      : The nodes that should be removed are 5, 2 and 3.
+                 - Node 13 is to the right of node 5.
+                 - Node 13 is to the right of node 2.
+                 … (1 more)
+
+  [2] Input    : head = [1,1,1,1]
+      Expected : [1,1,1,1]
+      Why      : Every node has value 1, so no nodes are removed.
+
+CODE TYPE
+  function · linked list
+    driver: one Solution call per test case
+    linked list: ListNode* — values in order, e.g. [1,2,3,4]
+
+SIGNATURE
+  ListNode* removeNodes(ListNode* head);
+
+FILES
+  edit : 2487.cpp
+  test : lc run 2487
+══════════════════════════════════════════════════════════════════════════

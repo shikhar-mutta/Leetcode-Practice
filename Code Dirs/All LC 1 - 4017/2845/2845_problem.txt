@@ -1,0 +1,54 @@
+══════════════════════════════════════════════════════════════════════════
+ 2845. Count of Interesting Subarrays
+ Medium  |  Tags: Array, Hash Table, Prefix Sum
+ https://leetcode.com/problems/count-of-interesting-subarrays/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a 0-indexed integer array nums, an integer modulo, and an
+  integer k.
+
+  Your task is to find the count of subarrays that are interesting.
+
+  A subarray nums[l..r] is interesting if the following condition holds:
+
+  - Let cnt be the number of indices i in the range [l, r] such that
+    nums[i] % modulo == k. Then, cnt % modulo == k.
+
+  Return an integer denoting the count of interesting subarrays.
+
+  Note: A subarray is a contiguous non-empty sequence of elements within
+  an array.
+
+CONSTRAINTS
+  1 <= nums.length <= 10^5
+  1 <= nums[i] <= 10^9
+  1 <= modulo <= 10^9
+  0 <= k < modulo
+
+TEST CASES
+  [1] Input    : nums = [3,2,4], modulo = 2, k = 1
+      Expected : 3
+      Why      : In this example the interesting subarrays are:
+                 The subarray nums[0..0] which is [3].
+                 - There is only one index, i = 0, in the range [0, 0] that satisfies nums[i] % modulo == k.
+                 … (8 more)
+
+  [2] Input    : nums = [3,1,9,6], modulo = 3, k = 0
+      Expected : 2
+      Why      : In this example the interesting subarrays are:
+                 The subarray nums[0..3] which is [3,1,9,6].
+                 - There are three indices, i = 0, 2, 3, in the range [0, 3] that satisfy nums[i] % modulo == k.
+                 … (5 more)
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  long long countInterestingSubarrays(vector<int>& nums, int modulo, int k);
+
+FILES
+  edit : 2845.cpp
+  test : lc run 2845
+══════════════════════════════════════════════════════════════════════════

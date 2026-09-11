@@ -1,0 +1,40 @@
+══════════════════════════════════════════════════════════════════════════
+ 1156. Swap For Longest Repeated Character Substring
+ Medium  |  Tags: Hash Table, String, Sliding Window
+ https://leetcode.com/problems/swap-for-longest-repeated-character-substring/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a string text. You can swap two of the characters in the
+  text.
+
+  Return the length of the longest substring with repeated characters.
+
+CONSTRAINTS
+  1 <= text.length <= 2 * 10^4
+  text consist of lowercase English characters only.
+
+TEST CASES
+  [1] Input    : text = "ababa"
+      Expected : 3
+      Why      : We can swap the first 'b' with the last 'a', or the last 'b' with the first 'a'. Then, the longest repeated character substring is "aaa" with length 3.
+
+  [2] Input    : text = "aaabaaa"
+      Expected : 6
+      Why      : Swap 'b' with the last 'a' (or the first 'a'), and we get longest repeated character substring "aaaaaa" with length 6.
+
+  [3] Input    : text = "aaaaa"
+      Expected : 5
+      Why      : No need to swap, longest repeated character substring is "aaaaa" with length is 5.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int maxRepOpt1(string text);
+
+FILES
+  edit : 1156.cpp
+  test : lc run 1156
+══════════════════════════════════════════════════════════════════════════

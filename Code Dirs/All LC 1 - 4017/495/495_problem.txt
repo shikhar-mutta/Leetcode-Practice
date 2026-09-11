@@ -1,0 +1,51 @@
+══════════════════════════════════════════════════════════════════════════
+ 495. Teemo Attacking
+ Easy  |  Tags: Array, Simulation
+ https://leetcode.com/problems/teemo-attacking/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Our hero Teemo is attacking an enemy Ashe with poison attacks! When
+  Teemo attacks Ashe, Ashe gets poisoned for a exactly duration seconds.
+  More formally, an attack at second t will mean Ashe is poisoned during
+  the inclusive time interval [t, t + duration - 1]. If Teemo attacks
+  again before the poison effect ends, the timer for it is reset, and the
+  poison effect will end duration seconds after the new attack.
+
+  You are given a non-decreasing integer array timeSeries, where
+  timeSeries[i] denotes that Teemo attacks Ashe at second timeSeries[i],
+  and an integer duration.
+
+  Return the total number of seconds that Ashe is poisoned.
+
+CONSTRAINTS
+  1 <= timeSeries.length <= 10^4
+  0 <= timeSeries[i], duration <= 10^7
+  timeSeries is sorted in non-decreasing order.
+
+TEST CASES
+  [1] Input    : timeSeries = [1,4], duration = 2
+      Expected : 4
+      Why      : Teemo's attacks on Ashe go as follows:
+                 - At second 1, Teemo attacks, and Ashe is poisoned for seconds 1 and 2.
+                 - At second 4, Teemo attacks, and Ashe is poisoned for seconds 4 and 5.
+                 … (1 more)
+
+  [2] Input    : timeSeries = [1,2], duration = 2
+      Expected : 3
+      Why      : Teemo's attacks on Ashe go as follows:
+                 - At second 1, Teemo attacks, and Ashe is poisoned for seconds 1 and 2.
+                 - At second 2 however, Teemo attacks again and resets the poison timer. Ashe is poisoned for seconds 2 and 3.
+                 … (1 more)
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int findPoisonedDuration(vector<int>& timeSeries, int duration);
+
+FILES
+  edit : 495.cpp
+  test : lc run 495
+══════════════════════════════════════════════════════════════════════════

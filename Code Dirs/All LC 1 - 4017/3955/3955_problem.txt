@@ -1,0 +1,48 @@
+══════════════════════════════════════════════════════════════════════════
+ 3955. Valid Binary Strings With Cost Limit
+ Medium  |  Tags: String, Backtracking, Bit Manipulation, Enumeration
+ https://leetcode.com/problems/valid-binary-strings-with-cost-limit/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given two integers n and k.
+
+  The cost of a binary string s is defined as the sum of all indices i
+  (0-based) such that s[i] == '1'.
+
+  A binary string is considered valid if:
+
+  - It does not contain two consecutive '1' characters.
+
+  - Its cost is less than or equal to k.
+
+  Return a list of all valid binary strings of length n in any order.
+
+CONSTRAINTS
+  1 <= n <= 12
+  0 <= k <= n * (n - 1) / 2
+
+TEST CASES
+  [1] Input    : n = 3, k = 1
+      Expected : ["000","010","100"]
+      Why      : The binary strings of length 3 without consecutive '1' characters are:
+                 - "000" : cost = 0
+                 - "100" : cost = 0
+                 … (5 more)
+
+  [2] Input    : n = 1, k = 0
+      Expected : ["0","1"]
+      Why      : The valid binary strings of length 1 are "0" and "1".
+                 Thus the answer is ["0", "1"].
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  vector<string> generateValidStrings(int n, int k);
+
+FILES
+  edit : 3955.cpp
+  test : lc run 3955
+══════════════════════════════════════════════════════════════════════════

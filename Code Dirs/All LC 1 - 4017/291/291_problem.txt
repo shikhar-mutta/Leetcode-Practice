@@ -1,0 +1,34 @@
+══════════════════════════════════════════════════════════════════════════
+ 291. Word Pattern II
+ Medium  |  Tags: Hash Table, String, Backtracking
+ https://leetcode.com/problems/word-pattern-ii/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : "abab" | "redblueredblue"
+      Expected : true
+
+  [2] Input    : "aaaa" | "asdasdasdasd"
+      Expected : true
+
+  [3] Input    : "aabb" | "xyzabcxzyabc"
+      Expected : false
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  bool wordPatternMatch(string pattern, string s);
+
+FILES
+  edit : 291.cpp
+  test : lc run 291
+══════════════════════════════════════════════════════════════════════════

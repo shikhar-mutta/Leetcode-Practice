@@ -1,0 +1,37 @@
+══════════════════════════════════════════════════════════════════════════
+ 3950. Exactly One Consecutive Set Bits Pair
+ Easy  |  Tags: Bit Manipulation
+ https://leetcode.com/problems/exactly-one-consecutive-set-bits-pair/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given an integer n.
+
+  Return true if its binary representation contains exactly one adjacent
+  pair of set bits, and false otherwise.
+
+CONSTRAINTS
+  0 <= n <= 10^5
+
+TEST CASES
+  [1] Input    : n = 6
+      Expected : true
+      Why      : - Binary representation of 6 is 110.
+                 - There is exactly one adjacent pair of set bits ("11"). Thus, the answer is true.
+
+  [2] Input    : n = 5
+      Expected : false
+      Why      : - Binary representation of 5 is 101.
+                 - There is no adjacent pair of set bits. Thus, the answer is false.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  bool consecutiveSetBits(int n);
+
+FILES
+  edit : 3950.cpp
+  test : lc run 3950
+══════════════════════════════════════════════════════════════════════════

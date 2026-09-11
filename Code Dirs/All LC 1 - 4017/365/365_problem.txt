@@ -1,0 +1,38 @@
+══════════════════════════════════════════════════════════════════════════
+ 365. Water and Jug Problem
+ Medium  |  Tags: Math, Depth-First Search, Breadth-First Search, Bézout's Lemma, Euclidean Algorithm, Greatest Common Divisor, Extended Euclidean Algorithm
+ https://leetcode.com/problems/water-and-jug-problem/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given two jugs with capacities x liters and y liters. You have
+  an infinite water supply. Return whether the total amount of water in
+  both jugs may reach target using the following operations:
+
+  - Fill either jug completely with water.
+
+  - Completely empty either jug.
+
+  - Pour water from one jug into another until the receiving jug is full,
+    or the transferring jug is empty.
+
+CONSTRAINTS
+  1 <= x, y, target <= 10^3
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : 3 | 5 | 4
+      Expected : true
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  bool canMeasureWater(int x, int y, int target);
+
+FILES
+  edit : 365.cpp
+  test : lc run 365
+══════════════════════════════════════════════════════════════════════════

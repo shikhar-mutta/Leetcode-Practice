@@ -1,0 +1,46 @@
+══════════════════════════════════════════════════════════════════════════
+ 3922. Minimum Flips to Make Binary String Coherent
+ Medium  |  Tags: String
+ https://leetcode.com/problems/minimum-flips-to-make-binary-string-coherent/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a binary string s.
+
+  A string is considered coherent if it does not contain "011" or "110" as
+  subsequences.
+
+  In one operation, you can flip any character in s ('0' to '1' or '1' to
+  '0').
+
+  Return an integer denoting the minimum number of operations required to
+  make s coherent.
+
+CONSTRAINTS
+  1 <= s.length <= 10^5
+  s[i] is either '0' or '1'.
+
+TEST CASES
+  [1] Input    : s = "1010"
+      Expected : 1
+      Why      : Flip s[0] to get "0010", which contains no "011" or "110" subsequences.
+
+  [2] Input    : s = "0110"
+      Expected : 1
+      Why      : Flip s[1] to get "0010", removing all forbidden subsequences "011" and "110".
+
+  [3] Input    : s = "1000"
+      Expected : 0
+      Why      : The string already has no "011" or "110" subsequences, so no flips are needed.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int minFlips(string s);
+
+FILES
+  edit : 3922.cpp
+  test : lc run 3922
+══════════════════════════════════════════════════════════════════════════

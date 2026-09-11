@@ -1,0 +1,43 @@
+══════════════════════════════════════════════════════════════════════════
+ 940. Distinct Subsequences II
+ Hard  |  Tags: String, Dynamic Programming
+ https://leetcode.com/problems/distinct-subsequences-ii/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given a string s, return the number of distinct non-empty subsequences
+  of s. Since the answer may be very large, return it modulo 10^9 + 7.
+
+  A subsequence of a string is a new string that is formed from the
+  original string by deleting some (can be none) of the characters without
+  disturbing the relative positions of the remaining characters. (i.e.,
+  "ace" is a subsequence of "abcde" while "aec" is not.
+
+CONSTRAINTS
+  1 <= s.length <= 2000
+  s consists of lowercase English letters.
+
+TEST CASES
+  [1] Input    : s = "abc"
+      Expected : 7
+      Why      : The 7 distinct subsequences are "a", "b", "c", "ab", "ac", "bc", and "abc".
+
+  [2] Input    : s = "aba"
+      Expected : 6
+      Why      : The 6 distinct subsequences are "a", "b", "ab", "aa", "ba", and "aba".
+
+  [3] Input    : s = "aaa"
+      Expected : 3
+      Why      : The 3 distinct subsequences are "a", "aa" and "aaa".
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int distinctSubseqII(string s);
+
+FILES
+  edit : 940.cpp
+  test : lc run 940
+══════════════════════════════════════════════════════════════════════════

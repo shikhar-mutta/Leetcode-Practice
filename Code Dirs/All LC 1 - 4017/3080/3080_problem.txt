@@ -1,0 +1,56 @@
+══════════════════════════════════════════════════════════════════════════
+ 3080. Mark Elements on Array by Performing Queries
+ Medium  |  Tags: Array, Hash Table, Sorting, Heap (Priority Queue), Simulation
+ https://leetcode.com/problems/mark-elements-on-array-by-performing-queries/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a 0-indexed array nums of size n consisting of positive
+  integers.
+
+  You are also given a 2D array queries of size m where queries[i] =
+  [indexi, ki].
+
+  Initially all elements of the array are unmarked.
+
+  You need to apply m queries on the array in order, where on the i^th
+  query you do the following:
+
+  - Mark the element at index indexi if it is not already marked.
+
+  - Then mark ki unmarked elements in the array with the smallest values.
+    If multiple such elements exist, mark the ones with the smallest
+    indices. And if less than ki unmarked elements exist, then mark all of
+    them.
+
+  Return an array answer of size m where answer[i] is the sum of unmarked
+  elements in the array after the i^th query.
+
+CONSTRAINTS
+  n == nums.length
+  m == queries.length
+  1 <= m <= n <= 10^5
+  1 <= nums[i] <= 10^5
+  queries[i].length == 2
+  0 <= indexi, ki <= n - 1
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : [1,2,2,1,2,3,1] | [[1,2],[3,3],[4,2]]
+      Expected : 8 3 0
+
+  [2] Input    : [1,4,2,3] | [[0,1]]
+      Expected : 7
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  vector<long long> unmarkedSumArray(vector<int>& nums, vector<vector<int>>& queries);
+
+FILES
+  edit : 3080.cpp
+  test : lc run 3080
+══════════════════════════════════════════════════════════════════════════

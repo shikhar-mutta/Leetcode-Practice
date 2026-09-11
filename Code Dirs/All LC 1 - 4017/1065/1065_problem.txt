@@ -1,0 +1,31 @@
+══════════════════════════════════════════════════════════════════════════
+ 1065. Index Pairs of a String
+ Easy  |  Tags: Array, String, Trie, Sorting, Aho–Corasick Algorithm
+ https://leetcode.com/problems/index-pairs-of-a-string/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : "thestoryofleetcodeandme" | ["story","fleet","leetcode"]
+      Expected : 3 7
+
+  [2] Input    : "ababa" | ["aba","ab"]
+      Expected : 9 13
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  vector<vector<int>> indexPairs(string text, vector<string>& words);
+
+FILES
+  edit : 1065.cpp
+  test : lc run 1065
+══════════════════════════════════════════════════════════════════════════

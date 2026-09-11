@@ -1,0 +1,31 @@
+══════════════════════════════════════════════════════════════════════════
+ 1087. Brace Expansion
+ Medium  |  Tags: String, Backtracking, Stack, Breadth-First Search, Sorting
+ https://leetcode.com/problems/brace-expansion/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : "{a,b}c{d,e}f"
+      Expected : acdf acef bcdf bcef
+
+  [2] Input    : "abcd"
+      Expected : abcd
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  vector<string> expand(string s);
+
+FILES
+  edit : 1087.cpp
+  test : lc run 1087
+══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,62 @@
+══════════════════════════════════════════════════════════════════════════
+ 2071. Maximum Number of Tasks You Can Assign
+ Hard  |  Tags: Array, Two Pointers, Binary Search, Greedy, Queue, Sorting, Monotonic Queue
+ https://leetcode.com/problems/maximum-number-of-tasks-you-can-assign/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You have n tasks and m workers. Each task has a strength requirement
+  stored in a 0-indexed integer array tasks, with the i^th task requiring
+  tasks[i] strength to complete. The strength of each worker is stored in
+  a 0-indexed integer array workers, with the j^th worker having
+  workers[j] strength. Each worker can only be assigned to a single task
+  and must have a strength greater than or equal to the task's strength
+  requirement (i.e., workers[j] >= tasks[i]).
+
+  Additionally, you have pills magical pills that will increase a worker's
+  strength by strength. You can decide which workers receive the magical
+  pills, however, you may only give each worker at most one magical pill.
+
+  Given the 0-indexed integer arrays tasks and workers and the integers
+  pills and strength, return the maximum number of tasks that can be
+  completed.
+
+CONSTRAINTS
+  n == tasks.length
+  m == workers.length
+  1 <= n, m <= 5 * 10^4
+  0 <= pills <= m
+  0 <= tasks[i], workers[j], strength <= 10^9
+
+TEST CASES
+  [1] Input    : tasks = [3,2,1], workers = [0,3,3], pills = 1, strength = 1
+      Expected : 3
+      Why      : We can assign the magical pill and tasks as follows:
+                 - Give the magical pill to worker 0.
+                 - Assign worker 0 to task 2 (0 + 1 >= 1)
+                 … (2 more)
+
+  [2] Input    : tasks = [5,4], workers = [0,0,0], pills = 1, strength = 5
+      Expected : 1
+      Why      : We can assign the magical pill and tasks as follows:
+                 - Give the magical pill to worker 0.
+                 - Assign worker 0 to task 0 (0 + 5 >= 5)
+
+  [3] Input    : tasks = [10,15,30], workers = [0,10,10,10,10], pills = 3, strength = 10
+      Expected : 2
+      Why      : We can assign the magical pills and tasks as follows:
+                 - Give the magical pill to worker 0 and worker 1.
+                 - Assign worker 0 to task 0 (0 + 10 >= 10)
+                 … (2 more)
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int maxTaskAssign(vector<int>& tasks, vector<int>& workers, int pills, int strength);
+
+FILES
+  edit : 2071.cpp
+  test : lc run 2071
+══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,40 @@
+══════════════════════════════════════════════════════════════════════════
+ 230. Kth Smallest Element in a BST
+ Medium  |  Tags: Tree, Depth-First Search, Binary Search Tree, Binary Tree
+ https://leetcode.com/problems/kth-smallest-element-in-a-bst/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given the root of a binary search tree, and an integer k, return the
+  k^th smallest value (1-indexed) of all the values of the nodes in the
+  tree.
+
+CONSTRAINTS
+  The number of nodes in the tree is n.
+  1 <= k <= n <= 10^4
+  0 <= Node.val <= 10^4
+
+TEST CASES
+  [1] Input    : root = [3,1,4,null,2], k = 1
+      Expected : 1
+
+  [2] Input    : root = [5,3,6,2,4,null,null,1], k = 3
+      Expected : 3
+
+FOLLOW UP
+  If the BST is modified often (i.e., we can do insert and delete
+  operations) and you need to find the kth smallest frequently, how would
+  you optimize?
+
+CODE TYPE
+  function · tree
+    driver: one Solution call per test case
+    tree: TreeNode* — level order, e.g. [3,9,20,null,null,15,7]
+
+SIGNATURE
+  int kthSmallest(TreeNode* root, int k);
+
+FILES
+  edit : 230.cpp
+  test : lc run 230
+══════════════════════════════════════════════════════════════════════════

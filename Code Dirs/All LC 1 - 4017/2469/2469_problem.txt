@@ -1,0 +1,45 @@
+══════════════════════════════════════════════════════════════════════════
+ 2469. Convert the Temperature
+ Easy  |  Tags: Math
+ https://leetcode.com/problems/convert-the-temperature/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a non-negative floating point number rounded to two
+  decimal places celsius, that denotes the temperature in Celsius.
+
+  You should convert Celsius into Kelvin and Fahrenheit and return it as
+  an array ans = [kelvin, fahrenheit].
+
+  Return the array ans. Answers within 10^-5 of the actual answer will be
+  accepted.
+
+  Note that:
+
+  - Kelvin = Celsius + 273.15
+
+  - Fahrenheit = Celsius * 1.80 + 32.00
+
+CONSTRAINTS
+  0 <= celsius <= 1000
+
+TEST CASES
+  [1] Input    : celsius = 36.50
+      Expected : [309.65000,97.70000]
+      Why      : Temperature at 36.50 Celsius converted in Kelvin is 309.65 and converted in Fahrenheit is 97.70.
+
+  [2] Input    : celsius = 122.11
+      Expected : [395.26000,251.79800]
+      Why      : Temperature at 122.11 Celsius converted in Kelvin is 395.26 and converted in Fahrenheit is 251.798.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  vector<double> convertTemperature(double celsius);
+
+FILES
+  edit : 2469.cpp
+  test : lc run 2469
+══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,37 @@
+══════════════════════════════════════════════════════════════════════════
+ 383. Ransom Note
+ Easy  |  Tags: Hash Table, String, Counting
+ https://leetcode.com/problems/ransom-note/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given two strings ransomNote and magazine, return true if ransomNote can
+  be constructed by using the letters from magazine and false otherwise.
+
+  Each letter in magazine can only be used once in ransomNote.
+
+CONSTRAINTS
+  1 <= ransomNote.length, magazine.length <= 10^5
+  ransomNote and magazine consist of lowercase English letters.
+
+TEST CASES
+  [1] Input    : ransomNote = "a", magazine = "b"
+      Expected : false
+
+  [2] Input    : ransomNote = "aa", magazine = "ab"
+      Expected : false
+
+  [3] Input    : ransomNote = "aa", magazine = "aab"
+      Expected : true
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  bool canConstruct(string ransomNote, string magazine);
+
+FILES
+  edit : 383.cpp
+  test : lc run 383
+══════════════════════════════════════════════════════════════════════════

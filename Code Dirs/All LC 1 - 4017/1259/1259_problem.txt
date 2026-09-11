@@ -1,0 +1,34 @@
+══════════════════════════════════════════════════════════════════════════
+ 1259. Handshakes That Don't Cross
+ Hard  |  Tags: Math, Dynamic Programming
+ https://leetcode.com/problems/handshakes-that-dont-cross/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : 2
+      Expected : 1
+
+  [2] Input    : 4
+      Expected : 2
+
+  [3] Input    : 6
+      Expected : 5
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int numberOfWays(int numPeople);
+
+FILES
+  edit : 1259.cpp
+  test : lc run 1259
+══════════════════════════════════════════════════════════════════════════

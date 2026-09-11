@@ -1,0 +1,44 @@
+══════════════════════════════════════════════════════════════════════════
+ 3760. Maximum Substrings With Distinct Start
+ Medium  |  Tags: Hash Table, String
+ https://leetcode.com/problems/maximum-substrings-with-distinct-start/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a string s consisting of lowercase English letters.
+
+  Return an integer denoting the maximum number of substrings you can
+  split s into such that each substring starts with a distinct character
+  (i.e., no two substrings start with the same character).
+
+CONSTRAINTS
+  1 <= s.length <= 10^5
+  s consists of lowercase English letters.
+
+TEST CASES
+  [1] Input    : s = "abab"
+      Expected : 2
+      Why      : - Split "abab" into "a" and "bab".
+                 - Each substring starts with a distinct character i.e 'a' and 'b'. Thus, the answer is 2.
+
+  [2] Input    : s = "abcd"
+      Expected : 4
+      Why      : - Split "abcd" into "a", "b", "c", and "d".
+                 - Each substring starts with a distinct character. Thus, the answer is 4.
+
+  [3] Input    : s = "aaaa"
+      Expected : 1
+      Why      : - All characters in "aaaa" are 'a'.
+                 - Only one substring can start with 'a'. Thus, the answer is 1.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int maxDistinct(string s);
+
+FILES
+  edit : 3760.cpp
+  test : lc run 3760
+══════════════════════════════════════════════════════════════════════════

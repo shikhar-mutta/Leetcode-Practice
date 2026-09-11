@@ -1,0 +1,26 @@
+══════════════════════════════════════════════════════════════════════════
+ 1666. Change the Root of a Binary Tree
+ Medium  |  Tags: Tree, Depth-First Search, Binary Tree
+ https://leetcode.com/problems/change-the-root-of-a-binary-tree/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (no examples available)
+
+CODE TYPE
+  function · parent pointers
+    driver: one Solution call per test case
+    parent pointers: Node* {left, right, parent} — tree in level order, plus the nodes by value
+
+SIGNATURE
+  Node* flipBinaryTree(Node* root, Node* leaf);
+
+FILES
+  edit : 1666.cpp
+  test : lc run 1666
+══════════════════════════════════════════════════════════════════════════

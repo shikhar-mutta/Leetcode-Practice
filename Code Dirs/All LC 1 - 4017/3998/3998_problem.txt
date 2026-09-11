@@ -1,0 +1,68 @@
+══════════════════════════════════════════════════════════════════════════
+ 3998. Transform Binary String Using Subsequence Sort
+ Medium  |  Tags: Array, Two Pointers, String, Greedy
+ https://leetcode.com/problems/transform-binary-string-using-subsequence-sort/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a binary string s.
+
+  You are also given an array of strings strs, where each strs[i] has the
+  same length as s and consists of characters '0', '1', and '?'. Each '?'
+  can be replaced by either '0' or '1'.
+
+  You may perform the following operation any number of times (including
+  zero):
+
+  - Choose any subsequence sub of s.
+
+  - Sort sub in non-decreasing order.
+
+  - Replace the chosen subsequence in s with the sorted sub, keeping all
+    other characters unchanged.
+
+  Return a boolean array ans, where ans[i] is true if it's possible to
+  replace all '?' in strs[i] with '0' or '1' and transform s into the
+  resulting string using the allowed operation above, otherwise return
+  false.
+
+CONSTRAINTS
+  1 <= n == s.length <= 2000
+  s[i] is either '0' or '1'.
+  1 <= strs.length <= 2000
+  strs[i].length == n
+  strs[i] is either '0', '1', or '?'.
+
+TEST CASES
+  [1] Input    : s = "101", strs = ["1?1","0?1","0?0"]
+      Expected : [true,true,false]
+      Why      : i
+                 strs[i]
+                 Replacement
+                 … (23 more)
+
+  [2] Input    : s = "1100", strs = ["0011","11?1","1?1?"]
+      Expected : [true,false,true]
+      Why      : i
+                 strs[i]
+                 Replacement
+                 … (25 more)
+
+  [3] Input    : s = "1010", strs = ["0011"]
+      Expected : [true]
+      Why      : i
+                 strs[i]
+                 Replacement
+                 … (11 more)
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  vector<bool> transformStr(string s, vector<string>& strs);
+
+FILES
+  edit : 3998.cpp
+  test : lc run 3998
+══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,79 @@
+══════════════════════════════════════════════════════════════════════════
+ 3965. Finish Time of Tasks I
+ Medium  |  Tags: Array, Dynamic Programming, Tree, Depth-First Search
+ https://leetcode.com/problems/finish-time-of-tasks-i/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given an integer n representing the number of tasks in a
+  project, numbered from 0 to n - 1. These tasks are connected as a tree
+  rooted at task 0. This is represented by a 2D integer array edges of
+  length n - 1, where edges[i] = [ui, vi] indicates that task ui is the
+  parent of task vi.
+
+  You are also given an array baseTime of length n, where baseTime[i]
+  represents the time to complete task i.
+
+  The finish time of each task is calculated as follows:
+
+  - Leaf task: The finish time is baseTime[i].
+
+  - Non-leaf task:
+
+  - Let earliest be the minimum finish time among its children, and latest
+    be the maximum finish time among its children.
+
+  - Let ownDuration be (latest - earliest) + baseTime[i].
+
+  - The finish time of task i is latest + ownDuration.
+
+
+
+
+
+  Return the finish time of the root task 0.
+
+CONSTRAINTS
+  1 <= n <= 10^5
+  edges.length = n - 1
+  edges[i] == [ui, vi]
+  0 <= ui, vi <= n - 1
+  ui!= vi
+  The input is generated such that edges represents a valid tree.
+  baseTime.length == n
+  1 <= baseTime[i] <= 10^5
+  The finish time of every task is guaranteed to be less than 2^53.
+
+TEST CASES
+  [1] Input    : n = 3, edges = [[0,1],[1,2]], baseTime = [9,5,3]
+      Expected : 17
+      Why      : 0 9 1 5 2 3
+                 - Task 2 is a leaf, so its finish time is baseTime[2] = 3.
+                 - Task 1 has one child task 2:
+                 … (7 more)
+
+  [2] Input    : n = 3, edges = [[0,1],[0,2]], baseTime = [4,7,6]
+      Expected : 12
+      Why      : 0 4 1 7 2 6
+                 - Task 1 is a leaf, so its finish time is baseTime[1] = 7.
+                 - Task 2 is a leaf, so its finish time is baseTime[2] = 6.
+                 … (4 more)
+
+  [3] Input    : n = 4, edges = [[0,1],[0,2],[2,3]], baseTime = [5,8,2,1]
+      Expected : 18
+      Why      : - Task 1 is a leaf, so its finish time is baseTime[1] = 8.
+                 - Task 3 is a leaf, so its finish time is baseTime[3] = 1.
+                 - Task 2 has one child task 3:
+                 … (7 more)
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  long long finishTime(int n, vector<vector<int>>& edges, vector<int>& baseTime);
+
+FILES
+  edit : 3965.cpp
+  test : lc run 3965
+══════════════════════════════════════════════════════════════════════════

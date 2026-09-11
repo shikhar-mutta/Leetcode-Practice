@@ -1,0 +1,44 @@
+══════════════════════════════════════════════════════════════════════════
+ 2447. Number of Subarrays With GCD Equal to K
+ Medium  |  Tags: Array, Math, Number Theory
+ https://leetcode.com/problems/number-of-subarrays-with-gcd-equal-to-k/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given an integer array nums and an integer k, return the number of
+  subarrays of nums where the greatest common divisor of the subarray's
+  elements is k.
+
+  A subarray is a contiguous non-empty sequence of elements within an
+  array.
+
+  The greatest common divisor of an array is the largest integer that
+  evenly divides all the array elements.
+
+CONSTRAINTS
+  1 <= nums.length <= 1000
+  1 <= nums[i], k <= 10^9
+
+TEST CASES
+  [1] Input    : nums = [9,3,1,2,6,3], k = 3
+      Expected : 4
+      Why      : The subarrays of nums where 3 is the greatest common divisor of all the subarray's elements are:
+                 - [9,3,1,2,6,3]
+                 - [9,3,1,2,6,3]
+                 … (2 more)
+
+  [2] Input    : nums = [4], k = 7
+      Expected : 0
+      Why      : There are no subarrays of nums where 7 is the greatest common divisor of all the subarray's elements.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int subarrayGCD(vector<int>& nums, int k);
+
+FILES
+  edit : 2447.cpp
+  test : lc run 2447
+══════════════════════════════════════════════════════════════════════════

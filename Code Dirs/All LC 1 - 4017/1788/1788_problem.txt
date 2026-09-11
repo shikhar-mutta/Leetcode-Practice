@@ -1,0 +1,34 @@
+══════════════════════════════════════════════════════════════════════════
+ 1788. Maximize the Beauty of the Garden
+ Hard  |  Tags: Array, Hash Table, Greedy, Prefix Sum
+ https://leetcode.com/problems/maximize-the-beauty-of-the-garden/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : [1,2,3,1,2]
+      Expected : 9
+
+  [2] Input    : [-1,-2,0,-1]
+      Expected : -2
+
+  [3] Input    : [-1,-2,-3,-4,-1,-2,-3,-4]
+      Expected : -2
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int maximumBeauty(vector<int>& flowers);
+
+FILES
+  edit : 1788.cpp
+  test : lc run 1788
+══════════════════════════════════════════════════════════════════════════

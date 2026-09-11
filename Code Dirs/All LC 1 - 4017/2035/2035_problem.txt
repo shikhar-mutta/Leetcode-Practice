@@ -1,0 +1,46 @@
+══════════════════════════════════════════════════════════════════════════
+ 2035. Partition Array Into Two Arrays to Minimize Sum Difference
+ Hard  |  Tags: Array, Two Pointers, Binary Search, Dynamic Programming, Bit Manipulation, Meet in the Middle, Sorting, Ordered Set, Bitmask
+ https://leetcode.com/problems/partition-array-into-two-arrays-to-minimize-sum-difference/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given an integer array nums of 2 * n integers. You need to
+  partition nums into two arrays of length n to minimize the absolute
+  difference of the sums of the arrays. To partition nums, put each
+  element of nums into one of the two arrays.
+
+  Return the minimum possible absolute difference.
+
+CONSTRAINTS
+  1 <= n <= 15
+  nums.length == 2 * n
+  -10^7 <= nums[i] <= 10^7
+
+TEST CASES
+  [1] Input    : nums = [3,9,7,3]
+      Expected : 2
+      Why      : One optimal partition is: [3,9] and [7,3].
+                 The absolute difference between the sums of the arrays is abs((3 + 9) - (7 + 3)) = 2.
+
+  [2] Input    : nums = [-36,36]
+      Expected : 72
+      Why      : One optimal partition is: [-36] and [36].
+                 The absolute difference between the sums of the arrays is abs((-36) - (36)) = 72.
+
+  [3] Input    : nums = [2,-1,0,4,-2,-9]
+      Expected : 0
+      Why      : One optimal partition is: [2,4,-9] and [-1,0,-2].
+                 The absolute difference between the sums of the arrays is abs((2 + 4 + -9) - (-1 + 0 + -2)) = 0.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int minimumDifference(vector<int>& nums);
+
+FILES
+  edit : 2035.cpp
+  test : lc run 2035
+══════════════════════════════════════════════════════════════════════════

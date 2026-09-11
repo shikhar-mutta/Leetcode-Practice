@@ -1,0 +1,39 @@
+══════════════════════════════════════════════════════════════════════════
+ 3755. Find Maximum Balanced XOR Subarray Length
+ Medium  |  Tags: Array, Hash Table, Bit Manipulation, Prefix Sum
+ https://leetcode.com/problems/find-maximum-balanced-xor-subarray-length/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given an integer array nums, return the length of the longest subarray
+  that has a bitwise XOR of zero and contains an equal number of even and
+  odd numbers. If no such subarray exists, return 0.
+
+CONSTRAINTS
+  1 <= nums.length <= 10^5
+  0 <= nums[i] <= 10^9
+
+TEST CASES
+  [1] Input    : nums = [3,1,3,2,0]
+      Expected : 4
+      Why      : The subarray [1, 3, 2, 0] has bitwise XOR 1 XOR 3 XOR 2 XOR 0 = 0 and contains 2 even and 2 odd numbers.
+
+  [2] Input    : nums = [3,2,8,5,4,14,9,15]
+      Expected : 8
+      Why      : The whole array has bitwise XOR 0 and contains 4 even and 4 odd numbers.
+
+  [3] Input    : nums = [0]
+      Expected : 0
+      Why      : No non-empty subarray satisfies both conditions.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int maxBalancedSubarray(vector<int>& nums);
+
+FILES
+  edit : 3755.cpp
+  test : lc run 3755
+══════════════════════════════════════════════════════════════════════════

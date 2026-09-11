@@ -1,0 +1,53 @@
+══════════════════════════════════════════════════════════════════════════
+ 3154. Find Number of Ways to Reach the K-th Stair
+ Hard  |  Tags: Math, Dynamic Programming, Bit Manipulation, Memoization, Combinatorics
+ https://leetcode.com/problems/find-number-of-ways-to-reach-the-k-th-stair/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a non-negative integer k. There exists a staircase with an
+  infinite number of stairs, with the lowest stair numbered 0.
+
+  Alice has an integer jump, with an initial value of 0. She starts on
+  stair 1 and wants to reach stair k using any number of operations. If
+  she is on stair i, in one operation she can:
+
+  - Go down to stair i - 1. This operation cannot be used consecutively or
+    on stair 0.
+
+  - Go up to stair i + 2^jump. And then, jump becomes jump + 1.
+
+  Return the total number of ways Alice can reach stair k.
+
+  Note that it is possible that Alice reaches the stair k, and performs
+  some operations to reach the stair k again.
+
+CONSTRAINTS
+  0 <= k <= 10^9
+
+TEST CASES
+  [1] Input    : k = 0
+      Expected : 2
+      Why      : The 2 possible ways of reaching stair 0 are:
+                 - Alice starts at stair 1.
+                 - Using an operation of the first type, she goes down 1 stair to reach stair 0.
+                 … (4 more)
+
+  [2] Input    : k = 1
+      Expected : 4
+      Why      : The 4 possible ways of reaching stair 1 are:
+                 - Alice starts at stair 1. Alice is at stair 1.
+                 - Alice starts at stair 1.
+                 … (11 more)
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int waysToReachStair(int k);
+
+FILES
+  edit : 3154.cpp
+  test : lc run 3154
+══════════════════════════════════════════════════════════════════════════

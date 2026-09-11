@@ -1,0 +1,28 @@
+══════════════════════════════════════════════════════════════════════════
+ 1168. Optimize Water Distribution in a Village
+ Hard  |  Tags: Union-Find, Graph Theory, Heap (Priority Queue), Minimum Spanning Tree, Prim's Algorithm, Kruskal's Algorithm, Borůvka's Algorithm
+ https://leetcode.com/problems/optimize-water-distribution-in-a-village/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : 3 | [1,2,2] | [[1,2,1],[2,3,1]]
+      Expected : 3
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int minCostToSupplyWater(int n, vector<int>& wells, vector<vector<int>>& pipes);
+
+FILES
+  edit : 1168.cpp
+  test : lc run 1168
+══════════════════════════════════════════════════════════════════════════

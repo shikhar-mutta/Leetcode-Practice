@@ -1,0 +1,31 @@
+══════════════════════════════════════════════════════════════════════════
+ 1099. Two Sum Less Than K
+ Easy  |  Tags: Array, Two Pointers, Binary Search, Sorting
+ https://leetcode.com/problems/two-sum-less-than-k/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : [34,23,1,24,75,33,54,8] | 60
+      Expected : 58
+
+  [2] Input    : [10,20,30] | 15
+      Expected : -1
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int twoSumLessThanK(vector<int>& nums, int k);
+
+FILES
+  edit : 1099.cpp
+  test : lc run 1099
+══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,29 @@
+══════════════════════════════════════════════════════════════════════════
+ 366. Find Leaves of Binary Tree
+ Medium  |  Tags: Tree, Depth-First Search, Binary Tree, DP on Trees
+ https://leetcode.com/problems/find-leaves-of-binary-tree/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : [1,2,3,4,5]
+      Expected : [[4,5,3],[2],[1]]
+
+CODE TYPE
+  function · tree
+    driver: one Solution call per test case
+    tree: TreeNode* — level order, e.g. [3,9,20,null,null,15,7]
+
+SIGNATURE
+  vector<vector<int>> findLeaves(TreeNode* root);
+
+FILES
+  edit : 366.cpp
+  test : lc run 366
+══════════════════════════════════════════════════════════════════════════

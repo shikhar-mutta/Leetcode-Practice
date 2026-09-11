@@ -1,0 +1,29 @@
+══════════════════════════════════════════════════════════════════════════
+ 1265. Print Immutable Linked List in Reverse
+ Medium  |  Tags: Linked List, Two Pointers, Stack, Recursion
+ https://leetcode.com/problems/print-immutable-linked-list-in-reverse/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : [1,2,3,4]
+      Expected : 4 3 2 1
+
+CODE TYPE
+  interactive · interface ImmutableListNode
+    driver: mocks what the judge supplies, backed by each case's data
+    interface: ImmutableListNode — the judge's class, mocked by the driver
+
+SIGNATURE
+  void printLinkedListInReverse(ImmutableListNode* head);
+
+FILES
+  edit : 1265.cpp
+  test : lc run 1265
+══════════════════════════════════════════════════════════════════════════

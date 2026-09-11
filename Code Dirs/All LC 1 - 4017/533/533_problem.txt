@@ -1,0 +1,31 @@
+══════════════════════════════════════════════════════════════════════════
+ 533. Lonely Pixel II
+ Medium  |  Tags: Array, Hash Table, Matrix
+ https://leetcode.com/problems/lonely-pixel-ii/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : [["W","B","W","B","B","W"],["W","B","W","B","B","W"],["W","B","W","B","B","W"],["W","W","B","W","B","W"]] | 3
+      Expected : 6
+
+  [2] Input    : [["B","B","B"],["B","B","W"],["B","B","B"]] | 3
+      Expected : 0
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int findBlackPixel(vector<vector<char>>& picture, int target);
+
+FILES
+  edit : 533.cpp
+  test : lc run 533
+══════════════════════════════════════════════════════════════════════════

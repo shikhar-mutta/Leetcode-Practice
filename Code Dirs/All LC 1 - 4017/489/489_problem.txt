@@ -1,0 +1,29 @@
+══════════════════════════════════════════════════════════════════════════
+ 489. Robot Room Cleaner
+ Hard  |  Tags: Backtracking, Interactive
+ https://leetcode.com/problems/robot-room-cleaner/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : [[1,1,1,1,1,0,1,1],[1,1,1,1,1,1,1,1],[1,0,1,1,1,1,0,1],[0,0,0,1,0,0,0,1],[1,1,1,1,1,1,1,1]] | 1 | 3
+      Expected : PASS
+
+CODE TYPE
+  interactive · interface Robot
+    driver: mocks what the judge supplies, backed by each case's data
+    interface: Robot — the judge's class, mocked by the driver
+
+SIGNATURE
+  void cleanRoom(Robot& robot);
+
+FILES
+  edit : 489.cpp
+  test : lc run 489
+══════════════════════════════════════════════════════════════════════════

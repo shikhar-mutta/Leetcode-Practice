@@ -1,0 +1,35 @@
+══════════════════════════════════════════════════════════════════════════
+ 709. To Lower Case
+ Easy  |  Tags: String
+ https://leetcode.com/problems/to-lower-case/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given a string s, return the string after replacing every uppercase
+  letter with the same lowercase letter.
+
+CONSTRAINTS
+  1 <= s.length <= 100
+  s consists of printable ASCII characters.
+
+TEST CASES
+  [1] Input    : s = "Hello"
+      Expected : "hello"
+
+  [2] Input    : s = "here"
+      Expected : "here"
+
+  [3] Input    : s = "LOVELY"
+      Expected : "lovely"
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  string toLowerCase(string s);
+
+FILES
+  edit : 709.cpp
+  test : lc run 709
+══════════════════════════════════════════════════════════════════════════

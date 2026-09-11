@@ -1,0 +1,47 @@
+══════════════════════════════════════════════════════════════════════════
+ 2810. Faulty Keyboard
+ Easy  |  Tags: String, Simulation
+ https://leetcode.com/problems/faulty-keyboard/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Your laptop keyboard is faulty, and whenever you type a character 'i' on
+  it, it reverses the string that you have written. Typing other
+  characters works as expected.
+
+  You are given a 0-indexed string s, and you type each character of s
+  using your faulty keyboard.
+
+  Return the final string that will be present on your laptop screen.
+
+CONSTRAINTS
+  1 <= s.length <= 100
+  s consists of lowercase English letters.
+  s[0] != 'i'
+
+TEST CASES
+  [1] Input    : s = "string"
+      Expected : "rtsng"
+      Why      : After typing first character, the text on the screen is "s".
+                 After the second character, the text is "st".
+                 After the third character, the text is "str".
+                 … (4 more)
+
+  [2] Input    : s = "poiinter"
+      Expected : "ponter"
+      Why      : After the first character, the text on the screen is "p".
+                 After the second character, the text is "po".
+                 Since the third character you type is an 'i', the text gets reversed and becomes "op".
+                 … (6 more)
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  string finalString(string s);
+
+FILES
+  edit : 2810.cpp
+  test : lc run 2810
+══════════════════════════════════════════════════════════════════════════

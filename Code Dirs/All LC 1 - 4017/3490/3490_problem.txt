@@ -1,0 +1,36 @@
+══════════════════════════════════════════════════════════════════════════
+ 3490. Count Beautiful Numbers
+ Hard  |  Tags: Dynamic Programming
+ https://leetcode.com/problems/count-beautiful-numbers/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given two positive integers, l and r. A positive integer is
+  called beautiful if the product of its digits is divisible by the sum of
+  its digits.
+
+  Return the count of beautiful numbers between l and r, inclusive.
+
+CONSTRAINTS
+  1 <= l <= r < 10^9
+
+TEST CASES
+  [1] Input    : l = 10, r = 20
+      Expected : 2
+      Why      : The beautiful numbers in the range are 10 and 20.
+
+  [2] Input    : l = 1, r = 15
+      Expected : 10
+      Why      : The beautiful numbers in the range are 1, 2, 3, 4, 5, 6, 7, 8, 9, and 10.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int beautifulNumbers(int l, int r);
+
+FILES
+  edit : 3490.cpp
+  test : lc run 3490
+══════════════════════════════════════════════════════════════════════════

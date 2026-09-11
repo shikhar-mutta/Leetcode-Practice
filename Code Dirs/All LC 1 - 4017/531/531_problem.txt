@@ -1,0 +1,31 @@
+══════════════════════════════════════════════════════════════════════════
+ 531. Lonely Pixel I
+ Medium  |  Tags: Array, Hash Table, Matrix
+ https://leetcode.com/problems/lonely-pixel-i/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : [["W","W","B"],["W","B","W"],["B","W","W"]]
+      Expected : 3
+
+  [2] Input    : [["B","B","B"],["B","B","W"],["B","B","B"]]
+      Expected : 0
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int findLonelyPixel(vector<vector<char>>& picture);
+
+FILES
+  edit : 531.cpp
+  test : lc run 531
+══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,32 @@
+══════════════════════════════════════════════════════════════════════════
+ 426. Convert Binary Search Tree to Sorted Doubly Linked List
+ Medium  |  Tags: Linked List, Stack, Tree, Depth-First Search, Binary Search Tree, Binary Tree, Doubly-Linked List
+ https://leetcode.com/problems/convert-binary-search-tree-to-sorted-doubly-linked-list/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : [4,2,5,1,3]
+      Expected : [1,2,3,4,5]
+
+  [2] Input    : [2,1,3]
+      Expected : [1,2,3]
+
+CODE TYPE
+  function · tree
+    driver: one Solution call per test case
+    tree: TreeNode* — level order, e.g. [3,9,20,null,null,15,7]
+
+SIGNATURE
+  TreeNode* treeToDoublyList(TreeNode* root);
+
+FILES
+  edit : 426.cpp
+  test : lc run 426
+══════════════════════════════════════════════════════════════════════════

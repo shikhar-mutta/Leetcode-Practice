@@ -1,0 +1,40 @@
+══════════════════════════════════════════════════════════════════════════
+ 1363. Largest Multiple of Three
+ Hard  |  Tags: Array, Math, Dynamic Programming, Greedy, Sorting
+ https://leetcode.com/problems/largest-multiple-of-three/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given an array of digits digits, return the largest multiple of three
+  that can be formed by concatenating some of the given digits in any
+  order. If there is no answer return an empty string.
+
+  Since the answer may not fit in an integer data type, return the answer
+  as a string. Note that the returning answer must not contain unnecessary
+  leading zeros.
+
+CONSTRAINTS
+  1 <= digits.length <= 10^4
+  0 <= digits[i] <= 9
+
+TEST CASES
+  [1] Input    : digits = [8,1,9]
+      Expected : "981"
+
+  [2] Input    : digits = [8,6,7,1,0]
+      Expected : "8760"
+
+  [3] Input    : digits = [1]
+      Expected : ""
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  string largestMultipleOfThree(vector<int>& digits);
+
+FILES
+  edit : 1363.cpp
+  test : lc run 1363
+══════════════════════════════════════════════════════════════════════════

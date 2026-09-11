@@ -1,0 +1,48 @@
+══════════════════════════════════════════════════════════════════════════
+ 2027. Minimum Moves to Convert String
+ Easy  |  Tags: String, Greedy
+ https://leetcode.com/problems/minimum-moves-to-convert-string/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a string s consisting of n characters which are either 'X'
+  or 'O'.
+
+  A move is defined as selecting three consecutive characters of s and
+  converting them to 'O'. Note that if a move is applied to the character
+  'O', it will stay the same.
+
+  Return the minimum number of moves required so that all the characters
+  of s are converted to 'O'.
+
+CONSTRAINTS
+  3 <= s.length <= 1000
+  s[i] is either 'X' or 'O'.
+
+TEST CASES
+  [1] Input    : s = "XXX"
+      Expected : 1
+      Why      : XXX -> OOO
+                 We select all the 3 characters and convert them in one move.
+
+  [2] Input    : s = "XXOX"
+      Expected : 2
+      Why      : XXOX -> OOOX -> OOOO
+                 We select the first 3 characters in the first move, and convert them to 'O'.
+                 Then we select the last 3 characters and convert them so that the final string contains all 'O's.
+
+  [3] Input    : s = "OOOO"
+      Expected : 0
+      Why      : There are no 'X's in s to convert.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int minimumMoves(string s);
+
+FILES
+  edit : 2027.cpp
+  test : lc run 2027
+══════════════════════════════════════════════════════════════════════════

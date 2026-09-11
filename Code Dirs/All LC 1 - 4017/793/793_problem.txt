@@ -1,0 +1,42 @@
+══════════════════════════════════════════════════════════════════════════
+ 793. Preimage Size of Factorial Zeroes Function
+ Hard  |  Tags: Math, Binary Search
+ https://leetcode.com/problems/preimage-size-of-factorial-zeroes-function/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Let f(x) be the number of zeroes at the end of x!. Recall that x! = 1 *
+  2 * 3 * ... * x and by convention, 0! = 1.
+
+  - For example, f(3) = 0 because 3! = 6 has no zeroes at the end, while
+    f(11) = 2 because 11! = 39916800 has two zeroes at the end.
+
+  Given an integer k, return the number of non-negative integers x have
+  the property that f(x) = k.
+
+CONSTRAINTS
+  0 <= k <= 10^9
+
+TEST CASES
+  [1] Input    : k = 0
+      Expected : 5
+      Why      : 0!, 1!, 2!, 3!, and 4! end with k = 0 zeroes.
+
+  [2] Input    : k = 5
+      Expected : 0
+      Why      : There is no x such that x! ends in k = 5 zeroes.
+
+  [3] Input    : k = 3
+      Expected : 5
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int preimageSizeFZF(int k);
+
+FILES
+  edit : 793.cpp
+  test : lc run 793
+══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,42 @@
+══════════════════════════════════════════════════════════════════════════
+ 632. Smallest Range Covering Elements from K Lists
+ Hard  |  Tags: Array, Hash Table, Greedy, Sliding Window, Sorting, Heap (Priority Queue)
+ https://leetcode.com/problems/smallest-range-covering-elements-from-k-lists/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You have k lists of sorted integers in non-decreasing order. Find the
+  smallest range that includes at least one number from each of the k
+  lists.
+
+  We define the range [a, b] is smaller than range [c, d] if b - a < d - c
+  or a < c if b - a == d - c.
+
+CONSTRAINTS
+  nums.length == k
+  1 <= k <= 3500
+  1 <= nums[i].length <= 50
+  -10^5 <= nums[i][j] <= 10^5
+  nums[i] is sorted in non-decreasing order.
+
+TEST CASES
+  [1] Input    : nums = [[4,10,15,24,26],[0,9,12,20],[5,18,22,30]]
+      Expected : [20,24]
+      Why      : List 1: [4, 10, 15, 24,26], 24 is in range [20,24].
+                 List 2: [0, 9, 12, 20], 20 is in range [20,24].
+                 List 3: [5, 18, 22, 30], 22 is in range [20,24].
+
+  [2] Input    : nums = [[1,2,3],[1,2,3],[1,2,3]]
+      Expected : [1,1]
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  vector<int> smallestRange(vector<vector<int>>& nums);
+
+FILES
+  edit : 632.cpp
+  test : lc run 632
+══════════════════════════════════════════════════════════════════════════

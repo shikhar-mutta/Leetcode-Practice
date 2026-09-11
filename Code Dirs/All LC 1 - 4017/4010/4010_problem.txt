@@ -1,0 +1,42 @@
+══════════════════════════════════════════════════════════════════════════
+ 4010. Maximize Pair Strength Using GCD
+ Easy  |  Tags: Array, Math, Enumeration, Number Theory
+ https://leetcode.com/problems/maximize-pair-strength-using-gcd/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given an integer array nums.
+
+  Choose exactly one pair of distinct indices i and j. The strength of the
+  pair is defined as (nums[i] * nums[j]) / gcd(nums[i], nums[j])^2.
+
+  Return the maximum strength over all possible pairs.
+
+CONSTRAINTS
+  2 <= nums.length <= 2000
+  1 <= nums[i] <= 10^5
+
+TEST CASES
+  [1] Input    : nums = [2,3,5]
+      Expected : 15
+      Why      : Choosing i = 1 and j = 2 gives strength (3 * 5) / gcd(3, 5)^2 = 15 / 1 = 15, which is the maximum over all pairs.
+
+  [2] Input    : nums = [4,6,8]
+      Expected : 12
+      Why      : Choosing i = 1 and j = 2 gives strength (6 * 8) / gcd(6, 8)^2 = 48 / 4 = 12, which is the maximum over all pairs.
+
+  [3] Input    : nums = [3,3]
+      Expected : 1
+      Why      : Choosing i = 0 and j = 1 gives strength (3 * 3) / gcd(3, 3)^2 = 9 / 9 = 1, the maximum over all pairs.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  long long maxPairStrength(vector<int>& nums);
+
+FILES
+  edit : 4010.cpp
+  test : lc run 4010
+══════════════════════════════════════════════════════════════════════════

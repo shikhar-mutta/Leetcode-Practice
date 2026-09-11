@@ -1,0 +1,36 @@
+══════════════════════════════════════════════════════════════════════════
+ 567. Permutation in String
+ Medium  |  Tags: Hash Table, Two Pointers, String, Sliding Window
+ https://leetcode.com/problems/permutation-in-string/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given two strings s1 and s2, return true if s2 contains a permutation of
+  s1, or false otherwise.
+
+  In other words, return true if one of s1's permutations is the substring
+  of s2.
+
+CONSTRAINTS
+  1 <= s1.length, s2.length <= 10^4
+  s1 and s2 consist of lowercase English letters.
+
+TEST CASES
+  [1] Input    : s1 = "ab", s2 = "eidbaooo"
+      Expected : true
+      Why      : s2 contains one permutation of s1 ("ba").
+
+  [2] Input    : s1 = "ab", s2 = "eidboaoo"
+      Expected : false
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  bool checkInclusion(string s1, string s2);
+
+FILES
+  edit : 567.cpp
+  test : lc run 567
+══════════════════════════════════════════════════════════════════════════

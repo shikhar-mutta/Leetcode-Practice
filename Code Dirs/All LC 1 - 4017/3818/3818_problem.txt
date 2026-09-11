@@ -1,0 +1,42 @@
+══════════════════════════════════════════════════════════════════════════
+ 3818. Minimum Prefix Removal to Make Array Strictly Increasing
+ Medium  |  Tags: Array
+ https://leetcode.com/problems/minimum-prefix-removal-to-make-array-strictly-increasing/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given an integer array nums.
+
+  You need to remove exactly one prefix (possibly empty) from nums.
+
+  Return an integer denoting the minimum length of the removed prefix such
+  that the remaining array is strictly increasing.
+
+CONSTRAINTS
+  1 <= nums.length <= 10^5
+  -10^9 <= nums[i] <= 10^9
+
+TEST CASES
+  [1] Input    : nums = [1,-1,2,3,3,4,5]
+      Expected : 4
+      Why      : Removing the prefix = [1, -1, 2, 3] leaves the remaining array [3, 4, 5] which is strictly increasing.
+
+  [2] Input    : nums = [4,3,-2,-5]
+      Expected : 3
+      Why      : Removing the prefix = [4, 3, -2] leaves the remaining array [-5] which is strictly increasing.
+
+  [3] Input    : nums = [1,2,3,4]
+      Expected : 0
+      Why      : The array nums = [1, 2, 3, 4] is already strictly increasing so removing an empty prefix is sufficient.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int minimumPrefixLength(vector<int>& nums);
+
+FILES
+  edit : 3818.cpp
+  test : lc run 3818
+══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,29 @@
+══════════════════════════════════════════════════════════════════════════
+ 642. Design Search Autocomplete System
+ Hard  |  Tags: String, Depth-First Search, Design, Trie, Sorting, Heap (Priority Queue), Data Stream
+ https://leetcode.com/problems/design-search-autocomplete-system/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : ["AutocompleteSystem","input","input","input","input"] | [["i love you","island","iroman","i love leetcode"],[5,3,2,2]] | ["i"] | [" "] | ["a"] | ["#"]
+      Expected : [null,["i love you","island","i love leetcode"],["i love you","i love leetcode"],[],[]]
+
+CODE TYPE
+  design · AutocompleteSystem
+    driver: replays ["AutocompleteSystem","op",...] / [[args],...] and prints [null,...]
+
+SIGNATURE
+  AutocompleteSystem(vector<string>& sentences, vector<int>& times);
+  vector<string> input(char c);
+
+FILES
+  edit : 642.cpp
+  test : lc run 642
+══════════════════════════════════════════════════════════════════════════

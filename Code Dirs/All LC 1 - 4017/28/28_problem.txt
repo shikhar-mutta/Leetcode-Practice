@@ -1,0 +1,36 @@
+══════════════════════════════════════════════════════════════════════════
+ 28. Find the Index of the First Occurrence in a String
+ Easy  |  Tags: Two Pointers, String, String Matching, Z Algorithm, Knuth–Morris–Pratt Algorithm, Boyer–Moore String-Search Algorithm
+ https://leetcode.com/problems/find-the-index-of-the-first-occurrence-in-a-string/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given two strings needle and haystack, return the index of the first
+  occurrence of needle in haystack, or -1 if needle is not part of
+  haystack.
+
+CONSTRAINTS
+  1 <= haystack.length, needle.length <= 10^4
+  haystack and needle consist of only lowercase English characters.
+
+TEST CASES
+  [1] Input    : haystack = "sadbutsad", needle = "sad"
+      Expected : 0
+      Why      : "sad" occurs at index 0 and 6.
+                 The first occurrence is at index 0, so we return 0.
+
+  [2] Input    : haystack = "leetcode", needle = "leeto"
+      Expected : -1
+      Why      : "leeto" did not occur in "leetcode", so we return -1.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int strStr(string haystack, string needle);
+
+FILES
+  edit : 28.cpp
+  test : lc run 28
+══════════════════════════════════════════════════════════════════════════

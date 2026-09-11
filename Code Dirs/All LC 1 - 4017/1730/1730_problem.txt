@@ -1,0 +1,34 @@
+══════════════════════════════════════════════════════════════════════════
+ 1730. Shortest Path to Get Food
+ Medium  |  Tags: Array, Breadth-First Search, Matrix
+ https://leetcode.com/problems/shortest-path-to-get-food/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : ["XXXXXX","X*OOOX","XOO#OX","XXXXXX"]
+      Expected : 3
+
+  [2] Input    : ["XXXXX","X*XXX","XOOOX","XOOOX","XOOOX","XXX#X","XXXXX"]
+      Expected : 6
+
+  [3] Input    : ["*X#"]
+      Expected : -1
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int getFood(vector<vector<char>>& grid);
+
+FILES
+  edit : 1730.cpp
+  test : lc run 1730
+══════════════════════════════════════════════════════════════════════════

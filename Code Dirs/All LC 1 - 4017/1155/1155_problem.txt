@@ -1,0 +1,44 @@
+══════════════════════════════════════════════════════════════════════════
+ 1155. Number of Dice Rolls With Target Sum
+ Medium  |  Tags: Dynamic Programming
+ https://leetcode.com/problems/number-of-dice-rolls-with-target-sum/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You have n dice, and each dice has k faces numbered from 1 to k.
+
+  Given three integers n, k, and target, return the number of possible
+  ways (out of the k^n total ways) to roll the dice, so the sum of the
+  face-up numbers equals target. Since the answer may be too large, return
+  it modulo 10^9 + 7.
+
+CONSTRAINTS
+  1 <= n, k <= 30
+  1 <= target <= 1000
+
+TEST CASES
+  [1] Input    : n = 1, k = 6, target = 3
+      Expected : 1
+      Why      : You throw one die with 6 faces.
+                 There is only one way to get a sum of 3.
+
+  [2] Input    : n = 2, k = 6, target = 7
+      Expected : 6
+      Why      : You throw two dice, each with 6 faces.
+                 There are 6 ways to get a sum of 7: 1+6, 2+5, 3+4, 4+3, 5+2, 6+1.
+
+  [3] Input    : n = 30, k = 30, target = 500
+      Expected : 222616187
+      Why      : The answer must be returned modulo 10^9 + 7.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int numRollsToTarget(int n, int k, int target);
+
+FILES
+  edit : 1155.cpp
+  test : lc run 1155
+══════════════════════════════════════════════════════════════════════════

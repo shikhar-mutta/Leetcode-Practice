@@ -1,0 +1,39 @@
+══════════════════════════════════════════════════════════════════════════
+ 3190. Find Minimum Operations to Make All Elements Divisible by Three
+ Easy  |  Tags: Array, Math
+ https://leetcode.com/problems/find-minimum-operations-to-make-all-elements-divisible-by-three/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given an integer array nums. In one operation, you can add or
+  subtract 1 from any element of nums.
+
+  Return the minimum number of operations to make all elements of nums
+  divisible by 3.
+
+CONSTRAINTS
+  1 <= nums.length <= 50
+  1 <= nums[i] <= 50
+
+TEST CASES
+  [1] Input    : nums = [1,2,3,4]
+      Expected : 3
+      Why      : All array elements can be made divisible by 3 using 3 operations:
+                 - Subtract 1 from 1.
+                 - Add 1 to 2.
+                 … (1 more)
+
+  [2] Input    : nums = [3,6,9]
+      Expected : 0
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int minimumOperations(vector<int>& nums);
+
+FILES
+  edit : 3190.cpp
+  test : lc run 3190
+══════════════════════════════════════════════════════════════════════════

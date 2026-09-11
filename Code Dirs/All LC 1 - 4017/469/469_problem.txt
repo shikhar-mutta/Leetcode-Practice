@@ -1,0 +1,31 @@
+══════════════════════════════════════════════════════════════════════════
+ 469. Convex Polygon
+ Medium  |  Tags: Array, Math, Geometry, Polygons
+ https://leetcode.com/problems/convex-polygon/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : [[0,0],[0,1],[1,1],[1,0]]
+      Expected : true
+
+  [2] Input    : [[0,0],[0,10],[10,10],[10,0],[5,5]]
+      Expected : false
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  bool isConvex(vector<vector<int>>& points);
+
+FILES
+  edit : 469.cpp
+  test : lc run 469
+══════════════════════════════════════════════════════════════════════════

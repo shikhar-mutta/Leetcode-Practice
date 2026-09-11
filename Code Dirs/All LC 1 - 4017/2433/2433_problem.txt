@@ -1,0 +1,43 @@
+══════════════════════════════════════════════════════════════════════════
+ 2433. Find The Original Array of Prefix Xor
+ Medium  |  Tags: Array, Bit Manipulation
+ https://leetcode.com/problems/find-the-original-array-of-prefix-xor/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given an integer array pref of size n. Find and return the array
+  arr of size n that satisfies:
+
+  - pref[i] = arr[0] ^ arr[1] ^ ... ^ arr[i].
+
+  Note that ^ denotes the bitwise-xor operation.
+
+  It can be proven that the answer is unique.
+
+CONSTRAINTS
+  1 <= pref.length <= 10^5
+  0 <= pref[i] <= 10^6
+
+TEST CASES
+  [1] Input    : pref = [5,2,0,3,1]
+      Expected : [5,7,2,3,2]
+      Why      : From the array [5,7,2,3,2] we have the following:
+                 - pref[0] = 5.
+                 - pref[1] = 5 ^ 7 = 2.
+                 … (3 more)
+
+  [2] Input    : pref = [13]
+      Expected : [13]
+      Why      : We have pref[0] = arr[0] = 13.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  vector<int> findArray(vector<int>& pref);
+
+FILES
+  edit : 2433.cpp
+  test : lc run 2433
+══════════════════════════════════════════════════════════════════════════

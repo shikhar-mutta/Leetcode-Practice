@@ -1,0 +1,60 @@
+══════════════════════════════════════════════════════════════════════════
+ 1349. Maximum Students Taking Exam
+ Hard  |  Tags: Array, Dynamic Programming, Bit Manipulation, Matrix, Bitmask, Maximum Flow, Maximum Matching, Bipartite Graph, Edmonds–Karp Algorithm, MPM Algorithm, Push-Relabel Algorithm, Minimum Cut, Matching (Graph), Flow Network, Dinic's Algorithm
+ https://leetcode.com/problems/maximum-students-taking-exam/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given a m * n matrix seats that represent seats distributions in a
+  classroom. If a seat is broken, it is denoted by '#' character otherwise
+  it is denoted by a '.' character.
+
+  Students can see the answers of those sitting next to the left, right,
+  upper left and upper right, but he cannot see the answers of the student
+  sitting directly in front or behind him. Return the maximum number of
+  students that can take the exam together without any cheating being
+  possible.
+
+  Students must be placed in seats in good condition.
+
+CONSTRAINTS
+  seats contains only characters '.' and'#'.
+  m == seats.length
+  n == seats[i].length
+  1 <= m <= 8
+  1 <= n <= 8
+
+TEST CASES
+  [1] Input    : seats = [["#",".","#","#",".","#"],
+ [".","#","#","#","#","."],
+ ["#",".","#","#",".","#"]]
+      Expected : 4
+      Why      : Teacher can place 4 students in available seats so they don't cheat on the exam.
+
+  [2] Input    : seats = [[".","#"],
+ ["#","#"],
+ ["#","."],
+ ["#","#"],
+ [".","#"]]
+      Expected : 3
+      Why      : Place all students in available seats.
+
+  [3] Input    : seats = [["#",".",".",".","#"],
+ [".","#",".","#","."],
+ [".",".","#",".","."],
+ [".","#",".","#","."],
+ ["#",".",".",".","#"]]
+      Expected : 10
+      Why      : Place students in available seats in column 1, 3 and 5.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int maxStudents(vector<vector<char>>& seats);
+
+FILES
+  edit : 1349.cpp
+  test : lc run 1349
+══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,44 @@
+══════════════════════════════════════════════════════════════════════════
+ 222. Count Complete Tree Nodes
+ Medium  |  Tags: Binary Search, Bit Manipulation, Tree, Binary Tree
+ https://leetcode.com/problems/count-complete-tree-nodes/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given the root of a complete binary tree, return the number of the nodes
+  in the tree.
+
+  According to Wikipedia, every level, except possibly the last, is
+  completely filled in a complete binary tree, and all nodes in the last
+  level are as far left as possible. It can have between 1 and 2^h nodes
+  inclusive at the last level h.
+
+  Design an algorithm that runs in less than O(n) time complexity.
+
+CONSTRAINTS
+  The number of nodes in the tree is in the range [0, 5 * 10^4].
+  0 <= Node.val <= 5 * 10^4
+  The tree is guaranteed to be complete.
+
+TEST CASES
+  [1] Input    : root = [1,2,3,4,5,6]
+      Expected : 6
+
+  [2] Input    : root = []
+      Expected : 0
+
+  [3] Input    : root = [1]
+      Expected : 1
+
+CODE TYPE
+  function · tree
+    driver: one Solution call per test case
+    tree: TreeNode* — level order, e.g. [3,9,20,null,null,15,7]
+
+SIGNATURE
+  int countNodes(TreeNode* root);
+
+FILES
+  edit : 222.cpp
+  test : lc run 222
+══════════════════════════════════════════════════════════════════════════

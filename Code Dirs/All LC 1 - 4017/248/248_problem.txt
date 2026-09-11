@@ -1,0 +1,28 @@
+══════════════════════════════════════════════════════════════════════════
+ 248. Strobogrammatic Number III
+ Hard  |  Tags: Array, String, Recursion
+ https://leetcode.com/problems/strobogrammatic-number-iii/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : "50" | "100"
+      Expected : 3
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int strobogrammaticInRange(string low, string high);
+
+FILES
+  edit : 248.cpp
+  test : lc run 248
+══════════════════════════════════════════════════════════════════════════

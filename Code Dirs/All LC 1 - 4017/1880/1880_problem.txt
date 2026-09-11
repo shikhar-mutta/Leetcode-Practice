@@ -1,0 +1,60 @@
+══════════════════════════════════════════════════════════════════════════
+ 1880. Check if Word Equals Summation of Two Words
+ Easy  |  Tags: String
+ https://leetcode.com/problems/check-if-word-equals-summation-of-two-words/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  The letter value of a letter is its position in the alphabet starting
+  from 0 (i.e. 'a' -> 0, 'b' -> 1, 'c' -> 2, etc.).
+
+  The numerical value of some string of lowercase English letters s is the
+  concatenation of the letter values of each letter in s, which is then
+  converted into an integer.
+
+  - For example, if s = "acb", we concatenate each letter's letter value,
+    resulting in "021". After converting it, we get 21.
+
+  You are given three strings firstWord, secondWord, and targetWord, each
+  consisting of lowercase English letters 'a' through 'j' inclusive.
+
+  Return true if the summation of the numerical values of firstWord and
+  secondWord equals the numerical value of targetWord, or false otherwise.
+
+CONSTRAINTS
+  1 <= firstWord.length, secondWord.length, targetWord.length <= 8
+  firstWord, secondWord, and targetWord consist of lowercase English letters from 'a' to 'j' inclusive.
+
+TEST CASES
+  [1] Input    : firstWord = "acb", secondWord = "cba", targetWord = "cdb"
+      Expected : true
+      Why      : The numerical value of firstWord is "acb" -> "021" -> 21.
+                 The numerical value of secondWord is "cba" -> "210" -> 210.
+                 The numerical value of targetWord is "cdb" -> "231" -> 231.
+                 … (1 more)
+
+  [2] Input    : firstWord = "aaa", secondWord = "a", targetWord = "aab"
+      Expected : false
+      Why      : The numerical value of firstWord is "aaa" -> "000" -> 0.
+                 The numerical value of secondWord is "a" -> "0" -> 0.
+                 The numerical value of targetWord is "aab" -> "001" -> 1.
+                 … (1 more)
+
+  [3] Input    : firstWord = "aaa", secondWord = "a", targetWord = "aaaa"
+      Expected : true
+      Why      : The numerical value of firstWord is "aaa" -> "000" -> 0.
+                 The numerical value of secondWord is "a" -> "0" -> 0.
+                 The numerical value of targetWord is "aaaa" -> "0000" -> 0.
+                 … (1 more)
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  bool isSumEqual(string firstWord, string secondWord, string targetWord);
+
+FILES
+  edit : 1880.cpp
+  test : lc run 1880
+══════════════════════════════════════════════════════════════════════════

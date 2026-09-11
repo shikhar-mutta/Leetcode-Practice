@@ -1,0 +1,29 @@
+══════════════════════════════════════════════════════════════════════════
+ 1756. Design Most Recently Used Queue
+ Medium  |  Tags: Array, Linked List, Divide and Conquer, Design, Simulation, Doubly-Linked List, Sqrt Decomposition, Treap, Splay Tree
+ https://leetcode.com/problems/design-most-recently-used-queue/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : ["MRUQueue","fetch","fetch","fetch","fetch"] | [[8],[3],[5],[2],[8]]
+      Expected : [null,3,6,2,2]
+
+CODE TYPE
+  design · MRUQueue
+    driver: replays ["MRUQueue","op",...] / [[args],...] and prints [null,...]
+
+SIGNATURE
+  MRUQueue(int n);
+  int fetch(int k);
+
+FILES
+  edit : 1756.cpp
+  test : lc run 1756
+══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,51 @@
+══════════════════════════════════════════════════════════════════════════
+ 3147. Taking Maximum Energy From the Mystic Dungeon
+ Medium  |  Tags: Array, Dynamic Programming, Prefix Sum
+ https://leetcode.com/problems/taking-maximum-energy-from-the-mystic-dungeon/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  In a mystic dungeon, n magicians are standing in a line. Each magician
+  has an attribute that gives you energy. Some magicians can give you
+  negative energy, which means taking energy from you.
+
+  You have been cursed in such a way that after absorbing energy from
+  magician i, you will be instantly transported to magician (i + k). This
+  process will be repeated until you reach the magician where (i + k) does
+  not exist.
+
+  In other words, you will choose a starting point and then teleport with
+  k jumps until you reach the end of the magicians' sequence, absorbing
+  all the energy during the journey.
+
+  You are given an array energy and an integer k. Return the maximum
+  possible energy you can gain.
+
+  Note that when you reach a magician, you must take energy from them,
+  whether it is negative or positive energy.
+
+CONSTRAINTS
+  1 <= energy.length <= 10^5
+  -1000 <= energy[i] <= 1000
+  1 <= k <= energy.length - 1
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : [5,2,-10,-5,1] | 3
+      Expected : 3
+
+  [2] Input    : [-2,-3,-1] | 2
+      Expected : -1
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int maximumEnergy(vector<int>& energy, int k);
+
+FILES
+  edit : 3147.cpp
+  test : lc run 3147
+══════════════════════════════════════════════════════════════════════════

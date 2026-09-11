@@ -1,0 +1,42 @@
+══════════════════════════════════════════════════════════════════════════
+ 3945. Digit Frequency Score
+ Easy  |  Tags: Hash Table, Math
+ https://leetcode.com/problems/digit-frequency-score/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given an integer n.
+
+  The score of n is defined as the sum of d * freq(d) over all distinct
+  digits d, where freq(d) denotes the number of times the digit d appears
+  in n.
+
+  Return an integer denoting the score of n.
+
+CONSTRAINTS
+  1 <= n <= 10^9
+
+TEST CASES
+  [1] Input    : n = 122
+      Expected : 5
+      Why      : - The digit 1 appears 1 time, contributing 1 * 1 = 1.
+                 - The digit 2 appears 2 times, contributing 2 * 2 = 4.
+                 - Thus, the score of n is 1 + 4 = 5.
+
+  [2] Input    : n = 101
+      Expected : 2
+      Why      : - The digit 0 appears 1 time, contributing 0 * 1 = 0.
+                 - The digit 1 appears 2 times, contributing 1 * 2 = 2.
+                 - Thus, the score of n is 2.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int digitFrequencyScore(int n);
+
+FILES
+  edit : 3945.cpp
+  test : lc run 3945
+══════════════════════════════════════════════════════════════════════════

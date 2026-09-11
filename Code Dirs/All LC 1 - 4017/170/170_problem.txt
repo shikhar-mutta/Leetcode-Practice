@@ -1,0 +1,30 @@
+══════════════════════════════════════════════════════════════════════════
+ 170. Two Sum III - Data structure design
+ Easy  |  Tags: Array, Hash Table, Two Pointers, Design, Data Stream
+ https://leetcode.com/problems/two-sum-iii-data-structure-design/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : ["TwoSum","add","add","add","find","find"] | [[],[1],[3],[5],[4],[7]]
+      Expected : [null,null,null,null,true,false]
+
+CODE TYPE
+  design · TwoSum
+    driver: replays ["TwoSum","op",...] / [[args],...] and prints [null,...]
+
+SIGNATURE
+  TwoSum();
+  void add(int number);
+  bool find(int value);
+
+FILES
+  edit : 170.cpp
+  test : lc run 170
+══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,51 @@
+══════════════════════════════════════════════════════════════════════════
+ 948. Bag of Tokens
+ Medium  |  Tags: Array, Two Pointers, Greedy, Sorting
+ https://leetcode.com/problems/bag-of-tokens/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You start with an initial power of power, an initial score of 0, and a
+  bag of tokens given as an integer array tokens, where each tokens[i]
+  denotes the value of tokeni.
+
+  Your goal is to maximize the total score by strategically playing these
+  tokens. In one move, you can play an unplayed token in one of the two
+  ways (but not both for the same token):
+
+  - Face-up: If your current power is at least tokens[i], you may play
+    tokeni, losing tokens[i] power and gaining 1 score.
+
+  - Face-down: If your current score is at least 1, you may play tokeni,
+    gaining tokens[i] power and losing 1 score.
+
+  Return the maximum possible score you can achieve after playing any
+  number of tokens.
+
+CONSTRAINTS
+  0 <= tokens.length <= 1000
+  0 <= tokens[i], power < 10^4
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : [100] | 50
+      Expected : 0
+
+  [2] Input    : [200,100] | 150
+      Expected : 1
+
+  [3] Input    : [100,200,300,400] | 200
+      Expected : 2
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int bagOfTokensScore(vector<int>& tokens, int power);
+
+FILES
+  edit : 948.cpp
+  test : lc run 948
+══════════════════════════════════════════════════════════════════════════

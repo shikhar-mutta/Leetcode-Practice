@@ -1,0 +1,45 @@
+══════════════════════════════════════════════════════════════════════════
+ 3428. Maximum and Minimum Sums of at Most Size K Subsequences
+ Medium  |  Tags: Array, Math, Dynamic Programming, Sorting, Combinatorics
+ https://leetcode.com/problems/maximum-and-minimum-sums-of-at-most-size-k-subsequences/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given an integer array nums and a positive integer k. Return the
+  sum of the maximum and minimum elements of all subsequences of nums with
+  at most k elements.
+
+  Since the answer may be very large, return it modulo 10^9 + 7.
+
+CONSTRAINTS
+  1 <= nums.length <= 10^5
+  0 <= nums[i] <= 10^9
+  1 <= k <= min(70, nums.length)
+
+TEST CASES
+  [1] Input    : nums = [1,2,3], k = 2
+      Expected : 24
+      Why      : The subsequences of nums with at most 2 elements are:
+                 Subsequence
+                 Minimum
+                 … (29 more)
+
+  [2] Input    : nums = [5,0,6], k = 1
+      Expected : 22
+      Why      : For subsequences with exactly 1 element, the minimum and maximum values are the element itself. Therefore, the total is 5 + 5 + 0 + 0 + 6 + 6 = 22.
+
+  [3] Input    : nums = [1,1,1], k = 2
+      Expected : 12
+      Why      : The subsequences [1, 1] and [1] each appear 3 times. For all of them, the minimum and maximum are both 1. Thus, the total is 12.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int minMaxSums(vector<int>& nums, int k);
+
+FILES
+  edit : 3428.cpp
+  test : lc run 3428
+══════════════════════════════════════════════════════════════════════════

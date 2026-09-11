@@ -1,0 +1,35 @@
+══════════════════════════════════════════════════════════════════════════
+ 556. Next Greater Element III
+ Medium  |  Tags: Math, Two Pointers, String
+ https://leetcode.com/problems/next-greater-element-iii/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given a positive integer n, find the smallest integer which has exactly
+  the same digits existing in the integer n and is greater in value than
+  n. If no such positive integer exists, return -1.
+
+  Note that the returned integer should fit in 32-bit integer, if there is
+  a valid answer but it does not fit in 32-bit integer, return -1.
+
+CONSTRAINTS
+  1 <= n <= 2^31 - 1
+
+TEST CASES
+  [1] Input    : n = 12
+      Expected : 21
+
+  [2] Input    : n = 21
+      Expected : -1
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int nextGreaterElement(int n);
+
+FILES
+  edit : 556.cpp
+  test : lc run 556
+══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,56 @@
+══════════════════════════════════════════════════════════════════════════
+ 1834. Single-Threaded CPU
+ Medium  |  Tags: Array, Sorting, Heap (Priority Queue)
+ https://leetcode.com/problems/single-threaded-cpu/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given n tasks labeled from 0 to n - 1 represented by a 2D
+  integer array tasks, where tasks[i] = [enqueueTimei, processingTimei]
+  means that the i^th task will be available to process at enqueueTimei
+  and will take processingTimeito finish processing.
+
+  You have a single-threaded CPU that can process at most one task at a
+  time and will act in the following way:
+
+  - If the CPU is idle and there are no available tasks to process, the
+    CPU remains idle.
+
+  - If the CPU is idle and there are available tasks, the CPU will choose
+    the one with the shortest processing time. If multiple tasks have the
+    same shortest processing time, it will choose the task with the
+    smallest index.
+
+  - Once a task is started, the CPU will process the entire task without
+    stopping.
+
+  - The CPU can finish a task then start a new one instantly.
+
+  Return the order in which the CPU will process the tasks.
+
+TEST CASES
+  [1] Input    : tasks = [[1,2],[2,4],[3,2],[4,1]]
+      Expected : [0,2,3,1]
+      Why      : The events go as follows:
+                 - At time = 1, task 0 is available to process. Available tasks = {0}.
+                 - Also at time = 1, the idle CPU starts processing task 0. Available tasks = {}.
+                 … (7 more)
+
+  [2] Input    : tasks = [[7,10],[7,12],[7,5],[7,4],[7,2]]
+      Expected : [4,3,2,0,1]
+      Why      : The events go as follows:
+                 - At time = 7, all the tasks become available. Available tasks = {0,1,2,3,4}.
+                 - Also at time = 7, the idle CPU starts processing task 4. Available tasks = {0,1,2,3}.
+                 … (5 more)
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  vector<int> getOrder(vector<vector<int>>& tasks);
+
+FILES
+  edit : 1834.cpp
+  test : lc run 1834
+══════════════════════════════════════════════════════════════════════════

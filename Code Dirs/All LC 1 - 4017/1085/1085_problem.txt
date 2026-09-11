@@ -1,0 +1,31 @@
+══════════════════════════════════════════════════════════════════════════
+ 1085. Sum of Digits in the Minimum Number
+ Easy  |  Tags: Array, Math
+ https://leetcode.com/problems/sum-of-digits-in-the-minimum-number/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : [34,23,1,24,75,33,54,8]
+      Expected : 0
+
+  [2] Input    : [99,77,33,66,55]
+      Expected : 1
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int sumOfDigits(vector<int>& nums);
+
+FILES
+  edit : 1085.cpp
+  test : lc run 1085
+══════════════════════════════════════════════════════════════════════════

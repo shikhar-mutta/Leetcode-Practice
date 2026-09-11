@@ -1,0 +1,65 @@
+══════════════════════════════════════════════════════════════════════════
+ 753. Cracking the Safe
+ Hard  |  Tags: String, Depth-First Search, Graph Theory, Eulerian Circuit, Eulerian Path, Eulerian Graph
+ https://leetcode.com/problems/cracking-the-safe/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  There is a safe protected by a password. The password is a sequence of n
+  digits where each digit can be in the range [0, k - 1].
+
+  The safe has a peculiar way of checking the password. When you enter in
+  a sequence, it checks the most recent n digits that were entered each
+  time you type a digit.
+
+  - For example, the correct password is "345" and you enter in "012345":
+
+
+  - After typing 0, the most recent 3 digits is "0", which is incorrect.
+
+  - After typing 1, the most recent 3 digits is "01", which is incorrect.
+
+  - After typing 2, the most recent 3 digits is "012", which is incorrect.
+
+  - After typing 3, the most recent 3 digits is "123", which is incorrect.
+
+  - After typing 4, the most recent 3 digits is "234", which is incorrect.
+
+  - After typing 5, the most recent 3 digits is "345", which is correct
+    and the safe unlocks.
+
+
+
+
+
+  Return any string of minimum length that will unlock the safe at some
+  point of entering it.
+
+CONSTRAINTS
+  1 <= n <= 4
+  1 <= k <= 10
+  1 <= k^n <= 4096
+
+TEST CASES
+  [1] Input    : n = 1, k = 2
+      Expected : "10"
+      Why      : The password is a single digit, so enter each digit. "01" would also unlock the safe.
+
+  [2] Input    : n = 2, k = 2
+      Expected : "01100"
+      Why      : For each possible password:
+                 - "00" is typed in starting from the 4^th digit.
+                 - "01" is typed in starting from the 1^st digit.
+                 … (3 more)
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  string crackSafe(int n, int k);
+
+FILES
+  edit : 753.cpp
+  test : lc run 753
+══════════════════════════════════════════════════════════════════════════

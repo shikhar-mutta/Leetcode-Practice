@@ -1,0 +1,69 @@
+══════════════════════════════════════════════════════════════════════════
+ 3981. Count Distinct Ways to Form Target from Two Strings
+ Hard  |  Tags: String, Dynamic Programming, Prefix Sum
+ https://leetcode.com/problems/count-distinct-ways-to-form-target-from-two-strings/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given three strings word1, word2, and target.
+
+  Your task is to count the number of ways to form target by choosing
+  characters from word1 and word2 under the following conditions:
+
+  - For each character of target, choose one matching character from
+    either word1 or word2.
+
+  - The chosen indices from word1 must be strictly increasing.
+
+  - The chosen indices from word2 must be strictly increasing.
+
+  - At least one character must be chosen from both word1 and word2.
+
+  Two ways are considered different if, for at least one position in
+  target, the chosen character comes from a different string or a
+  different index.
+
+  Return the number of ways. Since the answer may be very large, return it
+  modulo 10^9 + 7.
+
+CONSTRAINTS
+  1 <= word1.length, word2.length, target.length <= 100
+  word1, word2, and target consist of lowercase English letters only.
+
+TEST CASES
+  [1] Input    : word1 = "abc", word2 = "bac", target = "abc"
+      Expected : 5
+      Why      : There are 5 ways to form target:
+                 - word1[0] = 'a', word1[1] = 'b', word2[2] = 'c'
+                 - word1[0] = 'a', word2[0] = 'b', word1[2] = 'c'
+                 … (4 more)
+
+  [2] Input    : word1 = "cd", word2 = "cd", target = "ccd"
+      Expected : 4
+      Why      : There are 4 ways to form target:
+                 - word1[0] = 'c', word2[0] = 'c', word1[1] = 'd'
+                 - word1[0] = 'c', word2[0] = 'c', word2[1] = 'd'
+                 … (3 more)
+
+  [3] Input    : word1 = "xy", word2 = "xy", target = "xyxy"
+      Expected : 2
+      Why      : There are 2 ways to form target:
+                 - word1[0] = 'x', word1[1] = 'y', word2[0] = 'x', word2[1] = 'y'
+                 - word2[0] = 'x', word2[1] = 'y', word1[0] = 'x', word1[1] = 'y'
+                 … (1 more)
+
+  [4] Input    : word1 = "ab", word2 = "cde", target = "ace"
+      Expected : 1
+      Why      : The only way is to choose word1[0] = 'a', word2[0] = 'c', and word2[2] = 'e'. Thus, the answer is 1.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int interleaveCharacters(string word1, string word2, string target);
+
+FILES
+  edit : 3981.cpp
+  test : lc run 3981
+══════════════════════════════════════════════════════════════════════════

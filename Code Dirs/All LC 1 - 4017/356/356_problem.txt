@@ -1,0 +1,31 @@
+══════════════════════════════════════════════════════════════════════════
+ 356. Line Reflection
+ Medium  |  Tags: Array, Hash Table, Math
+ https://leetcode.com/problems/line-reflection/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : [[1,1],[-1,1]]
+      Expected : true
+
+  [2] Input    : [[1,1],[-1,-1]]
+      Expected : false
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  bool isReflected(vector<vector<int>>& points);
+
+FILES
+  edit : 356.cpp
+  test : lc run 356
+══════════════════════════════════════════════════════════════════════════

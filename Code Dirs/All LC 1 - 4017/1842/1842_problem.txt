@@ -1,0 +1,31 @@
+══════════════════════════════════════════════════════════════════════════
+ 1842. Next Palindrome Using Same Digits
+ Hard  |  Tags: Two Pointers, String
+ https://leetcode.com/problems/next-palindrome-using-same-digits/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : "1221"
+      Expected : "2112"
+
+  [2] Input    : "32123"
+      Expected : ""
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  string nextPalindrome(string num);
+
+FILES
+  edit : 1842.cpp
+  test : lc run 1842
+══════════════════════════════════════════════════════════════════════════

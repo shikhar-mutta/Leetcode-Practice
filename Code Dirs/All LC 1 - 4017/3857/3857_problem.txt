@@ -1,0 +1,46 @@
+══════════════════════════════════════════════════════════════════════════
+ 3857. Minimum Cost to Split into Ones
+ Medium  |  Tags: Math, Dynamic Programming
+ https://leetcode.com/problems/minimum-cost-to-split-into-ones/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given an integer n.
+
+  In one operation, you may split an integer x into two positive integers
+  a and b such that a + b = x.
+
+  The cost of this operation is a * b.
+
+  Return an integer denoting the minimum total cost required to split the
+  integer n into n ones.
+
+CONSTRAINTS
+  1 <= n <= 500
+
+TEST CASES
+  [1] Input    : n = 3
+      Expected : 3
+      Why      : One optimal set of operations is:
+                 x
+                 a
+                 … (17 more)
+
+  [2] Input    : n = 4
+      Expected : 6
+      Why      : One optimal set of operations is:
+                 x
+                 a
+                 … (23 more)
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int minCost(int n);
+
+FILES
+  edit : 3857.cpp
+  test : lc run 3857
+══════════════════════════════════════════════════════════════════════════

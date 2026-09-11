@@ -1,0 +1,55 @@
+══════════════════════════════════════════════════════════════════════════
+ 3561. Resulting String After Adjacent Removals
+ Medium  |  Tags: String, Stack, Simulation
+ https://leetcode.com/problems/resulting-string-after-adjacent-removals/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a string s consisting of lowercase English letters.
+
+  You must repeatedly perform the following operation while the string s
+  has at least two consecutive characters:
+
+  - Remove the leftmost pair of adjacent characters in the string that are
+    consecutive in the alphabet, in either order (e.g., 'a' and 'b', or
+    'b' and 'a').
+
+  - Shift the remaining characters to the left to fill the gap.
+
+  Return the resulting string after no more operations can be performed.
+
+  Note: Consider the alphabet as circular, thus 'a' and 'z' are
+  consecutive.
+
+CONSTRAINTS
+  1 <= s.length <= 10^5
+  s consists only of lowercase English letters.
+
+TEST CASES
+  [1] Input    : s = "abc"
+      Expected : "c"
+      Why      : - Remove "ab" from the string, leaving "c" as the remaining string.
+                 - No further operations are possible. Thus, the resulting string after all possible removals is "c".
+
+  [2] Input    : s = "adcb"
+      Expected : ""
+      Why      : - Remove "dc" from the string, leaving "ab" as the remaining string.
+                 - Remove "ab" from the string, leaving "" as the remaining string.
+                 - No further operations are possible. Thus, the resulting string after all possible removals is "".
+
+  [3] Input    : s = "zadb"
+      Expected : "db"
+      Why      : - Remove "za" from the string, leaving "db" as the remaining string.
+                 - No further operations are possible. Thus, the resulting string after all possible removals is "db".
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  string resultingString(string s);
+
+FILES
+  edit : 3561.cpp
+  test : lc run 3561
+══════════════════════════════════════════════════════════════════════════

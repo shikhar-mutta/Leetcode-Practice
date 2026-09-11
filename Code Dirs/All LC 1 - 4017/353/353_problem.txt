@@ -1,0 +1,29 @@
+══════════════════════════════════════════════════════════════════════════
+ 353. Design Snake Game
+ Medium  |  Tags: Array, Hash Table, Design, Queue, Simulation
+ https://leetcode.com/problems/design-snake-game/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : ["SnakeGame","move","move","move","move","move"] | [[3,3,[[0,1],[0,2]]],["R"],["R"],["D"],["L"],["D"]]
+      Expected : [null, 1, 2, 2, 2, 2]
+
+CODE TYPE
+  design · SnakeGame
+    driver: replays ["SnakeGame","op",...] / [[args],...] and prints [null,...]
+
+SIGNATURE
+  SnakeGame(int width, int height, vector<vector<int>>& food);
+  int move(string direction);
+
+FILES
+  edit : 353.cpp
+  test : lc run 353
+══════════════════════════════════════════════════════════════════════════

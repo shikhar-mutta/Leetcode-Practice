@@ -1,0 +1,40 @@
+══════════════════════════════════════════════════════════════════════════
+ 172. Factorial Trailing Zeroes
+ Medium  |  Tags: Math
+ https://leetcode.com/problems/factorial-trailing-zeroes/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given an integer n, return the number of trailing zeroes in n!.
+
+  Note that n! = n * (n - 1) * (n - 2) * ... * 3 * 2 * 1.
+
+CONSTRAINTS
+  0 <= n <= 10^4
+
+TEST CASES
+  [1] Input    : n = 3
+      Expected : 0
+      Why      : 3! = 6, no trailing zero.
+
+  [2] Input    : n = 5
+      Expected : 1
+      Why      : 5! = 120, one trailing zero.
+
+  [3] Input    : n = 0
+      Expected : 0
+
+FOLLOW UP
+  Could you write a solution that works in logarithmic time complexity?
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int trailingZeroes(int n);
+
+FILES
+  edit : 172.cpp
+  test : lc run 172
+══════════════════════════════════════════════════════════════════════════

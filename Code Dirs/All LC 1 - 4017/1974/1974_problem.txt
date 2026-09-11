@@ -1,0 +1,58 @@
+══════════════════════════════════════════════════════════════════════════
+ 1974. Minimum Time to Type Word Using Special Typewriter
+ Easy  |  Tags: String, Greedy
+ https://leetcode.com/problems/minimum-time-to-type-word-using-special-typewriter/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  There is a special typewriter with lowercase English letters 'a' to 'z'
+  arranged in a circle with a pointer. A character can only be typed if
+  the pointer is pointing to that character. The pointer is initially
+  pointing to the character 'a'.
+
+  Each second, you may perform one of the following operations:
+
+  - Move the pointer one character counterclockwise or clockwise.
+
+  - Type the character the pointer is currently on.
+
+  Given a string word, return the minimum number of seconds to type out
+  the characters in word.
+
+CONSTRAINTS
+  1 <= word.length <= 100
+  word consists of lowercase English letters.
+
+TEST CASES
+  [1] Input    : word = "abc"
+      Expected : 5
+      Why      : The characters are printed as follows:
+                 - Type the character 'a' in 1 second since the pointer is initially on 'a'.
+                 - Move the pointer clockwise to 'b' in 1 second.
+                 … (3 more)
+
+  [2] Input    : word = "bza"
+      Expected : 7
+      Why      : The characters are printed as follows:
+                 - Move the pointer clockwise to 'b' in 1 second.
+                 - Type the character 'b' in 1 second.
+                 … (4 more)
+
+  [3] Input    : word = "zjpc"
+      Expected : 34
+      Why      : The characters are printed as follows:
+                 - Move the pointer counterclockwise to 'z' in 1 second.
+                 - Type the character 'z' in 1 second.
+                 … (6 more)
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int minTimeToType(string word);
+
+FILES
+  edit : 1974.cpp
+  test : lc run 1974
+══════════════════════════════════════════════════════════════════════════

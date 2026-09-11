@@ -1,0 +1,32 @@
+══════════════════════════════════════════════════════════════════════════
+ 1120. Maximum Average Subtree
+ Medium  |  Tags: Tree, Depth-First Search, Binary Tree
+ https://leetcode.com/problems/maximum-average-subtree/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : [5,6,1]
+      Expected : 6.00000
+
+  [2] Input    : [0,null,1]
+      Expected : 1.00000
+
+CODE TYPE
+  function · tree
+    driver: one Solution call per test case
+    tree: TreeNode* — level order, e.g. [3,9,20,null,null,15,7]
+
+SIGNATURE
+  double maximumAverageSubtree(TreeNode* root);
+
+FILES
+  edit : 1120.cpp
+  test : lc run 1120
+══════════════════════════════════════════════════════════════════════════

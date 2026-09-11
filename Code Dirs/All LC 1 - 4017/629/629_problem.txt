@@ -1,0 +1,38 @@
+══════════════════════════════════════════════════════════════════════════
+ 629. K Inverse Pairs Array
+ Hard  |  Tags: Dynamic Programming
+ https://leetcode.com/problems/k-inverse-pairs-array/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  For an integer array nums, an inverse pair is a pair of integers [i, j]
+  where 0 <= i < j < nums.length and nums[i] > nums[j].
+
+  Given two integers n and k, return the number of different arrays
+  consisting of numbers from 1 to n such that there are exactly k inverse
+  pairs. Since the answer can be huge, return it modulo 10^9 + 7.
+
+CONSTRAINTS
+  1 <= n <= 1000
+  0 <= k <= 1000
+
+TEST CASES
+  [1] Input    : n = 3, k = 0
+      Expected : 1
+      Why      : Only the array [1,2,3] which consists of numbers from 1 to 3 has exactly 0 inverse pairs.
+
+  [2] Input    : n = 3, k = 1
+      Expected : 2
+      Why      : The array [1,3,2] and [2,1,3] have exactly 1 inverse pair.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int kInversePairs(int n, int k);
+
+FILES
+  edit : 629.cpp
+  test : lc run 629
+══════════════════════════════════════════════════════════════════════════

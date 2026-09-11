@@ -1,0 +1,44 @@
+══════════════════════════════════════════════════════════════════════════
+ 1716. Calculate Money in Leetcode Bank
+ Easy  |  Tags: Math
+ https://leetcode.com/problems/calculate-money-in-leetcode-bank/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Hercy wants to save money for his first car. He puts money in the
+  Leetcode bank every day.
+
+  He starts by putting in $1 on Monday, the first day. Every day from
+  Tuesday to Sunday, he will put in $1 more than the day before. On every
+  subsequent Monday, he will put in $1 more than the previous Monday.
+
+  Given n, return the total amount of money he will have in the Leetcode
+  bank at the end of the n^th day.
+
+CONSTRAINTS
+  1 <= n <= 1000
+
+TEST CASES
+  [1] Input    : n = 4
+      Expected : 10
+      Why      : After the 4^th day, the total is 1 + 2 + 3 + 4 = 10.
+
+  [2] Input    : n = 10
+      Expected : 37
+      Why      : After the 10^th day, the total is (1 + 2 + 3 + 4 + 5 + 6 + 7) + (2 + 3 + 4) = 37. Notice that on the 2^nd Monday, Hercy only puts in $2.
+
+  [3] Input    : n = 20
+      Expected : 96
+      Why      : After the 20^th day, the total is (1 + 2 + 3 + 4 + 5 + 6 + 7) + (2 + 3 + 4 + 5 + 6 + 7 + 8) + (3 + 4 + 5 + 6 + 7 + 8) = 96.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int totalMoney(int n);
+
+FILES
+  edit : 1716.cpp
+  test : lc run 1716
+══════════════════════════════════════════════════════════════════════════

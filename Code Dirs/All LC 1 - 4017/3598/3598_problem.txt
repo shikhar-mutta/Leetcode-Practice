@@ -1,0 +1,49 @@
+══════════════════════════════════════════════════════════════════════════
+ 3598. Longest Common Prefix Between Adjacent Strings After Removals
+ Medium  |  Tags: Array, String
+ https://leetcode.com/problems/longest-common-prefix-between-adjacent-strings-after-removals/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given an array of strings words. For each index i in the range
+  [0, words.length - 1], perform the following steps:
+
+  - Remove the element at index i from the words array.
+
+  - Compute the length of the longest common prefix among all adjacent
+    pairs in the modified array.
+
+  Return an array answer, where answer[i] is the length of the longest
+  common prefix between the adjacent pairs after removing the element at
+  index i. If no adjacent pairs remain or if none share a common prefix,
+  then answer[i] should be 0.
+
+CONSTRAINTS
+  1 <= words.length <= 10^5
+  1 <= words[i].length <= 10^4
+  words[i] consists of lowercase English letters.
+  The sum of words[i].length is smaller than or equal 10^5.
+
+TEST CASES
+  [1] Input    : words = ["jump","run","run","jump","run"]
+      Expected : [3,0,0,3,3]
+      Why      : - Removing index 0:
+                 - words becomes ["run", "run", "jump", "run"]
+                 - Longest adjacent pair is ["run", "run"] having a common prefix "run" (length 3)
+                 … (12 more)
+
+  [2] Input    : words = ["dog","racer","car"]
+      Expected : [0,0,0]
+      Why      : - Removing any index results in an answer of 0.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  vector<int> longestCommonPrefix(vector<string>& words);
+
+FILES
+  edit : 3598.cpp
+  test : lc run 3598
+══════════════════════════════════════════════════════════════════════════

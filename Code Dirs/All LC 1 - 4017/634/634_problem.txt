@@ -1,0 +1,31 @@
+══════════════════════════════════════════════════════════════════════════
+ 634. Find the Derangement of An Array
+ Medium  |  Tags: Math, Dynamic Programming, Combinatorics
+ https://leetcode.com/problems/find-the-derangement-of-an-array/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : 3
+      Expected : 2
+
+  [2] Input    : 4
+      Expected : 9
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int findDerangement(int n);
+
+FILES
+  edit : 634.cpp
+  test : lc run 634
+══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,28 @@
+══════════════════════════════════════════════════════════════════════════
+ 1198. Find Smallest Common Element in All Rows
+ Medium  |  Tags: Array, Hash Table, Binary Search, Matrix, Counting
+ https://leetcode.com/problems/find-smallest-common-element-in-all-rows/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : [[1,2,3,4,5],[2,4,5,8,10],[3,5,7,9,11],[1,3,5,7,9]]
+      Expected : 5
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int smallestCommonElement(vector<vector<int>>& mat);
+
+FILES
+  edit : 1198.cpp
+  test : lc run 1198
+══════════════════════════════════════════════════════════════════════════

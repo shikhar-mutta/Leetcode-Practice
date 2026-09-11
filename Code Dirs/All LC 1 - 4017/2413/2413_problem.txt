@@ -1,0 +1,33 @@
+══════════════════════════════════════════════════════════════════════════
+ 2413. Smallest Even Multiple
+ Easy  |  Tags: Math, Number Theory
+ https://leetcode.com/problems/smallest-even-multiple/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given a positive integer n, return the smallest positive integer that is
+  a multiple of both 2 and n.
+
+CONSTRAINTS
+  1 <= n <= 150
+
+TEST CASES
+  [1] Input    : n = 5
+      Expected : 10
+      Why      : The smallest multiple of both 5 and 2 is 10.
+
+  [2] Input    : n = 6
+      Expected : 6
+      Why      : The smallest multiple of both 6 and 2 is 6. Note that a number is a multiple of itself.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int smallestEvenMultiple(int n);
+
+FILES
+  edit : 2413.cpp
+  test : lc run 2413
+══════════════════════════════════════════════════════════════════════════

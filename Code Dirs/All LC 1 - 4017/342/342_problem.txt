@@ -1,0 +1,40 @@
+══════════════════════════════════════════════════════════════════════════
+ 342. Power of Four
+ Easy  |  Tags: Math, Bit Manipulation, Recursion
+ https://leetcode.com/problems/power-of-four/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given an integer n, return true if it is a power of four. Otherwise,
+  return false.
+
+  An integer n is a power of four, if there exists an integer x such that
+  n == 4^x.
+
+CONSTRAINTS
+  -2^31 <= n <= 2^31 - 1
+
+TEST CASES
+  [1] Input    : n = 16
+      Expected : true
+
+  [2] Input    : n = 5
+      Expected : false
+
+  [3] Input    : n = 1
+      Expected : true
+
+FOLLOW UP
+  Could you solve it without loops/recursion?
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  bool isPowerOfFour(int n);
+
+FILES
+  edit : 342.cpp
+  test : lc run 342
+══════════════════════════════════════════════════════════════════════════

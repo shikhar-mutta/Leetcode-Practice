@@ -1,0 +1,48 @@
+══════════════════════════════════════════════════════════════════════════
+ 3592. Inverse Coin Change
+ Medium  |  Tags: Array, Dynamic Programming
+ https://leetcode.com/problems/inverse-coin-change/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a 1-indexed integer array numWays, where numWays[i]
+  represents the number of ways to select a total amount i using an
+  infinite supply of some fixed coin denominations. Each denomination is a
+  positive integer with value at most numWays.length.
+
+  However, the exact coin denominations have been lost. Your task is to
+  recover the set of denominations that could have resulted in the given
+  numWays array.
+
+  Return a sorted array containing unique integers which represents this
+  set of denominations.
+
+  If no such set exists, return an empty array.
+
+CONSTRAINTS
+  1 <= numWays.length <= 100
+  0 <= numWays[i] <= 2 * 10^8
+
+TEST CASES
+  [1] Input    : numWays = [1,2,2,3,4]
+      Expected : [1,2,5]
+      Why      : 1
+                 1
+                 The only way is [1].
+                 … (12 more)
+
+  [2] Input    : numWays = [1,2,3,4,15]
+      Expected : []
+      Why      : No set of denomination satisfies this array.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  vector<int> findCoins(vector<int>& numWays);
+
+FILES
+  edit : 3592.cpp
+  test : lc run 3592
+══════════════════════════════════════════════════════════════════════════

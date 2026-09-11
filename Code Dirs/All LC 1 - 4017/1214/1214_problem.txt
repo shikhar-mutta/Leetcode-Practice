@@ -1,0 +1,32 @@
+══════════════════════════════════════════════════════════════════════════
+ 1214. Two Sum BSTs
+ Medium  |  Tags: Two Pointers, Binary Search, Stack, Tree, Depth-First Search, Binary Search Tree, Binary Tree
+ https://leetcode.com/problems/two-sum-bsts/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : [2,1,4] | [1,0,3] | 5
+      Expected : true
+
+  [2] Input    : [0,-10,10] | [5,1,7,0,2] | 18
+      Expected : false
+
+CODE TYPE
+  function · tree
+    driver: one Solution call per test case
+    tree: TreeNode* — level order, e.g. [3,9,20,null,null,15,7]
+
+SIGNATURE
+  bool twoSumBSTs(TreeNode* root1, TreeNode* root2, int target);
+
+FILES
+  edit : 1214.cpp
+  test : lc run 1214
+══════════════════════════════════════════════════════════════════════════

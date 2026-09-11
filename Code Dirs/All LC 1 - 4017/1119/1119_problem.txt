@@ -1,0 +1,31 @@
+══════════════════════════════════════════════════════════════════════════
+ 1119. Remove Vowels from a String
+ Easy  |  Tags: String
+ https://leetcode.com/problems/remove-vowels-from-a-string/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : "leetcodeisacommunityforcoders"
+      Expected : ltcdscmmntyfrcdrs
+
+  [2] Input    : "aeiou"
+      Expected : 
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  string removeVowels(string s);
+
+FILES
+  edit : 1119.cpp
+  test : lc run 1119
+══════════════════════════════════════════════════════════════════════════

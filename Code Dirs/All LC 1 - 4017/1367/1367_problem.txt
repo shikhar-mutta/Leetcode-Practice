@@ -1,0 +1,46 @@
+══════════════════════════════════════════════════════════════════════════
+ 1367. Linked List in Binary Tree
+ Medium  |  Tags: Linked List, Tree, Depth-First Search, Binary Tree
+ https://leetcode.com/problems/linked-list-in-binary-tree/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given a binary tree root and a linked list with head as the first node.
+
+  Return True if all the elements in the linked list starting from the
+  head correspond to some downward path connected in the binary tree
+  otherwise return False.
+
+  In this context downward path means a path that starts at some node and
+  goes downwards.
+
+CONSTRAINTS
+  The number of nodes in the tree will be in the range [1, 2500].
+  The number of nodes in the list will be in the range [1, 100].
+  1 <= Node.val <= 100 for each node in the linked list and binary tree.
+
+TEST CASES
+  [1] Input    : head = [4,2,8], root = [1,4,4,null,2,2,null,1,null,6,8,null,null,null,null,1,3]
+      Expected : true
+      Why      : Nodes in blue form a subpath in the binary Tree.
+
+  [2] Input    : head = [1,4,2,6], root = [1,4,4,null,2,2,null,1,null,6,8,null,null,null,null,1,3]
+      Expected : true
+
+  [3] Input    : head = [1,4,2,6,8], root = [1,4,4,null,2,2,null,1,null,6,8,null,null,null,null,1,3]
+      Expected : false
+      Why      : There is no path in the binary tree that contains all the elements of the linked list from head.
+
+CODE TYPE
+  function · linked list · tree
+    driver: one Solution call per test case
+    linked list: ListNode* — values in order, e.g. [1,2,3,4]
+    tree: TreeNode* — level order, e.g. [3,9,20,null,null,15,7]
+
+SIGNATURE
+  bool isSubPath(ListNode* head, TreeNode* root);
+
+FILES
+  edit : 1367.cpp
+  test : lc run 1367
+══════════════════════════════════════════════════════════════════════════

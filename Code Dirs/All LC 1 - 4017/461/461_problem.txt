@@ -1,0 +1,37 @@
+══════════════════════════════════════════════════════════════════════════
+ 461. Hamming Distance
+ Easy  |  Tags: Bit Manipulation
+ https://leetcode.com/problems/hamming-distance/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  The Hamming distance between two integers is the number of positions at
+  which the corresponding bits are different.
+
+  Given two integers x and y, return the Hamming distance between them.
+
+CONSTRAINTS
+  0 <= x, y <= 2^31 - 1
+
+TEST CASES
+  [1] Input    : x = 1, y = 4
+      Expected : 2
+      Why      : 1 (0 0 0 1)
+                 4 (0 1 0 0)
+                 ↑ ↑
+                 … (1 more)
+
+  [2] Input    : x = 3, y = 1
+      Expected : 1
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int hammingDistance(int x, int y);
+
+FILES
+  edit : 461.cpp
+  test : lc run 461
+══════════════════════════════════════════════════════════════════════════

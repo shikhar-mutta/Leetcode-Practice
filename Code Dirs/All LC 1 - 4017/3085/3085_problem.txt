@@ -1,0 +1,46 @@
+══════════════════════════════════════════════════════════════════════════
+ 3085. Minimum Deletions to Make String K-Special
+ Medium  |  Tags: Hash Table, String, Greedy, Sorting, Counting
+ https://leetcode.com/problems/minimum-deletions-to-make-string-k-special/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a string word and an integer k.
+
+  We consider word to be k-special if |freq(word[i]) - freq(word[j])| <= k
+  for all indices i and j in the string.
+
+  Here, freq(x) denotes the frequency of the character x in word, and |y|
+  denotes the absolute value of y.
+
+  Return the minimum number of characters you need to delete to make word
+  k-special.
+
+CONSTRAINTS
+  1 <= word.length <= 10^5
+  0 <= k <= 10^5
+  word consists only of lowercase English letters.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : "aabcaba" | 0
+      Expected : 3
+
+  [2] Input    : "dabdcbdcdcd" | 2
+      Expected : 2
+
+  [3] Input    : "aaabaaa" | 2
+      Expected : 1
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int minimumDeletions(string word, int k);
+
+FILES
+  edit : 3085.cpp
+  test : lc run 3085
+══════════════════════════════════════════════════════════════════════════

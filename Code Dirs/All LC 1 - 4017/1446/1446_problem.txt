@@ -1,0 +1,36 @@
+══════════════════════════════════════════════════════════════════════════
+ 1446. Consecutive Characters
+ Easy  |  Tags: String
+ https://leetcode.com/problems/consecutive-characters/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  The power of the string is the maximum length of a non-empty substring
+  that contains only one unique character.
+
+  Given a string s, return the power of s.
+
+CONSTRAINTS
+  1 <= s.length <= 500
+  s consists of only lowercase English letters.
+
+TEST CASES
+  [1] Input    : s = "leetcode"
+      Expected : 2
+      Why      : The substring "ee" is of length 2 with the character 'e' only.
+
+  [2] Input    : s = "abbcccddddeeeeedcba"
+      Expected : 5
+      Why      : The substring "eeeee" is of length 5 with the character 'e' only.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int maxPower(string s);
+
+FILES
+  edit : 1446.cpp
+  test : lc run 1446
+══════════════════════════════════════════════════════════════════════════

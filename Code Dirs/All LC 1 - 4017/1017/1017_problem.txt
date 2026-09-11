@@ -1,0 +1,40 @@
+══════════════════════════════════════════════════════════════════════════
+ 1017. Convert to Base -2
+ Medium  |  Tags: Math
+ https://leetcode.com/problems/convert-to-base-2/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given an integer n, return a binary string representing its
+  representation in base -2.
+
+  Note that the returned string should not have leading zeros unless the
+  string is "0".
+
+CONSTRAINTS
+  0 <= n <= 10^9
+
+TEST CASES
+  [1] Input    : n = 2
+      Expected : "110"
+Explantion: (-2)^2 + (-2)^1 = 2
+
+  [2] Input    : n = 3
+      Expected : "111"
+Explantion: (-2)^2 + (-2)^1 + (-2)^0 = 3
+
+  [3] Input    : n = 4
+      Expected : "100"
+Explantion: (-2)^2 = 4
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  string baseNeg2(int n);
+
+FILES
+  edit : 1017.cpp
+  test : lc run 1017
+══════════════════════════════════════════════════════════════════════════

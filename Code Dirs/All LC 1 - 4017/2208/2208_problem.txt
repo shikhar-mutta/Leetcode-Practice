@@ -1,0 +1,45 @@
+══════════════════════════════════════════════════════════════════════════
+ 2208. Minimum Operations to Halve Array Sum
+ Medium  |  Tags: Array, Greedy, Heap (Priority Queue)
+ https://leetcode.com/problems/minimum-operations-to-halve-array-sum/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given an array nums of positive integers. In one operation, you
+  can choose any number from nums and reduce it to exactly half the
+  number. (Note that you may choose this reduced number in future
+  operations.)
+
+  Return the minimum number of operations to reduce the sum of nums by at
+  least half.
+
+CONSTRAINTS
+  1 <= nums.length <= 10^5
+  1 <= nums[i] <= 10^7
+
+TEST CASES
+  [1] Input    : nums = [5,19,8,1]
+      Expected : 3
+      Why      : The initial sum of nums is equal to 5 + 19 + 8 + 1 = 33.
+                 The following is one of the ways to reduce the sum by at least half:
+                 Pick the number 19 and reduce it to 9.5.
+                 … (6 more)
+
+  [2] Input    : nums = [3,8,20]
+      Expected : 3
+      Why      : The initial sum of nums is equal to 3 + 8 + 20 = 31.
+                 The following is one of the ways to reduce the sum by at least half:
+                 Pick the number 20 and reduce it to 10.
+                 … (6 more)
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int halveArray(vector<int>& nums);
+
+FILES
+  edit : 2208.cpp
+  test : lc run 2208
+══════════════════════════════════════════════════════════════════════════

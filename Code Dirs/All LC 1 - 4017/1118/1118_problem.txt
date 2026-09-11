@@ -1,0 +1,34 @@
+══════════════════════════════════════════════════════════════════════════
+ 1118. Number of Days in a Month
+ Easy  |  Tags: Math
+ https://leetcode.com/problems/number-of-days-in-a-month/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : 1992 | 7
+      Expected : 31
+
+  [2] Input    : 2000 | 2
+      Expected : 29
+
+  [3] Input    : 1900 | 2
+      Expected : 28
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int numberOfDays(int year, int month);
+
+FILES
+  edit : 1118.cpp
+  test : lc run 1118
+══════════════════════════════════════════════════════════════════════════

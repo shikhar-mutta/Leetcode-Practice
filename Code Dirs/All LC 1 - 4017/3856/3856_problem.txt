@@ -1,0 +1,41 @@
+══════════════════════════════════════════════════════════════════════════
+ 3856. Trim Trailing Vowels
+ Easy  |  Tags: String
+ https://leetcode.com/problems/trim-trailing-vowels/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a string s that consists of lowercase English letters.
+
+  Return the string obtained by removing all trailing vowels from s.
+
+  The vowels consist of the characters 'a', 'e', 'i', 'o', and 'u'.
+
+CONSTRAINTS
+  1 <= s.length <= 100
+  s consists of only lowercase English letters.
+
+TEST CASES
+  [1] Input    : s = "idea"
+      Expected : "id"
+      Why      : Removing "idea", we obtain the string "id".
+
+  [2] Input    : s = "day"
+      Expected : "day"
+      Why      : There are no trailing vowels in the string "day".
+
+  [3] Input    : s = "aeiou"
+      Expected : ""
+      Why      : Removing "aeiou", we obtain the string "".
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  string trimTrailingVowels(string s);
+
+FILES
+  edit : 3856.cpp
+  test : lc run 3856
+══════════════════════════════════════════════════════════════════════════

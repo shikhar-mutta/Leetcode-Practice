@@ -1,0 +1,31 @@
+══════════════════════════════════════════════════════════════════════════
+ 186. Reverse Words in a String II
+ Medium  |  Tags: Two Pointers, String
+ https://leetcode.com/problems/reverse-words-in-a-string-ii/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : "the sky is blue"
+      Expected : blue is sky the
+
+  [2] Input    : "a"
+      Expected : a
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  void reverseWords(vector<char>& s);
+
+FILES
+  edit : 186.cpp
+  test : lc run 186
+══════════════════════════════════════════════════════════════════════════

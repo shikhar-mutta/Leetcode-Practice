@@ -1,0 +1,43 @@
+══════════════════════════════════════════════════════════════════════════
+ 2544. Alternating Digit Sum
+ Easy  |  Tags: Math
+ https://leetcode.com/problems/alternating-digit-sum/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a positive integer n. Each digit of n has a sign according
+  to the following rules:
+
+  - The most significant digit is assigned a positive sign.
+
+  - Each other digit has an opposite sign to its adjacent digits.
+
+  Return the sum of all digits with their corresponding sign.
+
+CONSTRAINTS
+  1 <= n <= 10^9
+
+TEST CASES
+  [1] Input    : n = 521
+      Expected : 4
+      Why      : (+5) + (-2) + (+1) = 4.
+
+  [2] Input    : n = 111
+      Expected : 1
+      Why      : (+1) + (-1) + (+1) = 1.
+
+  [3] Input    : n = 886996
+      Expected : 0
+      Why      : (+8) + (-8) + (+6) + (-9) + (+9) + (-6) = 0.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int alternateDigitSum(int n);
+
+FILES
+  edit : 2544.cpp
+  test : lc run 2544
+══════════════════════════════════════════════════════════════════════════

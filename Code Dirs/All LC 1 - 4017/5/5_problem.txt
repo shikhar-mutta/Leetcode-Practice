@@ -1,0 +1,32 @@
+══════════════════════════════════════════════════════════════════════════
+ 5. Longest Palindromic Substring
+ Medium  |  Tags: Two Pointers, String, Dynamic Programming, Manacher
+ https://leetcode.com/problems/longest-palindromic-substring/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given a string s, return the longest palindromic substring in s.
+
+CONSTRAINTS
+  1 <= s.length <= 1000
+  s consist of only digits and English letters.
+
+TEST CASES
+  [1] Input    : s = "babad"
+      Expected : "bab"
+      Why      : "aba" is also a valid answer.
+
+  [2] Input    : s = "cbbd"
+      Expected : "bb"
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  string longestPalindrome(string s);
+
+FILES
+  edit : 5.cpp
+  test : lc run 5
+══════════════════════════════════════════════════════════════════════════

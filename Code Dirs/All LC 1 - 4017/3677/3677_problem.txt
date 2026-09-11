@@ -1,0 +1,45 @@
+══════════════════════════════════════════════════════════════════════════
+ 3677. Count Binary Palindromic Numbers
+ Hard  |  Tags: Math, Bit Manipulation
+ https://leetcode.com/problems/count-binary-palindromic-numbers/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a non-negative integer n.
+
+  A non-negative integer is called binary-palindromic if its binary
+  representation (written without leading zeros) reads the same forward
+  and backward.
+
+  Return the number of integers k such that 0 <= k <= n and the binary
+  representation of k is a palindrome.
+
+  Note: The number 0 is considered binary-palindromic, and its
+  representation is "0".
+
+CONSTRAINTS
+  0 <= n <= 10^15
+
+TEST CASES
+  [1] Input    : n = 9
+      Expected : 6
+      Why      : The integers k in the range [0, 9] whose binary representations are palindromes are:
+                 - 0 → "0"
+                 - 1 → "1"
+                 … (5 more)
+
+  [2] Input    : n = 0
+      Expected : 1
+      Why      : Since "0" is a palindrome, the count is 1.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int countBinaryPalindromes(long long n);
+
+FILES
+  edit : 3677.cpp
+  test : lc run 3677
+══════════════════════════════════════════════════════════════════════════

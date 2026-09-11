@@ -1,0 +1,47 @@
+══════════════════════════════════════════════════════════════════════════
+ 171. Excel Sheet Column Number
+ Easy  |  Tags: Math, String
+ https://leetcode.com/problems/excel-sheet-column-number/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given a string columnTitle that represents the column title as appears
+  in an Excel sheet, return its corresponding column number.
+
+  For example:
+
+  A -> 1
+  B -> 2
+  C -> 3
+  ...
+  Z -> 26
+  AA -> 27
+  AB -> 28
+  ...
+
+CONSTRAINTS
+  1 <= columnTitle.length <= 7
+  columnTitle consists only of uppercase English letters.
+  columnTitle is in the range ["A", "FXSHRXW"].
+
+TEST CASES
+  [1] Input    : columnTitle = "A"
+      Expected : 1
+
+  [2] Input    : columnTitle = "AB"
+      Expected : 28
+
+  [3] Input    : columnTitle = "ZY"
+      Expected : 701
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int titleToNumber(string columnTitle);
+
+FILES
+  edit : 171.cpp
+  test : lc run 171
+══════════════════════════════════════════════════════════════════════════

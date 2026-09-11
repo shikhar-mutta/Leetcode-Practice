@@ -1,0 +1,26 @@
+══════════════════════════════════════════════════════════════════════════
+ 1778. Shortest Path in a Hidden Grid
+ Medium  |  Tags: Array, Depth-First Search, Breadth-First Search, Matrix, Interactive
+ https://leetcode.com/problems/shortest-path-in-a-hidden-grid/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (no examples available)
+
+CODE TYPE
+  interactive · interface GridMaster
+    driver: mocks what the judge supplies, backed by each case's data
+    interface: GridMaster — the judge's class, mocked by the driver
+
+SIGNATURE
+  string findShortestPath(GridMaster& master);
+
+FILES
+  edit : 1778.cpp
+  test : lc run 1778
+══════════════════════════════════════════════════════════════════════════

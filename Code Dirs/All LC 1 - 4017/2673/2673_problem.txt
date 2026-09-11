@@ -1,0 +1,56 @@
+══════════════════════════════════════════════════════════════════════════
+ 2673. Make Costs of Paths Equal in a Binary Tree
+ Medium  |  Tags: Array, Dynamic Programming, Greedy, Tree, Binary Tree
+ https://leetcode.com/problems/make-costs-of-paths-equal-in-a-binary-tree/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given an integer n representing the number of nodes in a perfect
+  binary tree consisting of nodes numbered from 1 to n. The root of the
+  tree is node 1 and each node i in the tree has two children where the
+  left child is the node 2 * i and the right child is 2 * i + 1.
+
+  Each node in the tree also has a cost represented by a given 0-indexed
+  integer array cost of size n where cost[i] is the cost of node i + 1.
+  You are allowed to increment the cost of any node by 1 any number of
+  times.
+
+  Return the minimum number of increments you need to make the cost of
+  paths from the root to each leaf node equal.
+
+  Note:
+
+  - A perfect binary tree is a tree where each node, except the leaf
+    nodes, has exactly 2 children.
+
+  - The cost of a path is the sum of costs of nodes in the path.
+
+CONSTRAINTS
+  3 <= n <= 10^5
+  n + 1 is a power of 2
+  cost.length == n
+  1 <= cost[i] <= 10^4
+
+TEST CASES
+  [1] Input    : n = 7, cost = [1,5,2,2,3,3,1]
+      Expected : 6
+      Why      : We can do the following increments:
+                 - Increase the cost of node 4 one time.
+                 - Increase the cost of node 3 three times.
+                 … (4 more)
+
+  [2] Input    : n = 3, cost = [5,3,3]
+      Expected : 0
+      Why      : The two paths already have equal total costs, so no increments are needed.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int minIncrements(int n, vector<int>& cost);
+
+FILES
+  edit : 2673.cpp
+  test : lc run 2673
+══════════════════════════════════════════════════════════════════════════

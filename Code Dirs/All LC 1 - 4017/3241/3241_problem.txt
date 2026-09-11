@@ -1,0 +1,62 @@
+══════════════════════════════════════════════════════════════════════════
+ 3241. Time Taken to Mark All Nodes
+ Hard  |  Tags: Dynamic Programming, Tree, Depth-First Search, Graph Theory, DP on Trees
+ https://leetcode.com/problems/time-taken-to-mark-all-nodes/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  There exists an undirected tree with n nodes numbered 0 to n - 1. You
+  are given a 2D integer array edges of length n - 1, where edges[i] =
+  [ui, vi] indicates that there is an edge between nodes ui and vi in the
+  tree.
+
+  Initially, all nodes are unmarked. For each node i:
+
+  - If i is odd, the node will get marked at time x if there is at least
+    one node adjacent to it which was marked at time x - 1.
+
+  - If i is even, the node will get marked at time x if there is at least
+    one node adjacent to it which was marked at time x - 2.
+
+  Return an array times where times[i] is the time when all nodes get
+  marked in the tree, if you mark node i at time t = 0.
+
+  Note that the answer for each times[i] is independent, i.e. when you
+  mark node i all other nodes are unmarked.
+
+CONSTRAINTS
+  2 <= n <= 10^5
+  edges.length == n - 1
+  edges[i].length == 2
+  0 <= edges[i][0], edges[i][1] <= n - 1
+  The input is generated such that edges represents a valid tree.
+
+TEST CASES
+  [1] Input    : edges = [[0,1],[0,2]]
+      Expected : [2,4,3]
+      Why      : - For i = 0:
+                 - Node 1 is marked at t = 1, and Node 2 at t = 2.
+                 - For i = 1:
+                 … (3 more)
+
+  [2] Input    : edges = [[0,1]]
+      Expected : [1,2]
+      Why      : - For i = 0:
+                 - Node 1 is marked at t = 1.
+                 - For i = 1:
+                 … (1 more)
+
+  [3] Input    : edges = [[2,4],[0,1],[2,3],[0,2]]
+      Expected : [4,6,3,5,5]
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  vector<int> timeTaken(vector<vector<int>>& edges);
+
+FILES
+  edit : 3241.cpp
+  test : lc run 3241
+══════════════════════════════════════════════════════════════════════════

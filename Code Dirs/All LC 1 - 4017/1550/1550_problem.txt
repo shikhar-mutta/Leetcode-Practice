@@ -1,0 +1,34 @@
+══════════════════════════════════════════════════════════════════════════
+ 1550. Three Consecutive Odds
+ Easy  |  Tags: Array
+ https://leetcode.com/problems/three-consecutive-odds/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given an integer array arr, return true if there are three consecutive
+  odd numbers in the array. Otherwise, return false.
+
+CONSTRAINTS
+  1 <= arr.length <= 1000
+  1 <= arr[i] <= 1000
+
+TEST CASES
+  [1] Input    : arr = [2,6,4,1]
+      Expected : false
+      Why      : There are no three consecutive odds.
+
+  [2] Input    : arr = [1,2,34,3,4,5,7,23,12]
+      Expected : true
+      Why      : [5,7,23] are three consecutive odds.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  bool threeConsecutiveOdds(vector<int>& arr);
+
+FILES
+  edit : 1550.cpp
+  test : lc run 1550
+══════════════════════════════════════════════════════════════════════════

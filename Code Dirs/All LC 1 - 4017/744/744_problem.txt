@@ -1,0 +1,46 @@
+══════════════════════════════════════════════════════════════════════════
+ 744. Find Smallest Letter Greater Than Target
+ Easy  |  Tags: Array, Binary Search
+ https://leetcode.com/problems/find-smallest-letter-greater-than-target/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given an array of characters letters that is sorted in non-
+  decreasing order, and a character target. There are at least two
+  different characters in letters.
+
+  Return the smallest character in letters that is lexicographically
+  greater than target. If such a character does not exist, return the
+  first character in letters.
+
+CONSTRAINTS
+  2 <= letters.length <= 10^4
+  letters[i] is a lowercase English letter.
+  letters is sorted in non-decreasing order.
+  letters contains at least two different characters.
+  target is a lowercase English letter.
+
+TEST CASES
+  [1] Input    : letters = ["c","f","j"], target = "a"
+      Expected : "c"
+      Why      : The smallest character that is lexicographically greater than 'a' in letters is 'c'.
+
+  [2] Input    : letters = ["c","f","j"], target = "c"
+      Expected : "f"
+      Why      : The smallest character that is lexicographically greater than 'c' in letters is 'f'.
+
+  [3] Input    : letters = ["x","x","y","y"], target = "z"
+      Expected : "x"
+      Why      : There are no characters in letters that is lexicographically greater than 'z' so we return letters[0].
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  char nextGreatestLetter(vector<char>& letters, char target);
+
+FILES
+  edit : 744.cpp
+  test : lc run 744
+══════════════════════════════════════════════════════════════════════════

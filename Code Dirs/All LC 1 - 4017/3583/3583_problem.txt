@@ -1,0 +1,59 @@
+══════════════════════════════════════════════════════════════════════════
+ 3583. Count Special Triplets
+ Medium  |  Tags: Array, Hash Table, Counting
+ https://leetcode.com/problems/count-special-triplets/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given an integer array nums.
+
+  A special triplet is defined as a triplet of indices (i, j, k) such
+  that:
+
+  - 0 <= i < j < k < n, where n = nums.length
+
+  - nums[i] == nums[j] * 2
+
+  - nums[k] == nums[j] * 2
+
+  Return the total number of special triplets in the array.
+
+  Since the answer may be large, return it modulo 10^9 + 7.
+
+CONSTRAINTS
+  3 <= n == nums.length <= 10^5
+  0 <= nums[i] <= 10^5
+
+TEST CASES
+  [1] Input    : nums = [6,3,6]
+      Expected : 1
+      Why      : The only special triplet is (i, j, k) = (0, 1, 2), where:
+                 - nums[0] = 6, nums[1] = 3, nums[2] = 6
+                 - nums[0] = nums[1] * 2 = 3 * 2 = 6
+                 … (1 more)
+
+  [2] Input    : nums = [0,1,0,0]
+      Expected : 1
+      Why      : The only special triplet is (i, j, k) = (0, 2, 3), where:
+                 - nums[0] = 0, nums[2] = 0, nums[3] = 0
+                 - nums[0] = nums[2] * 2 = 0 * 2 = 0
+                 … (1 more)
+
+  [3] Input    : nums = [8,4,2,8,4]
+      Expected : 2
+      Why      : There are exactly two special triplets:
+                 - (i, j, k) = (0, 1, 3)
+                 - nums[0] = 8, nums[1] = 4, nums[3] = 8
+                 … (6 more)
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int specialTriplets(vector<int>& nums);
+
+FILES
+  edit : 3583.cpp
+  test : lc run 3583
+══════════════════════════════════════════════════════════════════════════

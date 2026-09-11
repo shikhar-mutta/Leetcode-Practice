@@ -1,0 +1,31 @@
+══════════════════════════════════════════════════════════════════════════
+ 616. Add Bold Tag in String
+ Medium  |  Tags: Array, Hash Table, String, Trie, String Matching, Aho–Corasick Algorithm
+ https://leetcode.com/problems/add-bold-tag-in-string/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : "abcxyz123" | ["abc","123"]
+      Expected : <b>abc</b>xyz<b>123</b>
+
+  [2] Input    : "aaabbcc" | ["aaa","aab","bc"]
+      Expected : <b>aaabbc</b>c
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  string addBoldTag(string s, vector<string>& words);
+
+FILES
+  edit : 616.cpp
+  test : lc run 616
+══════════════════════════════════════════════════════════════════════════

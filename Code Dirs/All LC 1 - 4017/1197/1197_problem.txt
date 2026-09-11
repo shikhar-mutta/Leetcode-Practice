@@ -1,0 +1,31 @@
+══════════════════════════════════════════════════════════════════════════
+ 1197. Minimum Knight Moves
+ Medium  |  Tags: Breadth-First Search, Heuristic Search, Bidirectional Search, A* Search
+ https://leetcode.com/problems/minimum-knight-moves/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : 2 | 1
+      Expected : 1
+
+  [2] Input    : 5 | 5
+      Expected : 4
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int minKnightMoves(int x, int y);
+
+FILES
+  edit : 1197.cpp
+  test : lc run 1197
+══════════════════════════════════════════════════════════════════════════

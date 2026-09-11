@@ -1,0 +1,31 @@
+══════════════════════════════════════════════════════════════════════════
+ 351. Android Unlock Patterns
+ Medium  |  Tags: Dynamic Programming, Backtracking, Bit Manipulation, Bitmask
+ https://leetcode.com/problems/android-unlock-patterns/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : 1 | 1
+      Expected : 9
+
+  [2] Input    : 1 | 2
+      Expected : 65
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int numberOfPatterns(int m, int n);
+
+FILES
+  edit : 351.cpp
+  test : lc run 351
+══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,32 @@
+══════════════════════════════════════════════════════════════════════════
+ 1522. Diameter of N-Ary Tree
+ Medium  |  Tags: Tree, Depth-First Search, DP on Trees
+ https://leetcode.com/problems/diameter-of-n-ary-tree/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : [1,null,3,2,4,null,5,6]
+      Expected : 3
+
+  [2] Input    : [1,null,2,3,4,5,null,null,6,7,null,8,null,9,10,null,null,11,null,12,null,13,null,null,14]
+      Expected : 7
+
+CODE TYPE
+  function · n-ary tree
+    driver: one Solution call per test case
+    n-ary tree: Node* {val, children} — level order, null ends a child group, e.g. [1,null,3,2,4,null,5,6]
+
+SIGNATURE
+  int diameter(Node* root);
+
+FILES
+  edit : 1522.cpp
+  test : lc run 1522
+══════════════════════════════════════════════════════════════════════════

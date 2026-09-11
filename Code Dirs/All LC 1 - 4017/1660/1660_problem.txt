@@ -1,0 +1,26 @@
+══════════════════════════════════════════════════════════════════════════
+ 1660. Correct a Binary Tree
+ Medium  |  Tags: Hash Table, Tree, Depth-First Search, Breadth-First Search, Binary Tree
+ https://leetcode.com/problems/correct-a-binary-tree/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (no examples available)
+
+CODE TYPE
+  function · tree
+    driver: one Solution call per test case
+    tree: TreeNode* — level order, e.g. [3,9,20,null,null,15,7]
+
+SIGNATURE
+  TreeNode* correctBinaryTree(TreeNode* root);
+
+FILES
+  edit : 1660.cpp
+  test : lc run 1660
+══════════════════════════════════════════════════════════════════════════

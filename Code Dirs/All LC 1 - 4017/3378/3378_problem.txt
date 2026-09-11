@@ -1,0 +1,48 @@
+══════════════════════════════════════════════════════════════════════════
+ 3378. Count Connected Components in LCM Graph
+ Hard  |  Tags: Array, Hash Table, Math, Union-Find, Number Theory, Least Common Multiple, Euclidean Algorithm, Greatest Common Divisor
+ https://leetcode.com/problems/count-connected-components-in-lcm-graph/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given an array of integers nums of size n and a positive integer
+  threshold.
+
+  There is a graph consisting of n nodes with the i^th node having a value
+  of nums[i]. Two nodes i and j in the graph are connected via an
+  undirected edge if lcm(nums[i], nums[j]) <= threshold.
+
+  Return the number of connected components in this graph.
+
+  A connected component is a subgraph of a graph in which there exists a
+  path between any two vertices, and no vertex of the subgraph shares an
+  edge with a vertex outside of the subgraph.
+
+  The term lcm(a, b) denotes the least common multiple of a and b.
+
+CONSTRAINTS
+  1 <= nums.length <= 10^5
+  1 <= nums[i] <= 10^9
+  All elements of nums are unique.
+  1 <= threshold <= 2 * 10^5
+
+TEST CASES
+  [1] Input    : nums = [2,4,8,3,9], threshold = 5
+      Expected : 4
+      Why      : The four connected components are (2, 4), (3), (8), (9).
+
+  [2] Input    : nums = [2,4,8,3,9,12], threshold = 10
+      Expected : 2
+      Why      : The two connected components are (2, 3, 4, 8, 9), and (12).
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int countComponents(vector<int>& nums, int threshold);
+
+FILES
+  edit : 3378.cpp
+  test : lc run 3378
+══════════════════════════════════════════════════════════════════════════

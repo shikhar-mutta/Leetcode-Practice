@@ -1,0 +1,49 @@
+══════════════════════════════════════════════════════════════════════════
+ 2349. Design a Number Container System
+ Medium  |  Tags: Hash Table, Design, Heap (Priority Queue), Ordered Set
+ https://leetcode.com/problems/design-a-number-container-system/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Design a number container system that can do the following:
+
+  - Insert or Replace a number at the given index in the system.
+
+  - Return the smallest index for the given number in the system.
+
+  Implement the NumberContainers class:
+
+  - NumberContainers() Initializes the number container system.
+
+  - void change(int index, int number) Fills the container at index with
+    the number. If there is already a number at that index, replace it.
+
+  - int find(int number) Returns the smallest index for the given number,
+    or -1 if there is no index that is filled by number in the system.
+
+CONSTRAINTS
+  1 <= index, number <= 10^9
+  At most 10^5 calls will be made in total to change and find.
+
+TEST CASES
+  [1] Input    : ["NumberContainers", "find", "change", "change", "change", "change", "find", "change", "find"]
+[[], [10], [2, 10], [1, 10], [3, 10], [5, 10], [10], [1, 20], [10]]
+      Expected : [null, -1, null, null, null, null, 1, null, 2]
+      Why      : NumberContainers nc = new NumberContainers();
+                 nc.find(10); // There is no index that is filled with number 10. Therefore, we return -1.
+                 nc.change(2, 10); // Your container at index 2 will be filled with number 10.
+                 … (6 more)
+
+CODE TYPE
+  design · NumberContainers
+    driver: replays ["NumberContainers","op",...] / [[args],...] and prints [null,...]
+
+SIGNATURE
+  NumberContainers();
+  void change(int index, int number);
+  int find(int number);
+
+FILES
+  edit : 2349.cpp
+  test : lc run 2349
+══════════════════════════════════════════════════════════════════════════

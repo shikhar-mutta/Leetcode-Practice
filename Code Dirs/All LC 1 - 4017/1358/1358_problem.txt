@@ -1,0 +1,39 @@
+══════════════════════════════════════════════════════════════════════════
+ 1358. Number of Substrings Containing All Three Characters
+ Medium  |  Tags: Hash Table, String, Sliding Window
+ https://leetcode.com/problems/number-of-substrings-containing-all-three-characters/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given a string s consisting only of characters a, b and c.
+
+  Return the number of substrings containing at least one occurrence of
+  all these characters a, b and c.
+
+CONSTRAINTS
+  3 <= s.length <= 5 x 10^4
+  s only consists of 'a', 'b' or 'c' characters.
+
+TEST CASES
+  [1] Input    : s = "abcabc"
+      Expected : 10
+      Why      : The substrings containing at least one occurrence of the characters a, b and c are "abc", "abca", "abcab", "abcabc", "bca", "bcab", "bcabc", "cab", "cabc" and "abc" (again).
+
+  [2] Input    : s = "aaacb"
+      Expected : 3
+      Why      : The substrings containing at least one occurrence of the characters a, b and c are "aaacb", "aacb" and "acb".
+
+  [3] Input    : s = "abc"
+      Expected : 1
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int numberOfSubstrings(string s);
+
+FILES
+  edit : 1358.cpp
+  test : lc run 1358
+══════════════════════════════════════════════════════════════════════════

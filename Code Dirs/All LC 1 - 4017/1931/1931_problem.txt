@@ -1,0 +1,42 @@
+══════════════════════════════════════════════════════════════════════════
+ 1931. Painting a Grid With Three Different Colors
+ Hard  |  Tags: Dynamic Programming, Graph Coloring
+ https://leetcode.com/problems/painting-a-grid-with-three-different-colors/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given two integers m and n. Consider an m x n grid where each
+  cell is initially white. You can paint each cell red, green, or blue.
+  All cells must be painted.
+
+  Return the number of ways to color the grid with no two adjacent cells
+  having the same color. Since the answer can be very large, return it
+  modulo 10^9 + 7.
+
+CONSTRAINTS
+  1 <= m <= 5
+  1 <= n <= 1000
+
+TEST CASES
+  [1] Input    : m = 1, n = 1
+      Expected : 3
+      Why      : The three possible colorings are shown in the image above.
+
+  [2] Input    : m = 1, n = 2
+      Expected : 6
+      Why      : The six possible colorings are shown in the image above.
+
+  [3] Input    : m = 5, n = 5
+      Expected : 580986
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int colorTheGrid(int m, int n);
+
+FILES
+  edit : 1931.cpp
+  test : lc run 1931
+══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,28 @@
+══════════════════════════════════════════════════════════════════════════
+ 555. Split Concatenated Strings
+ Medium  |  Tags: Array, String, Greedy
+ https://leetcode.com/problems/split-concatenated-strings/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : ["abc","xyz"]
+      Expected : zyxcba
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  string splitLoopedString(vector<string>& strs);
+
+FILES
+  edit : 555.cpp
+  test : lc run 555
+══════════════════════════════════════════════════════════════════════════

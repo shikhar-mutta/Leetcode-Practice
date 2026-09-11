@@ -1,0 +1,51 @@
+══════════════════════════════════════════════════════════════════════════
+ 3823. Reverse Letters Then Special Characters in a String
+ Easy  |  Tags: Two Pointers, String, Simulation
+ https://leetcode.com/problems/reverse-letters-then-special-characters-in-a-string/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a string s consisting of lowercase English letters and
+  special characters.
+
+  Your task is to perform these in order:
+
+  - Reverse the lowercase letters and place them back into the positions
+    originally occupied by letters.
+
+  - Reverse the special characters and place them back into the positions
+    originally occupied by special characters.
+
+  Return the resulting string after performing the reversals.
+
+CONSTRAINTS
+  1 <= s.length <= 100
+  s consists only of lowercase English letters and the special characters in "!@#$%^&*()".
+
+TEST CASES
+  [1] Input    : s = ")ebc#da@f("
+      Expected : "(fad@cb#e)"
+      Why      : - The letters in the string are ['e', 'b', 'c', 'd', 'a', 'f']:
+                 - Reversing them gives ['f', 'a', 'd', 'c', 'b', 'e']
+                 - s becomes ")fad#cb@e("
+                 … (3 more)
+
+  [2] Input    : s = "z"
+      Expected : "z"
+      Why      : The string contains only one letter, and reversing it does not change the string. There are no special characters.
+
+  [3] Input    : s = "!@#$%^&*()"
+      Expected : ")(*&^%$#@!"
+      Why      : The string contains no letters. The string contains all special characters, so reversing the special characters reverses the whole string.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  string reverseByType(string s);
+
+FILES
+  edit : 3823.cpp
+  test : lc run 3823
+══════════════════════════════════════════════════════════════════════════

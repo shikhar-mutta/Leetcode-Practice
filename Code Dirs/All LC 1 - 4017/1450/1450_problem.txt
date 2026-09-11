@@ -1,0 +1,46 @@
+══════════════════════════════════════════════════════════════════════════
+ 1450. Number of Students Doing Homework at a Given Time
+ Easy  |  Tags: Array
+ https://leetcode.com/problems/number-of-students-doing-homework-at-a-given-time/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given two integer arrays startTime and endTime and given an integer
+  queryTime.
+
+  The ith student started doing their homework at the time startTime[i]
+  and finished it at time endTime[i].
+
+  Return the number of students doing their homework at time queryTime.
+  More formally, return the number of students where queryTime lays in the
+  interval [startTime[i], endTime[i]] inclusive.
+
+CONSTRAINTS
+  startTime.length == endTime.length
+  1 <= startTime.length <= 100
+  1 <= startTime[i] <= endTime[i] <= 1000
+  1 <= queryTime <= 1000
+
+TEST CASES
+  [1] Input    : startTime = [1,2,3], endTime = [3,2,7], queryTime = 4
+      Expected : 1
+      Why      : We have 3 students where:
+                 The first student started doing homework at time 1 and finished at time 3 and wasn't doing anything at time 4.
+                 The second student started doing homework at time 2 and finished at time 2 and also wasn't doing anything at time 4.
+                 … (1 more)
+
+  [2] Input    : startTime = [4], endTime = [4], queryTime = 4
+      Expected : 1
+      Why      : The only student was doing their homework at the queryTime.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int busyStudent(vector<int>& startTime, vector<int>& endTime, int queryTime);
+
+FILES
+  edit : 1450.cpp
+  test : lc run 1450
+══════════════════════════════════════════════════════════════════════════

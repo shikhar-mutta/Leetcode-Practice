@@ -1,0 +1,43 @@
+══════════════════════════════════════════════════════════════════════════
+ 2283. Check if Number Has Equal Digit Count and Digit Value
+ Easy  |  Tags: Hash Table, String, Counting
+ https://leetcode.com/problems/check-if-number-has-equal-digit-count-and-digit-value/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a 0-indexed string num of length n consisting of digits.
+
+  Return true if for every index i in the range 0 <= i < n, the digit i
+  occurs num[i] times in num, otherwise return false.
+
+CONSTRAINTS
+  n == num.length
+  1 <= n <= 10
+  num consists of digits.
+
+TEST CASES
+  [1] Input    : num = "1210"
+      Expected : true
+      Why      : num[0] = '1'. The digit 0 occurs once in num.
+                 num[1] = '2'. The digit 1 occurs twice in num.
+                 num[2] = '1'. The digit 2 occurs once in num.
+                 … (2 more)
+
+  [2] Input    : num = "030"
+      Expected : false
+      Why      : num[0] = '0'. The digit 0 should occur zero times, but actually occurs twice in num.
+                 num[1] = '3'. The digit 1 should occur three times, but actually occurs zero times in num.
+                 num[2] = '0'. The digit 2 occurs zero times in num.
+                 … (1 more)
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  bool digitCount(string num);
+
+FILES
+  edit : 2283.cpp
+  test : lc run 2283
+══════════════════════════════════════════════════════════════════════════

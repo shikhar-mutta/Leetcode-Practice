@@ -1,0 +1,62 @@
+══════════════════════════════════════════════════════════════════════════
+ 3649. Number of Perfect Pairs
+ Medium  |  Tags: Array, Math, Two Pointers, Sorting
+ https://leetcode.com/problems/number-of-perfect-pairs/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given an integer array nums.
+
+  A pair of indices (i, j) is called perfect if the following conditions
+  are satisfied:
+
+  - i < j
+
+  - Let a = nums[i], b = nums[j]. Then:
+
+  - min(|a - b|, |a + b|) <= min(|a|, |b|)
+
+  - max(|a - b|, |a + b|) >= max(|a|, |b|)
+
+
+
+
+
+  Return the number of distinct perfect pairs.
+
+  Note: The absolute value |x| refers to the non-negative value of x.
+
+CONSTRAINTS
+  2 <= nums.length <= 10^5
+  -10^9 <= nums[i] <= 10^9
+
+TEST CASES
+  [1] Input    : nums = [0,1,2,3]
+      Expected : 2
+      Why      : There are 2 perfect pairs:
+                 (i, j)
+                 (a, b)
+                 … (16 more)
+
+  [2] Input    : nums = [-3,2,-1,4]
+      Expected : 4
+      Why      : There are 4 perfect pairs:
+                 (i, j)
+                 (a, b)
+                 … (28 more)
+
+  [3] Input    : nums = [1,10,100,1000]
+      Expected : 0
+      Why      : There are no perfect pairs. Thus, the answer is 0.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  long long perfectPairs(vector<int>& nums);
+
+FILES
+  edit : 3649.cpp
+  test : lc run 3649
+══════════════════════════════════════════════════════════════════════════

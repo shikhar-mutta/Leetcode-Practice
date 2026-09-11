@@ -1,0 +1,31 @@
+══════════════════════════════════════════════════════════════════════════
+ 465. Optimal Account Balancing
+ Hard  |  Tags: Array, Dynamic Programming, Backtracking, Bit Manipulation, Bitmask
+ https://leetcode.com/problems/optimal-account-balancing/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : [[0,1,10],[2,0,5]]
+      Expected : 2
+
+  [2] Input    : [[0,1,10],[1,0,1],[1,2,5],[2,0,5]]
+      Expected : 1
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int minTransfers(vector<vector<int>>& transactions);
+
+FILES
+  edit : 465.cpp
+  test : lc run 465
+══════════════════════════════════════════════════════════════════════════

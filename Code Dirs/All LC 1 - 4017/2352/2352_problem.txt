@@ -1,0 +1,42 @@
+══════════════════════════════════════════════════════════════════════════
+ 2352. Equal Row and Column Pairs
+ Medium  |  Tags: Array, Hash Table, Matrix, Simulation
+ https://leetcode.com/problems/equal-row-and-column-pairs/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given a 0-indexed n x n integer matrix grid, return the number of pairs
+  (ri, cj) such that row ri and column cj are equal.
+
+  A row and column pair is considered equal if they contain the same
+  elements in the same order (i.e., an equal array).
+
+CONSTRAINTS
+  n == grid.length == grid[i].length
+  1 <= n <= 200
+  1 <= grid[i][j] <= 10^5
+
+TEST CASES
+  [1] Input    : grid = [[3,2,1],[1,7,6],[2,7,7]]
+      Expected : 1
+      Why      : There is 1 equal row and column pair:
+                 - (Row 2, Column 1): [2,7,7]
+
+  [2] Input    : grid = [[3,1,2,2],[1,4,4,5],[2,4,2,2],[2,4,2,2]]
+      Expected : 3
+      Why      : There are 3 equal row and column pairs:
+                 - (Row 0, Column 0): [3,1,2,2]
+                 - (Row 2, Column 2): [2,4,2,2]
+                 … (1 more)
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int equalPairs(vector<vector<int>>& grid);
+
+FILES
+  edit : 2352.cpp
+  test : lc run 2352
+══════════════════════════════════════════════════════════════════════════

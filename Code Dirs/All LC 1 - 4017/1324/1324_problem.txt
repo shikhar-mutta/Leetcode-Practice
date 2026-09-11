@@ -1,0 +1,50 @@
+══════════════════════════════════════════════════════════════════════════
+ 1324. Print Words Vertically
+ Medium  |  Tags: Array, String, Simulation
+ https://leetcode.com/problems/print-words-vertically/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given a string s. Return all the words vertically in the same order in
+  which they appear in s.
+
+  Words are returned as a list of strings, complete with spaces when is
+  necessary. (Trailing spaces are not allowed).
+
+  Each word would be put on only one column and that in one column there
+  will be only one word.
+
+CONSTRAINTS
+  1 <= s.length <= 200
+  s contains only upper case English letters.
+  It's guaranteed that there is only one space between 2 words.
+
+TEST CASES
+  [1] Input    : s = "HOW ARE YOU"
+      Expected : ["HAY","ORO","WEU"]
+      Why      : Each word is printed vertically.
+                 "HAY"
+                 "ORO"
+                 … (1 more)
+
+  [2] Input    : s = "TO BE OR NOT TO BE"
+      Expected : ["TBONTB","OEROOE"," T"]
+      Why      : Trailing spaces is not allowed.
+                 "TBONTB"
+                 "OEROOE"
+                 … (1 more)
+
+  [3] Input    : s = "CONTEST IS COMING"
+      Expected : ["CIC","OSO","N M","T I","E N","S G","T"]
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  vector<string> printVertically(string s);
+
+FILES
+  edit : 1324.cpp
+  test : lc run 1324
+══════════════════════════════════════════════════════════════════════════

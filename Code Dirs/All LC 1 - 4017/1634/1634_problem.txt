@@ -1,0 +1,35 @@
+══════════════════════════════════════════════════════════════════════════
+ 1634. Add Two Polynomials Represented as Linked Lists
+ Medium  |  Tags: Linked List, Math, Two Pointers
+ https://leetcode.com/problems/add-two-polynomials-represented-as-linked-lists/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : [[1,1],[2,0]] | [[3,1],[-2,0]]
+      Expected : [[4,1]]
+
+  [2] Input    : [[2,2],[4,1],[3,0]] | [[3,2],[-4,1],[-1,0]]
+      Expected : [[5,2],[2,0]]
+
+  [3] Input    : [[1,2]] | [[-1,2]]
+      Expected : []
+
+CODE TYPE
+  function · PolyNode
+    driver: one Solution call per test case
+    PolyNode: PolyNode — LeetCode's own notation for it
+
+SIGNATURE
+  PolyNode* addPoly(PolyNode* poly1, PolyNode* poly2);
+
+FILES
+  edit : 1634.cpp
+  test : lc run 1634
+══════════════════════════════════════════════════════════════════════════

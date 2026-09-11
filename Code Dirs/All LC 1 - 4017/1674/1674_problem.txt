@@ -1,0 +1,51 @@
+══════════════════════════════════════════════════════════════════════════
+ 1674. Minimum Moves to Make Array Complementary
+ Medium  |  Tags: Array, Hash Table, Prefix Sum
+ https://leetcode.com/problems/minimum-moves-to-make-array-complementary/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given an integer array nums of even length n and an integer
+  limit. In one move, you can replace any integer from nums with another
+  integer between 1 and limit, inclusive.
+
+  The array nums is complementary if for all indices i (0-indexed),
+  nums[i] + nums[n - 1 - i] equals the same number. For example, the array
+  [1,2,3,4] is complementary because for all indices i, nums[i] + nums[n -
+  1 - i] = 5.
+
+  Return the minimum number of moves required to make nums complementary.
+
+CONSTRAINTS
+  n == nums.length
+  2 <= n <= 10^5
+  1 <= nums[i] <= limit <= 10^5
+  n is even.
+
+TEST CASES
+  [1] Input    : nums = [1,2,4,3], limit = 4
+      Expected : 1
+      Why      : In 1 move, you can change nums to [1,2,2,3] (underlined elements are changed).
+                 nums[0] + nums[3] = 1 + 3 = 4.
+                 nums[1] + nums[2] = 2 + 2 = 4.
+                 … (3 more)
+
+  [2] Input    : nums = [1,2,2,1], limit = 2
+      Expected : 2
+      Why      : In 2 moves, you can change nums to [2,2,2,2]. You cannot change any number to 3 since 3 > limit.
+
+  [3] Input    : nums = [1,2,1,2], limit = 2
+      Expected : 0
+      Why      : nums is already complementary.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int minMoves(vector<int>& nums, int limit);
+
+FILES
+  edit : 1674.cpp
+  test : lc run 1674
+══════════════════════════════════════════════════════════════════════════

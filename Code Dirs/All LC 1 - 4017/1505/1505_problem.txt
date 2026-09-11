@@ -1,0 +1,42 @@
+══════════════════════════════════════════════════════════════════════════
+ 1505. Minimum Possible Integer After at Most K Adjacent Swaps On Digits
+ Hard  |  Tags: String, Greedy, Binary Indexed Tree, Segment Tree
+ https://leetcode.com/problems/minimum-possible-integer-after-at-most-k-adjacent-swaps-on-digits/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a string num representing the digits of a very large
+  integer and an integer k. You are allowed to swap any two adjacent
+  digits of the integer at most k times.
+
+  Return the minimum integer you can obtain also as a string.
+
+CONSTRAINTS
+  1 <= num.length <= 3 * 10^4
+  num consists of only digits and does not contain leading zeros.
+  1 <= k <= 10^9
+
+TEST CASES
+  [1] Input    : num = "4321", k = 4
+      Expected : "1342"
+      Why      : The steps to obtain the minimum integer from 4321 with 4 adjacent swaps are shown.
+
+  [2] Input    : num = "100", k = 1
+      Expected : "010"
+      Why      : It's ok for the output to have leading zeros, but the input is guaranteed not to have any leading zeros.
+
+  [3] Input    : num = "36789", k = 1000
+      Expected : "36789"
+      Why      : We can keep the number without any swaps.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  string minInteger(string num, int k);
+
+FILES
+  edit : 1505.cpp
+  test : lc run 1505
+══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,35 @@
+══════════════════════════════════════════════════════════════════════════
+ 1044. Longest Duplicate Substring
+ Hard  |  Tags: String, Binary Search, Sliding Window, Rolling Hash, Suffix Array, Hash Function, Suffix Automaton, Suffix Tree, Z Algorithm, Boyer–Moore String-Search Algorithm
+ https://leetcode.com/problems/longest-duplicate-substring/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given a string s, consider all duplicated substrings: (contiguous)
+  substrings of s that occur 2 or more times. The occurrences may overlap.
+
+  Return any duplicated substring that has the longest possible length. If
+  s does not have a duplicated substring, the answer is "".
+
+CONSTRAINTS
+  2 <= s.length <= 3 * 10^4
+  s consists of lowercase English letters.
+
+TEST CASES
+  [1] Input    : s = "banana"
+      Expected : "ana"
+
+  [2] Input    : s = "abcd"
+      Expected : ""
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  string longestDupSubstring(string s);
+
+FILES
+  edit : 1044.cpp
+  test : lc run 1044
+══════════════════════════════════════════════════════════════════════════

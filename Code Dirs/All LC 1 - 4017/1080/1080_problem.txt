@@ -1,0 +1,43 @@
+══════════════════════════════════════════════════════════════════════════
+ 1080. Insufficient Nodes in Root to Leaf Paths
+ Medium  |  Tags: Tree, Depth-First Search, Binary Tree
+ https://leetcode.com/problems/insufficient-nodes-in-root-to-leaf-paths/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given the root of a binary tree and an integer limit, delete all
+  insufficient nodes in the tree simultaneously, and return the root of
+  the resulting binary tree.
+
+  A node is insufficient if every root to leaf path intersecting this node
+  has a sum strictly less than limit.
+
+  A leaf is a node with no children.
+
+CONSTRAINTS
+  The number of nodes in the tree is in the range [1, 5000].
+  -10^5 <= Node.val <= 10^5
+  -10^9 <= limit <= 10^9
+
+TEST CASES
+  [1] Input    : root = [1,2,3,4,-99,-99,7,8,9,-99,-99,12,13,-99,14], limit = 1
+      Expected : [1,2,3,4,null,null,7,8,9,null,14]
+
+  [2] Input    : root = [5,4,8,11,null,17,4,7,1,null,null,5,3], limit = 22
+      Expected : [5,4,8,11,null,17,4,7,null,null,null,5]
+
+  [3] Input    : root = [1,2,-3,-5,null,4,null], limit = -1
+      Expected : [1,null,-3,4]
+
+CODE TYPE
+  function · tree
+    driver: one Solution call per test case
+    tree: TreeNode* — level order, e.g. [3,9,20,null,null,15,7]
+
+SIGNATURE
+  TreeNode* sufficientSubset(TreeNode* root, int limit);
+
+FILES
+  edit : 1080.cpp
+  test : lc run 1080
+══════════════════════════════════════════════════════════════════════════

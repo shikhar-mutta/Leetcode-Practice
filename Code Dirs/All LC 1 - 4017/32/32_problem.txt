@@ -1,0 +1,37 @@
+══════════════════════════════════════════════════════════════════════════
+ 32. Longest Valid Parentheses
+ Hard  |  Tags: String, Dynamic Programming, Stack, Bracket Sequences
+ https://leetcode.com/problems/longest-valid-parentheses/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given a string containing just the characters '(' and ')', return the
+  length of the longest valid (well-formed) parentheses substring.
+
+CONSTRAINTS
+  0 <= s.length <= 3 * 10^4
+  s[i] is '(', or ')'.
+
+TEST CASES
+  [1] Input    : s = "(()"
+      Expected : 2
+      Why      : The longest valid parentheses substring is "()".
+
+  [2] Input    : s = ")()())"
+      Expected : 4
+      Why      : The longest valid parentheses substring is "()()".
+
+  [3] Input    : s = ""
+      Expected : 0
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int longestValidParentheses(string s);
+
+FILES
+  edit : 32.cpp
+  test : lc run 32
+══════════════════════════════════════════════════════════════════════════

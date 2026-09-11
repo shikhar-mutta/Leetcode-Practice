@@ -1,0 +1,50 @@
+══════════════════════════════════════════════════════════════════════════
+ 1375. Number of Times Binary String Is Prefix-Aligned
+ Medium  |  Tags: Array
+ https://leetcode.com/problems/number-of-times-binary-string-is-prefix-aligned/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You have a 1-indexed binary string of length n where all the bits are 0
+  initially. We will flip all the bits of this binary string (i.e., change
+  them from 0 to 1) one by one. You are given a 1-indexed integer array
+  flips where flips[i] indicates that the bit at index flips[i] will be
+  flipped in the i^th step.
+
+  A binary string is prefix-aligned if, after the i^th step, all the bits
+  in the inclusive range [1, i] are ones and all the other bits are zeros.
+
+  Return the number of times the binary string is prefix-aligned during
+  the flipping process.
+
+CONSTRAINTS
+  n == flips.length
+  1 <= n <= 5 * 10^4
+  flips is a permutation of the integers in the range [1, n].
+
+TEST CASES
+  [1] Input    : flips = [3,2,4,1,5]
+      Expected : 2
+      Why      : The binary string is initially "00000".
+                 After applying step 1: The string becomes "00100", which is not prefix-aligned.
+                 After applying step 2: The string becomes "01100", which is not prefix-aligned.
+                 … (4 more)
+
+  [2] Input    : flips = [4,1,2,3]
+      Expected : 1
+      Why      : The binary string is initially "0000".
+                 After applying step 1: The string becomes "0001", which is not prefix-aligned.
+                 After applying step 2: The string becomes "1001", which is not prefix-aligned.
+                 … (3 more)
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int numTimesAllBlue(vector<int>& flips);
+
+FILES
+  edit : 1375.cpp
+  test : lc run 1375
+══════════════════════════════════════════════════════════════════════════

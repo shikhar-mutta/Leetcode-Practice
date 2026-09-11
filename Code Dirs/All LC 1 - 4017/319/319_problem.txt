@@ -1,0 +1,44 @@
+══════════════════════════════════════════════════════════════════════════
+ 319. Bulb Switcher
+ Medium  |  Tags: Math, Brainteaser
+ https://leetcode.com/problems/bulb-switcher/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  There are n bulbs that are initially off. You first turn on all the
+  bulbs, then you turn off every second bulb.
+
+  On the third round, you toggle every third bulb (turning on if it's off
+  or turning off if it's on). For the i^th round, you toggle every i bulb.
+  For the n^th round, you only toggle the last bulb.
+
+  Return the number of bulbs that are on after n rounds.
+
+CONSTRAINTS
+  0 <= n <= 10^9
+
+TEST CASES
+  [1] Input    : n = 3
+      Expected : 1
+      Why      : At first, the three bulbs are [off, off, off].
+                 After the first round, the three bulbs are [on, on, on].
+                 After the second round, the three bulbs are [on, off, on].
+                 … (2 more)
+
+  [2] Input    : n = 0
+      Expected : 0
+
+  [3] Input    : n = 1
+      Expected : 1
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int bulbSwitch(int n);
+
+FILES
+  edit : 319.cpp
+  test : lc run 319
+══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,35 @@
+══════════════════════════════════════════════════════════════════════════
+ 271. Encode and Decode Strings
+ Medium  |  Tags: Array, String, Design
+ https://leetcode.com/problems/encode-and-decode-strings/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : ["hello","world"]
+      Expected : PASS
+
+  [2] Input    : [""]
+      Expected : PASS
+
+  [3] Input    : ["a","","abc"]
+      Expected : PASS
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  string encode(vector<string>& strs);
+  vector<string> decode(string s);
+
+FILES
+  edit : 271.cpp
+  test : lc run 271
+══════════════════════════════════════════════════════════════════════════

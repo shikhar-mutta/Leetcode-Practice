@@ -1,0 +1,45 @@
+══════════════════════════════════════════════════════════════════════════
+ 2351. First Letter to Appear Twice
+ Easy  |  Tags: Hash Table, String, Bit Manipulation, Counting
+ https://leetcode.com/problems/first-letter-to-appear-twice/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given a string s consisting of lowercase English letters, return the
+  first letter to appear twice.
+
+  Note:
+
+  - A letter a appears twice before another letter b if the second
+    occurrence of a is before the second occurrence of b.
+
+  - s will contain at least one letter that appears twice.
+
+CONSTRAINTS
+  2 <= s.length <= 100
+  s consists of lowercase English letters.
+  s has at least one repeated letter.
+
+TEST CASES
+  [1] Input    : s = "abccbaacz"
+      Expected : "c"
+      Why      : The letter 'a' appears on the indexes 0, 5 and 6.
+                 The letter 'b' appears on the indexes 1 and 4.
+                 The letter 'c' appears on the indexes 2, 3 and 7.
+                 … (2 more)
+
+  [2] Input    : s = "abcdd"
+      Expected : "d"
+      Why      : The only letter that appears twice is 'd' so we return 'd'.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  char repeatedCharacter(string s);
+
+FILES
+  edit : 2351.cpp
+  test : lc run 2351
+══════════════════════════════════════════════════════════════════════════

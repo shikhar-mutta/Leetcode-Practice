@@ -1,0 +1,31 @@
+══════════════════════════════════════════════════════════════════════════
+ 625. Minimum Factorization
+ Medium  |  Tags: Math, Greedy, Prime Factorization
+ https://leetcode.com/problems/minimum-factorization/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : 48
+      Expected : 68
+
+  [2] Input    : 15
+      Expected : 35
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int smallestFactorization(int n);
+
+FILES
+  edit : 625.cpp
+  test : lc run 625
+══════════════════════════════════════════════════════════════════════════

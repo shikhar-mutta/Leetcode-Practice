@@ -1,0 +1,48 @@
+══════════════════════════════════════════════════════════════════════════
+ 3301. Maximize the Total Height of Unique Towers
+ Medium  |  Tags: Array, Greedy, Sorting
+ https://leetcode.com/problems/maximize-the-total-height-of-unique-towers/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given an array maximumHeight, where maximumHeight[i] denotes the
+  maximum height the i^th tower can be assigned.
+
+  Your task is to assign a height to each tower so that:
+
+  - The height of the i^th tower is a positive integer and does not exceed
+    maximumHeight[i].
+
+  - No two towers have the same height.
+
+  Return the maximum possible total sum of the tower heights. If it's not
+  possible to assign heights, return -1.
+
+CONSTRAINTS
+  1 <= maximumHeight.length <= 10^5
+  1 <= maximumHeight[i] <= 10^9
+
+TEST CASES
+  [1] Input    : maximumHeight = [2,3,4,3]
+      Expected : 10
+      Why      : We can assign heights in the following way: [1, 2, 4, 3].
+
+  [2] Input    : maximumHeight = [15,10]
+      Expected : 25
+      Why      : We can assign heights in the following way: [15, 10].
+
+  [3] Input    : maximumHeight = [2,2,1]
+      Expected : -1
+      Why      : It's impossible to assign positive heights to each index so that no two towers have the same height.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  long long maximumTotalSum(vector<int>& maximumHeight);
+
+FILES
+  edit : 3301.cpp
+  test : lc run 3301
+══════════════════════════════════════════════════════════════════════════

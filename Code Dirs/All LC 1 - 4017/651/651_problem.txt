@@ -1,0 +1,31 @@
+══════════════════════════════════════════════════════════════════════════
+ 651. 4 Keys Keyboard
+ Medium  |  Tags: Math, Dynamic Programming
+ https://leetcode.com/problems/4-keys-keyboard/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : 3
+      Expected : 3
+
+  [2] Input    : 7
+      Expected : 9
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int maxA(int n);
+
+FILES
+  edit : 651.cpp
+  test : lc run 651
+══════════════════════════════════════════════════════════════════════════

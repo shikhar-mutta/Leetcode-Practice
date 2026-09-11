@@ -1,0 +1,34 @@
+══════════════════════════════════════════════════════════════════════════
+ 1063. Number of Valid Subarrays
+ Hard  |  Tags: Array, Stack, Monotonic Stack
+ https://leetcode.com/problems/number-of-valid-subarrays/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : [1,4,2,5,3]
+      Expected : 11
+
+  [2] Input    : [3,2,1]
+      Expected : 3
+
+  [3] Input    : [2,2,2]
+      Expected : 6
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int validSubarrays(vector<int>& nums);
+
+FILES
+  edit : 1063.cpp
+  test : lc run 1063
+══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,41 @@
+══════════════════════════════════════════════════════════════════════════
+ 1641. Count Sorted Vowel Strings
+ Medium  |  Tags: Math, Dynamic Programming, Combinatorics
+ https://leetcode.com/problems/count-sorted-vowel-strings/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given an integer n, return the number of strings of length n that
+  consist only of vowels (a, e, i, o, u) and are lexicographically sorted.
+
+  A string s is lexicographically sorted if for all valid i, s[i] is the
+  same as or comes before s[i+1] in the alphabet.
+
+CONSTRAINTS
+  1 <= n <= 50
+
+TEST CASES
+  [1] Input    : n = 1
+      Expected : 5
+      Why      : The 5 sorted strings that consist of vowels only are ["a","e","i","o","u"].
+
+  [2] Input    : n = 2
+      Expected : 15
+      Why      : The 15 sorted strings that consist of vowels only are
+                 ["aa","ae","ai","ao","au","ee","ei","eo","eu","ii","io","iu","oo","ou","uu"].
+                 Note that "ea" is not a valid string since 'e' comes after 'a' in the alphabet.
+
+  [3] Input    : n = 33
+      Expected : 66045
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int countVowelStrings(int n);
+
+FILES
+  edit : 1641.cpp
+  test : lc run 1641
+══════════════════════════════════════════════════════════════════════════

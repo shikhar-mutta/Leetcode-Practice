@@ -1,0 +1,32 @@
+══════════════════════════════════════════════════════════════════════════
+ 1533. Find the Index of the Large Integer
+ Medium  |  Tags: Array, Binary Search, Interactive
+ https://leetcode.com/problems/find-the-index-of-the-large-integer/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : [7,7,7,7,10,7,7,7]
+      Expected : 4
+
+  [2] Input    : [6,6,12]
+      Expected : 2
+
+CODE TYPE
+  interactive · interface ArrayReader
+    driver: mocks what the judge supplies, backed by each case's data
+    interface: ArrayReader — the judge's class, mocked by the driver
+
+SIGNATURE
+  int getIndex(ArrayReader &reader);
+
+FILES
+  edit : 1533.cpp
+  test : lc run 1533
+══════════════════════════════════════════════════════════════════════════

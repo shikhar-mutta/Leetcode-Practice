@@ -1,0 +1,31 @@
+══════════════════════════════════════════════════════════════════════════
+ 1058. Minimize Rounding Error to Meet Target
+ Medium  |  Tags: Array, Math, String, Greedy, Sorting
+ https://leetcode.com/problems/minimize-rounding-error-to-meet-target/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : ["0.700","2.800","4.900"] | 8
+      Expected : 1.000
+
+  [2] Input    : ["1.500","2.500","3.500"] | 10
+      Expected : -1
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  string minimizeError(vector<string>& prices, int target);
+
+FILES
+  edit : 1058.cpp
+  test : lc run 1058
+══════════════════════════════════════════════════════════════════════════

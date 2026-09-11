@@ -1,0 +1,54 @@
+══════════════════════════════════════════════════════════════════════════
+ 3272. Find the Count of Good Integers
+ Hard  |  Tags: Hash Table, Math, Combinatorics, Enumeration
+ https://leetcode.com/problems/find-the-count-of-good-integers/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given two positive integers n and k.
+
+  An integer x is called k-palindromic if:
+
+  - x is a palindrome.
+
+  - x is divisible by k.
+
+  An integer is called good if its digits can be rearranged to form a
+  k-palindromic integer. For example, for k = 2, 2020 can be rearranged to
+  form the k-palindromic integer 2002, whereas 1010 cannot be rearranged
+  to form a k-palindromic integer.
+
+  Return the count of good integers containing n digits.
+
+  Note that any integer must not have leading zeros, neither before nor
+  after rearrangement. For example, 1010 cannot be rearranged to form 101.
+
+CONSTRAINTS
+  1 <= n <= 10
+  1 <= k <= 9
+
+TEST CASES
+  [1] Input    : n = 3, k = 5
+      Expected : 27
+      Why      : Some of the good integers are:
+                 - 551 because it can be rearranged to form 515.
+                 - 525 because it is already k-palindromic.
+
+  [2] Input    : n = 1, k = 4
+      Expected : 2
+      Why      : The two good integers are 4 and 8.
+
+  [3] Input    : n = 5, k = 6
+      Expected : 2468
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  long long countGoodIntegers(int n, int k);
+
+FILES
+  edit : 3272.cpp
+  test : lc run 3272
+══════════════════════════════════════════════════════════════════════════

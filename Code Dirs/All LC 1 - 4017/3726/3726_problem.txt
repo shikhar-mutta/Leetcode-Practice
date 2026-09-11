@@ -1,0 +1,35 @@
+══════════════════════════════════════════════════════════════════════════
+ 3726. Remove Zeros in Decimal Representation
+ Easy  |  Tags: Math, Simulation
+ https://leetcode.com/problems/remove-zeros-in-decimal-representation/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a positive integer n.
+
+  Return the integer obtained by removing all zeros from the decimal
+  representation of n.
+
+CONSTRAINTS
+  1 <= n <= 10^15
+
+TEST CASES
+  [1] Input    : n = 1020030
+      Expected : 123
+      Why      : After removing all zeros from 1020030, we get 123.
+
+  [2] Input    : n = 1
+      Expected : 1
+      Why      : 1 has no zero in its decimal representation. Therefore, the answer is 1.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  long long removeZeros(long long n);
+
+FILES
+  edit : 3726.cpp
+  test : lc run 3726
+══════════════════════════════════════════════════════════════════════════

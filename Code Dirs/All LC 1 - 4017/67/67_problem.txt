@@ -1,0 +1,32 @@
+══════════════════════════════════════════════════════════════════════════
+ 67. Add Binary
+ Easy  |  Tags: Math, String, Bit Manipulation, Simulation
+ https://leetcode.com/problems/add-binary/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given two binary strings a and b, return their sum as a binary string.
+
+CONSTRAINTS
+  1 <= a.length, b.length <= 10^4
+  a and b consist only of '0' or '1' characters.
+  Each string does not contain leading zeros except for the zero itself.
+
+TEST CASES
+  [1] Input    : a = "11", b = "1"
+      Expected : "100"
+
+  [2] Input    : a = "1010", b = "1011"
+      Expected : "10101"
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  string addBinary(string a, string b);
+
+FILES
+  edit : 67.cpp
+  test : lc run 67
+══════════════════════════════════════════════════════════════════════════

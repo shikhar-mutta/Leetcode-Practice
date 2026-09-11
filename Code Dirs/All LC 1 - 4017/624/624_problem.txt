@@ -1,0 +1,42 @@
+══════════════════════════════════════════════════════════════════════════
+ 624. Maximum Distance in Arrays
+ Medium  |  Tags: Array, Greedy
+ https://leetcode.com/problems/maximum-distance-in-arrays/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given m arrays, where each array is sorted in ascending order.
+
+  You can pick up two integers from two different arrays (each array picks
+  one) and calculate the distance. We define the distance between two
+  integers a and b to be their absolute difference |a - b|.
+
+  Return the maximum distance.
+
+CONSTRAINTS
+  m == arrays.length
+  2 <= m <= 10^5
+  1 <= arrays[i].length <= 500
+  -10^4 <= arrays[i][j] <= 10^4
+  arrays[i] is sorted in ascending order.
+  There will be at most 10^5 integers in all the arrays.
+
+TEST CASES
+  [1] Input    : arrays = [[1,2,3],[4,5],[1,2,3]]
+      Expected : 4
+      Why      : One way to reach the maximum distance 4 is to pick 1 in the first or third array and pick 5 in the second array.
+
+  [2] Input    : arrays = [[1],[1]]
+      Expected : 0
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int maxDistance(vector<vector<int>>& arrays);
+
+FILES
+  edit : 624.cpp
+  test : lc run 624
+══════════════════════════════════════════════════════════════════════════

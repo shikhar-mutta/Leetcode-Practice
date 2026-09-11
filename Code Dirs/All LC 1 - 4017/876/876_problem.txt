@@ -1,0 +1,37 @@
+══════════════════════════════════════════════════════════════════════════
+ 876. Middle of the Linked List
+ Easy  |  Tags: Linked List, Two Pointers
+ https://leetcode.com/problems/middle-of-the-linked-list/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given the head of a singly linked list, return the middle node of the
+  linked list.
+
+  If there are two middle nodes, return the second middle node.
+
+CONSTRAINTS
+  The number of nodes in the list is in the range [1, 100].
+  1 <= Node.val <= 100
+
+TEST CASES
+  [1] Input    : head = [1,2,3,4,5]
+      Expected : [3,4,5]
+      Why      : The middle node of the list is node 3.
+
+  [2] Input    : head = [1,2,3,4,5,6]
+      Expected : [4,5,6]
+      Why      : Since the list has two middle nodes with values 3 and 4, we return the second one.
+
+CODE TYPE
+  function · linked list
+    driver: one Solution call per test case
+    linked list: ListNode* — values in order, e.g. [1,2,3,4]
+
+SIGNATURE
+  ListNode* middleNode(ListNode* head);
+
+FILES
+  edit : 876.cpp
+  test : lc run 876
+══════════════════════════════════════════════════════════════════════════

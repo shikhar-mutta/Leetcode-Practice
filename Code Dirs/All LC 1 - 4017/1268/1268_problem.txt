@@ -1,0 +1,49 @@
+══════════════════════════════════════════════════════════════════════════
+ 1268. Search Suggestions System
+ Medium  |  Tags: Array, String, Binary Search, Trie, Sorting, Heap (Priority Queue)
+ https://leetcode.com/problems/search-suggestions-system/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given an array of strings products and a string searchWord.
+
+  Design a system that suggests at most three product names from products
+  after each character of searchWord is typed. Suggested products should
+  have common prefix with searchWord. If there are more than three
+  products with a common prefix return the three lexicographically
+  minimums products.
+
+  Return a list of lists of the suggested products after each character of
+  searchWord is typed.
+
+CONSTRAINTS
+  1 <= products.length <= 1000
+  1 <= products[i].length <= 3000
+  1 <= sum(products[i].length) <= 2 * 10^4
+  All the strings of products are unique.
+  products[i] consists of lowercase English letters.
+  1 <= searchWord.length <= 1000
+  searchWord consists of lowercase English letters.
+
+TEST CASES
+  [1] Input    : products = ["mobile","mouse","moneypot","monitor","mousepad"], searchWord = "mouse"
+      Expected : [["mobile","moneypot","monitor"],["mobile","moneypot","monitor"],["mouse","mousepad"],["mouse","mousepad"],["mouse","mousepad"]]
+      Why      : products sorted lexicographically = ["mobile","moneypot","monitor","mouse","mousepad"].
+                 After typing m and mo all products match and we show user ["mobile","moneypot","monitor"].
+                 After typing mou, mous and mouse the system suggests ["mouse","mousepad"].
+
+  [2] Input    : products = ["havana"], searchWord = "havana"
+      Expected : [["havana"],["havana"],["havana"],["havana"],["havana"],["havana"]]
+      Why      : The only word "havana" will be always suggested while typing the search word.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  vector<vector<string>> suggestedProducts(vector<string>& products, string searchWord);
+
+FILES
+  edit : 1268.cpp
+  test : lc run 1268
+══════════════════════════════════════════════════════════════════════════

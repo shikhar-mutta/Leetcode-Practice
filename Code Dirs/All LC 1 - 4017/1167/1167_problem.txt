@@ -1,0 +1,34 @@
+══════════════════════════════════════════════════════════════════════════
+ 1167. Minimum Cost to Connect Sticks
+ Medium  |  Tags: Array, Greedy, Heap (Priority Queue)
+ https://leetcode.com/problems/minimum-cost-to-connect-sticks/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : [2,4,3]
+      Expected : 14
+
+  [2] Input    : [1,8,3,5]
+      Expected : 30
+
+  [3] Input    : [5]
+      Expected : 0
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int connectSticks(vector<int>& sticks);
+
+FILES
+  edit : 1167.cpp
+  test : lc run 1167
+══════════════════════════════════════════════════════════════════════════

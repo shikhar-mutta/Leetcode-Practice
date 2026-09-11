@@ -1,0 +1,31 @@
+══════════════════════════════════════════════════════════════════════════
+ 59. Spiral Matrix II
+ Medium  |  Tags: Array, Matrix, Simulation
+ https://leetcode.com/problems/spiral-matrix-ii/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given a positive integer n, generate an n x n matrix filled with
+  elements from 1 to n^2 in spiral order.
+
+CONSTRAINTS
+  1 <= n <= 20
+
+TEST CASES
+  [1] Input    : n = 3
+      Expected : [[1,2,3],[8,9,4],[7,6,5]]
+
+  [2] Input    : n = 1
+      Expected : [[1]]
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  vector<vector<int>> generateMatrix(int n);
+
+FILES
+  edit : 59.cpp
+  test : lc run 59
+══════════════════════════════════════════════════════════════════════════

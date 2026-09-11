@@ -1,0 +1,56 @@
+══════════════════════════════════════════════════════════════════════════
+ 2836. Maximize Value of Function in a Ball Passing Game
+ Hard  |  Tags: Array, Dynamic Programming, Bit Manipulation
+ https://leetcode.com/problems/maximize-value-of-function-in-a-ball-passing-game/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given an integer array receiver of length n and an integer k. n
+  players are playing a ball-passing game.
+
+  You choose the starting player, i. The game proceeds as follows: player
+  i passes the ball to player receiver[i], who then passes it to
+  receiver[receiver[i]], and so on, for k passes in total. The game's
+  score is the sum of the indices of the players who touched the ball,
+  including repetitions, i.e. i + receiver[i] + receiver[receiver[i]] +
+  ... + receiver^(k)[i].
+
+  Return the maximum possible score.
+
+  Notes:
+
+  - receiver may contain duplicates.
+
+  - receiver[i] may be equal to i.
+
+CONSTRAINTS
+  1 <= receiver.length == n <= 10^5
+  0 <= receiver[i] <= n - 1
+  1 <= k <= 10^10
+
+TEST CASES
+  [1] Input    : receiver = [2,0,1], k = 4
+      Expected : 6
+      Why      : Starting with player i = 2 the initial score is 2:
+                 Pass
+                 Sender Index
+                 … (18 more)
+
+  [2] Input    : receiver = [1,1,1,2,3], k = 3
+      Expected : 10
+      Why      : Starting with player i = 4 the initial score is 4:
+                 Pass
+                 Sender Index
+                 … (14 more)
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  long long getMaxFunctionValue(vector<int>& receiver, long long k);
+
+FILES
+  edit : 2836.cpp
+  test : lc run 2836
+══════════════════════════════════════════════════════════════════════════

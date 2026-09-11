@@ -1,0 +1,40 @@
+══════════════════════════════════════════════════════════════════════════
+ 3295. Report Spam Message
+ Medium  |  Tags: Array, Hash Table, String
+ https://leetcode.com/problems/report-spam-message/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given an array of strings message and an array of strings
+  bannedWords.
+
+  An array of words is considered spam if there are at least two words in
+  it that exactly match any word in bannedWords.
+
+  Return true if the array message is spam, and false otherwise.
+
+CONSTRAINTS
+  1 <= message.length, bannedWords.length <= 10^5
+  1 <= message[i].length, bannedWords[i].length <= 15
+  message[i] and bannedWords[i] consist only of lowercase English letters.
+
+TEST CASES
+  [1] Input    : message = ["hello","world","leetcode"], bannedWords = ["world","hello"]
+      Expected : true
+      Why      : The words "hello" and "world" from the message array both appear in the bannedWords array.
+
+  [2] Input    : message = ["hello","programming","fun"], bannedWords = ["world","programming","leetcode"]
+      Expected : false
+      Why      : Only one word from the message array ("programming") appears in the bannedWords array.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  bool reportSpam(vector<string>& message, vector<string>& bannedWords);
+
+FILES
+  edit : 3295.cpp
+  test : lc run 3295
+══════════════════════════════════════════════════════════════════════════

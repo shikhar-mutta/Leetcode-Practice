@@ -1,0 +1,30 @@
+══════════════════════════════════════════════════════════════════════════
+ 1429. First Unique Number
+ Medium  |  Tags: Array, Hash Table, Design, Queue, Data Stream
+ https://leetcode.com/problems/first-unique-number/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : ["FirstUnique","showFirstUnique","add","showFirstUnique","add","showFirstUnique","add","showFirstUnique"] | [[[2,3,5]],[],[5],[],[2],[],[3],[]]
+      Expected : [null, 2, null, 2, null, 3, null, -1]
+
+CODE TYPE
+  design · FirstUnique
+    driver: replays ["FirstUnique","op",...] / [[args],...] and prints [null,...]
+
+SIGNATURE
+  FirstUnique(vector<int>& nums);
+  int showFirstUnique();
+  void add(int value);
+
+FILES
+  edit : 1429.cpp
+  test : lc run 1429
+══════════════════════════════════════════════════════════════════════════

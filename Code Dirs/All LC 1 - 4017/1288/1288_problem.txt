@@ -1,0 +1,41 @@
+══════════════════════════════════════════════════════════════════════════
+ 1288. Remove Covered Intervals
+ Medium  |  Tags: Array, Sorting
+ https://leetcode.com/problems/remove-covered-intervals/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given an array intervals where intervals[i] = [li, ri] represent the
+  interval [li, ri), remove all intervals that are covered by another
+  interval in the list.
+
+  The interval [a, b) is covered by the interval [c, d) if and only if c
+  <= a and b <= d.
+
+  Return the number of remaining intervals.
+
+CONSTRAINTS
+  1 <= intervals.length <= 1000
+  intervals[i].length == 2
+  0 <= li < ri <= 10^5
+  All the given intervals are unique.
+
+TEST CASES
+  [1] Input    : intervals = [[1,4],[3,6],[2,8]]
+      Expected : 2
+      Why      : Interval [3,6] is covered by [2,8], therefore it is removed.
+
+  [2] Input    : intervals = [[1,4],[2,3]]
+      Expected : 1
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int removeCoveredIntervals(vector<vector<int>>& intervals);
+
+FILES
+  edit : 1288.cpp
+  test : lc run 1288
+══════════════════════════════════════════════════════════════════════════

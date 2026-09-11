@@ -1,0 +1,36 @@
+══════════════════════════════════════════════════════════════════════════
+ 1012. Numbers With Repeated Digits
+ Hard  |  Tags: Math, Dynamic Programming
+ https://leetcode.com/problems/numbers-with-repeated-digits/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given an integer n, return the number of positive integers in the range
+  [1, n] that have at least one repeated digit.
+
+CONSTRAINTS
+  1 <= n <= 10^9
+
+TEST CASES
+  [1] Input    : n = 20
+      Expected : 1
+      Why      : The only positive number (<= 20) with at least 1 repeated digit is 11.
+
+  [2] Input    : n = 100
+      Expected : 10
+      Why      : The positive numbers (<= 100) with atleast 1 repeated digit are 11, 22, 33, 44, 55, 66, 77, 88, 99, and 100.
+
+  [3] Input    : n = 1000
+      Expected : 262
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int numDupDigitsAtMostN(int n);
+
+FILES
+  edit : 1012.cpp
+  test : lc run 1012
+══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,40 @@
+══════════════════════════════════════════════════════════════════════════
+ 70. Climbing Stairs
+ Easy  |  Tags: Math, Dynamic Programming, Memoization
+ https://leetcode.com/problems/climbing-stairs/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are climbing a staircase. It takes n steps to reach the top.
+
+  Each time you can either climb 1 or 2 steps. In how many distinct ways
+  can you climb to the top?
+
+CONSTRAINTS
+  1 <= n <= 45
+
+TEST CASES
+  [1] Input    : n = 2
+      Expected : 2
+      Why      : There are two ways to climb to the top.
+                 1. 1 step + 1 step
+                 2. 2 steps
+
+  [2] Input    : n = 3
+      Expected : 3
+      Why      : There are three ways to climb to the top.
+                 1. 1 step + 1 step + 1 step
+                 2. 1 step + 2 steps
+                 … (1 more)
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int climbStairs(int n);
+
+FILES
+  edit : 70.cpp
+  test : lc run 70
+══════════════════════════════════════════════════════════════════════════

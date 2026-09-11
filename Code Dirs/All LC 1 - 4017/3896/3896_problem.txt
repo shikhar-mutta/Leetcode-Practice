@@ -1,0 +1,58 @@
+══════════════════════════════════════════════════════════════════════════
+ 3896. Minimum Operations to Transform Array into Alternating Prime
+ Medium  |  Tags: Array, Math, Two Pointers, Binary Search, Sorting, Number Theory
+ https://leetcode.com/problems/minimum-operations-to-transform-array-into-alternating-prime/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given an integer array nums.
+
+  An array is considered alternating prime if:
+
+  - Elements at even indices (0-based) are prime numbers.
+
+  - Elements at odd indices are non-prime numbers.
+
+  In one operation, you may increment any element by 1.
+
+  Return the minimum number of operations required to transform nums into
+  an alternating prime array.
+
+  A prime number is a natural number greater than 1 with only two factors,
+  1 and itself.
+
+CONSTRAINTS
+  1 <= nums.length <= 10^5
+  1 <= nums[i] <= 10^5
+
+TEST CASES
+  [1] Input    : nums = [1,2,3,4]
+      Expected : 3
+      Why      : - The element at index 0 must be prime. Increment nums[0] = 1 to 2, using 1 operation.
+                 - The element at index 1 must be non-prime. Increment nums[1] = 2 to 4, using 2 operations.
+                 - The element at index 2 is already prime.
+                 … (2 more)
+
+  [2] Input    : nums = [5,6,7,8]
+      Expected : 0
+      Why      : - The elements at indices 0 and 2 are already prime.
+                 - The elements at indices 1 and 3 are already non-prime.
+                 No operations are needed.
+
+  [3] Input    : nums = [4,4]
+      Expected : 1
+      Why      : - The element at index 0 must be prime. Increment nums[0] = 4 to 5, using 1 operation.
+                 - The element at index 1 is already non-prime.
+                 Total operations = 1.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int minOperations(vector<int>& nums);
+
+FILES
+  edit : 3896.cpp
+  test : lc run 3896
+══════════════════════════════════════════════════════════════════════════

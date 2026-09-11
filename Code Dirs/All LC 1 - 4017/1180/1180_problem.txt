@@ -1,0 +1,31 @@
+══════════════════════════════════════════════════════════════════════════
+ 1180. Count Substrings with Only One Distinct Letter
+ Easy  |  Tags: Math, String
+ https://leetcode.com/problems/count-substrings-with-only-one-distinct-letter/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : "aaaba"
+      Expected : 8
+
+  [2] Input    : "aaaaaaaaaa"
+      Expected : 55
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int countLetters(string s);
+
+FILES
+  edit : 1180.cpp
+  test : lc run 1180
+══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,42 @@
+══════════════════════════════════════════════════════════════════════════
+ 917. Reverse Only Letters
+ Easy  |  Tags: Two Pointers, String
+ https://leetcode.com/problems/reverse-only-letters/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given a string s, reverse the string according to the following rules:
+
+  - All the characters that are not English letters remain in the same
+    position.
+
+  - All the English letters (lowercase or uppercase) should be reversed.
+
+  Return s after reversing it.
+
+CONSTRAINTS
+  1 <= s.length <= 100
+  s consists of characters with ASCII values in the range [33, 122].
+  s does not contain '\"' or '\\'.
+
+TEST CASES
+  [1] Input    : s = "ab-cd"
+      Expected : "dc-ba"
+
+  [2] Input    : s = "a-bC-dEf-ghIj"
+      Expected : "j-Ih-gfE-dCba"
+
+  [3] Input    : s = "Test1ng-Leet=code-Q!"
+      Expected : "Qedo1ct-eeLg=ntse-T!"
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  string reverseOnlyLetters(string s);
+
+FILES
+  edit : 917.cpp
+  test : lc run 917
+══════════════════════════════════════════════════════════════════════════

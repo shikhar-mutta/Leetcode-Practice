@@ -1,0 +1,37 @@
+══════════════════════════════════════════════════════════════════════════
+ 3211. Generate Binary Strings Without Adjacent Zeros
+ Medium  |  Tags: String, Backtracking, Bit Manipulation
+ https://leetcode.com/problems/generate-binary-strings-without-adjacent-zeros/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a positive integer n.
+
+  A binary string x is valid if all substrings of x of length 2 contain at
+  least one "1".
+
+  Return all valid strings with length n, in any order.
+
+CONSTRAINTS
+  1 <= n <= 18
+
+TEST CASES
+  [1] Input    : n = 3
+      Expected : ["010","011","101","110","111"]
+      Why      : The valid strings of length 3 are: "010", "011", "101", "110", and "111".
+
+  [2] Input    : n = 1
+      Expected : ["0","1"]
+      Why      : The valid strings of length 1 are: "0" and "1".
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  vector<string> validStrings(int n);
+
+FILES
+  edit : 3211.cpp
+  test : lc run 3211
+══════════════════════════════════════════════════════════════════════════

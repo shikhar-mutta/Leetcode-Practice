@@ -1,0 +1,28 @@
+══════════════════════════════════════════════════════════════════════════
+ 265. Paint House II
+ Hard  |  Tags: Array, Dynamic Programming
+ https://leetcode.com/problems/paint-house-ii/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : [[1,5,3],[2,9,4]]
+      Expected : 5
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int minCostII(vector<vector<int>>& costs);
+
+FILES
+  edit : 265.cpp
+  test : lc run 265
+══════════════════════════════════════════════════════════════════════════

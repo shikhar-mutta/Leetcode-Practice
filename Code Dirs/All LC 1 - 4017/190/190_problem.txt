@@ -1,0 +1,42 @@
+══════════════════════════════════════════════════════════════════════════
+ 190. Reverse Bits
+ Easy  |  Tags: Divide and Conquer, Bit Manipulation
+ https://leetcode.com/problems/reverse-bits/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Reverse bits of a given 32 bits signed integer.
+
+CONSTRAINTS
+  0 <= n <= 2^31 - 2
+  n is even.
+
+TEST CASES
+  [1] Input    : n = 43261596
+      Expected : 964176192
+      Why      : Integer
+                 Binary
+                 43261596
+                 … (3 more)
+
+  [2] Input    : n = 2147483644
+      Expected : 1073741822
+      Why      : Integer
+                 Binary
+                 2147483644
+                 … (3 more)
+
+FOLLOW UP
+  If this function is called many times, how would you optimize it?
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int reverseBits(int n);
+
+FILES
+  edit : 190.cpp
+  test : lc run 190
+══════════════════════════════════════════════════════════════════════════

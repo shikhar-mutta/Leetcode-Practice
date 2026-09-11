@@ -1,0 +1,47 @@
+══════════════════════════════════════════════════════════════════════════
+ 135. Candy
+ Hard  |  Tags: Array, Greedy
+ https://leetcode.com/problems/candy/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  There are n children standing in a line.
+
+  Each child is assigned a rating value given in the integer array
+  ratings.
+
+  You are giving candies to these children subjected to the following
+  requirements:
+
+  - Each child must have at least one candy.
+
+  - Children with a higher rating get more candies than their neighbors.
+
+  Return the minimum number of candies you need to have to distribute the
+  candies to the children.
+
+CONSTRAINTS
+  1 <= n == ratings.length <= 5 * 10^4
+  0 <= ratings[i] <= 5 * 10^4
+
+TEST CASES
+  [1] Input    : ratings = [1,0,2]
+      Expected : 5
+      Why      : You can allocate to the first, second and third child with 2, 1, 2 candies respectively.
+
+  [2] Input    : ratings = [1,2,2]
+      Expected : 4
+      Why      : You can allocate to the first, second and third child with 1, 2, 1 candies respectively.
+                 The third child gets 1 candy because it satisfies the above two conditions.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int candy(vector<int>& ratings);
+
+FILES
+  edit : 135.cpp
+  test : lc run 135
+══════════════════════════════════════════════════════════════════════════

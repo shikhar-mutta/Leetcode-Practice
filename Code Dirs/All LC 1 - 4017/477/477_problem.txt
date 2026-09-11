@@ -1,0 +1,40 @@
+══════════════════════════════════════════════════════════════════════════
+ 477. Total Hamming Distance
+ Medium  |  Tags: Array, Math, Bit Manipulation
+ https://leetcode.com/problems/total-hamming-distance/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  The Hamming distance between two integers is the number of positions at
+  which the corresponding bits are different.
+
+  Given an integer array nums, return the sum of Hamming distances between
+  all the pairs of the integers in nums.
+
+CONSTRAINTS
+  1 <= nums.length <= 10^4
+  0 <= nums[i] <= 10^9
+  The answer for the given input will fit in a 32-bit integer.
+
+TEST CASES
+  [1] Input    : nums = [4,14,2]
+      Expected : 6
+      Why      : In binary representation, the 4 is 0100, 14 is 1110, and 2 is 0010 (just
+                 showing the four bits relevant in this case).
+                 The answer will be:
+                 … (1 more)
+
+  [2] Input    : nums = [4,14,4]
+      Expected : 4
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int totalHammingDistance(vector<int>& nums);
+
+FILES
+  edit : 477.cpp
+  test : lc run 477
+══════════════════════════════════════════════════════════════════════════

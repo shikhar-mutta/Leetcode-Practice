@@ -1,0 +1,34 @@
+══════════════════════════════════════════════════════════════════════════
+ 869. Reordered Power of 2
+ Medium  |  Tags: Hash Table, Math, Sorting, Counting, Enumeration
+ https://leetcode.com/problems/reordered-power-of-2/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given an integer n. We reorder the digits in any order
+  (including the original order) such that the leading digit is not zero.
+
+  Return true if and only if we can do this so that the resulting number
+  is a power of two.
+
+CONSTRAINTS
+  1 <= n <= 10^9
+
+TEST CASES
+  [1] Input    : n = 1
+      Expected : true
+
+  [2] Input    : n = 10
+      Expected : false
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  bool reorderedPowerOf2(int n);
+
+FILES
+  edit : 869.cpp
+  test : lc run 869
+══════════════════════════════════════════════════════════════════════════

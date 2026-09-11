@@ -1,0 +1,50 @@
+══════════════════════════════════════════════════════════════════════════
+ 3456. Find Special Substring of Length K
+ Easy  |  Tags: String
+ https://leetcode.com/problems/find-special-substring-of-length-k/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a string s and an integer k.
+
+  Determine if there exists a substring of length exactly k in s that
+  satisfies the following conditions:
+
+  - The substring consists of only one distinct character (e.g., "aaa" or
+    "bbb").
+
+  - If there is a character immediately before the substring, it must be
+    different from the character in the substring.
+
+  - If there is a character immediately after the substring, it must also
+    be different from the character in the substring.
+
+  Return true if such a substring exists. Otherwise, return false.
+
+CONSTRAINTS
+  1 <= k <= s.length <= 100
+  s consists of lowercase English letters only.
+
+TEST CASES
+  [1] Input    : s = "aaabaaa", k = 3
+      Expected : true
+      Why      : The substring s[4..6] == "aaa" satisfies the conditions.
+                 - It has a length of 3.
+                 - All characters are the same.
+                 … (2 more)
+
+  [2] Input    : s = "abc", k = 2
+      Expected : false
+      Why      : There is no substring of length 2 that consists of one distinct character and satisfies the conditions.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  bool hasSpecialSubstring(string s, int k);
+
+FILES
+  edit : 3456.cpp
+  test : lc run 3456
+══════════════════════════════════════════════════════════════════════════

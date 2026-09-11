@@ -1,0 +1,46 @@
+══════════════════════════════════════════════════════════════════════════
+ 2696. Minimum String Length After Removing Substrings
+ Easy  |  Tags: String, Stack, Simulation
+ https://leetcode.com/problems/minimum-string-length-after-removing-substrings/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a string s consisting only of uppercase English letters.
+
+  You can apply some operations to this string where, in one operation,
+  you can remove any occurrence of one of the substrings "AB" or "CD" from
+  s.
+
+  Return the minimum possible length of the resulting string that you can
+  obtain.
+
+  Note that the string concatenates after removing the substring and could
+  produce new "AB" or "CD" substrings.
+
+CONSTRAINTS
+  1 <= s.length <= 100
+  s consists only of uppercase English letters.
+
+TEST CASES
+  [1] Input    : s = "ABFCACDB"
+      Expected : 2
+      Why      : We can do the following operations:
+                 - Remove the substring "ABFCACDB", so s = "FCACDB".
+                 - Remove the substring "FCACDB", so s = "FCAB".
+                 … (3 more)
+
+  [2] Input    : s = "ACBBD"
+      Expected : 5
+      Why      : We cannot do any operations on the string so the length remains the same.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int minLength(string s);
+
+FILES
+  edit : 2696.cpp
+  test : lc run 2696
+══════════════════════════════════════════════════════════════════════════

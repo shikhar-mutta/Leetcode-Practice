@@ -1,0 +1,38 @@
+══════════════════════════════════════════════════════════════════════════
+ 3177. Find the Maximum Length of a Good Subsequence II
+ Hard  |  Tags: Array, Hash Table, Dynamic Programming
+ https://leetcode.com/problems/find-the-maximum-length-of-a-good-subsequence-ii/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given an integer array nums and a non-negative integer k. A
+  sequence of integers seq is called good if there are at most k indices i
+  in the range [0, seq.length - 2] such that seq[i] != seq[i + 1].
+
+  Return the maximum possible length of a good subsequence of nums.
+
+CONSTRAINTS
+  1 <= nums.length <= 5 * 10^3
+  1 <= nums[i] <= 10^9
+  0 <= k <= min(50, nums.length)
+
+TEST CASES
+  [1] Input    : nums = [1,2,1,1,3], k = 2
+      Expected : 4
+      Why      : The maximum length subsequence is [1,2,1,1,3].
+
+  [2] Input    : nums = [1,2,3,4,5,1], k = 0
+      Expected : 2
+      Why      : The maximum length subsequence is [1,2,3,4,5,1].
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int maximumLength(vector<int>& nums, int k);
+
+FILES
+  edit : 3177.cpp
+  test : lc run 3177
+══════════════════════════════════════════════════════════════════════════

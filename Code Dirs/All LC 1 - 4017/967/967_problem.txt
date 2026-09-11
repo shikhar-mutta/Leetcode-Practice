@@ -1,0 +1,37 @@
+══════════════════════════════════════════════════════════════════════════
+ 967. Numbers With Same Consecutive Differences
+ Medium  |  Tags: Backtracking, Breadth-First Search
+ https://leetcode.com/problems/numbers-with-same-consecutive-differences/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given two integers n and k, return an array of all the integers of
+  length n where the difference between every two consecutive digits is k.
+  You may return the answer in any order.
+
+  Note that the integers should not have leading zeros. Integers as 02 and
+  043 are not allowed.
+
+CONSTRAINTS
+  2 <= n <= 9
+  0 <= k <= 9
+
+TEST CASES
+  [1] Input    : n = 3, k = 7
+      Expected : [181,292,707,818,929]
+      Why      : Note that 070 is not a valid number, because it has leading zeroes.
+
+  [2] Input    : n = 2, k = 1
+      Expected : [10,12,21,23,32,34,43,45,54,56,65,67,76,78,87,89,98]
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  vector<int> numsSameConsecDiff(int n, int k);
+
+FILES
+  edit : 967.cpp
+  test : lc run 967
+══════════════════════════════════════════════════════════════════════════

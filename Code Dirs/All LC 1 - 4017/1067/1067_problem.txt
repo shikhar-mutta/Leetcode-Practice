@@ -1,0 +1,31 @@
+══════════════════════════════════════════════════════════════════════════
+ 1067. Digit Count in Range
+ Hard  |  Tags: Math, Dynamic Programming
+ https://leetcode.com/problems/digit-count-in-range/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : 1 | 1 | 13
+      Expected : 6
+
+  [2] Input    : 3 | 100 | 250
+      Expected : 35
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int digitsCount(int d, int low, int high);
+
+FILES
+  edit : 1067.cpp
+  test : lc run 1067
+══════════════════════════════════════════════════════════════════════════

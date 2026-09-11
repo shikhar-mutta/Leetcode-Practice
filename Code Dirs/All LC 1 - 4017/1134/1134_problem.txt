@@ -1,0 +1,31 @@
+══════════════════════════════════════════════════════════════════════════
+ 1134. Armstrong Number
+ Easy  |  Tags: Math
+ https://leetcode.com/problems/armstrong-number/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : 153
+      Expected : true
+
+  [2] Input    : 100
+      Expected : false
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  bool isArmstrong(int n);
+
+FILES
+  edit : 1134.cpp
+  test : lc run 1134
+══════════════════════════════════════════════════════════════════════════

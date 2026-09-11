@@ -1,0 +1,59 @@
+══════════════════════════════════════════════════════════════════════════
+ 3621. Number of Integers With Popcount-Depth Equal to K I
+ Hard  |  Tags: Math, Dynamic Programming, Bit Manipulation, Combinatorics
+ https://leetcode.com/problems/number-of-integers-with-popcount-depth-equal-to-k-i/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given two integers n and k.
+
+  For any positive integer x, define the following sequence:
+
+  - p0 = x
+
+  - pi+1 = popcount(pi) for all i >= 0, where popcount(y) is the number of
+    set bits (1's) in the binary representation of y.
+
+  This sequence will eventually reach the value 1.
+
+  The popcount-depth of x is defined as the smallest integer d >= 0 such
+  that pd = 1.
+
+  For example, if x = 7 (binary representation "111"). Then, the sequence
+  is: 7 → 3 → 2 → 1, so the popcount-depth of 7 is 3.
+
+  Your task is to determine the number of integers in the range [1, n]
+  whose popcount-depth is exactly equal to k.
+
+  Return the number of such integers.
+
+CONSTRAINTS
+  1 <= n <= 10^15
+  0 <= k <= 5
+
+TEST CASES
+  [1] Input    : n = 4, k = 1
+      Expected : 2
+      Why      : The following integers in the range [1, 4] have popcount-depth exactly equal to 1:
+                 x
+                 Binary
+                 … (8 more)
+
+  [2] Input    : n = 7, k = 2
+      Expected : 3
+      Why      : The following integers in the range [1, 7] have popcount-depth exactly equal to 2:
+                 x
+                 Binary
+                 … (11 more)
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  long long popcountDepth(long long n, int k);
+
+FILES
+  edit : 3621.cpp
+  test : lc run 3621
+══════════════════════════════════════════════════════════════════════════

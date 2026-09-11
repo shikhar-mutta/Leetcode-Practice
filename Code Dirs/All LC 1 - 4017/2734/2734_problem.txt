@@ -1,0 +1,49 @@
+══════════════════════════════════════════════════════════════════════════
+ 2734. Lexicographically Smallest String After Substring Operation
+ Medium  |  Tags: String, Greedy
+ https://leetcode.com/problems/lexicographically-smallest-string-after-substring-operation/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given a string s consisting of lowercase English letters. Perform the
+  following operation:
+
+  - Select any non-empty substring then replace every letter of the
+    substring with the preceding letter of the English alphabet. For
+    example, 'b' is converted to 'a', and 'a' is converted to 'z'.
+
+  Return the lexicographically smallest string after performing the
+  operation.
+
+CONSTRAINTS
+  1 <= s.length <= 3 * 10^5
+  s consists of lowercase English letters
+
+TEST CASES
+  [1] Input    : s = "cbabc"
+      Expected : "baabc"
+      Why      : Perform the operation on the substring starting at index 0, and ending at index 1 inclusive.
+
+  [2] Input    : s = "aa"
+      Expected : "az"
+      Why      : Perform the operation on the last letter.
+
+  [3] Input    : s = "acbbc"
+      Expected : "abaab"
+      Why      : Perform the operation on the substring starting at index 1, and ending at index 4 inclusive.
+
+  [4] Input    : s = "leetcode"
+      Expected : "kddsbncd"
+      Why      : Perform the operation on the entire string.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  string smallestString(string s);
+
+FILES
+  edit : 2734.cpp
+  test : lc run 2734
+══════════════════════════════════════════════════════════════════════════

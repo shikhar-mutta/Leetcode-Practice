@@ -1,0 +1,35 @@
+══════════════════════════════════════════════════════════════════════════
+ 1628. Design an Expression Tree With Evaluate Function
+ Medium  |  Tags: Array, Math, Stack, Tree, Design, Binary Tree
+ https://leetcode.com/problems/design-an-expression-tree-with-evaluate-function/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : ["3","4","+","2","*","7","/"]
+      Expected : 2
+
+  [2] Input    : ["4","5","2","7","+","-","*"]
+      Expected : -16
+
+  [3] Input    : ["4","2","+","3","5","1","-","*","+"]
+      Expected : 18
+
+CODE TYPE
+  interactive · interface Node
+    driver: mocks what the judge supplies, backed by each case's data
+    interface: Node — the judge's class, mocked by the driver
+
+SIGNATURE
+  Node* buildTreeFromPostfix(vector<string>& postfix);
+
+FILES
+  edit : 1628.cpp
+  test : lc run 1628
+══════════════════════════════════════════════════════════════════════════

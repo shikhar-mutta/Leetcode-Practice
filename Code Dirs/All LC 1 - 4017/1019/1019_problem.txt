@@ -1,0 +1,41 @@
+══════════════════════════════════════════════════════════════════════════
+ 1019. Next Greater Node In Linked List
+ Medium  |  Tags: Array, Linked List, Stack, Monotonic Stack
+ https://leetcode.com/problems/next-greater-node-in-linked-list/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given the head of a linked list with n nodes.
+
+  For each node in the list, find the value of the next greater node. That
+  is, for each node, find the value of the first node that is next to it
+  and has a strictly larger value than it.
+
+  Return an integer array answer where answer[i] is the value of the next
+  greater node of the i^th node (1-indexed). If the i^th node does not
+  have a next greater node, set answer[i] = 0.
+
+CONSTRAINTS
+  The number of nodes in the list is n.
+  1 <= n <= 10^4
+  1 <= Node.val <= 10^9
+
+TEST CASES
+  [1] Input    : head = [2,1,5]
+      Expected : [5,5,0]
+
+  [2] Input    : head = [2,7,4,3,5]
+      Expected : [7,0,5,5,0]
+
+CODE TYPE
+  function · linked list
+    driver: one Solution call per test case
+    linked list: ListNode* — values in order, e.g. [1,2,3,4]
+
+SIGNATURE
+  vector<int> nextLargerNodes(ListNode* head);
+
+FILES
+  edit : 1019.cpp
+  test : lc run 1019
+══════════════════════════════════════════════════════════════════════════

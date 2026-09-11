@@ -1,0 +1,53 @@
+══════════════════════════════════════════════════════════════════════════
+ 3612. Process String with Special Operations I
+ Medium  |  Tags: String, Simulation
+ https://leetcode.com/problems/process-string-with-special-operations-i/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a string s consisting of lowercase English letters and the
+  special characters: *, #, and %.
+
+  Build a new string result by processing s according to the following
+  rules from left to right:
+
+  - If the letter is a lowercase English letter append it to result.
+
+  - A '*' removes the last character from result, if it exists.
+
+  - A '#' duplicates the current result and appends it to itself.
+
+  - A '%' reverses the current result.
+
+  Return the final string result after processing all characters in s.
+
+CONSTRAINTS
+  1 <= s.length <= 20
+  s consists of only lowercase English letters and special characters *, #, and %.
+
+TEST CASES
+  [1] Input    : s = "a#b%*"
+      Expected : "ba"
+      Why      : i
+                 s[i]
+                 Operation
+                 … (22 more)
+
+  [2] Input    : s = "z*#"
+      Expected : ""
+      Why      : i
+                 s[i]
+                 Operation
+                 … (14 more)
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  string processStr(string s);
+
+FILES
+  edit : 3612.cpp
+  test : lc run 3612
+══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,34 @@
+══════════════════════════════════════════════════════════════════════════
+ 61. Rotate List
+ Medium  |  Tags: Linked List, Two Pointers
+ https://leetcode.com/problems/rotate-list/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given the head of a linked list, rotate the list to the right by k
+  places.
+
+CONSTRAINTS
+  The number of nodes in the list is in the range [0, 500].
+  -100 <= Node.val <= 100
+  0 <= k <= 2 * 10^9
+
+TEST CASES
+  [1] Input    : head = [1,2,3,4,5], k = 2
+      Expected : [4,5,1,2,3]
+
+  [2] Input    : head = [0,1,2], k = 4
+      Expected : [2,0,1]
+
+CODE TYPE
+  function · linked list
+    driver: one Solution call per test case
+    linked list: ListNode* — values in order, e.g. [1,2,3,4]
+
+SIGNATURE
+  ListNode* rotateRight(ListNode* head, int k);
+
+FILES
+  edit : 61.cpp
+  test : lc run 61
+══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,32 @@
+══════════════════════════════════════════════════════════════════════════
+ 400. Nth Digit
+ Medium  |  Tags: Math, Binary Search
+ https://leetcode.com/problems/nth-digit/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given an integer n, return the n^th digit of the infinite integer
+  sequence [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, ...].
+
+CONSTRAINTS
+  1 <= n <= 2^31 - 1
+
+TEST CASES
+  [1] Input    : n = 3
+      Expected : 3
+
+  [2] Input    : n = 11
+      Expected : 0
+      Why      : The 11^th digit of the sequence 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, ... is a 0, which is part of the number 10.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int findNthDigit(int n);
+
+FILES
+  edit : 400.cpp
+  test : lc run 400
+══════════════════════════════════════════════════════════════════════════

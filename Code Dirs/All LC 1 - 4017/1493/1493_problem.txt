@@ -1,0 +1,40 @@
+══════════════════════════════════════════════════════════════════════════
+ 1493. Longest Subarray of 1's After Deleting One Element
+ Medium  |  Tags: Array, Dynamic Programming, Sliding Window
+ https://leetcode.com/problems/longest-subarray-of-1s-after-deleting-one-element/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given a binary array nums, you should delete one element from it.
+
+  Return the size of the longest non-empty subarray containing only 1's in
+  the resulting array. Return 0 if there is no such subarray.
+
+CONSTRAINTS
+  1 <= nums.length <= 10^5
+  nums[i] is either 0 or 1.
+
+TEST CASES
+  [1] Input    : nums = [1,1,0,1]
+      Expected : 3
+      Why      : After deleting the number in position 2, [1,1,1] contains 3 numbers with value of 1's.
+
+  [2] Input    : nums = [0,1,1,1,0,1,1,0,1]
+      Expected : 5
+      Why      : After deleting the number in position 4, [0,1,1,1,1,1,0,1] longest subarray with value of 1's is [1,1,1,1,1].
+
+  [3] Input    : nums = [1,1,1]
+      Expected : 2
+      Why      : You must delete one element.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int longestSubarray(vector<int>& nums);
+
+FILES
+  edit : 1493.cpp
+  test : lc run 1493
+══════════════════════════════════════════════════════════════════════════

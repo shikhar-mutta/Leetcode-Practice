@@ -1,0 +1,44 @@
+══════════════════════════════════════════════════════════════════════════
+ 959. Regions Cut By Slashes
+ Medium  |  Tags: Array, Hash Table, Depth-First Search, Breadth-First Search, Union-Find, Matrix, Planar Graph
+ https://leetcode.com/problems/regions-cut-by-slashes/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  An n x n grid is composed of 1 x 1 squares where each 1 x 1 square
+  consists of a '/', '\', or blank space ' '. These characters divide the
+  square into contiguous regions.
+
+  Given the grid grid represented as a string array, return the number of
+  regions.
+
+  Note that backslash characters are escaped, so a '\' is represented as
+  '\\'.
+
+CONSTRAINTS
+  n == grid.length == grid[i].length
+  1 <= n <= 30
+  grid[i][j] is either '/', '\', or ' '.
+
+TEST CASES
+  [1] Input    : grid = [" /","/ "]
+      Expected : 2
+
+  [2] Input    : grid = [" /"," "]
+      Expected : 1
+
+  [3] Input    : grid = ["/\\","\\/"]
+      Expected : 5
+      Why      : Recall that because \ characters are escaped, "\\/" refers to \/, and "/\\" refers to /\.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int regionsBySlashes(vector<string>& grid);
+
+FILES
+  edit : 959.cpp
+  test : lc run 959
+══════════════════════════════════════════════════════════════════════════

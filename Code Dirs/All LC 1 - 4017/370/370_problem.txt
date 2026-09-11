@@ -1,0 +1,28 @@
+══════════════════════════════════════════════════════════════════════════
+ 370. Range Addition
+ Medium  |  Tags: Array, Prefix Sum
+ https://leetcode.com/problems/range-addition/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : 5 | [[1,3,2],[2,4,3],[0,2,-2]]
+      Expected : -2 0 3 5 3
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  vector<int> getModifiedArray(int length, vector<vector<int>>& updates);
+
+FILES
+  edit : 370.cpp
+  test : lc run 370
+══════════════════════════════════════════════════════════════════════════

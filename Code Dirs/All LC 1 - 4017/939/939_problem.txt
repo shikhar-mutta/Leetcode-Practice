@@ -1,0 +1,38 @@
+══════════════════════════════════════════════════════════════════════════
+ 939. Minimum Area Rectangle
+ Medium  |  Tags: Array, Hash Table, Math, Geometry, Sorting
+ https://leetcode.com/problems/minimum-area-rectangle/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given an array of points in the X-Y plane points where points[i]
+  = [xi, yi].
+
+  Return the minimum area of a rectangle formed from these points, with
+  sides parallel to the X and Y axes. If there is not any such rectangle,
+  return 0.
+
+CONSTRAINTS
+  1 <= points.length <= 500
+  points[i].length == 2
+  0 <= xi, yi <= 4 * 10^4
+  All the given points are unique.
+
+TEST CASES
+  [1] Input    : points = [[1,1],[1,3],[3,1],[3,3],[2,2]]
+      Expected : 4
+
+  [2] Input    : points = [[1,1],[1,3],[3,1],[3,3],[4,1],[4,3]]
+      Expected : 2
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int minAreaRect(vector<vector<int>>& points);
+
+FILES
+  edit : 939.cpp
+  test : lc run 939
+══════════════════════════════════════════════════════════════════════════

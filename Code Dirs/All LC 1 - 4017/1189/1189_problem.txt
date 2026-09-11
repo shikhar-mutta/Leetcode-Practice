@@ -1,0 +1,38 @@
+══════════════════════════════════════════════════════════════════════════
+ 1189. Maximum Number of Balloons
+ Easy  |  Tags: Hash Table, String, Counting
+ https://leetcode.com/problems/maximum-number-of-balloons/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given a string text, you want to use the characters of text to form as
+  many instances of the word "balloon" as possible.
+
+  You can use each character in text at most once. Return the maximum
+  number of instances that can be formed.
+
+CONSTRAINTS
+  1 <= text.length <= 10^4
+  text consists of lower case English letters only.
+
+TEST CASES
+  [1] Input    : text = "nlaebolko"
+      Expected : 1
+
+  [2] Input    : text = "loonbalxballpoon"
+      Expected : 2
+
+  [3] Input    : text = "leetcode"
+      Expected : 0
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int maxNumberOfBalloons(string text);
+
+FILES
+  edit : 1189.cpp
+  test : lc run 1189
+══════════════════════════════════════════════════════════════════════════

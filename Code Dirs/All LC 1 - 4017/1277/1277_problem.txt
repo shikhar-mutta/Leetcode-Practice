@@ -1,0 +1,50 @@
+══════════════════════════════════════════════════════════════════════════
+ 1277. Count Square Submatrices with All Ones
+ Medium  |  Tags: Array, Dynamic Programming, Matrix
+ https://leetcode.com/problems/count-square-submatrices-with-all-ones/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given a m * n matrix of ones and zeros, return how many square
+  submatrices have all ones.
+
+CONSTRAINTS
+  1 <= arr.length <= 300
+  1 <= arr[0].length <= 300
+  0 <= arr[i][j] <= 1
+
+TEST CASES
+  [1] Input    : matrix =
+[
+ [0,1,1,1],
+ [1,1,1,1],
+ [0,1,1,1]
+]
+      Expected : 15
+      Why      : There are 10 squares of side 1.
+                 There are 4 squares of side 2.
+                 There is 1 square of side 3.
+                 … (1 more)
+
+  [2] Input    : matrix =
+[
+ [1,0,1],
+ [1,1,0],
+ [1,1,0]
+]
+      Expected : 7
+      Why      : There are 6 squares of side 1.
+                 There is 1 square of side 2.
+                 Total number of squares = 6 + 1 = 7.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int countSquares(vector<vector<int>>& matrix);
+
+FILES
+  edit : 1277.cpp
+  test : lc run 1277
+══════════════════════════════════════════════════════════════════════════

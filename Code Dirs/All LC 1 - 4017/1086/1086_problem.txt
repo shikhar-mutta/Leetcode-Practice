@@ -1,0 +1,28 @@
+══════════════════════════════════════════════════════════════════════════
+ 1086. High Five
+ Easy  |  Tags: Array, Hash Table, Sorting, Heap (Priority Queue)
+ https://leetcode.com/problems/high-five/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : [[1,91],[1,92],[2,93],[2,97],[1,60],[2,77],[1,65],[1,87],[1,100],[2,100],[2,76]]
+      Expected : 1 87
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  vector<vector<int>> highFive(vector<vector<int>>& items);
+
+FILES
+  edit : 1086.cpp
+  test : lc run 1086
+══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,41 @@
+══════════════════════════════════════════════════════════════════════════
+ 2244. Minimum Rounds to Complete All Tasks
+ Medium  |  Tags: Array, Hash Table, Greedy, Counting
+ https://leetcode.com/problems/minimum-rounds-to-complete-all-tasks/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a 0-indexed integer array tasks, where tasks[i] represents
+  the difficulty level of a task. In each round, you can complete either 2
+  or 3 tasks of the same difficulty level.
+
+  Return the minimum rounds required to complete all the tasks, or -1 if
+  it is not possible to complete all the tasks.
+
+CONSTRAINTS
+  1 <= tasks.length <= 10^5
+  1 <= tasks[i] <= 10^9
+
+TEST CASES
+  [1] Input    : tasks = [2,2,3,3,2,4,4,4,4,4]
+      Expected : 4
+      Why      : To complete all the tasks, a possible plan is:
+                 - In the first round, you complete 3 tasks of difficulty level 2.
+                 - In the second round, you complete 2 tasks of difficulty level 3.
+                 … (3 more)
+
+  [2] Input    : tasks = [2,3,3]
+      Expected : -1
+      Why      : There is only 1 task of difficulty level 2, but in each round, you can only complete either 2 or 3 tasks of the same difficulty level. Hence, you cannot complete all the tasks, and the answer is -1.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int minimumRounds(vector<int>& tasks);
+
+FILES
+  edit : 2244.cpp
+  test : lc run 2244
+══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,41 @@
+══════════════════════════════════════════════════════════════════════════
+ 3116. Kth Smallest Amount With Single Denomination Combination
+ Hard  |  Tags: Array, Math, Binary Search, Bit Manipulation, Combinatorics, Number Theory
+ https://leetcode.com/problems/kth-smallest-amount-with-single-denomination-combination/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given an integer array coins representing coins of different
+  denominations and an integer k.
+
+  You have an infinite number of coins of each denomination. However, you
+  are not allowed to combine coins of different denominations.
+
+  Return the k^th smallest amount that can be made using these coins.
+
+CONSTRAINTS
+  1 <= coins.length <= 15
+  1 <= coins[i] <= 25
+  1 <= k <= 2 * 10^9
+  coins contains pairwise distinct integers.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : [3,6,9] | 3
+      Expected : 9
+
+  [2] Input    : [5,2] | 7
+      Expected : 12
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  long long findKthSmallest(vector<int>& coins, int k);
+
+FILES
+  edit : 3116.cpp
+  test : lc run 3116
+══════════════════════════════════════════════════════════════════════════

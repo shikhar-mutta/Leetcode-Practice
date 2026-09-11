@@ -1,0 +1,52 @@
+══════════════════════════════════════════════════════════════════════════
+ 3844. Longest Almost-Palindromic Substring
+ Medium  |  Tags: Two Pointers, String, Dynamic Programming
+ https://leetcode.com/problems/longest-almost-palindromic-substring/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a string s consisting of lowercase English letters.
+
+  A substring is almost-palindromic if it becomes a palindrome after
+  removing exactly one character from it.
+
+  Return an integer denoting the length of the longest almost-palindromic
+  substring in s.
+
+CONSTRAINTS
+  2 <= s.length <= 2500
+  s consists of only lowercase English letters.
+
+TEST CASES
+  [1] Input    : s = "abca"
+      Expected : 4
+      Why      : Choose the substring "abca".
+                 - Remove "abca".
+                 - The string becomes "aba", which is a palindrome.
+                 … (1 more)
+
+  [2] Input    : s = "abba"
+      Expected : 4
+      Why      : Choose the substring "abba".
+                 - Remove "abba".
+                 - The string becomes "aba", which is a palindrome.
+                 … (1 more)
+
+  [3] Input    : s = "zzabba"
+      Expected : 5
+      Why      : Choose the substring "zzabba".
+                 - Remove "zabba".
+                 - The string becomes "abba", which is a palindrome.
+                 … (1 more)
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int almostPalindromic(string s);
+
+FILES
+  edit : 3844.cpp
+  test : lc run 3844
+══════════════════════════════════════════════════════════════════════════

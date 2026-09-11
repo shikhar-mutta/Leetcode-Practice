@@ -1,0 +1,66 @@
+══════════════════════════════════════════════════════════════════════════
+ 1337. The K Weakest Rows in a Matrix
+ Easy  |  Tags: Array, Binary Search, Sorting, Heap (Priority Queue), Matrix
+ https://leetcode.com/problems/the-k-weakest-rows-in-a-matrix/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given an m x n binary matrix mat of 1's (representing soldiers)
+  and 0's (representing civilians). The soldiers are positioned in front
+  of the civilians. That is, all the 1's will appear to the left of all
+  the 0's in each row.
+
+  A row i is weaker than a row j if one of the following is true:
+
+  - The number of soldiers in row i is less than the number of soldiers in
+    row j.
+
+  - Both rows have the same number of soldiers and i < j.
+
+  Return the indices of the k weakest rows in the matrix ordered from
+  weakest to strongest.
+
+CONSTRAINTS
+  m == mat.length
+  n == mat[i].length
+  2 <= n, m <= 100
+  1 <= k <= m
+  matrix[i][j] is either 0 or 1.
+
+TEST CASES
+  [1] Input    : mat =
+[[1,1,0,0,0],
+ [1,1,1,1,0],
+ [1,0,0,0,0],
+ [1,1,0,0,0],
+ [1,1,1,1,1]],
+k = 3
+      Expected : [2,0,3]
+      Why      : The number of soldiers in each row is:
+                 - Row 0: 2
+                 - Row 1: 4
+                 … (4 more)
+
+  [2] Input    : mat =
+[[1,0,0,0],
+ [1,1,1,1],
+ [1,0,0,0],
+ [1,0,0,0]],
+k = 2
+      Expected : [0,2]
+      Why      : The number of soldiers in each row is:
+                 - Row 0: 1
+                 - Row 1: 4
+                 … (3 more)
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  vector<int> kWeakestRows(vector<vector<int>>& mat, int k);
+
+FILES
+  edit : 1337.cpp
+  test : lc run 1337
+══════════════════════════════════════════════════════════════════════════

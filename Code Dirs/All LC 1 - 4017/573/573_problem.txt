@@ -1,0 +1,28 @@
+══════════════════════════════════════════════════════════════════════════
+ 573. Squirrel Simulation
+ Medium  |  Tags: Array, Math
+ https://leetcode.com/problems/squirrel-simulation/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : 5 | 7 | [2,2] | [4,4] | [[3,0],[2,5]]
+      Expected : 12
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int minDistance(int height, int width, vector<int>& tree, vector<int>& squirrel, vector<vector<int>>& nuts);
+
+FILES
+  edit : 573.cpp
+  test : lc run 573
+══════════════════════════════════════════════════════════════════════════

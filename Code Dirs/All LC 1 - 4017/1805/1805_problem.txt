@@ -1,0 +1,49 @@
+══════════════════════════════════════════════════════════════════════════
+ 1805. Number of Different Integers in a String
+ Easy  |  Tags: Hash Table, String
+ https://leetcode.com/problems/number-of-different-integers-in-a-string/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a string word that consists of digits and lowercase
+  English letters.
+
+  You will replace every non-digit character with a space. For example,
+  "a123bc34d8ef34" will become " 123 34 8 34". Notice that you are left
+  with some integers that are separated by at least one space: "123",
+  "34", "8", and "34".
+
+  Return the number of different integers after performing the replacement
+  operations on word.
+
+  Two integers are considered different if their decimal representations
+  without any leading zeros are different.
+
+CONSTRAINTS
+  1 <= word.length <= 1000
+  word consists of digits and lowercase English letters.
+
+TEST CASES
+  [1] Input    : word = "a123bc34d8ef34"
+      Expected : 3
+      Why      : The three different integers are "123", "34", and "8". Notice that "34" is only counted once.
+
+  [2] Input    : word = "leet1234code234"
+      Expected : 2
+
+  [3] Input    : word = "a1b01c001"
+      Expected : 1
+      Why      : The three integers "1", "01", and "001" all represent the same integer because
+                 the leading zeros are ignored when comparing their decimal values.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int numDifferentIntegers(string word);
+
+FILES
+  edit : 1805.cpp
+  test : lc run 1805
+══════════════════════════════════════════════════════════════════════════

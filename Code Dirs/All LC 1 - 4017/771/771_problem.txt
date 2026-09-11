@@ -1,0 +1,38 @@
+══════════════════════════════════════════════════════════════════════════
+ 771. Jewels and Stones
+ Easy  |  Tags: Hash Table, String
+ https://leetcode.com/problems/jewels-and-stones/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You're given strings jewels representing the types of stones that are
+  jewels, and stones representing the stones you have. Each character in
+  stones is a type of stone you have. You want to know how many of the
+  stones you have are also jewels.
+
+  Letters are case sensitive, so "a" is considered a different type of
+  stone from "A".
+
+CONSTRAINTS
+  1 <= jewels.length, stones.length <= 50
+  jewels and stones consist of only English letters.
+  All the characters of jewels are unique.
+
+TEST CASES
+  [1] Input    : jewels = "aA", stones = "aAAbbbb"
+      Expected : 3
+
+  [2] Input    : jewels = "z", stones = "ZZ"
+      Expected : 0
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int numJewelsInStones(string jewels, string stones);
+
+FILES
+  edit : 771.cpp
+  test : lc run 771
+══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,37 @@
+══════════════════════════════════════════════════════════════════════════
+ 1315. Sum of Nodes with Even-Valued Grandparent
+ Medium  |  Tags: Tree, Depth-First Search, Breadth-First Search, Binary Tree
+ https://leetcode.com/problems/sum-of-nodes-with-even-valued-grandparent/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given the root of a binary tree, return the sum of values of nodes with
+  an even-valued grandparent. If there are no nodes with an even-valued
+  grandparent, return 0.
+
+  A grandparent of a node is the parent of its parent if it exists.
+
+CONSTRAINTS
+  The number of nodes in the tree is in the range [1, 10^4].
+  1 <= Node.val <= 100
+
+TEST CASES
+  [1] Input    : root = [6,7,8,2,7,1,3,9,null,1,4,null,null,null,5]
+      Expected : 18
+      Why      : The red nodes are the nodes with even-value grandparent while the blue nodes are the even-value grandparents.
+
+  [2] Input    : root = [1]
+      Expected : 0
+
+CODE TYPE
+  function · tree
+    driver: one Solution call per test case
+    tree: TreeNode* — level order, e.g. [3,9,20,null,null,15,7]
+
+SIGNATURE
+  int sumEvenGrandparent(TreeNode* root);
+
+FILES
+  edit : 1315.cpp
+  test : lc run 1315
+══════════════════════════════════════════════════════════════════════════

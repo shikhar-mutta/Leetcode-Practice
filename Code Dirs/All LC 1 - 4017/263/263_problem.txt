@@ -1,0 +1,39 @@
+══════════════════════════════════════════════════════════════════════════
+ 263. Ugly Number
+ Easy  |  Tags: Math
+ https://leetcode.com/problems/ugly-number/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  An ugly number is a positive integer which does not have a prime factor
+  other than 2, 3, and 5.
+
+  Given an integer n, return true if n is an ugly number.
+
+CONSTRAINTS
+  -2^31 <= n <= 2^31 - 1
+
+TEST CASES
+  [1] Input    : n = 6
+      Expected : true
+      Why      : 6 = 2 × 3
+
+  [2] Input    : n = 1
+      Expected : true
+      Why      : 1 has no prime factors.
+
+  [3] Input    : n = 14
+      Expected : false
+      Why      : 14 is not ugly since it includes the prime factor 7.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  bool isUgly(int n);
+
+FILES
+  edit : 263.cpp
+  test : lc run 263
+══════════════════════════════════════════════════════════════════════════

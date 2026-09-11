@@ -1,0 +1,30 @@
+══════════════════════════════════════════════════════════════════════════
+ 504. Base 7
+ Easy  |  Tags: Math, String
+ https://leetcode.com/problems/base-7/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given an integer num, return a string of its base 7 representation.
+
+CONSTRAINTS
+  -10^7 <= num <= 10^7
+
+TEST CASES
+  [1] Input    : num = 100
+      Expected : "202"
+
+  [2] Input    : num = -7
+      Expected : "-10"
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  string convertToBase7(int num);
+
+FILES
+  edit : 504.cpp
+  test : lc run 504
+══════════════════════════════════════════════════════════════════════════

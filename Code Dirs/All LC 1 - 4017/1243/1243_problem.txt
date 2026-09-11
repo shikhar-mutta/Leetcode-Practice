@@ -1,0 +1,31 @@
+══════════════════════════════════════════════════════════════════════════
+ 1243. Array Transformation
+ Easy  |  Tags: Array, Simulation
+ https://leetcode.com/problems/array-transformation/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : [6,2,3,4]
+      Expected : 6 3 3 4
+
+  [2] Input    : [1,6,3,4,3,5]
+      Expected : 1 4 4 4 4 5
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  vector<int> transformArray(vector<int>& arr);
+
+FILES
+  edit : 1243.cpp
+  test : lc run 1243
+══════════════════════════════════════════════════════════════════════════

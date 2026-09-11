@@ -1,0 +1,28 @@
+══════════════════════════════════════════════════════════════════════════
+ 1273. Delete Tree Nodes
+ Medium  |  Tags: Array, Tree, Depth-First Search, Breadth-First Search, DP on Trees
+ https://leetcode.com/problems/delete-tree-nodes/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : 7 | [-1,0,0,1,2,2,2] | [1,-2,4,0,-2,-1,-1]
+      Expected : 2
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int deleteTreeNodes(int nodes, vector<int>& parent, vector<int>& value);
+
+FILES
+  edit : 1273.cpp
+  test : lc run 1273
+══════════════════════════════════════════════════════════════════════════

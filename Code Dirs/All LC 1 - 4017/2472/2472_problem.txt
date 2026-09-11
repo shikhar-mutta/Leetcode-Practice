@@ -1,0 +1,45 @@
+══════════════════════════════════════════════════════════════════════════
+ 2472. Maximum Number of Non-overlapping Palindrome Substrings
+ Hard  |  Tags: Two Pointers, String, Dynamic Programming, Greedy
+ https://leetcode.com/problems/maximum-number-of-non-overlapping-palindrome-substrings/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a string s and a positive integer k.
+
+  Select a set of non-overlapping substrings from the string s that
+  satisfy the following conditions:
+
+  - The length of each substring is at least k.
+
+  - Each substring is a palindrome.
+
+  Return the maximum number of substrings in an optimal selection.
+
+  A substring is a contiguous sequence of characters within a string.
+
+CONSTRAINTS
+  1 <= k <= s.length <= 2000
+  s consists of lowercase English letters.
+
+TEST CASES
+  [1] Input    : s = "abaccdbbd", k = 3
+      Expected : 2
+      Why      : We can select the substrings underlined in s = "abaccdbbd". Both "aba" and "dbbd" are palindromes and have a length of at least k = 3.
+                 It can be shown that we cannot find a selection with more than two valid substrings.
+
+  [2] Input    : s = "adbcda", k = 2
+      Expected : 0
+      Why      : There is no palindrome substring of length at least 2 in the string.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int maxPalindromes(string s, int k);
+
+FILES
+  edit : 2472.cpp
+  test : lc run 2472
+══════════════════════════════════════════════════════════════════════════

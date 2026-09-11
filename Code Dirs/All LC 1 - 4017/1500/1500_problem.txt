@@ -1,0 +1,31 @@
+══════════════════════════════════════════════════════════════════════════
+ 1500. Design a File Sharing System
+ Medium  |  Tags: Hash Table, Design, Sorting, Heap (Priority Queue), Data Stream
+ https://leetcode.com/problems/design-a-file-sharing-system/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : ["FileSharing","join","join","join","request","request","leave","request","leave","join"] | [[4],[[1,2]],[[2,3]],[[4]],[1,3],[2,2],[1],[2,1],[2],[[]]]
+      Expected : [null,1,2,3,[2],[1],null,[],null,1]
+
+CODE TYPE
+  design · FileSharing
+    driver: replays ["FileSharing","op",...] / [[args],...] and prints [null,...]
+
+SIGNATURE
+  FileSharing(int m);
+  int join(vector<int> ownedChunks);
+  void leave(int userID);
+  vector<int> request(int userID, int chunkID);
+
+FILES
+  edit : 1500.cpp
+  test : lc run 1500
+══════════════════════════════════════════════════════════════════════════

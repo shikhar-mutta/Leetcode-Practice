@@ -1,0 +1,34 @@
+══════════════════════════════════════════════════════════════════════════
+ 246. Strobogrammatic Number
+ Easy  |  Tags: Hash Table, Two Pointers, String
+ https://leetcode.com/problems/strobogrammatic-number/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : "69"
+      Expected : true
+
+  [2] Input    : "88"
+      Expected : true
+
+  [3] Input    : "962"
+      Expected : false
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  bool isStrobogrammatic(string num);
+
+FILES
+  edit : 246.cpp
+  test : lc run 246
+══════════════════════════════════════════════════════════════════════════

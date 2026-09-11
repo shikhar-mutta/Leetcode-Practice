@@ -1,0 +1,31 @@
+══════════════════════════════════════════════════════════════════════════
+ 431. Encode N-ary Tree to Binary Tree
+ Hard  |  Tags: Tree, Depth-First Search, Breadth-First Search, Design, Binary Tree
+ https://leetcode.com/problems/encode-n-ary-tree-to-binary-tree/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : [1,null,3,2,4,null,5,6]
+      Expected : [1,null,3,2,4,null,5,6]
+
+CODE TYPE
+  design · Codec · tree · n-ary tree
+    driver: replays ["Codec","op",...] / [[args],...] and prints [null,...]
+    tree: TreeNode* — level order, e.g. [3,9,20,null,null,15,7]
+    n-ary tree: Node* {val, children} — level order, null ends a child group, e.g. [1,null,3,2,4,null,5,6]
+
+SIGNATURE
+  TreeNode* encode(Node* root);
+  Node* decode(TreeNode* root);
+
+FILES
+  edit : 431.cpp
+  test : lc run 431
+══════════════════════════════════════════════════════════════════════════

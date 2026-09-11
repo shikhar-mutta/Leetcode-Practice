@@ -1,0 +1,41 @@
+══════════════════════════════════════════════════════════════════════════
+ 2910. Minimum Number of Groups to Create a Valid Assignment
+ Medium  |  Tags: Array, Hash Table, Greedy
+ https://leetcode.com/problems/minimum-number-of-groups-to-create-a-valid-assignment/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a collection of numbered balls and instructed to sort them
+  into boxes for a nearly balanced distribution. There are two rules you
+  must follow:
+
+  - Balls with the same box must have the same value. But, if you have
+    more than one ball with the same number, you can put them in different
+    boxes.
+
+  - The biggest box can only have one more ball than the smallest box.
+
+  Return the fewest number of boxes to sort these balls following these
+  rules.
+
+CONSTRAINTS
+  1 <= nums.length <= 10^5
+  1 <= nums[i] <= 10^9
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : [3,2,3,2,3]
+      Expected : 2
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int minGroupsForValidAssignment(vector<int>& balls);
+
+FILES
+  edit : 2910.cpp
+  test : lc run 2910
+══════════════════════════════════════════════════════════════════════════

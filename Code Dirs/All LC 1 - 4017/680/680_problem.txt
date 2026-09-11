@@ -1,0 +1,36 @@
+══════════════════════════════════════════════════════════════════════════
+ 680. Valid Palindrome II
+ Easy  |  Tags: Two Pointers, String, Greedy
+ https://leetcode.com/problems/valid-palindrome-ii/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given a string s, return true if the s can be palindrome after deleting
+  at most one character from it.
+
+CONSTRAINTS
+  1 <= s.length <= 10^5
+  s consists of lowercase English letters.
+
+TEST CASES
+  [1] Input    : s = "aba"
+      Expected : true
+
+  [2] Input    : s = "abca"
+      Expected : true
+      Why      : You could delete the character 'c'.
+
+  [3] Input    : s = "abc"
+      Expected : false
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  bool validPalindrome(string s);
+
+FILES
+  edit : 680.cpp
+  test : lc run 680
+══════════════════════════════════════════════════════════════════════════

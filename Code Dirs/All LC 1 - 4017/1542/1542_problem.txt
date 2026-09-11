@@ -1,0 +1,40 @@
+══════════════════════════════════════════════════════════════════════════
+ 1542. Find Longest Awesome Substring
+ Hard  |  Tags: Hash Table, String, Bit Manipulation
+ https://leetcode.com/problems/find-longest-awesome-substring/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a string s. An awesome substring is a non-empty substring
+  of s such that we can make any number of swaps in order to make it a
+  palindrome.
+
+  Return the length of the maximum length awesome substring of s.
+
+CONSTRAINTS
+  1 <= s.length <= 10^5
+  s consists only of digits.
+
+TEST CASES
+  [1] Input    : s = "3242415"
+      Expected : 5
+      Why      : "24241" is the longest awesome substring, we can form the palindrome "24142" with some swaps.
+
+  [2] Input    : s = "12345678"
+      Expected : 1
+
+  [3] Input    : s = "213123"
+      Expected : 6
+      Why      : "213123" is the longest awesome substring, we can form the palindrome "231132" with some swaps.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int longestAwesome(string s);
+
+FILES
+  edit : 1542.cpp
+  test : lc run 1542
+══════════════════════════════════════════════════════════════════════════

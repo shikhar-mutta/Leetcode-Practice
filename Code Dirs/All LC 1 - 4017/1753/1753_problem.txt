@@ -1,0 +1,49 @@
+══════════════════════════════════════════════════════════════════════════
+ 1753. Maximum Score From Removing Stones
+ Medium  |  Tags: Math, Greedy, Heap (Priority Queue)
+ https://leetcode.com/problems/maximum-score-from-removing-stones/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are playing a solitaire game with three piles of stones of sizes a,
+  b, and c respectively. Each turn you choose two different non-empty
+  piles, take one stone from each, and add 1 point to your score. The game
+  stops when there are fewer than two non-empty piles (meaning there are
+  no more available moves).
+
+  Given three integers a, b, and c, return the maximum score you can get.
+
+CONSTRAINTS
+  1 <= a, b, c <= 10^5
+
+TEST CASES
+  [1] Input    : a = 2, b = 4, c = 6
+      Expected : 6
+      Why      : The starting state is (2, 4, 6). One optimal set of moves is:
+                 - Take from 1st and 3rd piles, state is now (1, 4, 5)
+                 - Take from 1st and 3rd piles, state is now (0, 4, 4)
+                 … (5 more)
+
+  [2] Input    : a = 4, b = 4, c = 6
+      Expected : 7
+      Why      : The starting state is (4, 4, 6). One optimal set of moves is:
+                 - Take from 1st and 2nd piles, state is now (3, 3, 6)
+                 - Take from 1st and 3rd piles, state is now (2, 3, 5)
+                 … (6 more)
+
+  [3] Input    : a = 1, b = 8, c = 8
+      Expected : 8
+      Why      : One optimal set of moves is to take from the 2nd and 3rd piles for 8 turns until they are empty.
+                 After that, there are fewer than two non-empty piles, so the game ends.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int maximumScore(int a, int b, int c);
+
+FILES
+  edit : 1753.cpp
+  test : lc run 1753
+══════════════════════════════════════════════════════════════════════════

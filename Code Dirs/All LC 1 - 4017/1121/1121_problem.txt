@@ -1,0 +1,31 @@
+══════════════════════════════════════════════════════════════════════════
+ 1121. Divide Array Into Increasing Sequences
+ Hard  |  Tags: Array, Counting
+ https://leetcode.com/problems/divide-array-into-increasing-sequences/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : [1,2,2,3,3,4,4] | 3
+      Expected : true
+
+  [2] Input    : [5,6,6,7,8] | 3
+      Expected : false
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  bool canDivideIntoSubsequences(vector<int>& nums, int k);
+
+FILES
+  edit : 1121.cpp
+  test : lc run 1121
+══════════════════════════════════════════════════════════════════════════

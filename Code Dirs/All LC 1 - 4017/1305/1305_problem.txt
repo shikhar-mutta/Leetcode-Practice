@@ -1,0 +1,33 @@
+══════════════════════════════════════════════════════════════════════════
+ 1305. All Elements in Two Binary Search Trees
+ Medium  |  Tags: Tree, Depth-First Search, Binary Search Tree, Sorting, Binary Tree
+ https://leetcode.com/problems/all-elements-in-two-binary-search-trees/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given two binary search trees root1 and root2, return a list containing
+  all the integers from both trees sorted in ascending order.
+
+CONSTRAINTS
+  The number of nodes in each tree is in the range [0, 5000].
+  -10^5 <= Node.val <= 10^5
+
+TEST CASES
+  [1] Input    : root1 = [2,1,4], root2 = [1,0,3]
+      Expected : [0,1,1,2,3,4]
+
+  [2] Input    : root1 = [1,null,8], root2 = [8,1]
+      Expected : [1,1,8,8]
+
+CODE TYPE
+  function · tree
+    driver: one Solution call per test case
+    tree: TreeNode* — level order, e.g. [3,9,20,null,null,15,7]
+
+SIGNATURE
+  vector<int> getAllElements(TreeNode* root1, TreeNode* root2);
+
+FILES
+  edit : 1305.cpp
+  test : lc run 1305
+══════════════════════════════════════════════════════════════════════════

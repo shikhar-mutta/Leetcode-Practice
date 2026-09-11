@@ -1,0 +1,43 @@
+══════════════════════════════════════════════════════════════════════════
+ 3351. Sum of Good Subsequences
+ Hard  |  Tags: Array, Hash Table, Dynamic Programming
+ https://leetcode.com/problems/sum-of-good-subsequences/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given an integer array nums. A good subsequence is defined as a
+  subsequence of nums where the absolute difference between any two
+  consecutive elements in the subsequence is exactly 1.
+
+  Return the sum of all possible good subsequences of nums.
+
+  Since the answer may be very large, return it modulo 10^9 + 7.
+
+  Note that a subsequence of size 1 is considered good by definition.
+
+CONSTRAINTS
+  1 <= nums.length <= 10^5
+  0 <= nums[i] <= 10^5
+
+TEST CASES
+  [1] Input    : nums = [1,2,1]
+      Expected : 14
+      Why      : - Good subsequences are: [1], [2], [1], [1,2], [2,1], [1,2,1].
+                 - The sum of elements in these subsequences is 14.
+
+  [2] Input    : nums = [3,4,5]
+      Expected : 40
+      Why      : - Good subsequences are: [3], [4], [5], [3,4], [4,5], [3,4,5].
+                 - The sum of elements in these subsequences is 40.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int sumOfGoodSubsequences(vector<int>& nums);
+
+FILES
+  edit : 3351.cpp
+  test : lc run 3351
+══════════════════════════════════════════════════════════════════════════

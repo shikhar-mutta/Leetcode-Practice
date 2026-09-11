@@ -1,0 +1,44 @@
+══════════════════════════════════════════════════════════════════════════
+ 1790. Check if One String Swap Can Make Strings Equal
+ Easy  |  Tags: Hash Table, String, Counting
+ https://leetcode.com/problems/check-if-one-string-swap-can-make-strings-equal/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given two strings s1 and s2 of equal length. A string swap is an
+  operation where you choose two indices in a string (not necessarily
+  different) and swap the characters at these indices.
+
+  Return true if it is possible to make both strings equal by performing
+  at most one string swap on exactly one of the strings. Otherwise, return
+  false.
+
+CONSTRAINTS
+  1 <= s1.length, s2.length <= 100
+  s1.length == s2.length
+  s1 and s2 consist of only lowercase English letters.
+
+TEST CASES
+  [1] Input    : s1 = "bank", s2 = "kanb"
+      Expected : true
+      Why      : For example, swap the first character with the last character of s2 to make "bank".
+
+  [2] Input    : s1 = "attack", s2 = "defend"
+      Expected : false
+      Why      : It is impossible to make them equal with one string swap.
+
+  [3] Input    : s1 = "kelb", s2 = "kelb"
+      Expected : true
+      Why      : The two strings are already equal, so no string swap operation is required.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  bool areAlmostEqual(string s1, string s2);
+
+FILES
+  edit : 1790.cpp
+  test : lc run 1790
+══════════════════════════════════════════════════════════════════════════

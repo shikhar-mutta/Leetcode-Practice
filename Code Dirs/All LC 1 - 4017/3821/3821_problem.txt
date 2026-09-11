@@ -1,0 +1,44 @@
+══════════════════════════════════════════════════════════════════════════
+ 3821. Find Nth Smallest Integer With K One Bits
+ Hard  |  Tags: Math, Bit Manipulation, Combinatorics
+ https://leetcode.com/problems/find-nth-smallest-integer-with-k-one-bits/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given two positive integers n and k.
+
+  Return an integer denoting the n^th smallest positive integer that has
+  exactly k ones in its binary representation. It is guaranteed that the
+  answer is strictly less than 2^50.
+
+CONSTRAINTS
+  1 <= n <= 2^50
+  1 <= k <= 50
+  The answer is strictly less than 2^50.
+
+TEST CASES
+  [1] Input    : n = 4, k = 2
+      Expected : 9
+      Why      : The 4 smallest positive integers that have exactly k = 2 ones in their binary representations are:
+                 - 3 = 112
+                 - 5 = 1012
+                 … (2 more)
+
+  [2] Input    : n = 3, k = 1
+      Expected : 4
+      Why      : The 3 smallest positive integers that have exactly k = 1 one in their binary representations are:
+                 - 1 = 12
+                 - 2 = 102
+                 … (1 more)
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  long long nthSmallest(long long n, int k);
+
+FILES
+  edit : 3821.cpp
+  test : lc run 3821
+══════════════════════════════════════════════════════════════════════════

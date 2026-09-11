@@ -1,0 +1,47 @@
+══════════════════════════════════════════════════════════════════════════
+ 3330. Find the Original Typed String I
+ Easy  |  Tags: String
+ https://leetcode.com/problems/find-the-original-typed-string-i/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Alice is attempting to type a specific string on her computer. However,
+  she tends to be clumsy and may press a key for too long, resulting in a
+  character being typed multiple times.
+
+  Although Alice tried to focus on her typing, she is aware that she may
+  still have done this at most once.
+
+  You are given a string word, which represents the final output displayed
+  on Alice's screen.
+
+  Return the total number of possible original strings that Alice might
+  have intended to type.
+
+CONSTRAINTS
+  1 <= word.length <= 100
+  word consists only of lowercase English letters.
+
+TEST CASES
+  [1] Input    : word = "abbcccc"
+      Expected : 5
+      Why      : The possible strings are: "abbcccc", "abbccc", "abbcc", "abbc", and "abcccc".
+
+  [2] Input    : word = "abcd"
+      Expected : 1
+      Why      : The only possible string is "abcd".
+
+  [3] Input    : word = "aaaa"
+      Expected : 4
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int possibleStringCount(string word);
+
+FILES
+  edit : 3330.cpp
+  test : lc run 3330
+══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,43 @@
+══════════════════════════════════════════════════════════════════════════
+ 1250. Check If It Is a Good Array
+ Hard  |  Tags: Array, Math, Number Theory, Bézout's Lemma, Euclidean Algorithm, Greatest Common Divisor, Extended Euclidean Algorithm
+ https://leetcode.com/problems/check-if-it-is-a-good-array/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given an array nums of positive integers. Your task is to select some
+  subset of nums, multiply each element by an integer and add all these
+  numbers. The array is said to be good if you can obtain a sum of 1 from
+  the array by any possible subset and multiplicand.
+
+  Return True if the array is good otherwise return False.
+
+CONSTRAINTS
+  1 <= nums.length <= 10^5
+  1 <= nums[i] <= 10^9
+
+TEST CASES
+  [1] Input    : nums = [12,5,7,23]
+      Expected : true
+      Why      : Pick numbers 5 and 7.
+                 5*3 + 7*(-2) = 1
+
+  [2] Input    : nums = [29,6,10]
+      Expected : true
+      Why      : Pick numbers 29, 6 and 10.
+                 29*1 + 6*(-3) + 10*(-1) = 1
+
+  [3] Input    : nums = [3,6]
+      Expected : false
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  bool isGoodArray(vector<int>& nums);
+
+FILES
+  edit : 1250.cpp
+  test : lc run 1250
+══════════════════════════════════════════════════════════════════════════

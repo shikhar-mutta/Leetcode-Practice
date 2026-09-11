@@ -1,0 +1,34 @@
+══════════════════════════════════════════════════════════════════════════
+ 1966. Binary Searchable Numbers in an Unsorted Array
+ Medium  |  Tags: Array, Binary Search, Stack, Monotonic Stack
+ https://leetcode.com/problems/binary-searchable-numbers-in-an-unsorted-array/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : [7]
+      Expected : 1
+
+  [2] Input    : [-1,5,2]
+      Expected : 1
+
+  [3] Input    : [11,15,2,1,14]
+      Expected : 0
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int binarySearchableNumbers(vector<int>& nums);
+
+FILES
+  edit : 1966.cpp
+  test : lc run 1966
+══════════════════════════════════════════════════════════════════════════

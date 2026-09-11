@@ -1,0 +1,30 @@
+══════════════════════════════════════════════════════════════════════════
+ 251. Flatten 2D Vector
+ Medium  |  Tags: Array, Two Pointers, Design, Iterator
+ https://leetcode.com/problems/flatten-2d-vector/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : [[1,2],[3],[4]]
+      Expected : 1 2 3 4
+
+CODE TYPE
+  design · Vector2D
+    driver: replays ["Vector2D","op",...] / [[args],...] and prints [null,...]
+
+SIGNATURE
+  Vector2D(vector<vector<int>>& vec);
+  int next();
+  bool hasNext();
+
+FILES
+  edit : 251.cpp
+  test : lc run 251
+══════════════════════════════════════════════════════════════════════════

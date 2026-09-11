@@ -1,0 +1,46 @@
+══════════════════════════════════════════════════════════════════════════
+ 3591. Check if Any Element Has Prime Frequency
+ Easy  |  Tags: Array, Hash Table, Math, Counting, Number Theory
+ https://leetcode.com/problems/check-if-any-element-has-prime-frequency/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given an integer array nums.
+
+  Return true if the frequency of any element of the array is prime,
+  otherwise, return false.
+
+  The frequency of an element x is the number of times it occurs in the
+  array.
+
+  A prime number is a natural number greater than 1 with only two factors,
+  1 and itself.
+
+CONSTRAINTS
+  1 <= nums.length <= 100
+  0 <= nums[i] <= 100
+
+TEST CASES
+  [1] Input    : nums = [1,2,3,4,5,4]
+      Expected : true
+      Why      : 4 has a frequency of two, which is a prime number.
+
+  [2] Input    : nums = [1,2,3,4,5]
+      Expected : false
+      Why      : All elements have a frequency of one.
+
+  [3] Input    : nums = [2,2,2,4,4]
+      Expected : true
+      Why      : Both 2 and 4 have a prime frequency.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  bool checkPrimeFrequency(vector<int>& nums);
+
+FILES
+  edit : 3591.cpp
+  test : lc run 3591
+══════════════════════════════════════════════════════════════════════════

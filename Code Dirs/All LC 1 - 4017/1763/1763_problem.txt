@@ -1,0 +1,45 @@
+══════════════════════════════════════════════════════════════════════════
+ 1763. Longest Nice Substring
+ Easy  |  Tags: Hash Table, String, Divide and Conquer, Bit Manipulation, Sliding Window
+ https://leetcode.com/problems/longest-nice-substring/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  A string s is nice if, for every letter of the alphabet that s contains,
+  it appears both in uppercase and lowercase. For example, "abABB" is nice
+  because 'A' and 'a' appear, and 'B' and 'b' appear. However, "abA" is
+  not because 'b' appears, but 'B' does not.
+
+  Given a string s, return the longest substring of s that is nice. If
+  there are multiple, return the substring of the earliest occurrence. If
+  there are none, return an empty string.
+
+CONSTRAINTS
+  1 <= s.length <= 100
+  s consists of uppercase and lowercase English letters.
+
+TEST CASES
+  [1] Input    : s = "YazaAay"
+      Expected : "aAa"
+      Why      : "aAa" is a nice string because 'A/a' is the only letter of the alphabet in s, and both 'A' and 'a' appear.
+                 "aAa" is the longest nice substring.
+
+  [2] Input    : s = "Bb"
+      Expected : "Bb"
+      Why      : "Bb" is a nice string because both 'B' and 'b' appear. The whole string is a substring.
+
+  [3] Input    : s = "c"
+      Expected : ""
+      Why      : There are no nice substrings.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  string longestNiceSubstring(string s);
+
+FILES
+  edit : 1763.cpp
+  test : lc run 1763
+══════════════════════════════════════════════════════════════════════════

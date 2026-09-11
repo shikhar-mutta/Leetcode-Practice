@@ -1,0 +1,44 @@
+══════════════════════════════════════════════════════════════════════════
+ 2514. Count Anagrams
+ Hard  |  Tags: Hash Table, Math, String, Combinatorics, Counting, Fermat's Little Theorem
+ https://leetcode.com/problems/count-anagrams/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a string s containing one or more words. Every consecutive
+  pair of words is separated by a single space ' '.
+
+  A string t is an anagram of string s if the i^th word of t is a
+  permutation of the i^th word of s.
+
+  - For example, "acb dfe" is an anagram of "abc def", but "def cab" and
+    "adc bef" are not.
+
+  Return the number of distinct anagrams of s. Since the answer may be
+  very large, return it modulo 10^9 + 7.
+
+CONSTRAINTS
+  1 <= s.length <= 10^5
+  s consists of lowercase English letters and spaces ' '.
+  There is single space between consecutive words.
+
+TEST CASES
+  [1] Input    : s = "too hot"
+      Expected : 18
+      Why      : Some of the anagrams of the given string are "too hot", "oot hot", "oto toh", "too toh", and "too oht".
+
+  [2] Input    : s = "aa"
+      Expected : 1
+      Why      : There is only one anagram possible for the given string.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int countAnagrams(string s);
+
+FILES
+  edit : 2514.cpp
+  test : lc run 2514
+══════════════════════════════════════════════════════════════════════════

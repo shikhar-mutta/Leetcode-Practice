@@ -1,0 +1,43 @@
+══════════════════════════════════════════════════════════════════════════
+ 922. Sort Array By Parity II
+ Easy  |  Tags: Array, Two Pointers, Sorting
+ https://leetcode.com/problems/sort-array-by-parity-ii/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given an array of integers nums, half of the integers in nums are odd,
+  and the other half are even.
+
+  Sort the array so that whenever nums[i] is odd, i is odd, and whenever
+  nums[i] is even, i is even.
+
+  Return any answer array that satisfies this condition.
+
+CONSTRAINTS
+  2 <= nums.length <= 2 * 10^4
+  nums.length is even.
+  Half of the integers in nums are even.
+  0 <= nums[i] <= 1000
+
+TEST CASES
+  [1] Input    : nums = [4,2,5,7]
+      Expected : [4,5,2,7]
+      Why      : [4,7,2,5], [2,5,4,7], [2,7,4,5] would also have been accepted.
+
+  [2] Input    : nums = [2,3]
+      Expected : [2,3]
+
+FOLLOW UP
+  Could you solve it in-place?
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  vector<int> sortArrayByParityII(vector<int>& nums);
+
+FILES
+  edit : 922.cpp
+  test : lc run 922
+══════════════════════════════════════════════════════════════════════════

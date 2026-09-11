@@ -1,0 +1,43 @@
+══════════════════════════════════════════════════════════════════════════
+ 1053. Previous Permutation With One Swap
+ Medium  |  Tags: Array, Greedy
+ https://leetcode.com/problems/previous-permutation-with-one-swap/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given an array of positive integers arr (not necessarily distinct),
+  return the lexicographically largest permutation that is smaller than
+  arr, that can be made with exactly one swap. If it cannot be done, then
+  return the same array.
+
+  Note that a swap exchanges the positions of two numbers arr[i] and
+  arr[j]
+
+CONSTRAINTS
+  1 <= arr.length <= 10^4
+  1 <= arr[i] <= 10^4
+
+TEST CASES
+  [1] Input    : arr = [3,2,1]
+      Expected : [3,1,2]
+      Why      : Swapping 2 and 1.
+
+  [2] Input    : arr = [1,1,5]
+      Expected : [1,1,5]
+      Why      : This is already the smallest permutation.
+
+  [3] Input    : arr = [1,9,4,6,7]
+      Expected : [1,7,4,6,9]
+      Why      : Swapping 9 and 7.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  vector<int> prevPermOpt1(vector<int>& arr);
+
+FILES
+  edit : 1053.cpp
+  test : lc run 1053
+══════════════════════════════════════════════════════════════════════════

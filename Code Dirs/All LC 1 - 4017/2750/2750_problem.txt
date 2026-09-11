@@ -1,0 +1,47 @@
+══════════════════════════════════════════════════════════════════════════
+ 2750. Ways to Split Array Into Good Subarrays
+ Medium  |  Tags: Array, Math, Dynamic Programming
+ https://leetcode.com/problems/ways-to-split-array-into-good-subarrays/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a binary array nums.
+
+  A subarray of an array is good if it contains exactly one element with
+  the value 1.
+
+  Return an integer denoting the number of ways to split the array nums
+  into good subarrays. As the number may be too large, return it modulo
+  10^9 + 7.
+
+  A subarray is a contiguous non-empty sequence of elements within an
+  array.
+
+CONSTRAINTS
+  1 <= nums.length <= 10^5
+  0 <= nums[i] <= 1
+
+TEST CASES
+  [1] Input    : nums = [0,1,0,0,1]
+      Expected : 3
+      Why      : There are 3 ways to split nums into good subarrays:
+                 - [0,1] [0,0,1]
+                 - [0,1,0] [0,1]
+                 … (1 more)
+
+  [2] Input    : nums = [0,1,0]
+      Expected : 1
+      Why      : There is 1 way to split nums into good subarrays:
+                 - [0,1,0]
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int numberOfGoodSubarraySplits(vector<int>& nums);
+
+FILES
+  edit : 2750.cpp
+  test : lc run 2750
+══════════════════════════════════════════════════════════════════════════

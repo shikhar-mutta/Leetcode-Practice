@@ -1,0 +1,63 @@
+══════════════════════════════════════════════════════════════════════════
+ 2949. Count Beautiful Substrings II
+ Hard  |  Tags: Hash Table, Math, String, Number Theory, Prefix Sum
+ https://leetcode.com/problems/count-beautiful-substrings-ii/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a string s and a positive integer k.
+
+  Let vowels and consonants be the number of vowels and consonants in a
+  string.
+
+  A string is beautiful if:
+
+  - vowels == consonants.
+
+  - (vowels * consonants) % k == 0, in other terms the multiplication of
+    vowels and consonants is divisible by k.
+
+  Return the number of non-empty beautiful substrings in the given string
+  s.
+
+  A substring is a contiguous sequence of characters in a string.
+
+  Vowel letters in English are 'a', 'e', 'i', 'o', and 'u'.
+
+  Consonant letters in English are every letter except vowels.
+
+CONSTRAINTS
+  1 <= s.length <= 5 * 10^4
+  1 <= k <= 1000
+  s consists of only English lowercase letters.
+
+TEST CASES
+  [1] Input    : s = "baeyh", k = 2
+      Expected : 2
+      Why      : There are 2 beautiful substrings in the given string.
+                 - Substring "baeyh", vowels = 2 (["a",e"]), consonants = 2 (["y","h"]).
+                 You can see that string "aeyh" is beautiful as vowels == consonants and vowels * consonants % k == 0.
+                 … (3 more)
+
+  [2] Input    : s = "abba", k = 1
+      Expected : 3
+      Why      : There are 3 beautiful substrings in the given string.
+                 - Substring "abba", vowels = 1 (["a"]), consonants = 1 (["b"]).
+                 - Substring "abba", vowels = 1 (["a"]), consonants = 1 (["b"]).
+                 … (2 more)
+
+  [3] Input    : s = "bcdf", k = 1
+      Expected : 0
+      Why      : There are no beautiful substrings in the given string.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  long long beautifulSubstrings(string s, int k);
+
+FILES
+  edit : 2949.cpp
+  test : lc run 2949
+══════════════════════════════════════════════════════════════════════════

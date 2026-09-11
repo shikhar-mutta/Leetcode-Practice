@@ -1,0 +1,49 @@
+══════════════════════════════════════════════════════════════════════════
+ 2586. Count the Number of Vowel Strings in Range
+ Easy  |  Tags: Array, String, Counting
+ https://leetcode.com/problems/count-the-number-of-vowel-strings-in-range/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a 0-indexed array of string words and two integers left
+  and right.
+
+  A string is called a vowel string if it starts with a vowel character
+  and ends with a vowel character where vowel characters are 'a', 'e',
+  'i', 'o', and 'u'.
+
+  Return the number of vowel strings words[i] where i belongs to the
+  inclusive range [left, right].
+
+CONSTRAINTS
+  1 <= words.length <= 1000
+  1 <= words[i].length <= 10
+  words[i] consists of only lowercase English letters.
+  0 <= left <= right < words.length
+
+TEST CASES
+  [1] Input    : words = ["are","amy","u"], left = 0, right = 2
+      Expected : 2
+      Why      : - "are" is a vowel string because it starts with 'a' and ends with 'e'.
+                 - "amy" is not a vowel string because it does not end with a vowel.
+                 - "u" is a vowel string because it starts with 'u' and ends with 'u'.
+                 … (1 more)
+
+  [2] Input    : words = ["hey","aeo","mu","ooo","artro"], left = 1, right = 4
+      Expected : 3
+      Why      : - "aeo" is a vowel string because it starts with 'a' and ends with 'o'.
+                 - "mu" is not a vowel string because it does not start with a vowel.
+                 - "ooo" is a vowel string because it starts with 'o' and ends with 'o'.
+                 … (2 more)
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int vowelStrings(vector<string>& words, int left, int right);
+
+FILES
+  edit : 2586.cpp
+  test : lc run 2586
+══════════════════════════════════════════════════════════════════════════

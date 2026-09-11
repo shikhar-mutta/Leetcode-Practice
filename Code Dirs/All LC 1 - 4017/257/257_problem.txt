@@ -1,0 +1,36 @@
+══════════════════════════════════════════════════════════════════════════
+ 257. Binary Tree Paths
+ Easy  |  Tags: String, Backtracking, Tree, Depth-First Search, Binary Tree
+ https://leetcode.com/problems/binary-tree-paths/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given the root of a binary tree.
+
+  Return all root-to-leaf paths in any order.
+
+  A leaf is a node with no children.
+
+CONSTRAINTS
+  The number of nodes in the tree is in the range [1, 100].
+  -100 <= Node.val <= 100
+
+TEST CASES
+  [1] Input    : root = [1,2,3,null,5]
+      Expected : ["1->2->5","1->3"]
+
+  [2] Input    : root = [1]
+      Expected : ["1"]
+
+CODE TYPE
+  function · tree
+    driver: one Solution call per test case
+    tree: TreeNode* — level order, e.g. [3,9,20,null,null,15,7]
+
+SIGNATURE
+  vector<string> binaryTreePaths(TreeNode* root);
+
+FILES
+  edit : 257.cpp
+  test : lc run 257
+══════════════════════════════════════════════════════════════════════════

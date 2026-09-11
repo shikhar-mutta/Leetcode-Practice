@@ -1,0 +1,34 @@
+══════════════════════════════════════════════════════════════════════════
+ 1060. Missing Element in Sorted Array
+ Medium  |  Tags: Array, Binary Search
+ https://leetcode.com/problems/missing-element-in-sorted-array/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : [4,7,9,10] | 1
+      Expected : 5
+
+  [2] Input    : [4,7,9,10] | 3
+      Expected : 8
+
+  [3] Input    : [1,2,4] | 3
+      Expected : 6
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int missingElement(vector<int>& nums, int k);
+
+FILES
+  edit : 1060.cpp
+  test : lc run 1060
+══════════════════════════════════════════════════════════════════════════

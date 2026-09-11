@@ -1,0 +1,31 @@
+══════════════════════════════════════════════════════════════════════════
+ 1230. Toss Strange Coins
+ Medium  |  Tags: Array, Math, Dynamic Programming, Probability and Statistics
+ https://leetcode.com/problems/toss-strange-coins/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : [0.4] | 1
+      Expected : 0.40000
+
+  [2] Input    : [0.5,0.5,0.5,0.5,0.5] | 0
+      Expected : 0.03125
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  double probabilityOfHeads(vector<double>& prob, int target);
+
+FILES
+  edit : 1230.cpp
+  test : lc run 1230
+══════════════════════════════════════════════════════════════════════════

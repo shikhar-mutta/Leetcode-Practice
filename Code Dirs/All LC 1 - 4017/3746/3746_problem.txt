@@ -1,0 +1,45 @@
+══════════════════════════════════════════════════════════════════════════
+ 3746. Minimum String Length After Balanced Removals
+ Medium  |  Tags: String, Stack, Counting
+ https://leetcode.com/problems/minimum-string-length-after-balanced-removals/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a string s consisting only of the characters 'a' and 'b'.
+
+  You are allowed to repeatedly remove any substring where the number of
+  'a' characters is equal to the number of 'b' characters. After each
+  removal, the remaining parts of the string are concatenated together
+  without gaps.
+
+  Return an integer denoting the minimum possible length of the string
+  after performing any number of such operations.
+
+CONSTRAINTS
+  1 <= s.length <= 10^5
+  s[i] is either 'a' or 'b'.
+
+TEST CASES
+  [1] Input    : s = "aabbab"
+      Expected : 0
+      Why      : The substring "aabbab" has three 'a' and three 'b'. Since their counts are equal, we can remove the entire string directly. The minimum length is 0.
+
+  [2] Input    : s = "aaaa"
+      Expected : 4
+      Why      : Every substring of "aaaa" contains only 'a' characters. No substring can be removed as a result, so the minimum length remains 4.
+
+  [3] Input    : s = "aaabb"
+      Expected : 1
+      Why      : First, remove the substring "ab", leaving "aab". Next, remove the new substring "ab", leaving "a". No further removals are possible, so the minimum length is 1.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int minLengthAfterRemovals(string s);
+
+FILES
+  edit : 3746.cpp
+  test : lc run 3746
+══════════════════════════════════════════════════════════════════════════

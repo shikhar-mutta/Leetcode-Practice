@@ -1,0 +1,43 @@
+══════════════════════════════════════════════════════════════════════════
+ 881. Boats to Save People
+ Medium  |  Tags: Array, Two Pointers, Greedy, Sorting, Timsort
+ https://leetcode.com/problems/boats-to-save-people/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given an array people where people[i] is the weight of the i^th
+  person, and an infinite number of boats where each boat can carry a
+  maximum weight of limit. Each boat carries at most two people at the
+  same time, provided the sum of the weight of those people is at most
+  limit.
+
+  Return the minimum number of boats to carry every given person.
+
+CONSTRAINTS
+  1 <= people.length <= 5 * 10^4
+  1 <= people[i] <= limit <= 3 * 10^4
+
+TEST CASES
+  [1] Input    : people = [1,2], limit = 3
+      Expected : 1
+      Why      : 1 boat (1, 2)
+
+  [2] Input    : people = [3,2,2,1], limit = 3
+      Expected : 3
+      Why      : 3 boats (1, 2), (2) and (3)
+
+  [3] Input    : people = [3,5,3,4], limit = 5
+      Expected : 4
+      Why      : 4 boats (3), (3), (4), (5)
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int numRescueBoats(vector<int>& people, int limit);
+
+FILES
+  edit : 881.cpp
+  test : lc run 881
+══════════════════════════════════════════════════════════════════════════

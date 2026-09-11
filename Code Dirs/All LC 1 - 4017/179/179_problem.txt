@@ -1,0 +1,35 @@
+══════════════════════════════════════════════════════════════════════════
+ 179. Largest Number
+ Medium  |  Tags: Array, String, Greedy, Sorting
+ https://leetcode.com/problems/largest-number/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given a list of non-negative integers nums, arrange them such that they
+  form the largest number and return it.
+
+  Since the result may be very large, so you need to return a string
+  instead of an integer.
+
+CONSTRAINTS
+  1 <= nums.length <= 100
+  0 <= nums[i] <= 10^9
+
+TEST CASES
+  [1] Input    : nums = [10,2]
+      Expected : "210"
+
+  [2] Input    : nums = [3,30,34,5,9]
+      Expected : "9534330"
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  string largestNumber(vector<int>& nums);
+
+FILES
+  edit : 179.cpp
+  test : lc run 179
+══════════════════════════════════════════════════════════════════════════

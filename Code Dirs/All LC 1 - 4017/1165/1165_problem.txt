@@ -1,0 +1,31 @@
+══════════════════════════════════════════════════════════════════════════
+ 1165. Single-Row Keyboard
+ Easy  |  Tags: Hash Table, String
+ https://leetcode.com/problems/single-row-keyboard/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : "abcdefghijklmnopqrstuvwxyz" | "cba"
+      Expected : 4
+
+  [2] Input    : "pqrstuvwxyzabcdefghijklmno" | "leetcode"
+      Expected : 73
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int calculateTime(string keyboard, string word);
+
+FILES
+  edit : 1165.cpp
+  test : lc run 1165
+══════════════════════════════════════════════════════════════════════════

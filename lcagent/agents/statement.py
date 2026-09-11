@@ -172,6 +172,10 @@ def extract_signatures(cpp_snippet: str) -> list[str]:
         s = line.strip()
         if not s or s.startswith(("class", "public", "private", "#", "}", "*", "struct")):
             continue
+        # Members sit one indent in (4 spaces, or a tab in a few snippets);
+        # deeper lines are body statements — `printFirst();` in 1114.
+        if not re.match(r"(?: {4}|\t)\S", line):
+            continue
         if "(" in s and ")" in s and not s.startswith("return"):
             sigs.append(s.rstrip("{ ").rstrip() + ";" if not s.rstrip().endswith(";") else s)
     return sigs
@@ -308,9 +312,11 @@ class StatementAgent(Agent):
             return ["  (no examples available)", ""]
         raw = ctx.paths.input.read_text(encoding="utf-8", errors="replace").splitlines()
         exp = ctx.paths.expected.read_text(encoding="utf-8", errors="replace").splitlines()
-        if not raw:
+        # Some hand-written drivers build their own cases, and the input file
+        # says so in prose rather than starting with a case count.
+        if not raw or not raw[0].strip().isdigit():
             return ["  (no examples available)", ""]
-        count = int(raw[0].strip() or 0)
+        count = int(raw[0].strip())
         rest = raw[1:]
         per = len(rest) // count if count else 0
         out = ["  (recovered from local test files)", ""]
@@ -368,7 +374,11 @@ def backfill_archive(pids: list[str] | None = None, *, refresh: bool = False,
             streak = 0
             time.sleep(delay)                   # one problem at a time, politely
         ctx.problem = data
-        r = agent.run(ctx)
+        try:
+            r = agent.run(ctx)
+        except Exception as e:                  # noqa: BLE001 — one odd folder must not stop the batch
+            failures.append((pid, f"{type(e).__name__}: {e}"))
+            continue
         if r.ok:
             written += 1
         else:

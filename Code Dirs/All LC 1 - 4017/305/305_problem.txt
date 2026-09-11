@@ -1,0 +1,28 @@
+══════════════════════════════════════════════════════════════════════════
+ 305. Number of Islands II
+ Hard  |  Tags: Array, Hash Table, Union-Find
+ https://leetcode.com/problems/number-of-islands-ii/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : 3 | 3 | [[0,0],[0,1],[1,2],[2,1]]
+      Expected : [1,1,2,3]
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  vector<int> numIslands2(int m, int n, vector<vector<int>>& positions);
+
+FILES
+  edit : 305.cpp
+  test : lc run 305
+══════════════════════════════════════════════════════════════════════════

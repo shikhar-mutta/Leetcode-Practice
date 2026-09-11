@@ -1,0 +1,31 @@
+══════════════════════════════════════════════════════════════════════════
+ 302. Smallest Rectangle Enclosing Black Pixels
+ Hard  |  Tags: Array, Binary Search, Depth-First Search, Breadth-First Search, Matrix
+ https://leetcode.com/problems/smallest-rectangle-enclosing-black-pixels/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : [["0","0","1","0"],["0","1","1","0"],["0","1","0","0"]] | [0,2]
+      Expected : 6
+
+  [2] Input    : [["1"]] | [0,0]
+      Expected : 1
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int minArea(vector<vector<char>>& image, int x, int y);
+
+FILES
+  edit : 302.cpp
+  test : lc run 302
+══════════════════════════════════════════════════════════════════════════

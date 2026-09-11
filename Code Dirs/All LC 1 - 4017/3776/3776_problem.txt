@@ -1,0 +1,54 @@
+══════════════════════════════════════════════════════════════════════════
+ 3776. Minimum Moves to Balance Circular Array
+ Medium  |  Tags: Array, Greedy, Sorting
+ https://leetcode.com/problems/minimum-moves-to-balance-circular-array/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a circular array balance of length n, where balance[i] is
+  the net balance of person i.
+
+  In one move, a person can transfer exactly 1 unit of balance to either
+  their left or right neighbor.
+
+  Return the minimum number of moves required so that every person has a
+  non-negative balance. If it is impossible, return -1.
+
+  Note: You are guaranteed that at most 1 index has a negative balance
+  initially.
+
+CONSTRAINTS
+  1 <= n == balance.length <= 10^5
+  -10^9 <= balance[i] <= 10^9
+  There is at most one negative value in balance initially.
+
+TEST CASES
+  [1] Input    : balance = [5,1,-4]
+      Expected : 4
+      Why      : One optimal sequence of moves is:
+                 - Move 1 unit from i = 1 to i = 2, resulting in balance = [5, 0, -3]
+                 - Move 1 unit from i = 0 to i = 2, resulting in balance = [4, 0, -2]
+                 … (3 more)
+
+  [2] Input    : balance = [1,2,-5,2]
+      Expected : 6
+      Why      : One optimal sequence of moves is:
+                 - Move 1 unit from i = 1 to i = 2, resulting in balance = [1, 1, -4, 2]
+                 - Move 1 unit from i = 1 to i = 2, resulting in balance = [1, 0, -3, 2]
+                 … (5 more)
+
+  [3] Input    : balance = [-3,2]
+      Expected : -1
+      Why      : It is impossible to make all balances non-negative for balance = [-3, 2], so the answer is -1.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  long long minMoves(vector<int>& balance);
+
+FILES
+  edit : 3776.cpp
+  test : lc run 3776
+══════════════════════════════════════════════════════════════════════════

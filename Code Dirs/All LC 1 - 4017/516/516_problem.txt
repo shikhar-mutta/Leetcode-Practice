@@ -1,0 +1,38 @@
+══════════════════════════════════════════════════════════════════════════
+ 516. Longest Palindromic Subsequence
+ Medium  |  Tags: String, Dynamic Programming
+ https://leetcode.com/problems/longest-palindromic-subsequence/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given a string s, find the longest palindromic subsequence's length in
+  s.
+
+  A subsequence is a sequence that can be derived from another sequence by
+  deleting some or no elements without changing the order of the remaining
+  elements.
+
+CONSTRAINTS
+  1 <= s.length <= 1000
+  s consists only of lowercase English letters.
+
+TEST CASES
+  [1] Input    : s = "bbbab"
+      Expected : 4
+      Why      : One possible longest palindromic subsequence is "bbbb".
+
+  [2] Input    : s = "cbbd"
+      Expected : 2
+      Why      : One possible longest palindromic subsequence is "bb".
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int longestPalindromeSubseq(string s);
+
+FILES
+  edit : 516.cpp
+  test : lc run 516
+══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,58 @@
+══════════════════════════════════════════════════════════════════════════
+ 3800. Minimum Cost to Make Two Binary Strings Equal
+ Medium  |  Tags: String, Greedy
+ https://leetcode.com/problems/minimum-cost-to-make-two-binary-strings-equal/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given two binary strings s and t, both of length n, and three
+  positive integers flipCost, swapCost, and crossCost.
+
+  You are allowed to apply the following operations any number of times
+  (in any order) to the strings s and t:
+
+  - Choose any index i and flip s[i] or t[i] (change '0' to '1' or '1' to
+    '0'). The cost of this operation is flipCost.
+
+  - Choose two distinct indices i and j, and swap either s[i] and s[j] or
+    t[i] and t[j]. The cost of this operation is swapCost.
+
+  - Choose an index i and swap s[i] with t[i]. The cost of this operation
+    is crossCost.
+
+  Return an integer denoting the minimum total cost needed to make the
+  strings s and t equal.
+
+CONSTRAINTS
+  n == s.length == t.length
+  1 <= n <= 10^5
+  1 <= flipCost, swapCost, crossCost <= 10^9
+  s and t consist only of the characters '0' and '1'.
+
+TEST CASES
+  [1] Input    : s = "01000", t = "10111", flipCost = 10, swapCost = 2, crossCost = 2
+      Expected : 16
+      Why      : We can perform the following operations:
+                 - Swap s[0] and s[1] (swapCost = 2). After this operation, s = "10000" and t = "10111".
+                 - Cross swap s[2] and t[2] (crossCost = 2). After this operation, s = "10100" and t = "10011".
+                 … (3 more)
+
+  [2] Input    : s = "001", t = "110", flipCost = 2, swapCost = 100, crossCost = 100
+      Expected : 6
+      Why      : Flipping all the bits of s makes the strings equal, and the total cost is 3 * flipCost = 3 * 2 = 6.
+
+  [3] Input    : s = "1010", t = "1010", flipCost = 5, swapCost = 5, crossCost = 5
+      Expected : 0
+      Why      : The strings are already equal, so no operations are required.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  long long minimumCost(string s, string t, int flipCost, int swapCost, int crossCost);
+
+FILES
+  edit : 3800.cpp
+  test : lc run 3800
+══════════════════════════════════════════════════════════════════════════

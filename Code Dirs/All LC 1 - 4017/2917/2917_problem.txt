@@ -1,0 +1,36 @@
+══════════════════════════════════════════════════════════════════════════
+ 2917. Find the K-or of an Array
+ Easy  |  Tags: Array, Bit Manipulation
+ https://leetcode.com/problems/find-the-k-or-of-an-array/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given an integer array nums, and an integer k. Let's introduce
+  K-or operation by extending the standard bitwise OR. In K-or, a bit
+  position in the result is set to 1 if at least k numbers in nums have a
+  1 in that position.
+
+  Return the K-or of nums.
+
+CONSTRAINTS
+  1 <= nums.length <= 50
+  0 <= nums[i] < 2^31
+  1 <= k <= nums.length
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : [7,12,9,8,9,15] | 4
+      Expected : 9
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int findKOr(vector<int>& nums, int k);
+
+FILES
+  edit : 2917.cpp
+  test : lc run 2917
+══════════════════════════════════════════════════════════════════════════

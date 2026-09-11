@@ -1,0 +1,61 @@
+══════════════════════════════════════════════════════════════════════════
+ 3139. Minimum Cost to Equalize Array
+ Hard  |  Tags: Array, Greedy, Enumeration
+ https://leetcode.com/problems/minimum-cost-to-equalize-array/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given an integer array nums and two integers cost1 and cost2.
+  You are allowed to perform either of the following operations any number
+  of times:
+
+  - Choose an index i from nums and increase nums[i] by 1 for a cost of
+    cost1.
+
+  - Choose two different indices i, j, from nums and increase nums[i] and
+    nums[j] by 1 for a cost of cost2.
+
+  Return the minimum cost required to make all elements in the array
+  equal.
+
+  Since the answer may be very large, return it modulo 10^9 + 7.
+
+CONSTRAINTS
+  1 <= nums.length <= 10^5
+  1 <= nums[i] <= 10^6
+  1 <= cost1 <= 10^6
+  1 <= cost2 <= 10^6
+
+TEST CASES
+  [1] Input    : nums = [4,1], cost1 = 5, cost2 = 2
+      Expected : 15
+      Why      : The following operations can be performed to make the values equal:
+                 - Increase nums[1] by 1 for a cost of 5. nums becomes [4,2].
+                 - Increase nums[1] by 1 for a cost of 5. nums becomes [4,3].
+                 … (2 more)
+
+  [2] Input    : nums = [2,3,3,3,5], cost1 = 2, cost2 = 1
+      Expected : 6
+      Why      : The following operations can be performed to make the values equal:
+                 - Increase nums[0] and nums[1] by 1 for a cost of 1. nums becomes [3,4,3,3,5].
+                 - Increase nums[0] and nums[2] by 1 for a cost of 1. nums becomes [4,4,4,3,5].
+                 … (4 more)
+
+  [3] Input    : nums = [3,5,3], cost1 = 1, cost2 = 3
+      Expected : 4
+      Why      : The following operations can be performed to make the values equal:
+                 - Increase nums[0] by 1 for a cost of 1. nums becomes [4,5,3].
+                 - Increase nums[0] by 1 for a cost of 1. nums becomes [5,5,3].
+                 … (3 more)
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int minCostToEqualizeArray(vector<int>& nums, int cost1, int cost2);
+
+FILES
+  edit : 3139.cpp
+  test : lc run 3139
+══════════════════════════════════════════════════════════════════════════

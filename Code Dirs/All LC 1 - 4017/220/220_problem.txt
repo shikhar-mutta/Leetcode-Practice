@@ -1,0 +1,49 @@
+══════════════════════════════════════════════════════════════════════════
+ 220. Contains Duplicate III
+ Hard  |  Tags: Array, Sliding Window, Sorting, Bucket Sort, Ordered Set
+ https://leetcode.com/problems/contains-duplicate-iii/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given an integer array nums and two integers indexDiff and
+  valueDiff.
+
+  Find a pair of indices (i, j) such that:
+
+  - i != j,
+
+  - abs(i - j) <= indexDiff.
+
+  - abs(nums[i] - nums[j]) <= valueDiff, and
+
+  Return true if such pair exists or false otherwise.
+
+CONSTRAINTS
+  2 <= nums.length <= 10^5
+  -10^9 <= nums[i] <= 10^9
+  1 <= indexDiff <= nums.length
+  0 <= valueDiff <= 10^9
+
+TEST CASES
+  [1] Input    : nums = [1,2,3,1], indexDiff = 3, valueDiff = 0
+      Expected : true
+      Why      : We can choose (i, j) = (0, 3).
+                 We satisfy the three conditions:
+                 i != j --> 0 != 3
+                 … (2 more)
+
+  [2] Input    : nums = [1,5,9,1,5,9], indexDiff = 2, valueDiff = 3
+      Expected : false
+      Why      : After trying all the possible pairs (i, j), we cannot satisfy the three conditions, so we return false.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  bool containsNearbyAlmostDuplicate(vector<int>& nums, int indexDiff, int valueDiff);
+
+FILES
+  edit : 220.cpp
+  test : lc run 220
+══════════════════════════════════════════════════════════════════════════

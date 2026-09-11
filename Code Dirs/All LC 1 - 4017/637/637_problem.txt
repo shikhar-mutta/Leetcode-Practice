@@ -1,0 +1,36 @@
+══════════════════════════════════════════════════════════════════════════
+ 637. Average of Levels in Binary Tree
+ Easy  |  Tags: Tree, Depth-First Search, Breadth-First Search, Binary Tree
+ https://leetcode.com/problems/average-of-levels-in-binary-tree/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given the root of a binary tree, return the average value of the nodes
+  on each level in the form of an array. Answers within 10^-5 of the
+  actual answer will be accepted.
+
+CONSTRAINTS
+  The number of nodes in the tree is in the range [1, 10^4].
+  -2^31 <= Node.val <= 2^31 - 1
+
+TEST CASES
+  [1] Input    : root = [3,9,20,null,null,15,7]
+      Expected : [3.00000,14.50000,11.00000]
+      Why      : The average value of nodes on level 0 is 3, on level 1 is 14.5, and on level 2 is 11.
+                 Hence return [3, 14.5, 11].
+
+  [2] Input    : root = [3,9,20,15,7]
+      Expected : [3.00000,14.50000,11.00000]
+
+CODE TYPE
+  function · tree
+    driver: one Solution call per test case
+    tree: TreeNode* — level order, e.g. [3,9,20,null,null,15,7]
+
+SIGNATURE
+  vector<double> averageOfLevels(TreeNode* root);
+
+FILES
+  edit : 637.cpp
+  test : lc run 637
+══════════════════════════════════════════════════════════════════════════

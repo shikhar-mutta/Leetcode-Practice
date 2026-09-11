@@ -1,0 +1,42 @@
+══════════════════════════════════════════════════════════════════════════
+ 94. Binary Tree Inorder Traversal
+ Easy  |  Tags: Stack, Tree, Depth-First Search, Binary Tree
+ https://leetcode.com/problems/binary-tree-inorder-traversal/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given the root of a binary tree, return the inorder traversal of its
+  nodes' values.
+
+CONSTRAINTS
+  The number of nodes in the tree is in the range [0, 100].
+  -100 <= Node.val <= 100
+
+TEST CASES
+  [1] Input    : root = [1,null,2,3]
+      Expected : [1,3,2]
+
+  [2] Input    : root = [1,2,3,4,5,null,8,null,null,6,7,9]
+      Expected : [4,2,6,5,7,1,3,9,8]
+
+  [3] Input    : root = []
+      Expected : []
+
+  [4] Input    : root = [1]
+      Expected : [1]
+
+FOLLOW UP
+  Recursive solution is trivial, could you do it iteratively?
+
+CODE TYPE
+  function · tree
+    driver: one Solution call per test case
+    tree: TreeNode* — level order, e.g. [3,9,20,null,null,15,7]
+
+SIGNATURE
+  vector<int> inorderTraversal(TreeNode* root);
+
+FILES
+  edit : 94.cpp
+  test : lc run 94
+══════════════════════════════════════════════════════════════════════════

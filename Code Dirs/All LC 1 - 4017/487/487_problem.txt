@@ -1,0 +1,31 @@
+══════════════════════════════════════════════════════════════════════════
+ 487. Max Consecutive Ones II
+ Medium  |  Tags: Array, Dynamic Programming, Sliding Window
+ https://leetcode.com/problems/max-consecutive-ones-ii/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : [1,0,1,1,0]
+      Expected : 4
+
+  [2] Input    : [1,0,1,1,0,1]
+      Expected : 4
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int findMaxConsecutiveOnes(vector<int>& nums);
+
+FILES
+  edit : 487.cpp
+  test : lc run 487
+══════════════════════════════════════════════════════════════════════════

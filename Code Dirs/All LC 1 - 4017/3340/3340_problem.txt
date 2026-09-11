@@ -1,0 +1,39 @@
+══════════════════════════════════════════════════════════════════════════
+ 3340. Check Balanced String
+ Easy  |  Tags: String
+ https://leetcode.com/problems/check-balanced-string/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a string num consisting of only digits. A string of digits
+  is called balanced if the sum of the digits at even indices is equal to
+  the sum of digits at odd indices.
+
+  Return true if num is balanced, otherwise return false.
+
+CONSTRAINTS
+  2 <= num.length <= 100
+  num consists of digits only
+
+TEST CASES
+  [1] Input    : num = "1234"
+      Expected : false
+      Why      : - The sum of digits at even indices is 1 + 3 == 4, and the sum of digits at odd indices is 2 + 4 == 6.
+                 - Since 4 is not equal to 6, num is not balanced.
+
+  [2] Input    : num = "24123"
+      Expected : true
+      Why      : - The sum of digits at even indices is 2 + 1 + 3 == 6, and the sum of digits at odd indices is 4 + 2 == 6.
+                 - Since both are equal the num is balanced.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  bool isBalanced(string num);
+
+FILES
+  edit : 3340.cpp
+  test : lc run 3340
+══════════════════════════════════════════════════════════════════════════

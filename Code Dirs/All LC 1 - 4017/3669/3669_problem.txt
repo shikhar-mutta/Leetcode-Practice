@@ -1,0 +1,38 @@
+══════════════════════════════════════════════════════════════════════════
+ 3669. Balanced K-Factor Decomposition
+ Medium  |  Tags: Math, Backtracking, Number Theory
+ https://leetcode.com/problems/balanced-k-factor-decomposition/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given two integers n and k.
+
+  Split the number n into exactly k positive integers such that the
+  product of these integers is equal to n.
+
+  Return any one split in which the maximum difference between any two
+  numbers is minimized. You may return the result in any order.
+
+TEST CASES
+  [1] Input    : n = 100, k = 2
+      Expected : [10,10]
+      Why      : The split [10, 10] yields 10 * 10 = 100 and a max-min difference of 0, which is minimal.
+
+  [2] Input    : n = 44, k = 3
+      Expected : [2,2,11]
+      Why      : Split [1, 1, 44] yields a difference of 43
+                 Split [1, 2, 22] yields a difference of 21
+                 Split [1, 4, 11] yields a difference of 10
+                 … (2 more)
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  vector<int> minDifference(int n, int k);
+
+FILES
+  edit : 3669.cpp
+  test : lc run 3669
+══════════════════════════════════════════════════════════════════════════

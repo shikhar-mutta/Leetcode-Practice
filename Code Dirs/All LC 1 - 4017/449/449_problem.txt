@@ -1,0 +1,45 @@
+══════════════════════════════════════════════════════════════════════════
+ 449. Serialize and Deserialize BST
+ Medium  |  Tags: String, Tree, Depth-First Search, Breadth-First Search, Design, Binary Search Tree, Binary Tree
+ https://leetcode.com/problems/serialize-and-deserialize-bst/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Serialization is converting a data structure or object into a sequence
+  of bits so that it can be stored in a file or memory buffer, or
+  transmitted across a network connection link to be reconstructed later
+  in the same or another computer environment.
+
+  Design an algorithm to serialize and deserialize a binary search tree.
+  There is no restriction on how your serialization/deserialization
+  algorithm should work. You need to ensure that a binary search tree can
+  be serialized to a string, and this string can be deserialized to the
+  original tree structure.
+
+  The encoded string should be as compact as possible.
+
+CONSTRAINTS
+  The number of nodes in the tree is in the range [0, 10^4].
+  0 <= Node.val <= 10^4
+  The input tree is guaranteed to be a binary search tree.
+
+TEST CASES
+  [1] Input    : root = [2,1,3]
+      Expected : [2,1,3]
+
+  [2] Input    : root = []
+      Expected : []
+
+CODE TYPE
+  design · Codec · tree
+    driver: replays ["Codec","op",...] / [[args],...] and prints [null,...]
+    tree: TreeNode* — level order, e.g. [3,9,20,null,null,15,7]
+
+SIGNATURE
+  string serialize(TreeNode* root);
+  TreeNode* deserialize(string data);
+
+FILES
+  edit : 449.cpp
+  test : lc run 449
+══════════════════════════════════════════════════════════════════════════

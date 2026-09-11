@@ -1,0 +1,48 @@
+══════════════════════════════════════════════════════════════════════════
+ 1147. Longest Chunked Palindrome Decomposition
+ Hard  |  Tags: Two Pointers, String, Dynamic Programming, Greedy, Rolling Hash, Hash Function
+ https://leetcode.com/problems/longest-chunked-palindrome-decomposition/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a string text. You should split it to k substrings
+  (subtext1, subtext2, ..., subtextk) such that:
+
+  - subtexti is a non-empty string.
+
+  - The concatenation of all the substrings is equal to text (i.e.,
+    subtext1 + subtext2 + ... + subtextk == text).
+
+  - subtexti == subtextk - i + 1 for all valid values of i (i.e., 1 <= i
+    <= k).
+
+  Return the largest possible value of k.
+
+CONSTRAINTS
+  1 <= text.length <= 1000
+  text consists only of lowercase English characters.
+
+TEST CASES
+  [1] Input    : text = "ghiabcdefhelloadamhelloabcdefghi"
+      Expected : 7
+      Why      : We can split the string on "(ghi)(abcdef)(hello)(adam)(hello)(abcdef)(ghi)".
+
+  [2] Input    : text = "merchant"
+      Expected : 1
+      Why      : We can split the string on "(merchant)".
+
+  [3] Input    : text = "antaprezatepzapreanta"
+      Expected : 11
+      Why      : We can split the string on "(a)(nt)(a)(pre)(za)(tep)(za)(pre)(a)(nt)(a)".
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int longestDecomposition(string text);
+
+FILES
+  edit : 1147.cpp
+  test : lc run 1147
+══════════════════════════════════════════════════════════════════════════

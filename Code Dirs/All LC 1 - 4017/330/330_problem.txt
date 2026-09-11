@@ -1,0 +1,45 @@
+══════════════════════════════════════════════════════════════════════════
+ 330. Patching Array
+ Hard  |  Tags: Array, Greedy
+ https://leetcode.com/problems/patching-array/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given a sorted integer array nums and an integer n, add/patch elements
+  to the array such that any number in the range [1, n] inclusive can be
+  formed by the sum of some elements in the array.
+
+  Return the minimum number of patches required.
+
+CONSTRAINTS
+  1 <= nums.length <= 1000
+  1 <= nums[i] <= 10^4
+  nums is sorted in ascending order.
+  1 <= n <= 2^31 - 1
+
+TEST CASES
+  [1] Input    : nums = [1,3], n = 6
+      Expected : 1
+      Why      : Combinations of nums are [1], [3], [1,3], which form possible sums of: 1, 3, 4.
+                 Now if we add/patch 2 to nums, the combinations are: [1], [2], [3], [1,3], [2,3], [1,2,3].
+                 Possible sums are 1, 2, 3, 4, 5, 6, which now covers the range [1, 6].
+                 … (1 more)
+
+  [2] Input    : nums = [1,5,10], n = 20
+      Expected : 2
+      Why      : The two patches can be [2, 4].
+
+  [3] Input    : nums = [1,2,2], n = 5
+      Expected : 0
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int minPatches(vector<int>& nums, int n);
+
+FILES
+  edit : 330.cpp
+  test : lc run 330
+══════════════════════════════════════════════════════════════════════════

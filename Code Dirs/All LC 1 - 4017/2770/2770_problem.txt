@@ -1,0 +1,56 @@
+══════════════════════════════════════════════════════════════════════════
+ 2770. Maximum Number of Jumps to Reach the Last Index
+ Medium  |  Tags: Array, Dynamic Programming
+ https://leetcode.com/problems/maximum-number-of-jumps-to-reach-the-last-index/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a 0-indexed array nums of n integers and an integer
+  target.
+
+  You are initially positioned at index 0. In one step, you can jump from
+  index i to any index j such that:
+
+  - 0 <= i < j < n
+
+  - -target <= nums[j] - nums[i] <= target
+
+  Return the maximum number of jumps you can make to reach index n - 1.
+
+  If there is no way to reach index n - 1, return -1.
+
+CONSTRAINTS
+  2 <= nums.length == n <= 1000
+  -10^9 <= nums[i] <= 10^9
+  0 <= target <= 2 * 10^9
+
+TEST CASES
+  [1] Input    : nums = [1,3,6,4,1,2], target = 2
+      Expected : 3
+      Why      : To go from index 0 to index n - 1 with the maximum number of jumps, you can perform the following jumping sequence:
+                 - Jump from index 0 to index 1.
+                 - Jump from index 1 to index 3.
+                 … (2 more)
+
+  [2] Input    : nums = [1,3,6,4,1,2], target = 3
+      Expected : 5
+      Why      : To go from index 0 to index n - 1 with the maximum number of jumps, you can perform the following jumping sequence:
+                 - Jump from index 0 to index 1.
+                 - Jump from index 1 to index 2.
+                 … (4 more)
+
+  [3] Input    : nums = [1,3,6,4,1,2], target = 0
+      Expected : -1
+      Why      : It can be proven that there is no jumping sequence that goes from 0 to n - 1. Hence, the answer is -1.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int maximumJumps(vector<int>& nums, int target);
+
+FILES
+  edit : 2770.cpp
+  test : lc run 2770
+══════════════════════════════════════════════════════════════════════════

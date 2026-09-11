@@ -1,0 +1,31 @@
+══════════════════════════════════════════════════════════════════════════
+ 1183. Maximum Number of Ones
+ Hard  |  Tags: Math, Greedy, Sorting, Heap (Priority Queue)
+ https://leetcode.com/problems/maximum-number-of-ones/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : 3 | 3 | 2 | 1
+      Expected : 4
+
+  [2] Input    : 3 | 3 | 2 | 2
+      Expected : 6
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int maximumNumberOfOnes(int width, int height, int sideLength, int maxOnes);
+
+FILES
+  edit : 1183.cpp
+  test : lc run 1183
+══════════════════════════════════════════════════════════════════════════

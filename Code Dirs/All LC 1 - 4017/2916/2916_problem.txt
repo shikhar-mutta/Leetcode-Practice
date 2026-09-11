@@ -1,0 +1,54 @@
+══════════════════════════════════════════════════════════════════════════
+ 2916. Subarrays Distinct Element Sum of Squares II
+ Hard  |  Tags: Array, Hash Table, Binary Indexed Tree, Segment Tree
+ https://leetcode.com/problems/subarrays-distinct-element-sum-of-squares-ii/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a 0-indexed integer array nums.
+
+  The distinct count of a subarray of nums is defined as:
+
+  - Let nums[i..j] be a subarray of nums consisting of all the indices
+    from i to j such that 0 <= i <= j < nums.length. Then the number of
+    distinct values in nums[i..j] is called the distinct count of
+    nums[i..j].
+
+  Return the sum of the squares of distinct counts of all subarrays of
+  nums.
+
+  Since the answer may be very large, return it modulo 10^9 + 7.
+
+  A subarray is a contiguous non-empty sequence of elements within an
+  array.
+
+CONSTRAINTS
+  1 <= nums.length <= 10^5
+  1 <= nums[i] <= 10^5
+
+TEST CASES
+  [1] Input    : nums = [1,2,1]
+      Expected : 15
+      Why      : Six possible subarrays are:
+                 [1]: 1 distinct value
+                 [2]: 1 distinct value
+                 … (5 more)
+
+  [2] Input    : nums = [2,2]
+      Expected : 3
+      Why      : Three possible subarrays are:
+                 [2]: 1 distinct value
+                 [2]: 1 distinct value
+                 … (2 more)
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int sumCounts(vector<int>& nums);
+
+FILES
+  edit : 2916.cpp
+  test : lc run 2916
+══════════════════════════════════════════════════════════════════════════

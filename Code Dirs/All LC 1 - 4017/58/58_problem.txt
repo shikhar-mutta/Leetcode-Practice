@@ -1,0 +1,41 @@
+══════════════════════════════════════════════════════════════════════════
+ 58. Length of Last Word
+ Easy  |  Tags: String
+ https://leetcode.com/problems/length-of-last-word/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given a string s consisting of words and spaces, return the length of
+  the last word in the string.
+
+  A word is a maximal substring consisting of non-space characters only.
+
+CONSTRAINTS
+  1 <= s.length <= 10^4
+  s consists of only English letters and spaces ' '.
+  There will be at least one word in s.
+
+TEST CASES
+  [1] Input    : s = "Hello World"
+      Expected : 5
+      Why      : The last word is "World" with length 5.
+
+  [2] Input    : s = " fly me to the moon "
+      Expected : 4
+      Why      : The last word is "moon" with length 4.
+
+  [3] Input    : s = "luffy is still joyboy"
+      Expected : 6
+      Why      : The last word is "joyboy" with length 6.
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int lengthOfLastWord(string s);
+
+FILES
+  edit : 58.cpp
+  test : lc run 58
+══════════════════════════════════════════════════════════════════════════

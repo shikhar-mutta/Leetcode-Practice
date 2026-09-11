@@ -1,0 +1,50 @@
+══════════════════════════════════════════════════════════════════════════
+ 211. Design Add and Search Words Data Structure
+ Medium  |  Tags: String, Depth-First Search, Design, Trie
+ https://leetcode.com/problems/design-add-and-search-words-data-structure/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Design a data structure that supports adding new words and finding if a
+  string matches any previously added string.
+
+  Implement the WordDictionary class:
+
+  - WordDictionary() Initializes the object.
+
+  - void addWord(word) Adds word to the data structure, it can be matched
+    later.
+
+  - bool search(word) Returns true if there is any string in the data
+    structure that matches word or false otherwise. word may contain dots
+    '.' where dots can be matched with any letter.
+
+CONSTRAINTS
+  1 <= word.length <= 25
+  word in addWord consists of lowercase English letters.
+  word in search consist of '.' or lowercase English letters.
+  There will be at most 2 dots in word for search queries.
+  At most 10^4 calls will be made to addWord and search.
+
+TEST CASES
+  [1] Input    : ["WordDictionary","addWord","addWord","addWord","search","search","search","search"]
+[[],["bad"],["dad"],["mad"],["pad"],["bad"],[".ad"],["b.."]]
+      Expected : [null,null,null,null,false,true,true,true]
+      Why      : WordDictionary wordDictionary = new WordDictionary();
+                 wordDictionary.addWord("bad");
+                 wordDictionary.addWord("dad");
+                 … (5 more)
+
+CODE TYPE
+  design · WordDictionary
+    driver: replays ["WordDictionary","op",...] / [[args],...] and prints [null,...]
+
+SIGNATURE
+  WordDictionary();
+  void addWord(string word);
+  bool search(string word);
+
+FILES
+  edit : 211.cpp
+  test : lc run 211
+══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,33 @@
+══════════════════════════════════════════════════════════════════════════
+ 421. Maximum XOR of Two Numbers in an Array
+ Medium  |  Tags: Array, Hash Table, Bit Manipulation, Trie
+ https://leetcode.com/problems/maximum-xor-of-two-numbers-in-an-array/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given an integer array nums, return the maximum result of nums[i] XOR
+  nums[j], where 0 <= i <= j < n.
+
+CONSTRAINTS
+  1 <= nums.length <= 2 * 10^5
+  0 <= nums[i] <= 2^31 - 1
+
+TEST CASES
+  [1] Input    : nums = [3,10,5,25,2,8]
+      Expected : 28
+      Why      : The maximum result is 5 XOR 25 = 28.
+
+  [2] Input    : nums = [14,70,53,83,49,91,36,80,92,51,66,70]
+      Expected : 127
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  int findMaximumXOR(vector<int>& nums);
+
+FILES
+  edit : 421.cpp
+  test : lc run 421
+══════════════════════════════════════════════════════════════════════════

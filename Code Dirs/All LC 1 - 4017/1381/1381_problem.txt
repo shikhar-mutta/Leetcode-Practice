@@ -1,0 +1,52 @@
+══════════════════════════════════════════════════════════════════════════
+ 1381. Design a Stack With Increment Operation
+ Medium  |  Tags: Array, Stack, Design
+ https://leetcode.com/problems/design-a-stack-with-increment-operation/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Design a stack that supports increment operations on its elements.
+
+  Implement the CustomStack class:
+
+  - CustomStack(int maxSize) Initializes the object with maxSize which is
+    the maximum number of elements in the stack.
+
+  - void push(int x) Adds x to the top of the stack if the stack has not
+    reached the maxSize.
+
+  - int pop() Pops and returns the top of the stack or -1 if the stack is
+    empty.
+
+  - void inc(int k, int val) Increments the bottom k elements of the stack
+    by val. If there are less than k elements in the stack, increment all
+    the elements in the stack.
+
+CONSTRAINTS
+  1 <= maxSize, x, k <= 1000
+  0 <= val <= 100
+  At most 1000 calls will be made to each method of increment, push and pop each separately.
+
+TEST CASES
+  [1] Input    : ["CustomStack","push","push","pop","push","push","push","increment","increment","pop","pop","pop","pop"]
+[[3],[1],[2],[],[2],[3],[4],[5,100],[2,100],[],[],[],[]]
+      Expected : [null,null,null,2,null,null,null,null,null,103,202,201,-1]
+      Why      : CustomStack stk = new CustomStack(3); // Stack is Empty []
+                 stk.push(1); // stack becomes [1]
+                 stk.push(2); // stack becomes [1, 2]
+                 … (10 more)
+
+CODE TYPE
+  design · CustomStack
+    driver: replays ["CustomStack","op",...] / [[args],...] and prints [null,...]
+
+SIGNATURE
+  CustomStack(int maxSize);
+  void push(int x);
+  int pop();
+  void increment(int k, int val);
+
+FILES
+  edit : 1381.cpp
+  test : lc run 1381
+══════════════════════════════════════════════════════════════════════════

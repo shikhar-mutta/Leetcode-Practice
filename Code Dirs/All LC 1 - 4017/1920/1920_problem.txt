@@ -1,0 +1,48 @@
+══════════════════════════════════════════════════════════════════════════
+ 1920. Build Array from Permutation
+ Easy  |  Tags: Array, Simulation
+ https://leetcode.com/problems/build-array-from-permutation/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given a zero-based permutation nums (0-indexed), build an array ans of
+  the same length where ans[i] = nums[nums[i]] for each 0 <= i <
+  nums.length and return it.
+
+  A zero-based permutation nums is an array of distinct integers from 0 to
+  nums.length - 1 (inclusive).
+
+CONSTRAINTS
+  1 <= nums.length <= 1000
+  0 <= nums[i] < nums.length
+  The elements in nums are distinct.
+
+TEST CASES
+  [1] Input    : nums = [0,2,1,5,3,4]
+      Expected : [0,1,2,4,5,3]
+      Why      : The array ans is built as follows:
+                 ans = [nums[nums[0]], nums[nums[1]], nums[nums[2]], nums[nums[3]], nums[nums[4]], nums[nums[5]]]
+                 = [nums[0], nums[2], nums[1], nums[5], nums[3], nums[4]]
+                 … (1 more)
+
+  [2] Input    : nums = [5,0,1,2,3,4]
+      Expected : [4,5,0,1,2,3]
+      Why      : The array ans is built as follows:
+                 ans = [nums[nums[0]], nums[nums[1]], nums[nums[2]], nums[nums[3]], nums[nums[4]], nums[nums[5]]]
+                 = [nums[5], nums[0], nums[1], nums[2], nums[3], nums[4]]
+                 … (1 more)
+
+FOLLOW UP
+  Can you solve it without using an extra space (i.e., O(1) memory)?
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  vector<int> buildArray(vector<int>& nums);
+
+FILES
+  edit : 1920.cpp
+  test : lc run 1920
+══════════════════════════════════════════════════════════════════════════

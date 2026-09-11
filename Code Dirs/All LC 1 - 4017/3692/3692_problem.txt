@@ -1,0 +1,56 @@
+══════════════════════════════════════════════════════════════════════════
+ 3692. Majority Frequency Characters
+ Easy  |  Tags: Hash Table, String, Counting
+ https://leetcode.com/problems/majority-frequency-characters/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  You are given a string s consisting of lowercase English letters.
+
+  The frequency group for a value k is the set of characters that appear
+  exactly k times in s.
+
+  The majority frequency group is the frequency group that contains the
+  largest number of distinct characters.
+
+  Return a string containing all characters in the majority frequency
+  group, in any order. If two or more frequency groups tie for that
+  largest size, pick the group whose frequency k is larger.
+
+CONSTRAINTS
+  1 <= s.length <= 100
+  s consists only of lowercase English letters.
+
+TEST CASES
+  [1] Input    : s = "aaabbbccdddde"
+      Expected : "ab"
+      Why      : Frequency (k)
+                 Distinct characters in group
+                 Group size
+                 … (18 more)
+
+  [2] Input    : s = "abcd"
+      Expected : "abcd"
+      Why      : Frequency (k)
+                 Distinct characters in group
+                 Group size
+                 … (6 more)
+
+  [3] Input    : s = "pfpfgi"
+      Expected : "fp"
+      Why      : Frequency (k)
+                 Distinct characters in group
+                 Group size
+                 … (10 more)
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  string majorityFrequencyGroup(string s);
+
+FILES
+  edit : 3692.cpp
+  test : lc run 3692
+══════════════════════════════════════════════════════════════════════════

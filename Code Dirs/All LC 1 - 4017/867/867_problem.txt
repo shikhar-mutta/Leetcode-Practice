@@ -1,0 +1,37 @@
+══════════════════════════════════════════════════════════════════════════
+ 867. Transpose Matrix
+ Easy  |  Tags: Array, Matrix, Simulation
+ https://leetcode.com/problems/transpose-matrix/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given a 2D integer array matrix, return the transpose of matrix.
+
+  The transpose of a matrix is the matrix flipped over its main diagonal,
+  switching the matrix's row and column indices.
+
+CONSTRAINTS
+  m == matrix.length
+  n == matrix[i].length
+  1 <= m, n <= 1000
+  1 <= m * n <= 10^5
+  -10^9 <= matrix[i][j] <= 10^9
+
+TEST CASES
+  [1] Input    : matrix = [[1,2,3],[4,5,6],[7,8,9]]
+      Expected : [[1,4,7],[2,5,8],[3,6,9]]
+
+  [2] Input    : matrix = [[1,2,3],[4,5,6]]
+      Expected : [[1,4],[2,5],[3,6]]
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  vector<vector<int>> transpose(vector<vector<int>>& matrix);
+
+FILES
+  edit : 867.cpp
+  test : lc run 867
+══════════════════════════════════════════════════════════════════════════

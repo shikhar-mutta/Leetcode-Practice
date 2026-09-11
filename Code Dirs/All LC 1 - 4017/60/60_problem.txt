@@ -1,0 +1,51 @@
+══════════════════════════════════════════════════════════════════════════
+ 60. Permutation Sequence
+ Hard  |  Tags: Math, Recursion
+ https://leetcode.com/problems/permutation-sequence/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  The set [1, 2, 3, ..., n] contains a total of n! unique permutations.
+
+  By listing and labeling all of the permutations in order, we get the
+  following sequence for n = 3:
+
+  - "123"
+
+  - "132"
+
+  - "213"
+
+  - "231"
+
+  - "312"
+
+  - "321"
+
+  Given n and k, return the k^th permutation sequence.
+
+CONSTRAINTS
+  1 <= n <= 9
+  1 <= k <= n!
+
+TEST CASES
+  [1] Input    : n = 3, k = 3
+      Expected : "213"
+
+  [2] Input    : n = 4, k = 9
+      Expected : "2314"
+
+  [3] Input    : n = 3, k = 1
+      Expected : "123"
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  string getPermutation(int n, int k);
+
+FILES
+  edit : 60.cpp
+  test : lc run 60
+══════════════════════════════════════════════════════════════════════════

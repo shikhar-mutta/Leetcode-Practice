@@ -1,0 +1,31 @@
+══════════════════════════════════════════════════════════════════════════
+ 444. Sequence Reconstruction
+ Medium  |  Tags: Array, Graph Theory, Topological Sort, Directed Acyclic Graph
+ https://leetcode.com/problems/sequence-reconstruction/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : [1,2,3] | [[1,2],[1,3]]
+      Expected : false
+
+  [2] Input    : [1,2,3] | [[1,2],[1,3],[2,3]]
+      Expected : true
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  bool sequenceReconstruction(vector<int>& nums, vector<vector<int>>& sequences);
+
+FILES
+  edit : 444.cpp
+  test : lc run 444
+══════════════════════════════════════════════════════════════════════════

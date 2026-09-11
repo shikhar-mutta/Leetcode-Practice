@@ -1,0 +1,31 @@
+══════════════════════════════════════════════════════════════════════════
+ 1256. Encode Number
+ Medium  |  Tags: Math, String, Bit Manipulation
+ https://leetcode.com/problems/encode-number/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  This is a LeetCode Premium problem. The statement, constraints and code
+  snippet are not served by the API without a subscription — only the
+  title, difficulty, tags and example test cases below are available.
+
+TEST CASES
+  (recovered from local test files)
+
+  [1] Input    : 23
+      Expected : 1000
+
+  [2] Input    : 107
+      Expected : 101100
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  string encode(int num);
+
+FILES
+  edit : 1256.cpp
+  test : lc run 1256
+══════════════════════════════════════════════════════════════════════════

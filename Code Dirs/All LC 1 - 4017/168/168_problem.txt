@@ -1,0 +1,45 @@
+══════════════════════════════════════════════════════════════════════════
+ 168. Excel Sheet Column Title
+ Easy  |  Tags: Math, String
+ https://leetcode.com/problems/excel-sheet-column-title/description/
+══════════════════════════════════════════════════════════════════════════
+
+PROBLEM
+  Given an integer columnNumber, return its corresponding column title as
+  it appears in an Excel sheet.
+
+  For example:
+
+  A -> 1
+  B -> 2
+  C -> 3
+  ...
+  Z -> 26
+  AA -> 27
+  AB -> 28
+  ...
+
+CONSTRAINTS
+  1 <= columnNumber <= 2^31 - 1
+
+TEST CASES
+  [1] Input    : columnNumber = 1
+      Expected : "A"
+
+  [2] Input    : columnNumber = 28
+      Expected : "AB"
+
+  [3] Input    : columnNumber = 701
+      Expected : "ZY"
+
+CODE TYPE
+  function
+    driver: one Solution call per test case
+
+SIGNATURE
+  string convertToTitle(int columnNumber);
+
+FILES
+  edit : 168.cpp
+  test : lc run 168
+══════════════════════════════════════════════════════════════════════════

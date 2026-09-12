@@ -1224,6 +1224,7 @@ and every scaffold is matched to the kind of code the problem needs.
 | `agents/fetcher.py` | archive first; LeetCode only for what the archive lacks |
 | `agents/statement.py` | `CODE TYPE` section; `backfill_archive()` for `statements` |
 | `fetch_problem.py` | `generate()` split out of `main()`; drivers per code type |
+| `docs/addendum_phase7.html` | source of the interview PDF's 5-page addendum (pages 40–44) |
 
 **Decisions**
 

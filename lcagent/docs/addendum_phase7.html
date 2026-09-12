@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Defending lcagent — Addendum</title>
+<style>
+  @page { size: A4; margin: 2.1cm 2.0cm 2.0cm 2.0cm; }
+  body { font-family: "DejaVu Serif"; font-size: 9.3pt; line-height: 1.45; color: #111827; text-align: justify; }
+  h1.part { font-family: "DejaVu Sans"; font-size: 9pt; letter-spacing: 3pt; color: #5b7aa8; margin: 0 0 6pt 0; font-weight: bold; }
+  h1.title { text-align: left; font-family: "DejaVu Serif"; font-size: 22pt; color: #1e3a5f; margin: 0 0 10pt 0; line-height: 1.2; }
+  p.tag { font-family: "DejaVu Sans"; font-size: 8.4pt; color: #5b6b80; margin: 0 0 16pt 0; text-align: left; }
+  h2 { text-align: left; font-family: "DejaVu Sans"; font-size: 11.5pt; color: #1e3a5f; margin: 16pt 0 7pt 0; }
+  h3 { font-family: "DejaVu Sans"; font-size: 9.4pt; color: #1e3a5f; margin: 12pt 0 5pt 0; }
+  code, .m { font-family: "DejaVu Sans Mono"; font-size: 8.1pt; background: #eef1f5; padding: 0 2px; }
+  table { border-collapse: collapse; width: 100%; margin: 7pt 0 9pt 0; font-size: 8.6pt; }
+  th { font-family: "DejaVu Sans"; font-size: 8.1pt; color: #1e3a5f; text-align: left;
+       border-bottom: 0.8pt solid #1e3a5f; padding: 3pt 5pt; }
+  td { border-bottom: 0.4pt solid #d6dde6; padding: 3pt 5pt; vertical-align: top; text-align: left; }
+  .qbar { text-align: left; background: #1e3a5f; color: #ffffff; font-family: "DejaVu Sans"; font-size: 8.6pt;
+          font-weight: bold; padding: 5pt 8pt; margin: 13pt 0 0 0; }
+  .qbar .n { color: #8ab4e8; padding-right: 5pt; }
+  .qa p { margin: 6pt 0 6pt 10pt; }
+  .cap { font-size: 8pt; color: #5b6b80; font-style: italic; text-align: left; margin: -4pt 0 10pt 0; }
+  ul { margin: 2pt 0 7pt 0; padding-left: 16pt; }
+  li { margin: 0 0 3pt 0; }
+  .lead { font-size: 9.8pt; }
+  .rule { border-top: 1.2pt solid #1e3a5f; margin: 0 0 12pt 0; }
+  .break { page-break-before: always; }
+</style>
+</head>
+<body>
+
+<h1 class="part">A D D E N D U M</h1>
+<h1 class="title">Phase 7 — the archive first,<br>and the answer withheld</h1>
+<p class="tag">Eight new questions · 12 September 2026 · every number measured on the 3,356-problem archive</p>
+<hr>
+
+<p class="lead">The book describes the system as it stood on 11 September. One change since then
+touches Part 1's numbers, Part 4's verification story, and the answer to Q18 directly. This
+addendum records what changed, what it was measured against, and the questions the change
+invites. Nothing in the original pages is withdrawn except where §A.3 says so.</p>
+
+<h2>A.1 What changed</h2>
+
+<table>
+<tr><th style="width:22%">&nbsp;</th><th style="width:39%">Before</th><th>After</th></tr>
+<tr><td>Menu option 1</td><td>LeetCode first; the local archive only when the fetch failed</td>
+    <td>the local archive first; LeetCode only for what the archive does not have</td></tr>
+<tr><td>The solution file</td><td>the archive's <code>&lt;id&gt;.cpp</code> — the finished solution, handed back</td>
+    <td>an empty stub rebuilt from it: signatures kept, bodies emptied</td></tr>
+<tr><td>The question file</td><td>rendered from the API — a network call unless cached</td>
+    <td><code>&lt;id&gt;_problem.txt</code> sits in all 3,356 archive folders</td></tr>
+<tr><td>The driver</td><td>two shapes: plain call, or ops/args replay</td>
+    <td>matched to the code type — see §A.2</td></tr>
+</table>
+
+<p>The re-solve loop is the point. An archived problem now scaffolds with no network at all:
+the driver, the tests and the question come off disk, and the one file that would spoil the
+exercise — the solution — is the one file that is rebuilt empty.</p>
+
+<h2>A.2 The numbers</h2>
+
+<table>
+<tr><th style="width:38%">Measurement</th><th>Result</th></tr>
+<tr><td>Question files written into <code>Code Dirs/</code></td><td>3,356 of 3,356, 0 failures — one API request each, the slug taken from the solution's <code>// Link:</code> line</td></tr>
+<tr><td>Stubs compiled against their own archived driver</td><td>3,355 of 3,355 compile. The one folder without a stub, 3795, holds four empty files, so the fetcher falls through to LeetCode</td></tr>
+<tr><td>Code shapes across the archive</td><td>function 3,195 · design 134 · interactive 20 · concurrency 6</td></tr>
+<tr><td>Structures crossing a signature</td><td>tree 148 · linked list 47 · n-ary 9 · nested list 4 · next pointers 3 · parent pointers 3 · random list 2 · quad tree 2 · multilevel 1 · graph 1</td></tr>
+<tr><td>Generator differential test (3,083 problems with a cached snippet)</td><td>3,036 byte-identical · 40 fixed · 0 regressions · 7 still failing</td></tr>
+</table>
+<p class="cap">Fig A.1 — every figure in this addendum is a measurement, not an estimate. The method for the last row is Q56.</p>
+
+<h2>A.3 A correction to Q18</h2>
+
+<p>Q18 answers the charge that the fetcher needs the network by saying it &ldquo;tries the on-disk
+cache first, then the local archive of ~3,350 solutions, and only then the network&rdquo;. That
+described the degradation I had designed. The code did not do it: it called LeetCode first and
+reached the archive only when that call failed, which is the opposite order and means the good
+data was reached by accident rather than by design.</p>
+<p>The code now does what the answer says. If this comes up, the version worth giving is the
+unflattering one: I described the behaviour I intended, found the implementation inverted when I
+went to change something else, and fixed it. The answer's conclusion — that an archived problem
+works with no connection — is true now, and is stronger than it was: the question file travels
+with the scaffold, so there is no network call left in the path at all.</p>
+
+<div class="break"></div>
+<h2>A.4 Questions</h2>
+
+<div class="qbar"><span class="n">Q51 </span>&nbsp;Your fetcher went to the network first and treated your own archive as a fallback. Why was that the wrong way round?</div>
+<div class="qa">
+<p>Three costs, in order of weight. <b>The archive holds the repaired drivers.</b> Those 3,356
+folders are not a cache of what LeetCode would give me — they are what I had to fix: hand-written
+readers for odd input notations, self-validating harnesses for special judges, corrected expected
+files. Fetching fresh regenerates the broken version of exactly the problems that cost the most
+work.</p>
+<p><b>It put a network call in the common case.</b> The common case is re-solving a problem I have
+already done, which is what the archive is for.</p>
+<p><b>A fallback that only runs on failure is untested.</b> It ran when LeetCode was down, which is
+rarely, so its behaviour was the least exercised path in the system.</p>
+<p>What I gave up: the archive can hold a stale scaffold — 430's input file is literally the word
+<code>placeholder</code> — so <code>--live</code> skips the archive and fetches fresh, and a
+problem whose archive entry is missing or empty falls through to LeetCode automatically, saying
+which files were missing.</p>
+</div>
+
+<div class="qbar"><span class="n">Q52 </span>&nbsp;You hand back an empty stub instead of the stored solution. How do you know the stub is correct?</div>
+<div class="qa">
+<p>Because correctness here has a mechanical definition: the stub must compile against the same
+driver the archive ships beside it. So I compiled all of them. Every stub the archive can produce &mdash; 3,355 of them &mdash; compiles against the driver archived beside it.</p>
+<p>The first run passed 3,351 of 3,356, and the five failures were the useful part. Two signatures
+used <code>ll</code>, an alias declared inside the class body I was deleting. One carried a
+user-added default argument (<code>int ans = INF3455</code>) that is not part of LeetCode's API.
+One kept an out-of-class <code>vector&lt;int&gt; Solution::v;</code> definition for a member that
+no longer existed. One had a template default argument (<code>uint8_t RBITS = SBITS</code>) that
+my segmenter read as an initialiser, so it swallowed the class that followed. The fifth was not a
+bug: 3795's archive entry is four empty files, and there the fetcher correctly falls through to
+LeetCode.</p>
+<p>What the test does not prove is that the stub is the signature LeetCode would give — only that
+it is the signature the driver calls. Those agree for every problem the archive has, because the
+driver was generated from LeetCode's own snippet.</p>
+</div>
+
+<div class="qbar"><span class="n">Q53 </span>&nbsp;Why re-derive the stub every time instead of storing one per problem?</div>
+<div class="qa">
+<p>A stored stub is 3,356 more files that can drift from the driver sitting next to them. The
+derivation reads the driver to decide which methods are the API — whatever it calls survives,
+private helpers and members do not — so the stub cannot disagree with the harness that calls it.</p>
+<p>It also buys a property I use elsewhere. The rebuild is idempotent, so
+<code>make_stub(x) == x</code> is exactly the test for &ldquo;this file is still the untouched
+stub&rdquo;. That is how clearing the root knows not to rescue an empty file into
+<code>data/replaced/</code>, where it would overwrite a genuine rescued solution with the same id.
+No marker file, no extra state, no way for the two to disagree.</p>
+</div>
+
+<div class="qbar"><span class="n">Q54 </span>&nbsp;Why is the judge's mock in the driver and never in the file you submit?</div>
+<div class="qa">
+<p>284 taught me this one, by failing on the judge rather than locally. Its <code>Iterator</code>
+base class is supplied by LeetCode at submission time. A concrete <code>class Iterator {...}</code>
+inside <code>284.cpp</code> compiles perfectly well on my machine and is a
+<b>redefinition error</b> the moment the file is submitted.</p>
+<p>So the mock goes in the driver, above its <code>#include "&lt;id&gt;.cpp"</code>: only the local
+harness ever sees it, and the file I submit declares nothing the judge already provides.
+<code>NestedInteger</code> is handled the same way. Hidden APIs are the mirror image — the stub
+carries the declaration <code>int guess(int num);</code>, which a judge accepts as a redeclaration,
+and the driver carries the definition backed by that case's extra input line.</p>
+<p>The cost is IDE diagnostics on the solution file alone, which cannot see the base class. That is
+noise I accept; the alternative is noise the judge rejects.</p>
+</div>
+
+<div class="break"></div>
+<div class="qbar"><span class="n">Q55 </span>&nbsp;LeetCode calls six different structures <code>Node</code>. How do you tell them apart, and why does it matter?</div>
+<div class="qa">
+<p>By their fields, most specific first: <code>neighbors</code> is a graph vertex,
+<code>children</code> an n-ary tree, <code>random</code> a list with random pointers,
+<code>child</code> a multilevel list, <code>topLeft</code> a quad tree, and a bare
+<code>next</code> beside <code>left</code>/<code>right</code> a tree with next pointers.</p>
+<p>It matters because the name carries no information and each one arrives in a different notation:
+an adjacency list, a level order with nulls closing each child group,
+<code>[[val, random_index]]</code>, levels separated by null runs, <code>[isLeaf, val]</code> pairs.
+Reading one as another does not crash — it silently builds the wrong structure. Every variant
+exposes the same three names (<code>_toNode</code>, <code>_sNode</code>, <code>_rnode</code>), so
+the type tables need one entry for <code>Node*</code> and the variant is chosen once, from the
+definition.</p>
+<p>The quad tree needed one extra piece of honesty. LeetCode states that a non-leaf node's
+<code>val</code> is not compared, and its own examples disagree with each other — 427 prints a 1
+there, 558 prints a 0. The printer emits <code>[0, *]</code> for a non-leaf and the expected file is
+normalised the same way, so the test checks the structure and not a value the judge ignores.</p>
+</div>
+
+<div class="qbar"><span class="n">Q56 </span>&nbsp;You changed a generator that 3,356 problems depend on. How did you know you had not broken it?</div>
+<div class="qa">
+<p>Differential testing against the previous version, not judgement. I kept the old generator, ran
+both over every problem with cached metadata — 3,083 of them — and compared the files they wrote.
+For 3,036 the output is byte-identical apart from helper functions the new one adds, so the
+behaviour cannot have changed and no compilation is needed. That shortcut is what makes the test
+affordable.</p>
+<p>For the 47 that differ I compiled and ran both: each generated driver was fed the archived
+<i>solved</i> solution and its output diffed against LeetCode's own expected values. 40 pass that
+did not before — the six <code>Node</code> variants, <code>NestedInteger</code>,
+<code>guess</code>, <code>isBadVersion</code>, the <code>Codec</code> round trips,
+<code>PeekingIterator</code> — and nothing regressed.</p>
+<p>The test also found a gap I had not gone looking for: 19 problems return
+<code>vector&lt;bool&gt;</code>, which the generator had never been able to print.</p>
+</div>
+
+<div class="qbar"><span class="n">Q57 </span>&nbsp;What still does not work?</div>
+<div class="qa">
+<p>Seven problems fail on the LeetCode path, and all seven failed before. Three (384, 519, 470)
+return random values, so no fixed expected file can match them; they need a self-validating driver,
+which is a per-problem judgement and not something a generator should guess. Three (843, 1095,
+1237) use judge classes I do not mock — <code>Master</code>, <code>MountainArray</code>,
+<code>CustomFunction</code> — and there the fetcher prints a warning naming the class and where the
+mock belongs. One (1462) is an output mismatch I have not diagnosed.</p>
+<p>Concurrency problems get a driver that refuses to pretend: it compiles, prints that a thread
+harness is needed, and exits non-zero. A generated harness would have to know what the input means
+for each problem — thread start order for 1114, a count for 1115, a water string for 1117.</p>
+<p>All ten are in the archive with working drivers, so option 1 — the path actually used — handles
+every one of them.</p>
+</div>
+
+<div class="qbar"><span class="n">Q58 </span>&nbsp;You wrote something that reads C++ to do this. Is that not the wrong tool for the job?</div>
+<div class="qa">
+<p>It is not a parser and I would not defend it as one. It blanks comments, string and character
+literals and preprocessor lines, then scans braces and parentheses — enough for the shapes LeetCode
+solutions take, and nothing beyond them.</p>
+<p>Two things make that acceptable. The <b>failure mode</b>: when it cannot find a solution class it
+returns nothing, and the fetcher falls through to LeetCode rather than writing a file that is
+subtly wrong — the same rule as the rest of the fetcher, which modifies nothing when it fails. And
+the <b>test set</b>: 3,356 real solutions, every one compiled, including the deliberately
+pathological ones — a copied solution carrying AVX intrinsics and attribute macros, classes using
+tabs, a solution whose helper is defined outside the class.</p>
+<p>The alternative is libclang: correct by construction, and a dependency that has to exist on
+Windows too, which is a requirement this project actually has. The measured benefit would have been
+five files out of 3,356, all five fixable in an afternoon. I would revisit that decision the first
+time a sixth class of failure appears rather than defending the scan on principle.</p>
+</div>
+
+</body>
+</html>
